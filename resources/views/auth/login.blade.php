@@ -74,19 +74,21 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Wrapper-->
 						<div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
 							<!--begin::Form-->
-							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="index.html" action="#">
+							{{-- <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="index.html" action="POST"> --}}
+							<form class="form w-100" action="{{ route('login') }}"  method="POST">
+								@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-11">
 									<!--begin::Title-->
-									<h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
+									<h1 class="text-gray-900 fw-bolder mb-3">Iniciar Session</h1>
 									<!--end::Title-->
 									<!--begin::Subtitle-->
-									<div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
+									{{-- <div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div> --}}
 									<!--end::Subtitle=-->
 								</div>
 								<!--begin::Heading-->
 								<!--begin::Login options-->
-								<div class="row g-3 mb-9">
+								{{-- <div class="row g-3 mb-9">
 									<!--begin::Col-->
 									<div class="col-md-6">
 										<!--begin::Google link=-->
@@ -104,23 +106,23 @@ License: For each use you must have a valid license purchased only from above li
 										<!--end::Google link=-->
 									</div>
 									<!--end::Col-->
-								</div>
+								</div> --}}
 								<!--end::Login options-->
 								<!--begin::Separator-->
 								<div class="separator separator-content my-14">
-									<span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
+									<span class="w-125px text-gray-500 fw-semibold fs-7">Cuenta de Usuario</span>
 								</div>
 								<!--end::Separator-->
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Email-->
-									<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+									<input type="text" placeholder="Correo" name="email" autocomplete="off" class="form-control bg-transparent" />
 									<!--end::Email-->
 								</div>
 								<!--end::Input group=-->
 								<div class="fv-row mb-3">
 									<!--begin::Password-->
-									<input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" />
+									<input type="password" placeholder="Contraseña" name="password" autocomplete="off" class="form-control bg-transparent" />
 									<!--end::Password-->
 								</div>
 								<!--end::Input group=-->
@@ -136,7 +138,7 @@ License: For each use you must have a valid license purchased only from above li
 								<div class="d-grid mb-10">
 									<button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
 										<!--begin::Indicator label-->
-										<span class="indicator-label">Sign In</span>
+										<span class="indicator-label">Iniciar Session</span>
 										<!--end::Indicator label-->
 										<!--begin::Indicator progress-->
 										<span class="indicator-progress">Please wait... 
