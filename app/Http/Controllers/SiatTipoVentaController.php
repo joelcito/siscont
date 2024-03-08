@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Empresa;
+use App\Models\SiatTipoVenta;
 use Illuminate\Http\Request;
 
-class EmpresaController extends Controller
+class SiatTipoVentaController extends Controller
 {
-
-    public function listado(Request $request){
-        return view('empresa.listado');
-    }
-
-
     /**
      * Display a listing of the resource.
      */
@@ -40,7 +34,7 @@ class EmpresaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Empresa $empresa)
+    public function show(SiatTipoVenta $siatTipoVenta)
     {
         //
     }
@@ -48,7 +42,7 @@ class EmpresaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Empresa $empresa)
+    public function edit(SiatTipoVenta $siatTipoVenta)
     {
         //
     }
@@ -56,7 +50,7 @@ class EmpresaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, SiatTipoVenta $siatTipoVenta)
     {
         //
     }
@@ -64,7 +58,7 @@ class EmpresaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Empresa $empresa)
+    public function destroy(SiatTipoVenta $siatTipoVenta)
     {
         //
     }
