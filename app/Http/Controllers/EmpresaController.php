@@ -3,30 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\SiatTipoDocumentoSector;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
 
     public function listado(Request $request){
-        return view('empresa.listado');
+        $documentosSectores = SiatTipoDocumentoSector::all();
+        return view('empresa.listado')->with(compact('documentosSectores'));
     }
 
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function guarda(Request $request){   
+        if($request->ajax()){
+            // dd($request->all());
+            $empresa = new Empresa();
+            $empresa->usuario_creador_id                    = Auth::user()->id;
+            $empresa->nombre                                = $request->input('nombre_empresa');
+            $empresa->nit                                   = $request->input('nit_empresa');
+            $empresa->razon_social                          = $request->input('razon_social');
+            $empresa->codigo_ambiente                       = $request->input('codigo_ambiente');
+            $empresa->codigo_sistema                        = $request->input('codigo_sistema');
+            $empresa->codigo_documento_sector               = $request->input('documento_sectores');
+            $empresa->url_facturacionCodigos                = $request->input('url_fac_codigos');
+            $empresa->url_facturacionSincronizacion         = $request->input('url_fac_sincronizacion');
+            $empresa->url_servicio_facturacion_compra_venta = $request->input('url_fac_servicios');
+            $empresa->url_facturacion_operaciones           = $request->input('url_fac_operaciones');
+
+            if($empresa->save()){
+                $data['estado'] = 'success';
+                $data['text']   = 'Se creo con exito';
+            }else{
+                $data['text']   = 'Erro al crear';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function ajaxListado(Request $request){
+        if($request->ajax()){
+            $data['estado'] = 'success';
+            $data['listado'] = $this->listadoArrayEmpresa();
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    protected function listadoArrayEmpresa(){
+        $empresas = Empresa::all();
+        return view('empresa.ajaxListado')->with(compact('empresas'))->render();
     }
 
     /**

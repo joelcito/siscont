@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SiatTipoDocumentoSector extends Model
 {
+    protected $table = 'siat_tipo_documento_sectores';
     use HasFactory, SoftDeletes;
 }

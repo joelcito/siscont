@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('/empresa')->group(function(){
         Route::get('/listado', [EmpresaController::class, 'listado']);
+        Route::post('/guarda', [EmpresaController::class, 'guarda']);
+        Route::post('/ajaxListado', [EmpresaController::class, 'ajaxListado']);
     });
 
 });

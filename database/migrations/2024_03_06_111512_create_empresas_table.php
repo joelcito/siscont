@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('codigo_ambiente')->nullable();
             $table->string('codigo_sistema')->nullable();
             $table->string('codigo_documento_sector')->nullable();
+            $table->string('api_token')->nullable();
             $table->string('url_facturacionCodigos')->nullable();
             $table->string('url_facturacionSincronizacion')->nullable();
             $table->string('url_servicio_facturacion_compra_venta')->nullable();
