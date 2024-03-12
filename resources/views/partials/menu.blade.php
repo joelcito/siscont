@@ -388,7 +388,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="pages/user-profile/overview.html">
+                            <a class="menu-link" href="{{url('sincronizacion/listado')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
