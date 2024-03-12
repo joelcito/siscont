@@ -9,6 +9,14 @@ use function Termwind\render;
 
 class SincronizacionSiatController extends Controller
 {
+
+    protected $siatController;
+
+    public function __construct(SiatController $siatController)
+    {
+        $this->siatController = $siatController;
+    }
+
     public function listado(Request $request){
         // return view('siat.sincronizacion_catalogo.listado')->with(compact('documentosSectores'));
         return view('siat.sincronizacion_catalogo.listado');

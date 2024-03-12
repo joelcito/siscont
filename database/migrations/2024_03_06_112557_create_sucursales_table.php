@@ -19,13 +19,14 @@ return new class extends Migration
             $table->unsignedBigInteger('usuario_modificador_id')->nullable();
             $table->foreign('usuario_eliminador_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_eliminador_id')->nullable();
-            
+
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedBigInteger('empresa_id')->nullable();
 
             $table->string('nombre')->nullable();
             $table->string('codigo_sucursal')->nullable();
-            
+            $table->string('direccion')->nullable();
+
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();
             $table->timestamps();

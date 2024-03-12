@@ -27,11 +27,15 @@ return new class extends Migration
             $table->string('codigo_ambiente')->nullable();
             $table->string('codigo_sistema')->nullable();
             $table->string('codigo_documento_sector')->nullable();
-            $table->string('api_token')->nullable();
+            $table->string('api_token', 1000)->nullable();
             $table->string('url_facturacionCodigos')->nullable();
             $table->string('url_facturacionSincronizacion')->nullable();
             $table->string('url_servicio_facturacion_compra_venta')->nullable();
             $table->string('url_facturacion_operaciones')->nullable();
+            $table->string('url_facturacionCodigos_pro')->nullable();
+            $table->string('url_facturacionSincronizacion_pro')->nullable();
+            $table->string('url_servicio_facturacion_compra_venta_pro')->nullable();
+            $table->string('url_facturacion_operaciones_pro')->nullable();
 
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();

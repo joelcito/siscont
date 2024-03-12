@@ -159,7 +159,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <div class="card card-flush h-lg-100" id="kt_contacts_main">
                                     <div class="card-body pt-5">
                                         <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-semibold mt-6 mb-8 gap-2">
@@ -168,7 +168,7 @@
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4 active" data-bs-toggle="tab" href="#sincro_doc_sector">
                                                 <i class="ki-duotone ki-home fs-4 me-1"></i>Doc Sector</a>
                                             </li>
-                                            
+
                                             <!--end:::Tab item-->
                                             <!--begin:::Tab item-->
                                             <li class="nav-item">
@@ -273,7 +273,7 @@
                                         <!--end:::Tabs-->
                                         <!--begin::Tab content-->
                                         <div class="tab-content" id="">
-                                            
+
                                             <!--begin:::Tab pane-->
                                             <div class="tab-pane fade show active" id="sincro_doc_sector" role="tabpanel">
                                                 <div class="row">
@@ -414,7 +414,23 @@
 
                     }
                 }
-            }) 
+            })
+        }
+
+        function sincronizarTipoDocumentoSector(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoTipoDocumentoSector') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_tipo_documento_sectores').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
         }
    </script>
 @endsection

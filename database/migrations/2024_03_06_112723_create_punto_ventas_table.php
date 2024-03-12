@@ -22,7 +22,10 @@ return new class extends Migration
 
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->unsignedBigInteger('sucursal_id')->nullable();
-            
+            $table->string('codigoPuntoVenta')->nullable();
+            $table->string('nombrePuntoVenta')->nullable();
+            $table->string('tipoPuntoVenta')->nullable();
+
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();
             $table->timestamps();

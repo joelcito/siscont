@@ -83,7 +83,7 @@
                     @if ($p->estado_factura != 'Anulado')
                         <button class="btn btn-secondary btn-sm btn-icon" title="Ticked" onclick="generaTicked('{{ $p->factura_id }}', '{{ $p->id }}')"><i class="fa fa-file-circle-exclamation"></i></button>
                     @endif
-                    
+
                     @if($p->facturado === "Si")
                         <a  class="btn btn-primary btn-icon btn-sm"href="{{ url('factura/generaPdfFacturaNew', [$p->factura_id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
                         <a  class="btn btn-white btn-icon btn-sm"href="{{ url('factura/imprimeFactura', [$p->factura_id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
@@ -156,6 +156,7 @@
                     @endif
                 </td>
                 <td>
+                    <a class="btn btn-sm btn-info btn-icon" title="Configuraciones de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a>
                 </td>
             </tr>
         @empty

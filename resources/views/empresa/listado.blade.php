@@ -70,23 +70,49 @@
                             </div>
                         </div>
                         <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Api Token</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="api_token" id="api_token">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Fac. Codigos</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Codigos</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos" id="url_fac_codigos">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Fac. Sincronizacion</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Sincronizacion</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion" id="url_fac_sincronizacion">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Fac. Servicio </label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Servicio </label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios" id="url_fac_servicios">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Fac. Operaciones</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Operaciones</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones" id="url_fac_operaciones">
                             </div>
                         </div>
+
+                        <div class="row mt-5">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Codigos</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos_pro" id="url_fac_codigos_pro">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Sincronizacion</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion_pro" id="url_fac_sincronizacion_pro">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Servicio </label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios_pro" id="url_fac_servicios_pro">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Operaciones</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones_pro" id="url_fac_operaciones_pro">
+                            </div>
+                        </div>
+
                         <!--begin::Input group-->
                         {{-- <div class="fv-row mb-10">
                             <!--begin::Label-->
@@ -1095,7 +1121,7 @@
 
                         }
                     }
-                }) 
+                })
         }
    </script>
 @endsection

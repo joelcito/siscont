@@ -1,34 +1,35 @@
 <div class="row">
-    <div class="col-md-3">
-        <button class="btn w-100 btn-sm" onclick="sincronizarTipoDocumentoSector()">Sincronizar</button>
+    <div class="col-3">
+        <button class="btn btn-primary btn-sm" onclick="modalNuevoPuntoVenta()"><i class="fa fa-plus"></i> Nuevo Punto Venta</button>
     </div>
-    <div class="col-md-3">
+    <div class="col-3">
 
     </div>
-    <div class="col-md-3">
+    <div class="col-3">
 
     </div>
-    <div class="col-md-3">
+    <div class="col-3">
 
     </div>
 </div>
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-            <th class="min-w-125px">Id</th>
-            <th class="min-w-125px">Codigo Clasificador</th>
-            <th class="min-w-125px">Descripcion</th>
+            <th class="min-w-125px">Cod. Punto Venta</th>
+            <th class="min-w-125px">Nombre Punto Venta</th>
+            <th class="min-w-125px">Tipo Punto Venta</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
-        @forelse ( $documentosSectores as $ds)
+        @forelse ( $punto_ventas as $pv)
             <tr>
-                <td>{{ $ds->id }}</td>
-                <td>{{ $ds->codigo_clasificador }}</td>
-                <td>{{ $ds->descripcion }}</td>
+                <td>{{ $pv->codigoPuntoVenta }}</td>
+                <td>{{ $pv->nombrePuntoVenta }}</td>
+                <td>{{ $pv->tipoPuntoVenta }}</td>
             </tr>
         @empty
-            <h4 class="text-danger">No hay datos</h4>
+            <h4 class="text-danger text-center">No hay datos</h4>
         @endforelse
     </tbody>
 </table>

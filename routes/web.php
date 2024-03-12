@@ -32,7 +32,13 @@ Route::middleware('auth')->group(function(){
     Route::prefix('/empresa')->group(function(){
         Route::get('/listado', [EmpresaController::class, 'listado']);
         Route::post('/guarda', [EmpresaController::class, 'guarda']);
+        Route::get('/detalle/{empresa_id}', [EmpresaController::class, 'detalle']);
         Route::post('/ajaxListado', [EmpresaController::class, 'ajaxListado']);
+
+        Route::post('/ajaxListadoSucursal', [EmpresaController::class, 'ajaxListadoSucursal']);
+        Route::post('/guardaSucursal', [EmpresaController::class, 'guardaSucursal']);
+        Route::post('/ajaxListadoPuntoVenta', [EmpresaController::class, 'ajaxListadoPuntoVenta']);
+
     });
 
     Route::prefix('/sincronizacion')->group(function(){
