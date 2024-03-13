@@ -1,11 +1,68 @@
 @extends('layouts.app')
 @section('css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .select-modal{
+            z-index: 1050; /* Ajusta según sea necesario, debe ser mayor que el z-index del modal */
+            position: relative; /* O absolute según sea necesario */
+        }
+    </style>
 @endsection
 @section('metadatos')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 @section('content')
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_genera_cuis" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario Generar Cuis</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_genera_cuis">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                                <input type="text" name="codigo_punto_venta_id_cuis" id="codigo_punto_venta_id_cuis">
+                                <input type="text" name="codigo_sucursal_id_cuis" id="codigo_sucursal_id_cuis">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="modalidad_cuis" id="modalidad_cuis" disabled>
+                                    <option></option>
+                                    <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
+                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en linea</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="generarCuis()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
 
     <!--begin::Modal - Adjust Balance-->
     <div class="modal fade" id="modal_new_sucursal" tabindex="-1" aria-hidden="true">
@@ -210,7 +267,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-5">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
                                             <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
                                                 <option></option>
@@ -218,14 +275,23 @@
                                                 <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
+                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad   " id="codigo_modalidad ">
+                                                <option></option>
+                                                <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
+                                                <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en linea</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Codigo de Sistema</label>
                                             <input type="text" class="form-control fw-bold form-control-solid" name="codigo_sistema" id="codigo_sistema" value="{{ $empresa->codigo_sistema }}">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
                                             <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="documento_sectores" id="documento_sectores">
                                                 <option></option>
+                                                <option value="1">NEVO</option>
                                                 @foreach ($documentosSectores as $ds)
                                                     <option value="2" {{ ($ds->descripcion == "2")? "selected" : "" }}>{{ $ds->descripcion }}</option>
                                                 @endforeach
@@ -582,6 +648,61 @@
         function cancelarCreacionPuntoVenta(){
             $('#modal_new_punto_venta').modal('hide');
             $('#modal_puntos_ventas').modal('show');
+        }
+
+        function generarCuis(){
+            Swal.fire({
+                title: "Esta seguro de generar un CUIS par el Punto de Venta?",
+                text: "Se verificar antes de crear!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, crear!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let datos = $('#formulario_genera_cuis').serializeArray()
+                        $.ajax({
+                            url   : "{{ url('empresa/crearCuis') }}",
+                            method: "POST",
+                            data  : datos,
+                            success: function (data) {
+                                console.log(data)
+                                if(data.estado === 'success'){
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: "EXITO!",
+                                        text:  data.text,
+                                    })
+                                }else if( data.estado === 'warnig'){
+                                    Swal.fire({
+                                        icon : 'warning',
+                                        title: "ALTERTA!",
+                                        text : data.text,
+                                        timer: 5000
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        icon : 'error',
+                                        title: "SE GENERO UN ERROR!",
+                                        text : JSON.stringify(data.msg),
+                                        timer: 10000
+                                    })
+                                }
+                                $('#modal_genera_cuis').modal('hide')
+                            }
+                        })
+                    }
+                });
+        }
+
+        function modal_genera_cuis(punto_venta, sucursal){
+
+            $('#codigo_punto_venta_id_cuis').val(punto_venta)
+            $('#codigo_sucursal_id_cuis').val(sucursal)
+
+            $('#modal_puntos_ventas').modal('hide')
+            $('#modal_genera_cuis').modal('show');
         }
 
         // function modalEmpresa(){

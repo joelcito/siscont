@@ -9,7 +9,7 @@ class SiatController extends Controller
 {
 
     protected $header ;
-    protected $timeout ;
+    protected $timeout = 5;
     protected $codigoAmbiente ;
     protected $codigoModalidad ;
     protected $codigoPuntoVenta ;
@@ -23,21 +23,21 @@ class SiatController extends Controller
     protected $url4 ;
 
     // public function __construct($header, $timeout, $codigoAmbiente, $codigoModalidad, $codigoPuntoVenta, $codigoSistema, $codigoSucursal, $nit, $codigoDocumentoSector, $url1, $url2, $url3, $url4){
-    public function __construct($header, $codigoAmbiente, $codigoModalidad, $codigoPuntoVenta, $codigoSistema, $codigoSucursal, $nit, $codigoDocumentoSector, $url1, $url2, $url3, $url4){
-        $this->header                = $header;
-        $this->timeout               = 5;
-        $this->codigoAmbiente        = $codigoAmbiente;
-        $this->codigoModalidad       = $codigoModalidad;
-        $this->codigoPuntoVenta      = $codigoPuntoVenta;
-        $this->codigoSistema         = $codigoSistema;
-        $this->codigoSucursal        = $codigoSucursal;
-        $this->nit                   = $nit;
-        $this->codigoDocumentoSector = $codigoDocumentoSector;
-        $this->url1                  = $url1;
-        $this->url2                  = $url2;
-        $this->url3                  = $url3;
-        $this->url4                  = $url4;
-    }
+    // public function __construct($header, $codigoAmbiente, $codigoModalidad, $codigoPuntoVenta, $codigoSistema, $codigoSucursal, $nit, $codigoDocumentoSector, $url1, $url2, $url3, $url4){
+    //     $this->header                = $header;
+    //     $this->timeout               = 5;
+    //     $this->codigoAmbiente        = $codigoAmbiente;
+    //     $this->codigoModalidad       = $codigoModalidad;
+    //     $this->codigoPuntoVenta      = $codigoPuntoVenta;
+    //     $this->codigoSistema         = $codigoSistema;
+    //     $this->codigoSucursal        = $codigoSucursal;
+    //     $this->nit                   = $nit;
+    //     $this->codigoDocumentoSector = $codigoDocumentoSector;
+    //     $this->url1                  = $url1;
+    //     $this->url2                  = $url2;
+    //     $this->url3                  = $url3;
+    //     $this->url4                  = $url4;
+    // }
 
     // public function __construct(){
     //     $this->header                = "";
@@ -69,16 +69,88 @@ class SiatController extends Controller
     // protected $url3                     = "https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl";
     // protected $url4                     = "https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl";
 
+
+    // ********************* GENERACION DE DATOS *********************
+    public function cuis($header,$url1,$codigoAmbiente,$codigoModalidad,$codigoPuntoVenta,$codigoSistema,$codigoSucursal,$nit){
+        // $wsdl               = $this->url1;
+        // $codigoAmbiente     = $this->codigoAmbiente;
+        // $codigoModalidad    = $this->codigoModalidad;
+        // $codigoPuntoVenta   = $this->codigoPuntoVenta; //
+        // $codigoSistema      = $this->codigoSistema;
+        // $codigoSucursal     = $this->codigoSucursal;
+        // $nit                = $this->nit;
+
+        // dd($url1,$codigoAmbiente,$codigoModalidad,$codigoPuntoVenta,$codigoSistema,$codigoSucursal,$nit);
+
+        $wsdl               = $url1;
+        // $codigoAmbiente     = $codigoAmbiente;
+        // $codigoModalidad    = $codigoModalidad;
+        // $codigoPuntoVenta   = $codigoPuntoVenta;
+        // $codigoSistema      = $codigoSistema;
+        // $codigoSucursal     = $codigoSucursal;
+        // $nit                = $nit;
+
+        $parametros         =  array(
+            'SolicitudCuis' => array(
+                'codigoAmbiente'    => $codigoAmbiente,
+                'codigoModalidad'   => $codigoModalidad,
+                'codigoPuntoVenta'  => $codigoPuntoVenta,
+                'codigoSistema'     => $codigoSistema,
+                'codigoSucursal'    => $codigoSucursal,
+                'nit'               => $nit
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header'  => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl'     => WSDL_CACHE_NONE,
+                'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->cuis($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
     // ********************* SINCRONIZACION DE CATALOGOS *********************
-    public function sincronizarParametricaTipoDocumentoSector(){
-        $this->verificarConeccion();
-        $wsdl                   = $this->url2;
-        $codigoAmbiente         = $this->codigoAmbiente;
-        $codigoPuntoVenta       = $this->codigoPuntoVenta;
-        $codigoSistema          = $this->codigoSistema;
-        $codigoSucursal         = $this->codigoSucursal;
-        $cuis                   = session('scuis');
-        $nit                    = $this->nit;
+    public function sincronizarParametricaTipoDocumentoSector($header, $url2, $codigoAmbiente, $codigoPuntoVenta ,$codigoSistema ,$codigoSucursal ,$scuis ,$nit ){
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $wsdl                   = $this->url2;
+        // $codigoAmbiente         = $this->codigoAmbiente;
+        // $codigoPuntoVenta       = $this->codigoPuntoVenta;
+        // $codigoSistema          = $this->codigoSistema;
+        // $codigoSucursal         = $this->codigoSucursal;
+        // $cuis                   = session('scuis');
+        // $nit                    = $this->nit;
+
+        $wsdl                   = $url2;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cuis                   = $scuis;
+        $nit                    = $nit;
 
         $parametros         =  array(
             'SolicitudSincronizacion' => array(
@@ -93,7 +165,7 @@ class SiatController extends Controller
 
         $aoptions = array(
             'http' => array(
-                'header' => $this->header,
+                'header' => $header,
                 'timeout' => $this->timeout
             ),
         );
@@ -108,6 +180,66 @@ class SiatController extends Controller
             ]);
 
             $resultado = $client->sincronizarParametricaTipoDocumentoSector($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function sincronizarParametricaTipoPuntoVenta($header, $url2, $codigoAmbiente, $codigoPuntoVenta, $codigoSistema, $codigoSucursal, $scuis, $nit){
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $wsdl                   = $this->url2;
+        // $codigoAmbiente         = $this->codigoAmbiente;
+        // $codigoPuntoVenta       = $this->codigoPuntoVenta;
+        // $codigoSistema          = $this->codigoSistema;
+        // $codigoSucursal         = $this->codigoSucursal;
+        // $cuis                   = session('scuis');
+        // $nit                    = $this->nit;
+
+        $wsdl                   = $url2;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+
+        $parametros         =  array(
+            'SolicitudSincronizacion' => array(
+                'codigoAmbiente'    => $codigoAmbiente,
+                'codigoPuntoVenta'  => $codigoPuntoVenta,
+                'codigoSistema'     => $codigoSistema,
+                'codigoSucursal'    => $codigoSucursal,
+                'cuis'              => $cuis,
+                'nit'               => $nit
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->sincronizarParametricaTipoPuntoVenta($parametros);
 
             $data['estado'] = 'success';
             $data['resultado'] = $resultado;

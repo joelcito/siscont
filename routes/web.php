@@ -37,14 +37,21 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/ajaxListadoSucursal', [EmpresaController::class, 'ajaxListadoSucursal']);
         Route::post('/guardaSucursal', [EmpresaController::class, 'guardaSucursal']);
+
         Route::post('/ajaxListadoPuntoVenta', [EmpresaController::class, 'ajaxListadoPuntoVenta']);
+
+        Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
     });
 
     Route::prefix('/sincronizacion')->group(function(){
         Route::get('/listado', [SincronizacionSiatController::class, 'listado']);
         Route::post('/ajaxListadoTipoDocumentoSector', [SincronizacionSiatController::class, 'ajaxListadoTipoDocumentoSector']);
+        Route::post('/ajaxListadoTipoPuntoVenta', [SincronizacionSiatController::class, 'ajaxListadoTipoPuntoVenta']);
+
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
+        Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
+
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });
 

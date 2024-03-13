@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
                                 <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
                                     <option></option>
@@ -55,11 +55,19 @@
                                     <option value="1">Produccion</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
+                                    <option></option>
+                                    <option value="1">Electronica en Linea</option>
+                                    <option value="2">Computarizada en linea</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Codigo de Sistema</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="codigo_sistema" id="codigo_sistema">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
                                 <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="documento_sectores" id="documento_sectores">
                                     <option></option>

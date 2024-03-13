@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SiatTipoVenta;
+use App\Models\SiatTipoPuntoVenta;
 use Illuminate\Http\Request;
 
-class SiatTipoVentaController extends Controller
+class SiatTipoPuntoVentaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class SiatTipoVentaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SiatTipoVenta $siatTipoVenta)
+    public function show(SiatTipoPuntoVenta $siatTipoPuntoVenta)
     {
         //
     }
@@ -42,7 +42,7 @@ class SiatTipoVentaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SiatTipoVenta $siatTipoVenta)
+    public function edit(SiatTipoPuntoVenta $siatTipoPuntoVenta)
     {
         //
     }
@@ -50,7 +50,7 @@ class SiatTipoVentaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SiatTipoVenta $siatTipoVenta)
+    public function update(Request $request, SiatTipoPuntoVenta $siatTipoPuntoVenta)
     {
         //
     }
@@ -58,7 +58,7 @@ class SiatTipoVentaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SiatTipoVenta $siatTipoVenta)
+    public function destroy(SiatTipoPuntoVenta $siatTipoPuntoVenta)
     {
         //
     }

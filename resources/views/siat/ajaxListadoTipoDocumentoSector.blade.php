@@ -1,15 +1,6 @@
 <div class="row">
-    <div class="col-md-3">
-        <button class="btn w-100 btn-sm" onclick="sincronizarTipoDocumentoSector()">Sincronizar</button>
-    </div>
-    <div class="col-md-3">
-
-    </div>
-    <div class="col-md-3">
-
-    </div>
-    <div class="col-md-3">
-
+    <div class="col-md-12">
+        <button class="btn w-100 btn-sm btn-primary" onclick="sincronizarTipoDocumentoSector()">Sincronizar</button>
     </div>
 </div>
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">

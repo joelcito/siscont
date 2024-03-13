@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('nit')->nullable();
             $table->string('razon_social')->nullable();
             $table->string('codigo_ambiente')->nullable();
+            $table->string('codigo_modalidad')->nullable();
             $table->string('codigo_sistema')->nullable();
             $table->string('codigo_documento_sector')->nullable();
             $table->string('api_token', 1000)->nullable();
