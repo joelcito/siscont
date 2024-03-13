@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('punto_ventas', function (Blueprint $table) {
+        Schema::create('cuis', function (Blueprint $table) {
             $table->id();
             $table->foreign('usuario_creador_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_creador_id')->nullable();
@@ -20,11 +20,10 @@ return new class extends Migration
             $table->foreign('usuario_eliminador_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_eliminador_id')->nullable();
 
-            $table->foreign('sucursal_id')->references('id')->on('sucursales');
-            $table->unsignedBigInteger('sucursal_id')->nullable();
-            $table->string('codigoPuntoVenta')->nullable();
-            $table->string('nombrePuntoVenta')->nullable();
-            $table->string('tipoPuntoVenta')->nullable();
+            $table->foreign('punto_venta_id')->references('id')->on('punto_ventas');
+            $table->unsignedBigInteger('punto_venta_id')->nullable();
+            $table->string('codigo')->nullable();
+            $table->timestamp('fechaVigencia')->nullable();
             $table->string('codigo_ambiente')->nullable();
 
             $table->string('estado')->nullable();
@@ -38,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('punto_ventas');
+        Schema::dropIfExists('cuis');
     }
 };

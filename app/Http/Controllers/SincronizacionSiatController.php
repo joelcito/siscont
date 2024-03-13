@@ -10,11 +10,21 @@ use function Termwind\render;
 class SincronizacionSiatController extends Controller
 {
 
-    protected $siatController;
+    protected $header ;
+    protected $codigoAmbiente ;
+    protected $codigoModalidad ;
+    protected $codigoPuntoVenta ;
+    protected $codigoSistema ;
+    protected $codigoSucursal ;
+    protected $nit ;
+    protected $codigoDocumentoSector ;
+    protected $url1 ;
+    protected $url2 ;
+    protected $url3 ;
+    protected $url4 ;
 
-    public function __construct(SiatController $siatController)
-    {
-        $this->siatController = $siatController;
+    public function __construct(){
+        
     }
 
     public function listado(Request $request){
@@ -36,7 +46,10 @@ class SincronizacionSiatController extends Controller
 
     public function sincronizarTipoDocumentoSector(Request $request){
         if($request->ajax()){
-            $siat = app(SiatController::class);
+            // $siat = app(SiatController::class);
+            $siat = new SiatController(
+
+            );
             $sincronizarParametricaTipoDocumentoIdentidad   = json_decode($siat->sincronizarParametricaTipoDocumentoIdentidad());
             if($sincronizarParametricaTipoDocumentoIdentidad->resultado->RespuestaListaParametricas){
                 $array = $sincronizarParametricaTipoDocumentoIdentidad->resultado->RespuestaListaParametricas->listaCodigos;

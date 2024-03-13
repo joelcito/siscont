@@ -22,21 +22,38 @@ class SiatController extends Controller
     protected $url3 ;
     protected $url4 ;
 
-    public function __construct(){
-        $this->header                = "";
-        $this->timeout               = "";
-        $this->codigoAmbiente        = "";
-        $this->codigoModalidad       = "";
-        $this->codigoPuntoVenta      = "";
-        $this->codigoSistema         = "";
-        $this->codigoSucursal        = "";
-        $this->nit                   = "";
-        $this->codigoDocumentoSector = "";
-        $this->url1                  = "";
-        $this->url2                  = "";
-        $this->url3                  = "";
-        $this->url4                  = "";
+    // public function __construct($header, $timeout, $codigoAmbiente, $codigoModalidad, $codigoPuntoVenta, $codigoSistema, $codigoSucursal, $nit, $codigoDocumentoSector, $url1, $url2, $url3, $url4){
+    public function __construct($header, $codigoAmbiente, $codigoModalidad, $codigoPuntoVenta, $codigoSistema, $codigoSucursal, $nit, $codigoDocumentoSector, $url1, $url2, $url3, $url4){
+        $this->header                = $header;
+        $this->timeout               = 5;
+        $this->codigoAmbiente        = $codigoAmbiente;
+        $this->codigoModalidad       = $codigoModalidad;
+        $this->codigoPuntoVenta      = $codigoPuntoVenta;
+        $this->codigoSistema         = $codigoSistema;
+        $this->codigoSucursal        = $codigoSucursal;
+        $this->nit                   = $nit;
+        $this->codigoDocumentoSector = $codigoDocumentoSector;
+        $this->url1                  = $url1;
+        $this->url2                  = $url2;
+        $this->url3                  = $url3;
+        $this->url4                  = $url4;
     }
+
+    // public function __construct(){
+    //     $this->header                = "";
+    //     $this->timeout               = "";
+    //     $this->codigoAmbiente        = "";
+    //     $this->codigoModalidad       = "";
+    //     $this->codigoPuntoVenta      = "";
+    //     $this->codigoSistema         = "";
+    //     $this->codigoSucursal        = "";
+    //     $this->nit                   = "";
+    //     $this->codigoDocumentoSector = "";
+    //     $this->url1                  = "";
+    //     $this->url2                  = "";
+    //     $this->url3                  = "";
+    //     $this->url4                  = "";
+    // }
 
     // protected $header                   = "apikey: TokenApi eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1NDI3NjQ4U2N6IiwiY29kaWdvU2lzdGVtYSI6Ijc3MkNCMUI1QTc0OUI0MTk0MjBGQjA2Iiwibml0IjoiSDRzSUFBQUFBQUFBQURNMU1USTNNN0V3TURRREFBc2lNQ29LQUFBQSIsImlkIjoxMDE3OTY5LCJleHAiOjE3MzU2ODkzMTUsImlhdCI6MTcwNjY3MzI4NSwibml0RGVsZWdhZG8iOjU0Mjc2NDgwMTYsInN1YnNpc3RlbWEiOiJTRkUifQ.DyCmanTysmzWWQ3TYV2X90oQf7C0fq36Ys3DCWyjmuM2hHxbeuLUfWWlTmewS59t37QnO4l9qiv1ZTdMVZjfAA";
     // protected $timeout                  = 5;                            // TIEMPO EN ESPERA PARA QUE RESPONDA SITA

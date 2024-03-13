@@ -100,9 +100,19 @@
                     <form id="formulario_sucursal">
                         <div class="row">
                             <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_punto_venta" id="codigo_ambiente_punto_venta">
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombre_sucursal" id="nombre_sucursal" required>
-                                <input type="hidden" name="empresa_id_sucursal" id="empresa_id_sucursal" value="{{ $empresa->id }}" required>
+                                <input type="text" name="sucursal_id_punto_venta" id="sucursal_id_punto_venta" required>
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -438,6 +448,13 @@
         $(document).ready(function() {
 
             ajaxListadoSucursal();
+            // $('#codigo_ambiente_punto_venta').selectpicker();
+            // $('#codigo_ambiente_punto_venta').select2({
+            //     placeholder: 'Seleccione',
+            //     minimumResultsForSearch: -1 // Para ocultar la barra de búsqueda
+            // });
+
+            $('#codigo_ambiente_punto_venta').select2();
 
             // $('#kt_table_users').DataTable({
             //     lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
@@ -522,7 +539,7 @@
             }
         }
 
-        function modalPuntoVentas(sucursal, nombre){
+        function modalPuntoVentas(sucursal, nombre, codigo_sucursal){
             let datos = {
                 sucursal:sucursal
             }
@@ -542,6 +559,7 @@
                         $('#tabla_puntos_ventas').html(data.listado)
                         $('#modal_puntos_ventas').modal('show');
                         $('#name_sucursal').text(nombre)
+                        $('#sucursal_id_punto_venta').val(codigo_sucursal)
                         // location.reload();
                     }else{
                         // console.log(data, data.detalle.mensajesList)
