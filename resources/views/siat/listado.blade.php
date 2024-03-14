@@ -289,7 +289,14 @@
                 data  : datos,
                 success: function (data) {
                     if(data.estado === 'success'){
-                        $('#tabla_tipo_documento_sectores').html(data.listado)
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoTipoDocumentoSector();
                     }else{
 
                     }
@@ -307,7 +314,14 @@
                 data  : datos,
                 success: function (data) {
                     if(data.estado === 'success'){
-                        $('#tabla_tipo_punto_venta').html(data.listado)
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoTipoPuntoVenta();
                     }else{
 
                     }

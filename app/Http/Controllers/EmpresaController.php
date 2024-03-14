@@ -6,8 +6,10 @@ use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
 use App\Models\SiatTipoDocumentoSector;
+use App\Models\SiatTipoPuntoVenta;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
@@ -15,7 +17,7 @@ class EmpresaController extends Controller
 
     public function listado(Request $request){
         $documentosSectores = SiatTipoDocumentoSector::all();
-        return view('empresa.listado')->with(compact('documentosSectores'));
+        return view('empresa.listado')->with(compact('documentosSectores', ));
     }
 
 
@@ -77,8 +79,9 @@ class EmpresaController extends Controller
 
         $empresa            = Empresa::find($empresa_id);
         $documentosSectores = SiatTipoDocumentoSector::all();
+        $siat_tipo_ventas   = SiatTipoPuntoVenta::all();
 
-        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores'));
+        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas'));
     }
 
     public function ajaxListadoSucursal(Request $request){
@@ -174,35 +177,70 @@ class EmpresaController extends Controller
                 // session(['scuis'                => $codigoCuis->resultado->RespuestaCuis->codigo]);
                 // session(['sfechaVigenciaCuis'   => $codigoCuis->resultado->RespuestaCuis->fechaVigencia]);
 
-                // dd($codigoCuis);
-
-                $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
-                $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
-
-                $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
-                                    ->where('sucursal_id', $sucursal->id)
-                                    ->where('codigo', $codigoCuisGenerado)
-                                    ->first();
-
-                if(is_null($cuisSacado)){
-                    $cuis                     = new Cuis();
-                    $cuis->usuario_creador_id = Auth::user()->id;
-                    $cuis->punto_venta_id     = $punto_venta->id;
-                    $cuis->sucursal_id        = $sucursal->id;
-                    $cuis->codigo             = $codigoCuisGenerado;
-                    $cuis->fechaVigencia      = $fechaVigenciaGenerado;
-                    $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
-                    if($cuis->save()){
-                        $data['text']   = 'Se creo el CUIS con exito';
-                        $data['estado'] = 'success';
+                if($codigoCuis->resultado->RespuestaCuis->transaccion){
+                    $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
+                    $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
+    
+                    $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
+                                        ->where('sucursal_id', $sucursal->id)
+                                        ->where('codigo', $codigoCuisGenerado)
+                                        ->first();
+    
+                    if(is_null($cuisSacado)){
+                        $cuis                     = new Cuis();
+                        $cuis->usuario_creador_id = Auth::user()->id;
+                        $cuis->punto_venta_id     = $punto_venta->id;
+                        $cuis->sucursal_id        = $sucursal->id;
+                        $cuis->codigo             = $codigoCuisGenerado;
+                        $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                        $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
+                        if($cuis->save()){
+                            $data['text']   = 'Se creo el CUIS con exito';
+                            $data['estado'] = 'success';
+                        }else{
+                            $data['text']   = 'Error al crear el CUIS';
+                            $data['estado'] = 'error';
+                        }
                     }else{
-                        $data['text']   = 'Error al crear el CUIS';
-                        $data['estado'] = 'error';
+                        $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
+                        $data['estado'] = 'warnig';
                     }
                 }else{
-                    $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
-                    $data['estado'] = 'warnig';
+                    if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980 && isset($codigoCuis->resultado->RespuestaCuis->codigo)){
+                        $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
+                        $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
+        
+                        $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
+                                            ->where('sucursal_id', $sucursal->id)
+                                            ->where('codigo', $codigoCuisGenerado)
+                                            ->first();
+        
+                        if(is_null($cuisSacado)){
+                            $cuis                     = new Cuis();
+                            $cuis->usuario_creador_id = Auth::user()->id;
+                            $cuis->punto_venta_id     = $punto_venta->id;
+                            $cuis->sucursal_id        = $sucursal->id;
+                            $cuis->codigo             = $codigoCuisGenerado;
+                            $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                            $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
+                            if($cuis->save()){
+                                $data['text']   = 'Se creo el CUIS con exito';
+                                $data['estado'] = 'success';
+                            }else{
+                                $data['text']   = 'Error al crear el CUIS';
+                                $data['estado'] = 'error';
+                            }
+                        }else{
+                            $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
+                            $data['estado'] = 'warnig';
+                        }
+                    }else{
+                        $data['text']   = 'Error al crear el CUIS';
+                        $data['msg']    = $codigoCuis->resultado->RespuestaCuis;
+                        $data['estado'] = 'error';
+                    }
                 }
+
                 // $data['$codigoCuis->estado === "success"'] = 'si';
             }else{
                 // dd("no");
@@ -248,6 +286,97 @@ class EmpresaController extends Controller
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
         }
+        return $data;
+    }
+
+    public function guardaPuntoVenta(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $empresa_id                      = $request->input('empresa_id_punto_venta');
+            $sucursal_id                     = $request->input('sucursal_id_punto_venta');
+            $codigo_clasificador_punto_venta = $request->input('codigo_tipo_punto_id_punto_venta');
+
+            $empresa    = Empresa::find($empresa_id);
+            $sucursal   = Sucursal::find($sucursal_id);
+            
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = Cuis::where('punto_venta_id', $puntoVenta->id)
+                              ->where('sucursal_id', $sucursal->id)
+                              ->where('codigo_ambiente', $empresa->codigo_ambiente)
+                              ->first();
+
+
+            $descripcionPuntoVenta = $request->input('descripcion_punto_venta');
+            $nombrePuntoVenta      = $request->input('nombre_punto_venta');
+            $header                = $empresa->api_token;
+            $url4                  = $empresa->url_facturacion_operaciones;
+            $codigoAmbiente        = $empresa->codigo_ambiente;
+            $codigoModalidad       = $empresa->cogigo_modalidad;
+            $codigoSistema         = $empresa->codigo_sistema;
+            $codigoSucursal        = $sucursal->codigo_sucursal;
+            $codigoTipoPuntoVenta  = $codigo_clasificador_punto_venta;
+            $scuis                 = $cuis->codigo;
+            $nit                   = $empresa->nit;
+
+            $siat = app(SiatController::class);
+
+            $puntoVentaGenerado = json_decode($siat->registroPuntoVenta(
+                $descripcionPuntoVenta, 
+                $nombrePuntoVenta,
+                $header,
+                $url4,
+                $codigoAmbiente,
+                $codigoModalidad,
+                $codigoSistema,
+                $codigoSucursal,
+                $codigoTipoPuntoVenta,
+                $scuis,
+                $nit
+            ));
+
+            if($puntoVentaGenerado->estado === "success"){
+                if($puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->transaccion){
+                    $codigoPuntoVentaDevuelto        = $puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->codigoPuntoVenta;
+
+                    $punto_venta                     = new PuntoVenta();
+                    $punto_venta->usuario_creador_id = Auth::user()->id;
+                    $punto_venta->sucursal_id        = $sucursal->id;
+                    $punto_venta->codigoPuntoVenta   = $codigoPuntoVentaDevuelto;
+                    $punto_venta->nombrePuntoVenta   = $nombrePuntoVenta;
+                    $punto_venta->tipoPuntoVenta     = $codigo_clasificador_punto_venta;
+                    $punto_venta->codigo_ambiente    = $codigoAmbiente;
+
+                    if($punto_venta->save()){
+                        $data['text']   = 'Se creo el PUNTO DE VENTA con exito';
+                        $data['estado'] = 'success';
+
+                        $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                    ->get();
+                        $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas'))->render();
+
+                    }else{
+                        $data['text']   = 'Error al crear el PUNTO DE VENTA';
+                        $data['estado'] = 'error';
+                    }
+                }else{
+                    $data['text']   = 'Error al crear el CUIS';
+                    $data['msg']    = $puntoVentaGenerado->resultado;
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['text']   = 'Error en la consulta';
+                $data['msg']    = $puntoVentaGenerado;
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
         return $data;
     }
 }

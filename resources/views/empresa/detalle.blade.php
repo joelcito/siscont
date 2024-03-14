@@ -36,8 +36,8 @@
                                     <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
                                     <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
                                 </select>
-                                <input type="text" name="codigo_punto_venta_id_cuis" id="codigo_punto_venta_id_cuis">
-                                <input type="text" name="codigo_sucursal_id_cuis" id="codigo_sucursal_id_cuis">
+                                <input type="hidden" name="codigo_punto_venta_id_cuis" id="codigo_punto_venta_id_cuis">
+                                <input type="hidden" name="codigo_sucursal_id_cuis" id="codigo_sucursal_id_cuis">
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -46,7 +46,7 @@
                                 <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="modalidad_cuis" id="modalidad_cuis" disabled>
                                     <option></option>
                                     <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
-                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en linea</option>
+                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en Linea</option>
                                 </select>
                             </div>
                         </div>
@@ -154,40 +154,56 @@
                 </div>
                 {{-- <div class="modal-body scroll-y mx-5 mx-xl-15 my-7"> --}}
                 <div class="modal-body scroll-y">
-                    <form id="formulario_sucursal">
+                    <form id="formulario_punto_venta">
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_punto_venta" id="codigo_ambiente_punto_venta">
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_punto_venta" id="codigo_ambiente_punto_venta" data-dropdown-parent="#modal_new_punto_venta" disabled>
                                     <option></option>
                                     <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
                                     <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
                                 </select>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad_punto_venta" id="codigo_modalidad_punto_venta" data-dropdown-parent="#modal_new_punto_venta" disabled>
+                                    <option></option>
+                                    <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
+                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en Linea</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_sucursal" id="nombre_sucursal" required>
-                                <input type="text" name="sucursal_id_punto_venta" id="sucursal_id_punto_venta" required>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_punto_venta" id="nombre_punto_venta" required>
+                                <input type="hidden" name="sucursal_id_punto_venta" id="sucursal_id_punto_venta" required>
+                                <input type="hidden" name="empresa_id_punto_venta" id="empresa_id_punto_venta" required value="{{ $empresa->id }}">
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Codigo Sucursal</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="codigo_sucursal" id="codigo_sucursal" required>
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion Punto Venta</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="descripcion_punto_venta" id="descripcion_punto_venta" required>
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Direccion</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="direccion_sucursal" id="direccion_sucursal" required>
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Tipo Punto Venta</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_tipo_punto_id_punto_venta" id="codigo_tipo_punto_id_punto_venta" data-dropdown-parent="#modal_new_punto_venta" required>
+                                    <option></option>
+                                    @foreach ( $siat_tipo_ventas as $tpv)
+                                        <option value="{{ $tpv->codigo_clasificador }}">{{$tpv->descripcion}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </form>
                     <div class="row mt-5">
                         <div class="col-md-6">
-                            <button class="btn btn-sm btn-success w-100" onclick="guardarSucursal()">Guardar</button>
+                            <button class="btn btn-sm btn-success w-100" onclick="guardarPuntoVenta()">Guardar</button>
                         </div>
                         <div class="col-md-6">
                             <button class="btn btn-sm btn-dark w-100" onclick="cancelarCreacionPuntoVenta()">Cancelar</button>
@@ -625,7 +641,7 @@
                         $('#tabla_puntos_ventas').html(data.listado)
                         $('#modal_puntos_ventas').modal('show');
                         $('#name_sucursal').text(nombre)
-                        $('#sucursal_id_punto_venta').val(codigo_sucursal)
+                        $('#sucursal_id_punto_venta').val(sucursal)
                         // location.reload();
                     }else{
                         // console.log(data, data.detalle.mensajesList)
@@ -705,48 +721,48 @@
             $('#modal_genera_cuis').modal('show');
         }
 
-        // function modalEmpresa(){
-        //     $('#modal_new_empresa').modal('show')
-        // }
+        function guardarPuntoVenta(){
+            
+            if($("#formulario_punto_venta")[0].checkValidity()){
 
-        // function guardarEmpresa(){
-        //     if($("#formulario_empresa")[0].checkValidity()){
-        //         console.log($('#formulario_empresa').serializeArray())
+                let datos = $('#formulario_punto_venta').serializeArray();
 
-        //         let datos = $('#formulario_empresa').serializeArray()
+                $.ajax({
+                    url   : "{{ url('empresa/guardaPuntoVenta') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
 
-        //         $.ajax({
-        //             url: "{{ url('empresa/guarda') }}",
-        //             method: "POST",
-        //             data: datos,
-        //             success: function (data) {
-        //                 if(data.estado === 'success'){
-        //                     // console.log(data)
-        //                     Swal.fire({
-        //                         icon:'success',
-        //                         title: "EXITO!",
-        //                         text:  "SE REGISTRO CON EXITO",
-        //                     })
-        //                     ajaxListado();
-        //                     $('#modal_new_empresa').modal('hide')
-        //                     // location.reload();
-        //                 }else{
-        //                     // console.log(data, data.detalle.mensajesList)
-        //                     // Swal.fire({
-        //                     //     icon:'error',
-        //                     //     title: data.detalle.codigoDescripcion,
-        //                     //     text:  JSON.stringify(data.detalle.mensajesList),
-        //                     //     // timer:1500
-        //                     // })
-        //                 }
-        //             }
-        //         })
+                        console.log(data)
 
-        //     }else{
-        //         $("#formularioTramsfereciaFactura")[0].reportValidity();
-        //     }
-        // }
+                        if(data.estado === 'success'){
+                            // console.log(data)
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            ajaxListadoSucursal();
+                            $('#modal_new_punto_venta').modal('hide');
+                            $('#modal_puntos_ventas').modal('show');
+                            $('#tabla_puntos_ventas').html(data.listado)
+                            // location.reload();
+                        }else{
+                            // console.log(data, data.detalle.mensajesList)
+                            // Swal.fire({
+                            //     icon:'error',
+                            //     title: data.detalle.codigoDescripcion,
+                            //     text:  JSON.stringify(data.detalle.mensajesList),
+                            //     // timer:1500
+                            // })
+                        }
+                    }
+                })
 
+            }else{
+                $("#formulario_punto_venta")[0].reportValidity();
+            }
+        }
 
    </script>
 @endsection

@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/guardaSucursal', [EmpresaController::class, 'guardaSucursal']);
 
         Route::post('/ajaxListadoPuntoVenta', [EmpresaController::class, 'ajaxListadoPuntoVenta']);
+        Route::post('/guardaPuntoVenta', [EmpresaController::class, 'guardaPuntoVenta']);
 
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 

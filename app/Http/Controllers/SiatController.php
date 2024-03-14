@@ -131,6 +131,68 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function registroPuntoVenta($descripcionPuntoVenta, $nombrePuntoVenta, $header, $url4, $codigoAmbiente, $codigoModalidad, $codigoSistema, $codigoSucursal, $codigoTipoPuntoVenta, $scuis, $nit ){
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        $wsdl                   = $url4;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoModalidad        = $codigoModalidad;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $codigoTipoPuntoVenta   = $codigoTipoPuntoVenta;                        //PUNTO VENTA VENTANILLA DE COBRANZA
+        $cuis                   = $scuis;
+        $descripcion            = $descripcionPuntoVenta;
+        $nit                    = $nit;
+        $nombrePuntoVenta       = $nombrePuntoVenta;
+
+        $parametros         =  array(
+            'SolicitudRegistroPuntoVenta' => array(
+                'codigoAmbiente'        => $codigoAmbiente,
+                'codigoModalidad'       => $codigoModalidad,
+                'codigoSistema'         => $codigoSistema,
+                'codigoSucursal'        => $codigoSucursal,
+                'codigoTipoPuntoVenta'  => $codigoTipoPuntoVenta,
+                'cuis'                  => $cuis,
+                'descripcion'           => $descripcion,
+                'nit'                   => $nit,
+                'nombrePuntoVenta'      => $nombrePuntoVenta
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->registroPuntoVenta($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+
+
+
+
     // ********************* SINCRONIZACION DE CATALOGOS *********************
     public function sincronizarParametricaTipoDocumentoSector($header, $url2, $codigoAmbiente, $codigoPuntoVenta ,$codigoSistema ,$codigoSucursal ,$scuis ,$nit ){
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
