@@ -180,12 +180,12 @@ class EmpresaController extends Controller
                 if($codigoCuis->resultado->RespuestaCuis->transaccion){
                     $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
                     $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
-    
+
                     $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
                                         ->where('sucursal_id', $sucursal->id)
                                         ->where('codigo', $codigoCuisGenerado)
                                         ->first();
-    
+
                     if(is_null($cuisSacado)){
                         $cuis                     = new Cuis();
                         $cuis->usuario_creador_id = Auth::user()->id;
@@ -209,12 +209,12 @@ class EmpresaController extends Controller
                     if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980 && isset($codigoCuis->resultado->RespuestaCuis->codigo)){
                         $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
                         $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
-        
+
                         $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
                                             ->where('sucursal_id', $sucursal->id)
                                             ->where('codigo', $codigoCuisGenerado)
                                             ->first();
-        
+
                         if(is_null($cuisSacado)){
                             $cuis                     = new Cuis();
                             $cuis->usuario_creador_id = Auth::user()->id;
@@ -300,7 +300,7 @@ class EmpresaController extends Controller
 
             $empresa    = Empresa::find($empresa_id);
             $sucursal   = Sucursal::find($sucursal_id);
-            
+
             $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
                                     ->first();
 
@@ -325,7 +325,7 @@ class EmpresaController extends Controller
             $siat = app(SiatController::class);
 
             $puntoVentaGenerado = json_decode($siat->registroPuntoVenta(
-                $descripcionPuntoVenta, 
+                $descripcionPuntoVenta,
                 $nombrePuntoVenta,
                 $header,
                 $url4,
@@ -377,6 +377,16 @@ class EmpresaController extends Controller
             $data['estado'] = 'error';
         }
 
+        return $data;
+    }
+
+    public function ajaxListadoUsuarioEmpresa(Request $request, $empresa_id){
+        if($request->ajax()){
+            dd($request->all(), $empresa_id);
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
         return $data;
     }
 }

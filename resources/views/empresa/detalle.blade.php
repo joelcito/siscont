@@ -385,7 +385,7 @@
                                             <span class="path4"></span>
                                             <span class="path5"></span>
                                             <span class="path6"></span>
-                                        </i>Meetings</a>
+                                        </i>Usuarios</a>
                                     </li>
                                     <!--end:::Tab item-->
                                     <!--begin:::Tab item-->
@@ -492,7 +492,13 @@
                                     <!--end:::Tab pane-->
                                     <!--begin:::Tab pane-->
                                     <div class="tab-pane fade" id="kt_contact_view_general" role="tabpanel">
-                                        <h1>PRIMERO</h1>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="tabla_usuario_empres">
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end:::Tab pane-->
                                     <!--begin:::Tab pane-->
@@ -530,6 +536,8 @@
         $(document).ready(function() {
 
             ajaxListadoSucursal();
+            ajaxListadoUsuarioEmpresa();
+
             // $('#codigo_ambiente_punto_venta').selectpicker();
             // $('#codigo_ambiente_punto_venta').select2({
             //     placeholder: 'Seleccione',
@@ -570,6 +578,22 @@
                 success: function (data) {
                     if(data.estado === 'success'){
                         $('#tabla_sucursales').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function ajaxListadoUsuarioEmpresa(){
+            let datos = {}
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa', [$empresa->id]) }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_usuario_empres').html(data.listado)
                     }else{
 
                     }
@@ -722,7 +746,7 @@
         }
 
         function guardarPuntoVenta(){
-            
+
             if($("#formulario_punto_venta")[0].checkValidity()){
 
                 let datos = $('#formulario_punto_venta').serializeArray();

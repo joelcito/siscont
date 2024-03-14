@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
+        Route::post('/ajaxListadoUsuarioEmpresa/{empresa_id}', [EmpresaController::class, 'ajaxListadoUsuarioEmpresa']);
+
     });
 
     Route::prefix('/sincronizacion')->group(function(){
