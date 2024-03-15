@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RolController;
 use App\Http\Controllers\SincronizacionSiatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
         Route::post('/ajaxListadoUsuarioEmpresa/{empresa_id}', [EmpresaController::class, 'ajaxListadoUsuarioEmpresa']);
+        Route::post('/guardarUsuarioEmpresa', [EmpresaController::class, 'guardarUsuarioEmpresa']);
+        
 
     });
 
@@ -54,6 +57,18 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
         Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
+
+        // Route::post('/guarda', [EmpresaController::class, 'guarda']);
+    });
+
+    Route::prefix('/rol')->group(function(){
+        Route::get('/listado', [RolController::class, 'listado']);
+        Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
+        Route::post('/agregarRol', [RolController::class, 'agregarRol']);
+        // Route::post('/ajaxListadoTipoPuntoVenta', [SincronizacionSiatController::class, 'ajaxListadoTipoPuntoVenta']);
+
+        // Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
+        // Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
 
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });

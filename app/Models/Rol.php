@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Rol extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = 'roles';
 }

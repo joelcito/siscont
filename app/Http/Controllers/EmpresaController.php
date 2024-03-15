@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
+use App\Models\Rol;
 use App\Models\SiatTipoDocumentoSector;
 use App\Models\SiatTipoPuntoVenta;
 use App\Models\Sucursal;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EmpresaController extends Controller
 {
@@ -80,14 +83,20 @@ class EmpresaController extends Controller
         $empresa            = Empresa::find($empresa_id);
         $documentosSectores = SiatTipoDocumentoSector::all();
         $siat_tipo_ventas   = SiatTipoPuntoVenta::all();
+        $roles              = Rol::all();
 
-        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas'));
+        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas', 'roles'));
     }
 
     public function ajaxListadoSucursal(Request $request){
         if($request->ajax()){
+
+            $empresa_id = $request->input('empresa');
+
             $data['estado']  = 'success';
-            $sucursales      = Sucursal::all();
+            // $sucursales      = Sucursal::all();
+            $sucursales      = Sucursal::where('empresa_id', $empresa_id)
+                                        ->get();
             $data['listado'] = view('empresa.ajaxListadoSucursal')->with(compact('sucursales'))->render();
         }else{
             $data['text']   = 'No existe';
@@ -206,33 +215,39 @@ class EmpresaController extends Controller
                         $data['estado'] = 'warnig';
                     }
                 }else{
-                    if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980 && isset($codigoCuis->resultado->RespuestaCuis->codigo)){
-                        $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
-                        $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
-
-                        $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
-                                            ->where('sucursal_id', $sucursal->id)
-                                            ->where('codigo', $codigoCuisGenerado)
-                                            ->first();
-
-                        if(is_null($cuisSacado)){
-                            $cuis                     = new Cuis();
-                            $cuis->usuario_creador_id = Auth::user()->id;
-                            $cuis->punto_venta_id     = $punto_venta->id;
-                            $cuis->sucursal_id        = $sucursal->id;
-                            $cuis->codigo             = $codigoCuisGenerado;
-                            $cuis->fechaVigencia      = $fechaVigenciaGenerado;
-                            $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
-                            if($cuis->save()){
-                                $data['text']   = 'Se creo el CUIS con exito';
-                                $data['estado'] = 'success';
+                    if(isset($codigoCuis->resultado->RespuestaCuis->codigo)){
+                        if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980){
+                            $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
+                            $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
+    
+                            $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
+                                                ->where('sucursal_id', $sucursal->id)
+                                                ->where('codigo', $codigoCuisGenerado)
+                                                ->first();
+    
+                            if(is_null($cuisSacado)){
+                                $cuis                     = new Cuis();
+                                $cuis->usuario_creador_id = Auth::user()->id;
+                                $cuis->punto_venta_id     = $punto_venta->id;
+                                $cuis->sucursal_id        = $sucursal->id;
+                                $cuis->codigo             = $codigoCuisGenerado;
+                                $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                                $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
+                                if($cuis->save()){
+                                    $data['text']   = 'Se creo el CUIS con exito';
+                                    $data['estado'] = 'success';
+                                }else{
+                                    $data['text']   = 'Error al crear el CUIS';
+                                    $data['estado'] = 'error';
+                                }
                             }else{
-                                $data['text']   = 'Error al crear el CUIS';
-                                $data['estado'] = 'error';
+                                $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
+                                $data['estado'] = 'warnig';
                             }
                         }else{
-                            $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
-                            $data['estado'] = 'warnig';
+                            $data['text']   = 'Error al crear el CUIS';
+                            $data['msg']    = $codigoCuis->resultado->RespuestaCuis;
+                            $data['estado'] = 'error';
                         }
                     }else{
                         $data['text']   = 'Error al crear el CUIS';
@@ -240,8 +255,6 @@ class EmpresaController extends Controller
                         $data['estado'] = 'error';
                     }
                 }
-
-                // $data['$codigoCuis->estado === "success"'] = 'si';
             }else{
                 // dd("no");
                 // $data['$codigoCuis->estado === "success"'] = 'no';
@@ -382,11 +395,49 @@ class EmpresaController extends Controller
 
     public function ajaxListadoUsuarioEmpresa(Request $request, $empresa_id){
         if($request->ajax()){
-            dd($request->all(), $empresa_id);
+            // dd($request->all(), $empresa_id);
+            // $empresa_id = $request->input('');
+
+            $usuarios = User::where('empresa_id', $empresa_id)
+                            ->get();
+
+                            
+            $data['listado']   = view('empresa.ajaxListadoUsuarioEmpresa')->with(compact('usuarios'))->render();
+            // $data['estado'] = 'success';
+            $data['estado'] = 'success';
+
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
         }
         return $data;
+    }
+
+    public function guardarUsuarioEmpresa(Request $request){
+        if($request->ajax()){
+
+            $usuario = new User();
+
+            $usuario->usuario_creador_id = Auth::user()->id;
+            $usuario->nombres            = $request->input('nombres_new_usuaio_empresa');
+            $usuario->ap_paterno         = $request->input('ap_paterno_new_usuaio_empresa');
+            $usuario->ap_materno         = $request->input('ap_materno_new_usuaio_empresa');
+            $usuario->name               = $usuario->nombres." ".$usuario->ap_paterno." ".$usuario->ap_materno;
+            $usuario->email              = $request->input('usuario_new_usuaio_empresa');
+            $usuario->password           = Hash::make($request->input('contrasenia_new_usuaio_empresa'));
+            $usuario->empresa_id         = $request->input('empresa_id_new_usuario_empresa');
+            $usuario->rol_id             = $request->input('rol_id_new_usuaio_empresa');
+            $usuario->numero_celular     = $request->input('num_ceular_new_usuaio_empresa');
+
+            $usuario->save();
+
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return  $data;
     }
 }

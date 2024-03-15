@@ -320,11 +320,11 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="pages/user-profile/campaigns.html">
+                            <a class="menu-link" href="{{url('rol/listado')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Campaigns</span>
+                                <span class="menu-title">Roles</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

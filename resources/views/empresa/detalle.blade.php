@@ -13,6 +13,76 @@
 @endsection
 @section('content')
 
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_usuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de usuario</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_usuario_empresa">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombres_new_usuaio_empresa" id="nombres_new_usuaio_empresa" required>
+                                <input type="hidden" name="empresa_id_new_usuario_empresa" id="empresa_id_new_usuario_empresa" value="{{ $empresa->id }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_new_usuaio_empresa" id="ap_paterno_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_new_usuaio_empresa" id="ap_materno_new_usuaio_empresa" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Usuario / Correo</label>
+                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
+                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_new_usuaio_empresa" id="num_ceular_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Rol</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="rol_id_new_usuaio_empresa" id="rol_id_new_usuaio_empresa">
+                                    <option></option>
+                                    @foreach ($roles as $r)
+                                        <option value="{{ $r->id }}">{{ $r->nombres }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarUsuarioEmpresa()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
     <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_genera_cuis" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-500px">
@@ -377,7 +447,7 @@
                                     <!--end:::Tab item-->
                                     <!--begin:::Tab item-->
                                     <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_meetings">
+                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_usuario">
                                         <i class="ki-duotone ki-calendar-8 fs-4 me-1">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
@@ -491,7 +561,7 @@
                                     </div>
                                     <!--end:::Tab pane-->
                                     <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade" id="kt_contact_view_general" role="tabpanel">
+                                    <div class="tab-pane fade" id="tab_tabla_usuario" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div id="tabla_usuario_empres">
@@ -544,7 +614,7 @@
             //     minimumResultsForSearch: -1 // Para ocultar la barra de búsqueda
             // });
 
-            $('#codigo_ambiente_punto_venta').select2();
+            // $('#codigo_ambiente_punto_venta').select2();
 
             // $('#kt_table_users').DataTable({
             //     lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
@@ -570,7 +640,9 @@
         });
 
         function ajaxListadoSucursal(){
-            let datos = {}
+            let datos = {
+                empresa : {{$empresa->id}}
+            }
             $.ajax({
                 url: "{{ url('empresa/ajaxListadoSucursal') }}",
                 method: "POST",
@@ -786,6 +858,53 @@
             }else{
                 $("#formulario_punto_venta")[0].reportValidity();
             }
+        }
+
+        function agregarUsuarioEmpresa(){
+            $('#modal_new_usuario').modal('show')
+        }
+
+        function guardarUsuarioEmpresa(){
+            if($("#formulario_new_usuario_empresa")[0].checkValidity()){
+
+                let datos = $('#formulario_new_usuario_empresa').serializeArray();
+
+                $.ajax({
+                    url   : "{{ url('empresa/guardarUsuarioEmpresa') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+
+                        console.log(data)
+
+                        if(data.estado === 'success'){
+                            // console.log(data)
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            // ajaxListadoSucursal();
+                            ajaxListadoUsuarioEmpresa();
+                            $('#modal_new_usuario').modal('hide');
+                            // $('#modal_puntos_ventas').modal('show');
+                            // $('#tabla_puntos_ventas').html(data.listado)
+                            // location.reload();
+                        }else{
+                            // console.log(data, data.detalle.mensajesList)
+                            // Swal.fire({
+                            //     icon:'error',
+                            //     title: data.detalle.codigoDescripcion,
+                            //     text:  JSON.stringify(data.detalle.mensajesList),
+                            //     // timer:1500
+                            // })
+                        }
+                    }
+                })
+
+            }else{
+                $("#formulario_new_usuario_empresa")[0].reportValidity();
+            }   
         }
 
    </script>
