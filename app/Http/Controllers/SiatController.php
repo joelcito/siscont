@@ -313,4 +313,128 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function sincronizarActividades($header,$url2,$codigoAmbiente,$codigoPuntoVenta,$codigoSistema,$codigoSucursal,$scuis,$nit){
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $wsdl               = $this->url2;
+        // $codigoAmbiente     = $this->codigoAmbiente;
+        // $codigoPuntoVenta   = $this->codigoPuntoVenta;
+        // $codigoSistema      = $this->codigoSistema;
+        // $codigoSucursal     = $this->codigoSucursal;
+        // $cuis               = session('scuis');
+        // $nit                = $this->nit;
+
+        $wsdl               = $url2;
+        $codigoAmbiente     = $codigoAmbiente;
+        $codigoPuntoVenta   = $codigoPuntoVenta;
+        $codigoSistema      = $codigoSistema;
+        $codigoSucursal     = $codigoSucursal;
+        $cuis               = $scuis;
+        $nit                = $nit;
+
+        $parametros         =  array(
+            'SolicitudSincronizacion' => array(
+                'codigoAmbiente'    => $codigoAmbiente,
+                'codigoPuntoVenta'  => $codigoPuntoVenta,
+                'codigoSistema'     => $codigoSistema,
+                'codigoSucursal'    => $codigoSucursal,
+                'cuis'              => $cuis,
+                'nit'               => $nit
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->sincronizarActividades($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+        }
+
+        // dd($data);
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function sincronizarListaProductosServicios(
+        $header,
+        $url2,
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scuis,
+        $nit
+    ){
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        $wsdl               = $url2;
+        $codigoAmbiente     = $codigoAmbiente;
+        $codigoPuntoVenta   = $codigoPuntoVenta;
+        $codigoSistema      = $codigoSistema;
+        $codigoSucursal     = $codigoSucursal;
+        $cuis               = $scuis;
+        $nit                = $nit;
+
+        $parametros         =  array(
+            'SolicitudSincronizacion' => array(
+                'codigoAmbiente'    => $codigoAmbiente,
+                'codigoPuntoVenta'  => $codigoPuntoVenta,
+                'codigoSistema'     => $codigoSistema,
+                'codigoSucursal'    => $codigoSucursal,
+                'cuis'              => $cuis,
+                'nit'               => $nit
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->sincronizarListaProductosServicios($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
 }

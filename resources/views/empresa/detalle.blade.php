@@ -1,18 +1,246 @@
 @extends('layouts.app')
 @section('css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <style>
-        .select-modal{
-            z-index: 1050; /* Ajusta según sea necesario, debe ser mayor que el z-index del modal */
-            position: relative; /* O absolute según sea necesario */
-        }
-    </style>
 @endsection
 @section('metadatos')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 @section('content')
 
+
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_lista_producto_servicios" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Lista Productos Servicios</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <div id="tabla_lista_producto_servicios">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVentasProductoServicios()">Volver Punto Ventas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_sincronizar_productos_servicios" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario Sincronizar Lista Productos Servicios</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_sincronizar_actividades_economicas">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                                <input type="hidden" name="punto_venta_id_sincronizar_actividad" id="punto_venta_id_sincronizar_actividad">
+                                <input type="hidden" name="sucuarsal_id_sincronizar_actividad" id="sucuarsal_id_sincronizar_actividad">
+                                <input type="hidden" name="empresa_id_sincronizar_actividad" id="empresa_id_sincronizar_actividad" value="{{ $empresa->id }}">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="cancelarSincronizacion()">Cancelar</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="sincronizarActividades()">Sincronizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_sincronizar_actividad" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario Sincronizar Actividades Economimcas</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_sincronizar_actividades_economicas">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                                <input type="hidden" name="punto_venta_id_sincronizar_actividad" id="punto_venta_id_sincronizar_actividad">
+                                <input type="hidden" name="sucuarsal_id_sincronizar_actividad" id="sucuarsal_id_sincronizar_actividad">
+                                <input type="hidden" name="empresa_id_sincronizar_actividad" id="empresa_id_sincronizar_actividad" value="{{ $empresa->id }}">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="cancelarSincronizacion()">Cancelar</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="sincronizarActividades()">Sincronizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_actividades_economicas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Actividades Economicass</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <div id="tabla_activiades_economicas">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVentas()">Volver Punto Ventas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_servicio" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Servicio</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_servicio">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2">Sucursal</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="new_servicio_sucursal_id" id="new_servicio_sucursal_id" data-dropdown-parent="#modal_new_servicio" onchange="ajaxRecuperarPuntosVentasSelect(this)">
+                                    <option></option>
+                                    @foreach ($sucursales as $sucu)
+                                        <option value="{{ $sucu->id }}">{{ $sucu->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" name="new_servicio_empresa_id" id="new_servicio_empresa_id" value="{{ $empresa->id }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Punto Venta</label>
+                                <div id="new_servicio_bloque_sucursal_id">
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Act. Economica</label>
+                                <div id="new_servicio_bloque_actividad">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="new_servicio_ambiente" id="new_servicio_ambiente" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
+                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_new_usuaio_empresa" id="num_ceular_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Rol</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="rol_id_new_usuaio_empresa" id="rol_id_new_usuaio_empresa">
+                                    <option></option>
+                                    @foreach ($roles as $r)
+                                        <option value="{{ $r->id }}">{{ $r->nombres }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarUsuarioEmpresa()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
 
     <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_new_usuario" tabindex="-1" aria-hidden="true">
@@ -121,7 +349,10 @@
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVenta()">Volver Punto Venta</button>
+                            </div>
+                            <div class="col-md-6">
                                 <button type="button" class="btn btn-success w-100 btn-sm" onclick="generarCuis()">Generar</button>
                             </div>
                         </div>
@@ -457,28 +688,19 @@
                                             <span class="path6"></span>
                                         </i>Usuarios</a>
                                     </li>
-                                    <!--end:::Tab item-->
-                                    <!--begin:::Tab item-->
                                     <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_siat_productos">
                                         <i class="ki-duotone ki-save-2 fs-4 me-1">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
-                                        </i>Activity</a>
+                                        </i>Siat Prodcutos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_servicios">
                                         <i class="ki-duotone ki-save-2 fs-4 me-1">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
+                                        </i>Servicios</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -570,15 +792,36 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="tab_tabla_siat_productos" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="tabla_siat_productos">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--end:::Tab pane-->
                                     <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade" id="kt_contact_view_meetings" role="tabpanel">
-                                        <h1>SEGUNDO</h1>
+                                    <div class="tab-pane fade" id="tab_tabla_servicios" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="tabla_servicios">
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end:::Tab pane-->
                                     <!--begin:::Tab pane-->
                                     <div class="tab-pane fade" id="kt_contact_view_activity" role="tabpanel">
-                                        <h1>TERCERO</h1>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="tabla_actividades">
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--end:::Tab pane-->
                                 </div>
@@ -607,35 +850,8 @@
 
             ajaxListadoSucursal();
             ajaxListadoUsuarioEmpresa();
-
-            // $('#codigo_ambiente_punto_venta').selectpicker();
-            // $('#codigo_ambiente_punto_venta').select2({
-            //     placeholder: 'Seleccione',
-            //     minimumResultsForSearch: -1 // Para ocultar la barra de búsqueda
-            // });
-
-            // $('#codigo_ambiente_punto_venta').select2();
-
-            // $('#kt_table_users').DataTable({
-            //     lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
-            //     dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
-            //     language: {
-            //     paginate: {
-            //         first : 'Primero',
-            //         last : 'Último',
-            //         next : 'Siguiente',
-            //         previous: 'Anterior'
-            //     },
-            //     search : 'Buscar:',
-            //     lengthMenu: 'Mostrar _MENU_ registros por página',
-            //     info : 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-            //     emptyTable: 'No hay datos disponibles'
-            //     },
-            //     order:[],
-            //     //  searching: true,
-            //     responsive: true
-            // });
-
+            ajaxListadoServicios();
+            // ajaxListadoSiatProductosServicios();
 
         });
 
@@ -658,9 +874,12 @@
         }
 
         function ajaxListadoUsuarioEmpresa(){
-            let datos = {}
+            let datos = {
+                empresa: {{$empresa->id}}
+            }
             $.ajax({
-                url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa', [$empresa->id]) }}",
+                // url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa', [$empresa->id]) }}",
+                url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa') }}",
                 method: "POST",
                 data  : datos,
                 success: function (data) {
@@ -672,6 +891,42 @@
                 }
             })
         }
+
+        function ajaxListadoServicios(){
+            let datos = {
+                empresa: {{$empresa->id}}
+            }
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoServicios') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_servicios').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        // function ajaxListadoDependeActividades(){
+        //     let datos = {
+        //         empresa: {{$empresa->id}}
+        //     }
+        //     $.ajax({
+        //         url   : "{{ url('empresa/ajaxListadoDependeActividades') }}",
+        //         method: "POST",
+        //         data  : datos,
+        //         success: function (data) {
+        //             if(data.estado === 'success'){
+        //                 $('#tabla_actividades').html(data.listado)
+        //             }else{
+
+        //             }
+        //         }
+        //     })
+        // }
 
         function modalNuevoSucursal(){
             $('#modal_new_sucursal').modal('show')
@@ -905,6 +1160,179 @@
             }else{
                 $("#formulario_new_usuario_empresa")[0].reportValidity();
             }   
+        }
+
+        function modalNuevoServicio(){
+            $('#modal_new_servicio').modal('show')
+        }
+
+        function sincronizarActividades(){
+
+            let datos = $('#formulario_sincronizar_actividades_economicas').serializeArray()
+
+            $.ajax({
+                    url   : "{{ url('empresa/sincronizarActividades') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+
+                        console.log(data)
+
+                        if(data.estado === 'success'){
+                            // console.log(data)
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE SINCRONIZO CON EXITO",
+                            })
+                            // ajaxListadoSucursal();
+                            $('#modal_sincronizar_actividad').modal('hide');
+                            $('#modal_actividades_economicas').modal('show');
+                            $('#tabla_activiades_economicas').html(data.listado)
+                            // location.reload();
+                        }else{
+                            // console.log(data, data.detalle.mensajesList)
+                            // Swal.fire({
+                            //     icon:'error',
+                            //     title: data.detalle.codigoDescripcion,
+                            //     text:  JSON.stringify(data.detalle.mensajesList),
+                            //     // timer:1500
+                            // })
+                        }
+                    }
+                })
+        }
+
+        function ajaxListadoActiviadesEconomicas(punto_venta_id, sucursal_id){
+
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoActiviadesEconomicas') }}",
+                method: "POST",
+                data  : {
+                    empresa       : {{$empresa->id}},
+                    punto_venta_id: punto_venta_id,
+                    sucursal_id   : sucursal_id
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        // Swal.fire({
+                        //     icon:'success',
+                        //     title: "EXITO!",
+                        //     text:  "SE REGISTRO CON EXITO",
+                        // })
+                        ajaxListadoSucursal();
+                        $('#modal_actividades_economicas').modal('show')
+                        $('#tabla_activiades_economicas').html(data.listado)
+                        $('#modal_puntos_ventas').modal('hide')
+                    }else{
+                        // console.log(data, data.detalle.mensajesList)
+                        // Swal.fire({
+                        //     icon:'error',
+                        //     title: data.detalle.codigoDescripcion,
+                        //     text:  JSON.stringify(data.detalle.mensajesList),
+                        //     // timer:1500
+                        // })
+                    }
+                }
+            })
+        }
+
+        function modal_sincronizar_actividad(punto_venta_id, sucursal_id){
+            console.log(punto_venta_id, sucursal_id)
+            $('#punto_venta_id_sincronizar_actividad').val(punto_venta_id)
+            $('#sucuarsal_id_sincronizar_actividad').val(sucursal_id)
+
+            $('#modal_sincronizar_actividad').modal('show')
+            $('#modal_actividades_economicas').modal('hide')
+
+        }
+
+        function cancelarSincronizacion(){
+            $('#modal_sincronizar_actividad').modal('hide')
+            $('#modal_actividades_economicas').modal('show')
+        }
+
+        function volverPuntoVentas(){
+            $('#modal_actividades_economicas').modal('hide')
+            $('#modal_puntos_ventas').modal('show')
+        }
+
+        function volverPuntoVenta(){
+            $('#modal_genera_cuis').modal('hide')
+            $('#modal_puntos_ventas').modal('show')
+        }
+
+        function ajaxRecuperarPuntosVentasSelect(elemt){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxRecuperarPuntosVentasSelect') }}",
+                method: "POST",
+                data  : {
+                    sucursal_id   : elemt.value
+                },
+                success: function (data) {
+                    if(data.estado === 'success')
+                        $('#new_servicio_bloque_sucursal_id').html(data.select)
+                }
+            })
+        }
+
+        function ajaxRecupraActividadesSelect(elemt){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxRecupraActividadesSelect') }}",
+                method: "POST",
+                data  : {
+                    punto_venta_id: elemt.value,
+                    empresa_id    : $('#new_servicio_empresa_id').val(),
+                    sucursal_id   : $('#new_servicio_sucursal_id').val()
+                },
+                success: function (data) {
+                    if(data.estado === 'success')
+                        $('#new_servicio_bloque_actividad').html(data.select)
+                }
+            })
+        }
+
+        function ajaxListadoSiatProductosServicios(punto_venta , sucursal){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoSiatProductosServicios') }}",
+                method: "POST",
+                data  : {
+                    empresa_id : {{$empresa->id}},
+                    punto_venta: punto_venta,
+                    sucursal   : sucursal,
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#modal_lista_producto_servicios').modal('show')
+                        $('#modal_puntos_ventas').modal('hide')
+                        $('#tabla_lista_producto_servicios').html(data.listado)
+                    }
+                }
+            })
+        }
+
+        function sincronizarSiatProductoServicios(punto_venta, sucursal){
+            // $('#modal_sincronizar_productos_servicios').modal('show')
+
+            $.ajax({
+                url   : "{{ url('empresa/sincronizarSiatProductoServicios') }}",
+                method: "POST",
+                data  : {
+                    empresa_id : {{$empresa->id}},
+                    punto_venta: punto_venta,
+                    sucursal   : sucursal,
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_lista_producto_servicios').html(data.listado)
+                    }
+                }
+            })
+        }
+
+        function volverPuntoVentasProductoServicios(){
+            $('#modal_lista_producto_servicios').modal('hide')
+            $('#modal_puntos_ventas').modal('show')
         }
 
    </script>

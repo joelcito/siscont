@@ -22,6 +22,11 @@ return new class extends Migration
             
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedBigInteger('empresa_id')->nullable();
+            $table->foreign('sucursal_id')->references('id')->on('sucursales');
+            $table->unsignedBigInteger('sucursal_id')->nullable();
+            $table->foreign('punto_venta_id')->references('id')->on('punto_ventas');
+            $table->unsignedBigInteger('punto_venta_id')->nullable();
+            $table->string('codigo_ambiente')->nullable();
             $table->string('codigo_caeb')->nullable();
             $table->string('descripcion')->nullable();
             $table->string('tipo_actividad')->nullable();

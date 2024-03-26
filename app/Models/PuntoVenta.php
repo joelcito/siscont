@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PuntoVenta extends Model
 {
     use HasFactory,SoftDeletes;
+
+    
 }

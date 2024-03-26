@@ -55,6 +55,8 @@
                 </td>
                 <td>
                     <button class="btn btn-icon btn-sm btn-primary" onclick="modal_genera_cuis('{{ $pv->id }}', '{{ $pv->sucursal_id }}')"><i class="fa fa-refresh"></i></button>
+                    <button class="btn btn-icon btn-sm btn-dark" onclick="ajaxListadoActiviadesEconomicas('{{ $pv->id }}', '{{ $pv->sucursal_id }}')"><i class="fa fa-hat-wizard"></i></button>
+                    <button class="btn btn-icon btn-sm btn-info" onclick="ajaxListadoSiatProductosServicios('{{ $pv->id }}', '{{ $pv->sucursal_id }}')"><i class="fa fa-header"></i></button>
                 </td>
             </tr>
         @empty
