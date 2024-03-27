@@ -70,10 +70,14 @@ Route::middleware('auth')->group(function(){
         Route::get('/listado', [SincronizacionSiatController::class, 'listado']);
         Route::post('/ajaxListadoTipoDocumentoSector', [SincronizacionSiatController::class, 'ajaxListadoTipoDocumentoSector']);
         Route::post('/ajaxListadoTipoPuntoVenta', [SincronizacionSiatController::class, 'ajaxListadoTipoPuntoVenta']);
+        Route::post('/ajaxListadoUnidadMedida', [SincronizacionSiatController::class, 'ajaxListadoUnidadMedida']);
+        
 
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
         Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
 
+        Route::post('/sincronizarUnidadMedida', [SincronizacionSiatController::class, 'sincronizarUnidadMedida']);
+        
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });
 

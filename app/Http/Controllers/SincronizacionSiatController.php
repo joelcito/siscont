@@ -7,6 +7,7 @@ use App\Models\Empresa;
 use App\Models\PuntoVenta;
 use App\Models\SiatTipoDocumentoSector;
 use App\Models\SiatTipoPuntoVenta;
+use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,18 +17,18 @@ use function Termwind\render;
 class SincronizacionSiatController extends Controller
 {
 
-    protected $header ;
-    protected $codigoAmbiente ;
-    protected $codigoModalidad ;
-    protected $codigoPuntoVenta ;
-    protected $codigoSistema ;
-    protected $codigoSucursal ;
-    protected $nit ;
-    protected $codigoDocumentoSector ;
-    protected $url1 ;
-    protected $url2 ;
-    protected $url3 ;
-    protected $url4 ;
+    // protected $header ;
+    // protected $codigoAmbiente ;
+    // protected $codigoModalidad ;
+    // protected $codigoPuntoVenta ;
+    // protected $codigoSistema ;
+    // protected $codigoSucursal ;
+    // protected $nit ;
+    // protected $codigoDocumentoSector ;
+    // protected $url1 ;
+    // protected $url2 ;
+    // protected $url3 ;
+    // protected $url4 ;
 
     public function __construct(){
 
@@ -168,6 +169,86 @@ class SincronizacionSiatController extends Controller
                 $data['estado'] = 'error';
                 $data['msg'] = 'ERROR AL SINCRONIZAR!';
             }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function  ajaxListadoUnidadMedida(Request $request) {
+        if($request->ajax()){
+            $data['estado']     = 'success';
+            $unidadesMedidas = SiatUnidadMedida::all();
+            $data['listado']    = view('siat.ajaxListadoUnidadMedida')->with(compact('unidadesMedidas'))->render();
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function  sincronizarUnidadMedida(Request $request) {
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa_id');
+
+            $empresa    = Empresa::find($empresa_id);
+
+            $sucursal   = Sucursal::where('empresa_id', $empresa_id)
+                                    ->first();
+
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+            $sincronizarUnidadMedida   = json_decode($siat->sincronizarParametricaUnidadMedida(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+
+            if($sincronizarUnidadMedida->estado === "success"){
+                if($sincronizarUnidadMedida->resultado->RespuestaListaParametricas->transaccion){
+                    $listaCodigos = $sincronizarUnidadMedida->resultado->RespuestaListaParametricas->listaCodigos;
+
+                    foreach ($listaCodigos as $key => $value) {
+                        $unidad = SiatUnidadMedida::where('codigo_clasificador', $value->codigoClasificador)
+                                                    ->first();
+
+                        if(is_null($unidad)){
+                            $unidad                      = new SiatUnidadMedida();
+                            $unidad->usuario_creador_id  = Auth::user()->id;
+                            $unidad->codigo_clasificador = $value->codigoClasificador;
+                            $unidad->descripcion         = $value->descripcion;
+                        }else{
+                            $unidad->usuario_modificador_id  = Auth::user()->id;
+                            $unidad->descripcion         = $value->descripcion;
+                        }
+                        $unidad->save();
+                    }
+
+                    $data['estado'] = 'success';
+                    $data['msg']    = 'SINCRONIZACION EXITOSA!';
+
+                }else{
+                    $data['estado'] = 'error';
+                    $data['msg'] = 'ERROR AL SINCRONIZAR!';
+                }
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
+
+            // dd($empresa_id, $sincronizarUnidadMedida);
+
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';

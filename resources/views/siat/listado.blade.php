@@ -88,11 +88,11 @@
                                             <!--end:::Tab item-->
                                             <!--begin:::Tab item-->
                                             <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#sincro_unidad_medida">
                                                 <i class="ki-duotone ki-save-2 fs-4 me-1">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>Activity</a>
+                                                </i>Unidad Medida</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -200,8 +200,14 @@
                                             </div>
                                             <!--end:::Tab pane-->
                                             <!--begin:::Tab pane-->
-                                            <div class="tab-pane fade" id="kt_contact_view_meetings" role="tabpanel">
-                                                <h1>SEGUNDO</h1>
+                                            <div class="tab-pane fade" id="sincro_unidad_medida" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="tab_tabla_unidad_medida">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <!--end:::Tab pane-->
                                             <!--begin:::Tab pane-->
@@ -243,8 +249,25 @@
 
             ajaxListadoTipoDocumentoSector();
             ajaxListadoTipoPuntoVenta();
+            ajaxListadoUnidadMedida();
 
         });
+
+        function ajaxListadoUnidadMedida(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoUnidadMedida') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tab_tabla_unidad_medida').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
 
         function ajaxListadoTipoDocumentoSector(){
             let datos = {}
@@ -322,6 +345,31 @@
                             timerProgressBar : true
                         });
                         ajaxListadoTipoPuntoVenta();
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function sincronizarUnidadMedida(){
+            let datos = {
+                empresa_id : 1
+            }
+            $.ajax({
+                url   : "{{ url('sincronizacion/sincronizarUnidadMedida') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoUnidadMedida();
                     }else{
 
                     }

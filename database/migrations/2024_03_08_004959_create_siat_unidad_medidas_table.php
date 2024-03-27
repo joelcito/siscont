@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('usuario_eliminador_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_eliminador_id')->nullable();
             
-            $table->string('tipo_clasificador')->nullable();
+            $table->string('codigo_clasificador')->nullable();
             $table->string('descripcion')->nullable();
 
             $table->string('estado')->nullable();
