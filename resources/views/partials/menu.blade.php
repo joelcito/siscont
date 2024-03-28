@@ -475,7 +475,7 @@
                                 <span class="path3"></span>
                             </i>
                         </span>
-                        <span class="menu-title">User Profile</span>
+                        <span class="menu-title">Perfil de Empresa</span>
                         <span class="menu-arrow"></span>
                     </span>
                     <!--end:Menu link-->
@@ -488,7 +488,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Overview</span>
+                                <span class="menu-title">Empresa</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -500,7 +500,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Projects</span>
+                                <span class="menu-title">Facturacion Compra Venta</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

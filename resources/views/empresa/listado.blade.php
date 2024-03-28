@@ -36,6 +36,7 @@
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombre_empresa" id="nombre_empresa">
+                                <input type="text" name="empresa_id" id="empresa_id" value="0">
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2">Nit Empresa</label>
@@ -51,13 +52,13 @@
                                 <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
                                 <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
                                     <option></option>
-                                    <option value="2">Desarrollo</option>
                                     <option value="1">Produccion</option>
+                                    <option value="2">Desarrollo</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad" id="codigo_modalidad">
                                     <option></option>
                                     <option value="1">Electronica en Linea</option>
                                     <option value="2">Computarizada en linea</option>

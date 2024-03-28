@@ -15,29 +15,25 @@
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_servicios">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-            <th>Sucursal</th>
-            <th>P. Venta</th>
-            <th>Ambiente</th>
-            <th>Cod. Actividad</th>
-            <th>Cod. Producto</th>
+            <th>Actividad Economica Siat</th>
+            <th>Servicio Siat</th>
+            <th>Unidad Medida Siat</th>
             <th>Descripcion</th>
-            <th>Nandina Pri</th>
-            <th>Nandina Seg</th>
+            <th>Precio</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
         @forelse ( $servicios as $s)
             <tr>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td>{{ $s->empresa_id }}</td>
-                <td></td>
+                <td>{{ $s->siatDependeActividad->descripcion }}</td>
+                <td>{{ $s->siatProductoServicio->descripcion_producto }}</td>
+                <td>{{ $s->siatUnidadMedida->descripcion }}</td>
+                <td>{{ $s->descripcion }}</td>
+                <td>{{ $s->precio }}</td>
+                <td>
+
+                </td>
             </tr>
         @empty
             <h4 class="text-danger text-center">No hay datos</h4>

@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-3">
+        {{-- <button class="btn btn-dark btn-sm" onclick="sincronizarPuntosVentas()"><i class="fa fa-refresh"></i> Sincronizar Punto de Venta</button> --}}
+        <button class="btn btn-dark btn-sm" onclick="sincronizarPuntosVentas({{ $sucursal_id }})"><i class="fa fa-refresh"></i> Sincronizar Punto de Venta</button>
+    </div>
+    <div class="col-3">
+    </div>
+    <div class="col-3">
+
+    </div>
+    <div class="col-3">
         <button class="btn btn-primary btn-sm" onclick="modalNuevoPuntoVenta()"><i class="fa fa-plus"></i> Nuevo Punto Venta</button>
-    </div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-3">
-
     </div>
 </div>
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_punto_ventas">

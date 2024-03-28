@@ -6,10 +6,12 @@ use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
 use App\Models\Rol;
+use App\Models\Servicio;
 use App\Models\SiatDependeActividades;
 use App\Models\SiatProductoServicio;
 use App\Models\SiatTipoDocumentoSector;
 use App\Models\SiatTipoPuntoVenta;
+use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,12 +37,20 @@ class EmpresaController extends Controller
     public function guarda(Request $request){
         if($request->ajax()){
             // dd($request->all());
-            $empresa                                            = new Empresa();
-            $empresa->usuario_creador_id                        = Auth::user()->id;
+            $empresa_id = $request->input('empresa_id');
+
+            if($empresa_id === "0"){
+                $empresa                                            = new Empresa();
+                $empresa->usuario_creador_id                        = Auth::user()->id;
+            }else{
+                $empresa                         = Empresa::find($empresa_id);
+                $empresa->usuario_modificador_id = Auth::user()->id;
+            }
             $empresa->nombre                                    = $request->input('nombre_empresa');
             $empresa->nit                                       = $request->input('nit_empresa');
             $empresa->razon_social                              = $request->input('razon_social');
             $empresa->codigo_ambiente                           = $request->input('codigo_ambiente');
+            $empresa->codigo_modalidad                          = $request->input('codigo_modalidad');
             $empresa->codigo_sistema                            = $request->input('codigo_sistema');
             $empresa->codigo_documento_sector                   = $request->input('documento_sectores');
             $empresa->api_token                                 = $request->input('api_token');
@@ -86,15 +96,17 @@ class EmpresaController extends Controller
     public function detalle(Request $request, $empresa_id){
 
         $empresa            = Empresa::find($empresa_id);
+
         $documentosSectores = SiatTipoDocumentoSector::all();
         $siat_tipo_ventas   = SiatTipoPuntoVenta::all();
         $roles              = Rol::all();
-        $sucursales         = Sucursal::where('empresa_id', $empresa_id)
-                                    ->get();
+        $sucursales         = Sucursal::where('empresa_id', $empresa_id)->get();
 
+        $activiadesEconomica = SiatDependeActividades::where('empresa_id', $empresa_id)->get();
+        $productoServicio    = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
+        $unidadMedida        = SiatUnidadMedida::all();
 
-
-        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas', 'roles', 'sucursales'));
+        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas', 'roles', 'sucursales', 'activiadesEconomica', 'productoServicio', 'unidadMedida'));
     }
 
     public function ajaxListadoSucursal(Request $request){
@@ -158,7 +170,7 @@ class EmpresaController extends Controller
                                         ->get();
 
             $data['estado']  = 'success';
-            $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas'))->render();
+            $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas', 'sucursal_id'))->render();
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
@@ -188,7 +200,18 @@ class EmpresaController extends Controller
                 $empresa->nit
             ));
 
-            // dd($codigoCuis);
+            // dd(
+            //     // $codigoCuis,
+            //     // $empresa,
+            //     $empresa->api_token,
+            //     $empresa->url_facturacionCodigos,
+            //     $empresa->codigo_ambiente,
+            //     $empresa->codigo_modalidad,
+            //     $punto_venta->codigoPuntoVenta,
+            //     $empresa->codigo_sistema,
+            //     $sucursal->codigo_sucursal,
+            //     $empresa->nit
+            // );
 
             if($codigoCuis->estado === "success"){
                 // dd($codigoCuis);
@@ -228,12 +251,12 @@ class EmpresaController extends Controller
                         if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980){
                             $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
                             $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
-    
+
                             $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
                                                 ->where('sucursal_id', $sucursal->id)
                                                 ->where('codigo', $codigoCuisGenerado)
                                                 ->first();
-    
+
                             if(is_null($cuisSacado)){
                                 $cuis                     = new Cuis();
                                 $cuis->usuario_creador_id = Auth::user()->id;
@@ -269,7 +292,7 @@ class EmpresaController extends Controller
                 $data['msg']    = $codigoCuis;
                 $data['estado'] = 'error';
             }
-           
+
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
@@ -377,7 +400,7 @@ class EmpresaController extends Controller
             $usuarios = User::where('empresa_id', $empresa_id)
                             ->get();
 
-                            
+
             $data['listado']   = view('empresa.ajaxListadoUsuarioEmpresa')->with(compact('usuarios'))->render();
             $data['estado'] = 'success';
 
@@ -421,8 +444,8 @@ class EmpresaController extends Controller
 
             $empresa_id = $request->input('empresa');
 
-            $servicios = SiatProductoServicio::where('empresa_id', $empresa_id)
-                                            ->get();
+            $servicios = Servicio::where('empresa_id', $empresa_id)
+                                    ->get();
 
             $data['listado']   = view('empresa.ajaxListadoServicios')->with(compact('servicios'))->render();
             $data['estado'] = 'success';
@@ -492,7 +515,7 @@ class EmpresaController extends Controller
             if($sincronizarActiviades->estado === "success"){
                 if($sincronizarActiviades->resultado->RespuestaListaActividades->transaccion){
 
-                    
+
                     $listaActividades = $sincronizarActiviades->resultado->RespuestaListaActividades->listaActividades;
                     if(is_array($listaActividades)){
                         // dd($sincronizarActiviades->resultado->RespuestaListaActividades->listaActividades);
@@ -522,11 +545,11 @@ class EmpresaController extends Controller
                                 $activiadesEconomica->codigo_caeb     = $codigoCaeb;
                                 $activiadesEconomica->descripcion     = $descripcion;
                                 $activiadesEconomica->tipo_actividad  = $tipoActividad;
-        
+
                             }else{
                                 $activiadesEconomica->descripcion = $descripcion;
                             }
-        
+
                             $activiadesEconomica->save();
                         }
 
@@ -534,7 +557,7 @@ class EmpresaController extends Controller
                         $codigoCaeb       = $listaActividades->codigoCaeb;
                         $descripcion      = $listaActividades->descripcion;
                         $tipoActividad    = $listaActividades->tipoActividad;
-    
+
                         $activiadesEconomica = SiatDependeActividades::where('empresa_id',$empresa_id )
                                                                         ->where('sucursal_id',$sucursal_id )
                                                                         ->where('punto_venta_id', $punto_venta_id)
@@ -555,11 +578,11 @@ class EmpresaController extends Controller
                             $activiadesEconomica->codigo_caeb     = $codigoCaeb;
                             $activiadesEconomica->descripcion     = $descripcion;
                             $activiadesEconomica->tipo_actividad  = $tipoActividad;
-    
+
                         }else{
                             $activiadesEconomica->descripcion = $descripcion;
                         }
-    
+
                         $activiadesEconomica->save();
                     }
 
@@ -570,7 +593,7 @@ class EmpresaController extends Controller
 
                     $data['listado']   = view('empresa.ajaxListadoActiviadesEconomicas')->with(compact('actividades', 'sucursal_id', 'punto_venta_id'))->render();
                     $data['estado'] = 'success';
-                    
+
                 }else{
                     $data['text']    = $sincronizarActiviades->resultado->RespuestaListaActividades->mensajesList;
                     $data['estado'] = 'error';
@@ -682,7 +705,7 @@ class EmpresaController extends Controller
                                                             ->get();
 
             $data['listado']   = view('empresa.ajaxListadoSiatProductosServicios')->with(compact('siatProductosServicios', 'punto_venta', 'sucursal'))->render();
-            $data['estado'] = 'success';                          
+            $data['estado'] = 'success';
 
         }else{
             $data['text']   = 'No existe';
@@ -733,7 +756,7 @@ class EmpresaController extends Controller
                 if($sincronizarListaProductosServicios->resultado->RespuestaListaProductos->transaccion){
                     $listaCodigo = $sincronizarListaProductosServicios->resultado->RespuestaListaProductos->listaCodigos;
                     if(is_array($listaCodigo)){
-                        
+
                         foreach ($listaCodigo as $key => $value) {
 
                             $listadoProductoServicio = SiatProductoServicio::where('empresa_id',$empresa_id)
@@ -755,7 +778,7 @@ class EmpresaController extends Controller
                                 $listadoProductoServicio->codigo_producto      = $value->codigoProducto;
                                 $listadoProductoServicio->codigo_producto      = $value->codigoProducto;
                                 $listadoProductoServicio->descripcion_producto = $value->descripcionProducto;
-                                
+
                             }else{
                                 $listadoProductoServicio->usuario_modificador_id = Auth::user()->id;
                                 $listadoProductoServicio->codigo_actividad       = $value->codigoActividad;
@@ -786,7 +809,7 @@ class EmpresaController extends Controller
                             $listadoProductoServicio->codigo_producto      = $listaCodigo->codigoProducto;
                             $listadoProductoServicio->codigo_producto      = $listaCodigo->codigoProducto;
                             $listadoProductoServicio->descripcion_producto = $listaCodigo->descripcionProducto;
-                            
+
                         }else{
                             $listadoProductoServicio->usuario_modificador_id = Auth::user()->id;
                             $listadoProductoServicio->codigo_actividad       = $listaCodigo->codigoActividad;
@@ -796,7 +819,7 @@ class EmpresaController extends Controller
                         }
                         $listadoProductoServicio->save();
                     }
-                    
+
                     // $empresa_id  = $request->input('empresa_id');
                     // $punto_venta = $request->input('punto_venta');
                     // $sucursal    = $request->input('sucursal');
@@ -810,7 +833,7 @@ class EmpresaController extends Controller
                     $sucursal    = $sucursal_id;
 
                     $data['listado']   = view('empresa.ajaxListadoSiatProductosServicios')->with(compact('siatProductosServicios', 'punto_venta', 'sucursal'))->render();
-                    $data['estado'] = 'success';  
+                    $data['estado'] = 'success';
 
                 }else{
                     $data['text']    = $sincronizarListaProductosServicios->resultado->RespuestaListaActividades->mensajesList;
@@ -822,6 +845,113 @@ class EmpresaController extends Controller
             }
 
             // dd($sincronizarListaProductosServicios);
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function sincronizarPuntosVentas(Request $request){
+        if($request->ajax()){
+
+            $empresa_id  = $request->input('empresa_id');
+            $sucursal_id = $request->input('sucursal');
+
+            $empresa     = Empresa::find($empresa_id);
+            $sucursal    = Sucursal::find($sucursal_id);
+            $punto_venta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                        ->where('codigoPuntoVenta',0)
+                                        ->first();
+
+            $header         = $empresa->api_token;
+            $url4           = $empresa->url_facturacion_operaciones;
+            $codigoAmbiente = $empresa->codigo_ambiente;
+            $codigoSistema  = $empresa->codigo_sistema;
+            $codigoSucursal = $sucursal->codigo_sucursal;
+
+            $cuis  = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
+            $scuis = $cuis->codigo;
+            $nit   = $empresa->nit;
+
+            $siat = app(SiatController::class);
+
+            $consultaPuntoVenta = json_decode($siat->consultaPuntoVenta(
+                $header,
+                $url4,
+                $codigoAmbiente,
+                $codigoSistema,
+                $codigoSucursal,
+                $scuis,
+                $nit
+            ));
+
+            if($consultaPuntoVenta->estado === "success"){
+                if($consultaPuntoVenta->resultado->RespuestaConsultaPuntoVenta->transaccion){
+                    $listaPuntosVentas = $consultaPuntoVenta->resultado->RespuestaConsultaPuntoVenta->listaPuntosVentas;
+                    foreach ($listaPuntosVentas as $key => $value) {
+
+                        $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                ->where('codigoPuntoVenta', $value->codigoPuntoVenta)
+                                                ->where('codigo_ambiente', $empresa->codigo_ambiente)
+                                                ->first();
+
+                        if(is_null($puntoVenta)){
+                            $puntoVenta                     = new PuntoVenta();
+                            $puntoVenta->usuario_creador_id = Auth::user()->id;
+                            $puntoVenta->sucursal_id        = $sucursal->id;
+                            $puntoVenta->codigoPuntoVenta   = $value->codigoPuntoVenta;
+                            $puntoVenta->nombrePuntoVenta   = $value->nombrePuntoVenta;
+                            $puntoVenta->tipoPuntoVenta     = $value->tipoPuntoVenta;
+                            $puntoVenta->codigo_ambiente    = $empresa->codigo_ambiente;
+                            $puntoVenta->save();
+                        }
+                    }
+                    $data['estado'] = 'success';
+                    $sucursal_id  = $sucursal->id;
+                    $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                ->get();
+                    $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas', 'sucursal_id'))->render();
+                }else{
+                    $data['text']    = $consultaPuntoVenta->resultado;
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['text']    = $consultaPuntoVenta;
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function guardarNewServioEmpresa(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $servicio_id_new_servicio = $request->input('servicio_id_new_servicio');
+
+            if($servicio_id_new_servicio == "0"){
+                $servicio                     = new Servicio();
+                $servicio->usuario_creador_id = Auth::user()->id;
+            }else{
+                $servicio                         = Servicio::find($servicio_id_new_servicio);
+                $servicio->usuario_modificador_id = Auth::user()->id;
+            }
+
+            $servicio->empresa_id                  = $request->input('empresa_id_new_servicio');
+            $servicio->siat_depende_actividades_id = $request->input('actividad_economica_siat_id_new_servicio');
+            $servicio->siat_producto_servicios_id  = $request->input('producto_servicio_siat_id_new_servicio');
+            $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
+            $servicio->descripcion                 = $request->input('descrpcion_new_servicio');
+            $servicio->precio                      = $request->input('precio_new_servicio');
+
+            $servicio->save();
+            $data['estado'] = 'success';
 
         }else{
             $data['text']   = 'No existe';
