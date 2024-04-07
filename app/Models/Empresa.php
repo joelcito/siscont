@@ -10,7 +10,7 @@ class Empresa extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function cuisVigente($sucursal_id, $punto_venta_id, $codigoAmbiente) : Cuis {
+    public function cuisVigente($sucursal_id, $punto_venta_id, $codigoAmbiente){
 
         return Cuis::where('punto_venta_id', $punto_venta_id)
                     ->where('sucursal_id', $sucursal_id)
@@ -18,4 +18,7 @@ class Empresa extends Model
                     ->first();
         
     }
+
+    
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cufd;
 use Illuminate\Http\Request;
 use SoapFault;
 
@@ -528,6 +529,68 @@ class SiatController extends Controller
             $data['msg']       = $fault;
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+    public function verificarComunicacion($url1,$header){
+        $wsdl = $url1;
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+        $data    = array();
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl'     => WSDL_CACHE_NONE,
+                'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+            $resultado         = $client->verificarComunicacion();
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+        }
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+
+
+
+
+    public function cufdVigente($empresa_id, $sucursal_id, $cuis_id, $punto_venta_id, $codigoAmbiente ){
+
+        $cufdDelDia = Cufd::where('empresa_id', $empresa_id)
+                            ->where('sucursal_id', $sucursal_id)
+                            ->where('cuis_id', $cuis_id)
+                            ->where('punto_venta_id', $punto_venta_id)
+                            ->where('codigo_ambiente', $codigoAmbiente)
+                            ->latest()
+                            ->first();
+
+        if($cufdDelDia){
+            $fechaVigencia = $cufdDelDia->fecha_vigencia;
+
+            if($fechaVigencia < date('Y-m-d H:i')){
+
+            }else{
+
+            }
+
+
+        }else{
+
+        }
+        
     }
 
 }

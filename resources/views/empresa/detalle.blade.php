@@ -8,6 +8,73 @@
 @section('content')
 
 
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_cliente" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Cliente</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_cliente_empresa">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombres_cliente_new_usuaio_empresa" id="nombres_cliente_new_usuaio_empresa" required>
+                                <input type="hidden" name="empresa_id_cliente_new_usuario_empresa" id="empresa_id_cliente_new_usuario_empresa" value="{{ $empresa->id }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_cliente_new_usuaio_empresa" id="ap_paterno_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_cliente_new_usuaio_empresa" id="ap_materno_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_cliente_new_usuaio_empresa" id="num_ceular_cliente_new_usuaio_empresa" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Cedula</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="cedula_cliente_new_usuaio_empresa" id="cedula_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nit</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="nit_cliente_new_usuaio_empresa" id="nit_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Razon Social</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social_cliente_new_usuaio_empresa" id="razon_social_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Correo</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="correo_cliente_new_usuaio_empresa" id="correo_cliente_new_usuaio_empresa" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarClienteEmpresa()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
     <!--begin::Modal - Adjust Balance-->
     <div class="modal fade" id="modal_lista_producto_servicios" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-1000px">
@@ -246,36 +313,34 @@
                 <div class="modal-body scroll-y">
                     <form id="formulario_new_usuario_empresa">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombres_new_usuaio_empresa" id="nombres_new_usuaio_empresa" required>
                                 <input type="hidden" name="empresa_id_new_usuario_empresa" id="empresa_id_new_usuario_empresa" value="{{ $empresa->id }}">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_new_usuaio_empresa" id="ap_paterno_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_new_usuaio_empresa" id="ap_materno_new_usuaio_empresa" required>
                             </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Usuario / Correo</label>
-                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
-                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
                                 <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_new_usuaio_empresa" id="num_ceular_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Usuario / Correo</label>
+                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
+                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Rol</label>
                                 <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="rol_id_new_usuaio_empresa" id="rol_id_new_usuaio_empresa">
                                     <option></option>
@@ -283,6 +348,23 @@
                                         <option value="{{ $r->id }}">{{ $r->nombres }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Sucursal</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="sucursal_id_new_usuaio_empresa" id="sucursal_id_new_usuaio_empresa" onchange="ajaxBuscarPuntoVentaNewUsuarioSelect(this)">
+                                    <option></option>
+                                    @foreach ($sucursales as $suc)
+                                        <option value="{{ $suc->id }}">{{ $suc->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Punto de Venta</label>
+                                <div id="bloque_tabla_punto_ventas_new_usuario_empresa">
+
+                                </div>
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -691,11 +773,11 @@
                                         </i>Servicios</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_clientes">
                                         <i class="ki-duotone ki-save-2 fs-4 me-1">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
-                                        </i>Activity</a>
+                                        </i>Clientes</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -802,10 +884,10 @@
                                     </div>
                                     <!--end:::Tab pane-->
                                     <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade" id="kt_contact_view_activity" role="tabpanel">
+                                    <div class="tab-pane fade" id="tab_tabla_clientes" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div id="tabla_actividades">
+                                                <div id="tabla_clientes">
 
                                                 </div>
                                             </div>
@@ -839,6 +921,7 @@
             ajaxListadoSucursal();
             ajaxListadoUsuarioEmpresa();
             ajaxListadoServicios();
+            ajaxListadoClientes();
             // ajaxListadoSiatProductosServicios();
 
         });
@@ -891,6 +974,24 @@
                 success: function (data) {
                     if(data.estado === 'success'){
                         $('#tabla_servicios').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function ajaxListadoClientes(){
+            let datos = {
+                empresa: {{$empresa->id}}
+            }
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoClientes') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_clientes').html(data.listado)
                     }else{
 
                     }
@@ -1353,6 +1454,62 @@
                 })
             }else{
                 $("#formulario_new_servicio")[0].reportValidity();
+            }
+        }
+
+        function ajaxBuscarPuntoVentaNewUsuarioSelect(elemt){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxBuscarPuntoVentaNewUsuarioSelect') }}",
+                method: "POST",
+                data  : {
+                    sucursal_id: elemt.value
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#bloque_tabla_punto_ventas_new_usuario_empresa').html(data.select)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function modalNuevoCliente(){
+            $('#nombres_cliente_new_usuaio_empresa').val("")
+            $('#ap_paterno_cliente_new_usuaio_empresa').val("")
+            $('#ap_materno_cliente_new_usuaio_empresa').val("")
+            $('#num_ceular_cliente_new_usuaio_empresa').val("")
+            $('#cedula_cliente_new_usuaio_empresa').val("")
+            $('#nit_cliente_new_usuaio_empresa').val("")
+            $('#razon_social_cliente_new_usuaio_empresa').val("")
+            $('#correo_cliente_new_usuaio_empresa').val("")
+
+            $('#modal_new_cliente').modal('show')
+        }
+
+        function guardarClienteEmpresa(){
+            if($("#formulario_new_cliente_empresa")[0].checkValidity()){
+                let datos = $('#formulario_new_cliente_empresa').serializeArray();
+                $.ajax({
+                    url   : "{{ url('empresa/guardarClienteEmpresa') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            ajaxListadoClientes();
+                            $('#modal_new_cliente').modal('hide');
+                        }else{
+
+                        }
+                    }
+                })
+            }else{
+                $("#formulario_new_cliente_empresa")[0].reportValidity();
             }
         }
    </script>

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             
-            
             $table->unsignedBigInteger('usuario_creador_id')->nullable()->after('id');
             $table->foreign('usuario_creador_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_modificador_id')->nullable()->after('usuario_creador_id');
@@ -21,9 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('usuario_eliminador_id')->nullable()->after('usuario_modificador_id');
             $table->foreign('usuario_eliminador_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('empresa_id')->nullable()->after('id');
+            $table->unsignedBigInteger('empresa_id')->nullable()->after('usuario_eliminador_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
-            $table->unsignedBigInteger('punto_venta_id')->nullable()->after('empresa_id');
+            $table->unsignedBigInteger('sucursal_id')->nullable()->after('empresa_id');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales');
+            $table->unsignedBigInteger('punto_venta_id')->nullable()->after('sucursal_id');
             $table->foreign('punto_venta_id')->references('id')->on('punto_ventas');
             $table->unsignedBigInteger('rol_id')->nullable()->after('punto_venta_id');
             $table->foreign('rol_id')->references('id')->on('roles');

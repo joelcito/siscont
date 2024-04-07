@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SincronizacionSiatController;
@@ -43,8 +44,12 @@ Route::middleware('auth')->group(function(){
         Route::post('/guardaPuntoVenta', [EmpresaController::class, 'guardaPuntoVenta']);
         Route::post('/ajaxRecuperarPuntosVentasSelect', [EmpresaController::class, 'ajaxRecuperarPuntosVentasSelect']);
         Route::post('/ajaxRecupraActividadesSelect', [EmpresaController::class, 'ajaxRecupraActividadesSelect']);
+        Route::post('/ajaxBuscarPuntoVentaNewUsuarioSelect', [EmpresaController::class, 'ajaxBuscarPuntoVentaNewUsuarioSelect']);
 
-
+        
+        Route::post('/ajaxListadoClientes', [EmpresaController::class, 'ajaxListadoClientes']);
+        Route::post('/guardarClienteEmpresa', [EmpresaController::class, 'guardarClienteEmpresa']);
+        
 
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
@@ -95,6 +100,14 @@ Route::middleware('auth')->group(function(){
         // Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
 
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
+    });
+
+    Route::prefix('/factura')->group(function(){
+        Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
+        Route::post('/ajaxListadoClientes', [FacturaController::class, 'ajaxListadoClientes']);
+        
+        // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
+        // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
     });
 
 });

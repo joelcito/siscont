@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
@@ -106,6 +107,11 @@ class EmpresaController extends Controller
         $productoServicio    = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
         $unidadMedida        = SiatUnidadMedida::all();
 
+
+
+        // $punto_ventas = PuntoVenta::where('empre')->get();
+
+
         return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas', 'roles', 'sucursales', 'activiadesEconomica', 'productoServicio', 'unidadMedida'));
     }
 
@@ -142,8 +148,8 @@ class EmpresaController extends Controller
                 $punto_venta->usuario_creador_id = Auth::user()->id;
                 $punto_venta->sucursal_id        = $sucursal->id;
                 $punto_venta->codigoPuntoVenta   = 0;
-                $punto_venta->nombrePuntoVenta   = "PRIMER PUNTO VENTA";
-                $punto_venta->tipoPuntoVenta     = "VENTANILLA INICIAL";
+                $punto_venta->nombrePuntoVenta   = "PRIMER PUNTO VENTA POR DEFECTO";
+                $punto_venta->tipoPuntoVenta     = "VENTANILLA INICIAL POR DEFECTO";
                 $punto_venta->codigo_ambiente    = 2;
                 $punto_venta->save();
 
@@ -414,6 +420,8 @@ class EmpresaController extends Controller
     public function guardarUsuarioEmpresa(Request $request){
         if($request->ajax()){
 
+            // dd($request->all());
+
             $usuario = new User();
 
             $usuario->usuario_creador_id = Auth::user()->id;
@@ -424,6 +432,8 @@ class EmpresaController extends Controller
             $usuario->email              = $request->input('usuario_new_usuaio_empresa');
             $usuario->password           = Hash::make($request->input('contrasenia_new_usuaio_empresa'));
             $usuario->empresa_id         = $request->input('empresa_id_new_usuario_empresa');
+            $usuario->punto_venta_id     = $request->input('punto_venta_id_new_usuaio_empresa');
+            $usuario->sucursal_id        = $request->input('sucursal_id_new_usuaio_empresa');
             $usuario->rol_id             = $request->input('rol_id_new_usuaio_empresa');
             $usuario->numero_celular     = $request->input('num_ceular_new_usuaio_empresa');
 
@@ -646,7 +656,8 @@ class EmpresaController extends Controller
 
     function ajaxRecuperarPuntosVentasSelect(Request $request){
         if($request->ajax()){
-            $sucursal_id = $request->input('sucursal_id');
+
+            $sucursal_id  = $request->input('sucursal_id');
             $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal_id)
                                     ->get();
             $select = '<select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="new_servicio_sucursal_id" id="new_servicio_sucursal_id" data-dropdown-parent="#modal_new_servicio" onchange="ajaxRecupraActividadesSelect(this)">';
@@ -951,6 +962,70 @@ class EmpresaController extends Controller
             $servicio->precio                      = $request->input('precio_new_servicio');
 
             $servicio->save();
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function  ajaxBuscarPuntoVentaNewUsuarioSelect(Request $request) {
+        if($request->ajax()){
+            $sucursal_id   = $request->input('sucursal_id');
+            $puntos_ventas = PuntoVenta::where('sucursal_id', $sucursal_id)
+                                        ->get();
+
+            $select = '<select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="punto_venta_id_new_usuaio_empresa" id="punto_venta_id_new_usuaio_empresa" data-dropdown-parent="#modal_new_usuario">';
+            $option = '<option></option>';
+            foreach ($puntos_ventas as $key => $value) {
+                $option = $option.'<option value="'.$value->id.'">'.$value->nombrePuntoVenta.'</option>';
+            }
+            $select = $select.$option.'</select>';
+            $data['estado'] = 'success';
+            $data['select'] = $select;
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function  ajaxListadoClientes(Request $request) {
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa');
+
+            $clientes = Cliente::where('empresa_id', $empresa_id)
+                                ->get();
+
+            $data['listado'] = view('empresa.ajaxListadoClientes')->with(compact('clientes'))->render();
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function  guardarClienteEmpresa(Request $request){
+        if($request->ajax()){
+
+            $cliente                     = new Cliente();
+            $cliente->usuario_creador_id = Auth::user()->id;
+            $cliente->empresa_id         = $request->input('empresa_id_cliente_new_usuario_empresa');
+            $cliente->nombres            = $request->input('nombres_cliente_new_usuaio_empresa');
+            $cliente->ap_paterno         = $request->input('ap_paterno_cliente_new_usuaio_empresa');
+            $cliente->ap_materno         = $request->input('ap_materno_cliente_new_usuaio_empresa');
+            $cliente->cedula             = $request->input('cedula_cliente_new_usuaio_empresa');
+            $cliente->nit                = $request->input('nit_cliente_new_usuaio_empresa');
+            $cliente->razon_social       = $request->input('razon_social_cliente_new_usuaio_empresa');
+            $cliente->correo             = $request->input('correo_cliente_new_usuaio_empresa');
+            $cliente->numero_celular     = $request->input('num_ceular_cliente_new_usuaio_empresa');
+            $cliente->save();
+
             $data['estado'] = 'success';
 
         }else{
