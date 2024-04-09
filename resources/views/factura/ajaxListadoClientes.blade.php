@@ -41,7 +41,7 @@
                     {{-- <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $cli->id }}', '{{ $cli->nombre }}', {{ $cli->codigo_sucursal }})"><i class="fa fa-home"></i></button>
                     <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
                     <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button> --}}
-                    <button class="btn btn-sm btn-success btn-icon" onclick="escogerCliente('{{ $cli->id }}')"><i class="fa fa-dollar"></i></button>
+                    <button class="btn btn-sm btn-success btn-icon" onclick="escogerCliente('{{ $cli->id }}', '{{ $cli->nombres }}', '{{ $cli->ap_paterno }}', '{{ $cli->ap_materno }}', '{{ $cli->cedula }}')"><i class="fa fa-dollar"></i></button>
                 </td>
             </tr>
         @empty

@@ -41,10 +41,9 @@ class FacturaController extends Controller
         $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
 
         // SACAMOS EL CUFD VIGENTE
-        
+        $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
-
-        return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis'));
+        return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis', 'cufd'));
     }
 
     public function ajaxListadoClientes(Request $request){

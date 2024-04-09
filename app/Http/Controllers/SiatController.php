@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cufd;
+use App\Models\Cuis;
+use App\Models\Empresa;
+use App\Models\PuntoVenta;
+use App\Models\Sucursal;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use SoapFault;
 
 class SiatController extends Controller
@@ -562,12 +568,81 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function cufd(
+        $header,
+        $url1,
+        $codigoAmbiente,
+        $codigoModalidad,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scuis,
+        $nit
+    ){
+        $comunicacion =  json_decode($this->verificarComunicacion($url1,$header));
+        if($comunicacion->estado == "success"){
+            if($comunicacion->resultado->RespuestaComunicacion->transaccion){
+                $wsdl               = $url1;
+                $codigoAmbiente     = $codigoAmbiente;
+                $codigoModalidad    = $codigoModalidad;
+                $codigoPuntoVenta   = $codigoPuntoVenta;
+                $codigoSistema      = $codigoSistema;
+                $codigoSucursal     = $codigoSucursal;
+                $cuis               = $scuis;
+                $nit                = $nit;
+                $parametros         =  array(
+                    'SolicitudCufd' => array(
+                        'codigoAmbiente'    => $codigoAmbiente,
+                        'codigoModalidad'   => $codigoModalidad,
+                        'codigoPuntoVenta'  => $codigoPuntoVenta,
+                        'codigoSistema'     => $codigoSistema,
+                        'codigoSucursal'    => $codigoSucursal,
+                        'cuis'              => $cuis,
+                        'nit'               => $nit
+                    )
+                );
+                $aoptions = array(
+                    'http' => array(
+                        'header' => $header,
+                        'timeout' => $this->timeout
+                    ),
+                );
+                $context = stream_context_create($aoptions);
+                try {
+                    $client = new \SoapClient($wsdl,[
+                        'stream_context' => $context,
+                        'cache_wsdl' => WSDL_CACHE_NONE,
+                        'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+                    ]);
+
+                    $resultado = $client->cufd($parametros);
+                    $data['estado']     = 'success';
+                    $data['resultado']  = $resultado;
+                } catch (SoapFault $fault) {
+                    $resultado           = false;
+                    $data['estado']      = 'error';
+                    $data['resultado']   = $resultado;
+                    $data['error']       = $fault;
+                    $data['msgS']        = $fault->getMessage();
+                }   catch (Exception $e) {
+                    // Captura cualquier otra excepción y maneja el error
+                    $data['msgE']        = $e->getMessage();
+                }
+                return json_encode($data, JSON_UNESCAPED_UNICODE);
+
+            }else{
+                $data['estado']     = 'error';
+                $data['resultado']  = $comunicacion->resultado;
+            }
+        }else{
+            $data['estado']    = 'error';
+            $data['resultado'] = $comunicacion;
+        }
+        return $data;
+    }
 
 
-
-
-
-    public function cufdVigente($empresa_id, $sucursal_id, $cuis_id, $punto_venta_id, $codigoAmbiente ){
+    public function verificarConeccion($empresa_id, $sucursal_id, $cuis_id, $punto_venta_id, $codigoAmbiente ){
 
         $cufdDelDia = Cufd::where('empresa_id', $empresa_id)
                             ->where('sucursal_id', $sucursal_id)
@@ -577,20 +652,86 @@ class SiatController extends Controller
                             ->latest()
                             ->first();
 
+        // dd($cufdDelDia);
+
+        $cufdRescatadoUtilizar = null;
+
+        $empresa     = Empresa::find($empresa_id);
+        $sucursal    = Sucursal::find($sucursal_id);
+        $cuis        = Cuis::find($cuis_id);
+        $punto_venta = PuntoVenta::find($punto_venta_id);
+
+
+        $header           = $empresa->api_token;
+        $url1             = $empresa->url_facturacionCodigos;
+        $codigoAmbiente   = $empresa->codigo_ambiente;
+        $codigoModalidad  = $empresa->codigo_modalidad;
+        $codigoPuntoVenta = $punto_venta->codigoPuntoVenta;
+        $codigoSistema    = $empresa->codigo_sistema;
+        $codigoSucursal   = $sucursal->codigo_sucursal;
+        $scuis            = $cuis->codigo;
+        $nit              = $empresa->nit;
+
         if($cufdDelDia){
             $fechaVigencia = $cufdDelDia->fecha_vigencia;
-
+            // dd($fechaVigencia < date('Y-m-d H:i'));
             if($fechaVigencia < date('Y-m-d H:i')){
 
+                // $cufd = json_decode($this->cufd(
+                //     $header,
+                //     $url1,
+                //     $codigoAmbiente,
+                //     $codigoModalidad,
+                //     $codigoPuntoVenta,
+                //     $codigoSistema,
+                //     $codigoSucursal,
+                //     $scuis,
+                //     $nit
+                // ));
+
+                dd('$fechaVigencia < date("Y-m-d H:i")', "NO");
+
             }else{
-
+                $cufdRescatadoUtilizar = $cufdDelDia;
             }
-
-
         }else{
+            $cufd = json_decode($this->cufd(
+                $header,
+                $url1,
+                $codigoAmbiente,
+                $codigoModalidad,
+                $codigoPuntoVenta,
+                $codigoSistema,
+                $codigoSucursal,
+                $scuis,
+                $nit
+            ));
+            if($cufd->estado == "success"){
+                if($cufd->resultado->RespuestaCufd->transaccion){
 
+                    $cufdNew                     = new Cufd();
+                    $cufdNew->usuario_creador_id = Auth::user()->id;
+                    $cufdNew->empresa_id         = $empresa_id;
+                    $cufdNew->sucursal_id        = $sucursal_id;
+                    $cufdNew->cuis_id            = $cuis_id;
+                    $cufdNew->punto_venta_id     = $punto_venta_id;
+                    $cufdNew->codigo_ambiente    = $codigoAmbiente;
+                    $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
+                    $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
+                    $cufdNew->direccion     = $cufd->resultado->RespuestaCufd->direccion;
+                    $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                    $cufdNew->save();
+
+                    $cufdRescatadoUtilizar =  $cufdNew;
+
+                }else{
+
+                }
+            }else{
+                
+            }
         }
-        
+        return $cufdRescatadoUtilizar;
     }
 
 }

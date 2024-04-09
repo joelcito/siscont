@@ -119,7 +119,12 @@
                                             {{-- CUIS: {{ (session()->has('scuis'))?  session('scuis') : '<span class="text-danger">NO existe la Cuis Vigente</span>'}} --}}
                                         </div>
                                         <div class="col-md-3">
-                                            CUFD: {{ session('scodigoControl')." ".str_replace("T", " ",substr(session('sfechaVigenciaCufd'), 0 , 16)) }}
+                                            @if ($cufd)
+                                                {{-- CUFD: {{ $cufd->codigo_control." ".str_replace("T", " ",substr(session('sfechaVigenciaCufd'), 0 , 16)) }} --}}
+                                                CUFD: {{ $cufd->codigo_control." ".$cufd->fecha_vigencia }}
+                                            @else
+                                                
+                                            @endif
                                         </div>
                                     </div>
                                 @else
@@ -130,6 +135,32 @@
 
                         <div id="tabla_clientes">
 
+                        </div>
+
+                        <div id="tabla_ventas">
+                            <h4 class="text-info text-center">Cliente escogido</h4>
+                            <form id="formulario_cliente_escogido">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Nombre</label>
+                                        <input type="text" class="form-control fw-bold form-control-solid" name="nombre_escogido" id="nombre_escogido">
+                                        <input type="text" name="cliente_id_escogido" id="cliente_id_escogido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Ap Paterno</label>
+                                        <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_escogido" id="ap_paterno_escogido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Ap Materno</label>
+                                        <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_escogido" id="ap_materno_escogido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Cedula</label>
+                                        <input type="text" class="form-control fw-bold form-control-solid" name="cedula_escogido" id="cedula_escogido">
+                                    </div>
+                                </div>
+                            </form>
+                            
                         </div>
                     </div>
                     <!--end::Card body-->
@@ -175,8 +206,12 @@
             })
         }
 
-        function escogerCliente(cliente){
-            console.log(cliente)
+        function escogerCliente(cliente,nombres, ap_paterno, ap_materno, cedula){
+            $('#cliente_id_escogido').val(cliente)
+            $('#nombre_escogido').val(nombres)
+            $('#ap_paterno_escogido').val(ap_paterno)
+            $('#ap_materno_escogido').val(ap_materno)
+            $('#cedula_escogido').val(cedula)
         }
 
         // function modalRol(){
