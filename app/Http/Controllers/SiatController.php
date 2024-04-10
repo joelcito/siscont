@@ -677,20 +677,38 @@ class SiatController extends Controller
             // dd($fechaVigencia < date('Y-m-d H:i'));
             if($fechaVigencia < date('Y-m-d H:i')){
 
-                // $cufd = json_decode($this->cufd(
-                //     $header,
-                //     $url1,
-                //     $codigoAmbiente,
-                //     $codigoModalidad,
-                //     $codigoPuntoVenta,
-                //     $codigoSistema,
-                //     $codigoSucursal,
-                //     $scuis,
-                //     $nit
-                // ));
+                $cufd = json_decode($this->cufd(
+                    $header,
+                    $url1,
+                    $codigoAmbiente,
+                    $codigoModalidad,
+                    $codigoPuntoVenta,
+                    $codigoSistema,
+                    $codigoSucursal,
+                    $scuis,
+                    $nit
+                ));
 
-                dd('$fechaVigencia < date("Y-m-d H:i")', "NO");
-
+                if($cufd->estado == "success"){
+                    if($cufd->resultado->RespuestaCufd->transaccion){
+                        $cufdNew                     = new Cufd();
+                        $cufdNew->usuario_creador_id = Auth::user()->id;
+                        $cufdNew->empresa_id         = $empresa_id;
+                        $cufdNew->sucursal_id        = $sucursal_id;
+                        $cufdNew->cuis_id            = $cuis_id;
+                        $cufdNew->punto_venta_id     = $punto_venta_id;
+                        $cufdNew->codigo_ambiente    = $codigoAmbiente;
+                        $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
+                        $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
+                        $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
+                        $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                        $cufdNew->save();
+                        $cufdRescatadoUtilizar =  $cufdNew;
+                    }else{
+                    }
+                }else{
+                }
+                // dd('$fechaVigencia < date("Y-m-d H:i")', "NO", $fechaVigencia, date("Y-m-d H:i"), $fechaVigencia < date("Y-m-d H:i"));
             }else{
                 $cufdRescatadoUtilizar = $cufdDelDia;
             }
@@ -728,7 +746,7 @@ class SiatController extends Controller
 
                 }
             }else{
-                
+
             }
         }
         return $cufdRescatadoUtilizar;

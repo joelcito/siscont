@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Detalle;
 use App\Models\Empresa;
 use App\Models\Factura;
 use App\Models\PuntoVenta;
+use App\Models\Servicio;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +45,10 @@ class FacturaController extends Controller
         // SACAMOS EL CUFD VIGENTE
         $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
-        return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis', 'cufd'));
+        $servicios = Servicio::where('empresa_id', $empresa_id)
+                            ->get();
+
+        return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios'));
     }
 
     public function ajaxListadoClientes(Request $request){
@@ -54,7 +59,7 @@ class FacturaController extends Controller
 
             $clientes = Cliente::where('empresa_id', $empresa_id)
                                 ->get();
-                                
+
             $data['listado'] = view('factura.ajaxListadoClientes')->with(compact('clientes'))->render();
             $data['estado'] = 'success';
 
@@ -66,12 +71,47 @@ class FacturaController extends Controller
         return $data;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function agregarProducto(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $servicio            = json_decode($request->input('serivicio_id_venta'));
+            $precio_venta        = $request->input('precio_venta');
+            $cantidad_venta      = $request->input('cantidad_venta');
+            $total_venta         = $request->input('total_venta');
+            $cliente_id_escogido = $request->input('cliente_id_escogido');
+
+            // dd(Auth::user());
+
+            $detalle                     = new Detalle();
+            $detalle->usuario_creador_id = Auth::user()->id;
+            $detalle->empresa_id         = Auth::user()->empresa_id;
+            $detalle->sucursal_id        = Auth::user()->sucursal_id;
+            $detalle->punto_venta_id     = Auth::user()->punto_venta_id;
+            $detalle->cliente_id         = $cliente_id_escogido;
+            $detalle->servicio_id        = $servicio->id;
+            $detalle->precio             = $precio_venta;
+            $detalle->cantidad           = $cantidad_venta;
+            $detalle->total              = $total_venta;
+            $detalle->descuento          = 0;
+            $detalle->importe            = ($cantidad_venta*$precio_venta);
+            $detalle->fecha              = date('Y-m-d');
+            $detalle->estado             = "Parapagar";
+            $detalle->save();
+
+            // dd($servicio->id, $request->all());
+
+
+            // dd($request->all(), json_decode($request->input('serivicio_id_venta')), json_encode($request->input('serivicio_id_venta')));
+
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
     }
 
     /**

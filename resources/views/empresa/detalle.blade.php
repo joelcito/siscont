@@ -924,6 +924,8 @@
             ajaxListadoClientes();
             // ajaxListadoSiatProductosServicios();
 
+            $("#actividad_economica_siat_id_new_servicio, #producto_servicio_siat_id_new_servicio, #unidad_medida_siat_id_new_servicio").select2();
+
         });
 
         function ajaxListadoSucursal(){

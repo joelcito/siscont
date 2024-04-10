@@ -123,7 +123,7 @@
                                                 {{-- CUFD: {{ $cufd->codigo_control." ".str_replace("T", " ",substr(session('sfechaVigenciaCufd'), 0 , 16)) }} --}}
                                                 CUFD: {{ $cufd->codigo_control." ".$cufd->fecha_vigencia }}
                                             @else
-                                                
+
                                             @endif
                                         </div>
                                     </div>
@@ -160,7 +160,34 @@
                                     </div>
                                 </div>
                             </form>
-                            
+                            <form id="formulario_venta">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="required fw-semibold fs-6 mb-2">Servicio / Producto</label>
+                                        <select name="serivicio_id_venta" id="serivicio_id_venta" class="form-control" onchange="identificaSericio(this)" required>
+                                            <option value="">SELECCIONE</option>
+                                            @foreach ($servicios as $s)
+                                            <option value="{{ $s }}">{{ $s->descripcion }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="required fw-semibold fs-6 mb-2">Precio</label>
+                                        <input type="number" readonly class="form-control" id="precio_venta" name="precio_venta" value="0" min="1" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
+                                        <input type="number" class="form-control" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="required fw-semibold fs-6 mb-2">Total</label>
+                                        <input type="number" class="form-control" id="total_venta" name="total_venta" value="0" min="1" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success btn-sm w-100 mt-9" type="button" onclick="agregarProducto()"><i class="fa fa-plus"></i> Agregar</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <!--end::Card body-->
@@ -188,6 +215,8 @@
             // ajaxListadoTipoDocumentoSector();
             ajaxListadoClientes();
 
+            $("#serivicio_id_venta").select2();
+
         });
 
         function ajaxListadoClientes(){
@@ -213,6 +242,101 @@
             $('#ap_materno_escogido').val(ap_materno)
             $('#cedula_escogido').val(cedula)
         }
+
+        function identificaSericio(selected){
+
+            var json = JSON.parse(selected.value);
+
+            $('#precio_venta').val(json.precio)
+            $('#cantidad_venta').val(1)
+            $('#total_venta').val((1*json.precio))
+            // if(json.estado == 'servicio'){
+            //     $('.servi').show('toggle');
+            //     $('.serviPro').show('toggle');
+            //     $("#lavador_id").prop("required", true);
+            //     $('#cantidad').removeAttr('max');
+            //     $('.serviAlma').hide('toggle');
+            // }else{
+            //     $.ajax({
+            //         url: "{{ url('servicio/cantidadAlmacen') }}",
+            //         type: 'POST',
+            //         data:{servicio:json.id},
+            //         dataType: 'json',
+            //         success: function(data) {
+            //             if(data.estado === 'success'){
+            //                 $('#cantidad_almacen').val(data.cantidaAlacen)
+            //                 $('#cantidad').attr('max', data.cantidaAlacen)
+            //                 $('.servi').hide('toggle');
+            //                 $('.serviPro').show('toggle');
+            //                 $("#lavador_id").prop("required", false);
+            //                 $('.serviAlma').show('toggle');
+
+            //                 if(json.id == 213 || json.id == 214 || json.id == 215)
+            //                     $('#precio').prop('readonly', false);
+            //                 else
+            //                     $('#precio').prop('readonly', true);
+
+            //                 if(data.cantidaAlacen <= 0)
+            //                     $('#btnAgregarProductoChe').prop('disabled', true);
+            //                 else
+            //                     $('#btnAgregarProductoChe').prop('disabled', false);
+            //             }
+            //         }
+            //     });
+
+            // }
+
+        }
+
+
+        function multiplicarPrecioAlTolta(){
+            let precio   = $('#precio_venta').val();
+            let cantidad = $('#cantidad_venta').val();
+            $('#total_venta').val((precio*cantidad));
+            // console.log(precio, cantidad, (precio*cantidad))
+        }
+
+        function agregarProducto(){
+            // let datos = $('#formulario_venta').serializeArray();
+            // let datosClie = $('#formulario_cliente_escogido').serializeArray();
+
+            let datoscombi = $('#formulario_venta, #formulario_cliente_escogido').serializeArray();
+
+            // console.log(datos)
+
+            $.ajax({
+                url: "{{ url('factura/agregarProducto') }}",
+                type    : 'POST',
+                // data    : datos,
+                data    : datoscombi,
+                dataType: 'json',
+                success: function(data) {
+                    if(data.estado === 'success'){
+
+                        console.log(data)
+
+                        // $('#cantidad_almacen').val(data.cantidaAlacen)
+                        // $('#cantidad').attr('max', data.cantidaAlacen)
+                        // $('.servi').hide('toggle');
+                        // $('.serviPro').show('toggle');
+                        // $("#lavador_id").prop("required", false);
+                        // $('.serviAlma').show('toggle');
+
+                        // if(json.id == 213 || json.id == 214 || json.id == 215)
+                        //     $('#precio').prop('readonly', false);
+                        // else
+                        //     $('#precio').prop('readonly', true);
+
+                        // if(data.cantidaAlacen <= 0)
+                        //     $('#btnAgregarProductoChe').prop('disabled', true);
+                        // else
+                        //     $('#btnAgregarProductoChe').prop('disabled', false);
+                    }
+                }
+            });
+
+        }
+
 
         // function modalRol(){
         //     $('#nombre').val("")

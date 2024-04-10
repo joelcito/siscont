@@ -46,10 +46,10 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxRecupraActividadesSelect', [EmpresaController::class, 'ajaxRecupraActividadesSelect']);
         Route::post('/ajaxBuscarPuntoVentaNewUsuarioSelect', [EmpresaController::class, 'ajaxBuscarPuntoVentaNewUsuarioSelect']);
 
-        
+
         Route::post('/ajaxListadoClientes', [EmpresaController::class, 'ajaxListadoClientes']);
         Route::post('/guardarClienteEmpresa', [EmpresaController::class, 'guardarClienteEmpresa']);
-        
+
 
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
@@ -105,7 +105,8 @@ Route::middleware('auth')->group(function(){
     Route::prefix('/factura')->group(function(){
         Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
         Route::post('/ajaxListadoClientes', [FacturaController::class, 'ajaxListadoClientes']);
-        
+        Route::post('/agregarProducto', [FacturaController::class, 'agregarProducto']);
+
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
     });
