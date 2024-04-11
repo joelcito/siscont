@@ -70,6 +70,73 @@
         <button class="btn btn-sm w-100 btn-dark">FACTURAR</button>
     </div>
 </div>
+<hr>
+{{-- <div id="bloqueDatosFactura" style="display: none"> --}}
+<div id="bloqueDatosFactura">
+    <form id="formularioGeneraFactura">
+        <div class="row">
+            <div class="col-md-1">
+                <label for="">N Factura</label>
+                <input type="number" class="form-control" id="numero_factura" value="{{ $numFac }}" readonly>
+            </div>
+            <div class="col-md-3">
+                <label for="">Tipo Documento</label>
+                <select name="tipo_documento" id="tipo_documento" class="form-control" onchange="verificaNit()" required>
+                    <option value="">SELECCIONE</option>
+                    @foreach ($tipoDocumento as $te)
+                        <option value="{{ $te->codigo_sin }}">{{ $te->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="">Nit/Cedula</label>
+                <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off">
+                <small style="display: none;" class="text-danger" id="nitnoexiste">NIT INVALIDO</small>
+                <small style="display: none;" class="text-success" id="nitsiexiste">NIT VALIDO</small>
+            </div>
+            <div class="col-md-2">
+                <label for="">Razon Social</label>
+                <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off">
+            </div>
+            <div class="col-md-2">
+                <label for="">Tipo Factura</label>
+                <select name="tipo_facturacion" id="tipo_facturacion" class="form-control" onchange="bloqueCAFC()">
+                    <option value="online">En Linea</option>
+                    <option value="offline">Fuera de Linea</option>
+                </select>
+            </div>
+            <div class="col-md-2" style="display: none;" id="bloque_cafc">
+                <label for="">Uso del CAFC?</label>
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <label for="radioNo">No</label>
+                        <input type="radio" name="uso_cafc" id="radioNo" value="No" checked>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="radioSi">Si</label>
+                        <input type="radio" name="uso_cafc" id="radioSi" value="Si">
+                        <input type="hidden" id="codigo_cafc_contingencia" name="codigo_cafc_contingencia">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <h3 class="text-center text-info">PAGO</h3> --}}
+        <div class="row" style="display: none" id="bloque_exepcion">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Enviar con execpcion?</label>
+                    <input type="checkbox" name="execpcion" id="execpcion" required readonly>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" style="display: none" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i>Enviar</button>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $('#kt_table_detalles').DataTable({

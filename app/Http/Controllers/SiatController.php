@@ -736,7 +736,7 @@ class SiatController extends Controller
                     $cufdNew->codigo_ambiente    = $codigoAmbiente;
                     $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
                     $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
-                    $cufdNew->direccion     = $cufd->resultado->RespuestaCufd->direccion;
+                    $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
                     $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
                     $cufdNew->save();
 
