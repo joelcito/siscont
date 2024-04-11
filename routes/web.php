@@ -106,6 +106,10 @@ Route::middleware('auth')->group(function(){
         Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
         Route::post('/ajaxListadoClientes', [FacturaController::class, 'ajaxListadoClientes']);
         Route::post('/agregarProducto', [FacturaController::class, 'agregarProducto']);
+        Route::post('/ajaxListadoDetalles', [FacturaController::class, 'ajaxListadoDetalles']);
+        Route::post('/descuentoPorItem', [FacturaController::class, 'descuentoPorItem']);
+        Route::post('/eliminarDetalle', [FacturaController::class, 'eliminarDetalle']);
+        Route::post('/descuentoAdicionalGlobal', [FacturaController::class, 'descuentoAdicionalGlobal']);
 
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);

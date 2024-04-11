@@ -114,35 +114,95 @@ class FacturaController extends Controller
         return $data;
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Factura $factura)
-    {
-        //
+    public function ajaxListadoDetalles(Request $request){
+        if($request->ajax()){
+
+            $cliente_id     = $request->input('cliente');
+            $empresa_id     = Auth::user()->empresa_id;
+            $sucursal_id    = Auth::user()->sucursal_id;
+            $punto_venta_id = Auth::user()->punto_venta_id;
+
+            $detalles = Detalle::where('cliente_id', $cliente_id)
+                                ->where('empresa_id', $empresa_id)
+                                ->where('sucursal_id', $sucursal_id)
+                                ->where('punto_venta_id', $punto_venta_id)
+                                ->get();
+
+            $data['listado'] = view('factura.ajaxListadoDetalles')->with(compact('detalles'))->render();
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Factura $factura)
-    {
-        //
+    public function descuentoPorItem(Request $request){
+        if($request->ajax()){
+
+            $detalle_id = $request->input('detalle');
+            $descunto   = $request->input('descunto');
+
+            $detalle            = Detalle::find($detalle_id);
+            $detalle->descuento = $descunto;
+            $detalle->importe   = $detalle->total - $descunto;
+            $detalle->save();
+
+            $data['estado'] = 'success';
+            $data['cliente'] = $detalle->cliente_id;
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Factura $factura)
-    {
-        //
+    public function eliminarDetalle(Request $request){
+        if($request->ajax()){
+            $detalle = $request->input('detalle');
+            Detalle::destroy($detalle);
+            $data['estado'] = 'success';
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Factura $factura)
-    {
-        //
+    public function descuentoAdicionalGlobal(Request $request){
+        if($request->ajax()){
+
+            $cliente_id     = $request->input('cliente');
+            $empresa_id     = Auth::user()->empresa_id;
+            $sucursal_id    = Auth::user()->sucursal_id;
+            $punto_venta_id = Auth::user()->punto_venta_id;
+
+            // dd(
+            //     "cliente_id > ".$cliente_id,
+            //     "empresa_id > ".$empresa_id,
+            //     "sucursal_id > ".$sucursal_id,
+            //     "punto_venta_id > ".$punto_venta_id
+            // );
+
+            $detalles = Detalle::selectRaw('(SUM(total) - SUM(descuento)) as total_che')
+                                ->where('empresa_id', $empresa_id)
+                                ->where('cliente_id', $cliente_id)
+                                ->where('sucursal_id', $sucursal_id)
+                                ->where('punto_venta_id', $punto_venta_id)
+                                ->where('estado', 'Parapagar')
+                                ->first();
+
+            $data['estado'] = 'success';
+            $data['valor'] = $detalles->total_che;
+
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
     }
 }

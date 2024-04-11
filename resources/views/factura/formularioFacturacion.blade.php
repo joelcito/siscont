@@ -136,9 +136,9 @@
                         <div id="tabla_clientes">
 
                         </div>
-
+                        <hr>
                         <div id="tabla_ventas">
-                            <h4 class="text-info text-center">Cliente escogido</h4>
+                            <h4 class="text-info text-center">CLIENTE</h4>
                             <form id="formulario_cliente_escogido">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -188,6 +188,11 @@
                                     </div>
                                 </div>
                             </form>
+                            <hr>
+                            <h4 class="text-info text-center">DETALLES DE VENTA</h4>
+                            <div id="tabla_detalles">
+
+                            </div>
                         </div>
                     </div>
                     <!--end::Card body-->
@@ -236,11 +241,13 @@
         }
 
         function escogerCliente(cliente,nombres, ap_paterno, ap_materno, cedula){
-            $('#cliente_id_escogido').val(cliente)
-            $('#nombre_escogido').val(nombres)
-            $('#ap_paterno_escogido').val(ap_paterno)
-            $('#ap_materno_escogido').val(ap_materno)
-            $('#cedula_escogido').val(cedula)
+            $('#cliente_id_escogido').val(cliente);
+            $('#nombre_escogido').val(nombres);
+            $('#ap_paterno_escogido').val(ap_paterno);
+            $('#ap_materno_escogido').val(ap_materno);
+            $('#cedula_escogido').val(cedula);
+
+            ajaxListadoDetalles(cliente);
         }
 
         function identificaSericio(selected){
@@ -313,7 +320,8 @@
                 success: function(data) {
                     if(data.estado === 'success'){
 
-                        console.log(data)
+                        let cliente = $('#cliente_id_escogido').val();
+                        ajaxListadoDetalles(cliente);
 
                         // $('#cantidad_almacen').val(data.cantidaAlacen)
                         // $('#cantidad').attr('max', data.cantidaAlacen)
@@ -337,121 +345,133 @@
 
         }
 
+        function ajaxListadoDetalles(cliente){
+            let datos = {cliente : cliente}
+            $.ajax({
+                url   : "{{ url('factura/ajaxListadoDetalles') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
 
-        // function modalRol(){
-        //     $('#nombre').val("")
-        //     $('#descripcion').val("")
-        //     $('#modal_new_rol').modal('show')
-        // }
+                        $('#tabla_detalles').html(data.listado)
 
-        // function agregarRol(){
-        //     if($("#formulario_new_rol")[0].checkValidity()){
+                        // Swal.fire({
+                        //     icon             : 'success',
+                        //     title            : data.msg,
+                        //     showConfirmButton: false,       // No mostrar botón de confirmación
+                        //     timer            : 2000,        // 5 segundos
+                        //     timerProgressBar : true
+                        // });
+                        // ajaxListadoTipoDocumentoSector();
 
-        //         let datos = $('#formulario_new_rol').serializeArray();
+                    }else{
 
-        //         $.ajax({
-        //             url   : "{{ url('rol/agregarRol') }}",
-        //             method: "POST",
-        //             data  : datos,
-        //             success: function (data) {
+                    }
+                }
+            })
+        }
 
-        //                 console.log(data)
+        function descuentoPorItem(detalle, element, total, cliente){
 
-        //                 if(data.estado === 'success'){
-        //                     // console.log(data)
-        //                     Swal.fire({
-        //                         icon:'success',
-        //                         title: "EXITO!",
-        //                         text:  "SE REGISTRO CON EXITO",
-        //                     })
-        //                     ajaxListado();
-        //                     $('#modal_new_rol').modal('hide');
-        //                     // $('#modal_puntos_ventas').modal('show');
-        //                     // $('#tabla_puntos_ventas').html(data.listado)
-        //                     // location.reload();
-        //                 }else{
-        //                     // console.log(data, data.detalle.mensajesList)
-        //                     // Swal.fire({
-        //                     //     icon:'error',
-        //                     //     title: data.detalle.codigoDescripcion,
-        //                     //     text:  JSON.stringify(data.detalle.mensajesList),
-        //                     //     // timer:1500
-        //                     // })
-        //                 }
-        //             }
-        //         })
+            let ope = total - element.value
 
-        //     }else{
-        //         $("#formulario_new_rol")[0].reportValidity();
-        //     }
-        // }
+            if(ope > 0){
+                $.ajax({
+                    url   : "{{ url('factura/descuentoPorItem') }}",
+                    method: "POST",
+                    data  : {
+                        detalle : detalle,
+                        descunto: element.value
+                    },
+                    success: function (data) {
+                        if(data.estado === 'success'){
+    
+                            ajaxListadoDetalles(cliente)
+    
+                            // $('#tabla_detalles').html(data.listado)
+    
+                            // Swal.fire({
+                            //     icon             : 'success',
+                            //     title            : data.msg,
+                            //     showConfirmButton: false,       // No mostrar botón de confirmación
+                            //     timer            : 2000,        // 5 segundos
+                            //     timerProgressBar : true
+                            // });
+                            // ajaxListadoTipoDocumentoSector();
+    
+                        }else{
+    
+                        }
+                    }
+                })
+            }else{
+                Swal.fire({
+                    icon             : 'error',
+                    title            : 'El descuento no puede exeder al precio del Item',
+                    showConfirmButton: false,       // No mostrar botón de confirmación
+                    timer            : 2000,        // 5 segundos
+                    timerProgressBar : true
+                });
 
-        // function ajaxListadoTipoPuntoVenta(){
-        //     let datos = {}
-        //     $.ajax({
-        //         url: "{{ url('sincronizacion/ajaxListadoTipoPuntoVenta') }}",
-        //         method: "POST",
-        //         data: datos,
-        //         success: function (data) {
-        //             if(data.estado === 'success'){
-        //                 $('#tabla_tipo_punto_venta').html(data.listado)
-        //             }else{
+                ajaxListadoDetalles(cliente)
 
-        //             }
-        //         }
-        //     })
-        // }
+            }
 
+        }
 
-        // function sincronizarTipoDocumentoSector(){
-        //     let datos = {
-        //         empresa_id : 1
-        //     }
-        //     $.ajax({
-        //         url   : "{{ url('sincronizacion/sincronizarTipoDocumentoSector') }}",
-        //         method: "POST",
-        //         data  : datos,
-        //         success: function (data) {
-        //             if(data.estado === 'success'){
-        //                 Swal.fire({
-        //                     icon             : 'success',
-        //                     title            : data.msg,
-        //                     showConfirmButton: false,       // No mostrar botón de confirmación
-        //                     timer            : 2000,        // 5 segundos
-        //                     timerProgressBar : true
-        //                 });
-        //                 ajaxListadoTipoDocumentoSector();
-        //             }else{
+        function eliminarDetalle(detalle, cliente){
+            $.ajax({
+                url   : "{{ url('factura/eliminarDetalle') }}",
+                method: "POST",
+                data  : {
+                    detalle: detalle,
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
 
-        //             }
-        //         }
-        //     })
-        // }
+                        ajaxListadoDetalles(cliente)
 
-        // function sincronizarTipoPuntoVenta(){
-        //     let datos = {
-        //         empresa_id : 1
-        //     }
-        //     $.ajax({
-        //         url   : "{{ url('sincronizacion/sincronizarParametricaTipoPuntoVenta') }}",
-        //         method: "POST",
-        //         data  : datos,
-        //         success: function (data) {
-        //             if(data.estado === 'success'){
-        //                 Swal.fire({
-        //                     icon             : 'success',
-        //                     title            : data.msg,
-        //                     showConfirmButton: false,       // No mostrar botón de confirmación
-        //                     timer            : 2000,        // 5 segundos
-        //                     timerProgressBar : true
-        //                 });
-        //                 ajaxListadoTipoPuntoVenta();
-        //             }else{
+                    }else{
 
-        //             }
-        //         }
-        //     })
-        // }
+                    }
+                }
+            })
+        }
+
+        function descuentoAdicionalGlobal(){
+            $.ajax({
+                url   : "{{ url('factura/descuentoAdicionalGlobal') }}",
+                method: "POST",
+                data  : {
+                    cliente: $('#cliente_id_escogido').val(),
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        let desAdi = $('#descuento_adicional_global').val();
+                        let total  = data.valor;
+                        let dat = (total) - desAdi
+                        if(dat > 0){
+                            $('#total_a_pagar_importe').val(dat.toFixed(2))
+                        }else{
+                            Swal.fire({
+                                icon             : 'error',
+                                title            : 'El descuento no puede exeder al precio Total',
+                                showConfirmButton: false,       // No mostrar botón de confirmación
+                                timer            : 2000,        // 5 segundos
+                                timerProgressBar : true
+                            });
+
+                            $('#descuento_adicional_global').val(0);
+                        }
+
+                    }else{
+
+                    }
+                }
+            })
+        }
+      
    </script>
 @endsection
 

@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Detalle extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function servicio(){
+        return $this->belongsTo('App\Models\Servicio', 'servicio_id');
+    }
 }
