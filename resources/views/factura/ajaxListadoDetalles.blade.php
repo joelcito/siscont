@@ -75,16 +75,20 @@
 <div id="bloqueDatosFactura">
     <form id="formularioGeneraFactura">
         <div class="row">
-            <div class="col-md-1">
-                <label for="">N Factura</label>
-                <input type="number" class="form-control" id="numero_factura" value="{{ $numFac }}" readonly>
+            <div class="col-md-2">
+                <label for="">M. Pago</label>
+                <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control">
+                    @foreach($tipoMetodoPago as $key => $value)
+                    <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-md-3">
                 <label for="">Tipo Documento</label>
                 <select name="tipo_documento" id="tipo_documento" class="form-control" onchange="verificaNit()" required>
                     <option value="">SELECCIONE</option>
                     @foreach ($tipoDocumento as $te)
-                        <option value="{{ $te->codigo_sin }}">{{ $te->nombre }}</option>
+                        <option value="{{ $te->tipo_clasificador }}">{{ $te->descripcion }}</option>
                     @endforeach
                 </select>
             </div>
@@ -105,7 +109,7 @@
                     <option value="offline">Fuera de Linea</option>
                 </select>
             </div>
-            <div class="col-md-2" style="display: none;" id="bloque_cafc">
+            <div class="col-md-1" style="display: none;" id="bloque_cafc">
                 <label for="">Uso del CAFC?</label>
                 <div class="row mt-5">
                     <div class="col-md-6">
@@ -133,7 +137,8 @@
     </form>
     <div class="row mt-2">
         <div class="col-md-12">
-            <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" style="display: none" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i>Enviar</button>
+            {{-- <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" style="display: none" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i>Enviar</button> --}}
+            <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin"></i>Enviar</button>
         </div>
     </div>
 </div>
@@ -161,6 +166,8 @@
             info        : false,
             paginate    : false
         });
+
+        $("#facturacion_datos_tipo_metodo_pago").select2();
 
     });
 </script>

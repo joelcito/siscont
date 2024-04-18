@@ -471,6 +471,207 @@
                 }
             })
         }
+
+        function emitirFactura(){
+
+            let vehiculo = $('#vehiculo_id').val()
+            $.ajax({
+                url: "{{ url('factura/verificaItemsGeneracion') }}",
+                data: {
+                    vehiculo: $('#vehiculo_id').val(),
+                },
+                type: 'POST',
+                dataType:'json',
+                success: function(data) {
+                    if(data.estado === "success"){
+                        if(data.cantidad == 0){
+                            Swal.fire({
+                                icon:   'error',
+                                title:  'Error!',
+                                text:   "DEBE AL MENOS AGREGAR UN SERVICIO/PRODUCTO",
+                                timer: 5000
+                            })
+                        }else{
+                            if($("#formularioGeneraFactura")[0].checkValidity() && $("#formulario_tipo_pagos")[0].checkValidity()){
+                                // Obtén el botón y el icono de carga
+                                var boton = $("#boton_enviar_factura");
+                                var iconoCarga = boton.find("i");
+                                // Deshabilita el botón y muestra el icono de carga
+                                boton.attr("disabled", true);
+                                iconoCarga.show();
+
+                                //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
+                                detalle = [];
+                                arrayProductos.forEach(function (prod){
+                                    detalle.push({
+                                        actividadEconomica  :   prod.codigoActividad,
+                                        codigoProductoSin   :   prod.codigoProducto,
+                                        codigoProducto      :   prod.servicio_id,
+                                        descripcion         :   prod.descripcion,
+                                        cantidad            :   prod.cantidad,
+                                        unidadMedida        :   prod.unidadMedida,
+                                        precioUnitario      :   prod.precio,
+                                        montoDescuento      :   prod.descuento,
+                                        subTotal            :   ((prod.cantidad*prod.precio)-prod.descuento),
+                                        numeroSerie         :   null,
+                                        numeroImei          :   null
+                                    })
+                                })
+
+                                let numero_factura                  = $('#numero_factura').val();
+                                let cuf                             = "123456789";//cambiar
+                                let cufd                            = "{{ session('scufd') }}";  //solo despues de que aga
+                                let direccion                       = "{{ session('sdireccion') }}";//solo despues de que aga
+                                var tzoffset                        = ((new Date()).getTimezoneOffset()*60000);
+                                let fechaEmision                    = ((new Date(Date.now()-tzoffset)).toISOString()).slice(0,-1);
+                                let nombreRazonSocial               = $('#razon_factura').val();
+                                let codigoTipoDocumentoIdentidad    = $('#tipo_documento').val()
+                                let numeroDocumento                 = $('#nit_factura').val();
+
+                                let complemento;
+                                var complementoValue = $("#complemento").val();
+                                if (complementoValue === null || complementoValue.trim() === ""){
+                                    complemento                     = null;
+                                }else{
+                                    if($('#tipo_documento').val()==5){
+                                        complemento                     = null;
+                                    }else{
+                                        complemento                     = $('#complemento').val();
+                                    }
+                                }
+
+                                let montoTotal                      = $('#motoTotalFac').val();
+                                let descuentoAdicional              = $('#descuento_adicional').val();
+                                let leyenda                         = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
+                                let usuario                         = "{{ Auth::user()->name }}";
+                                let nombreEstudiante                = $('#nombreCompletoEstudiante').val();
+                                let periodoFacturado                = detalle[(detalle.length)-1].descripcion+" / "+$('#anio_vigente_cuota_pago').val();
+
+                                let codigoExcepcion;
+                                if ($('#execpcion').is(':checked'))
+                                    codigoExcepcion                 = 1;
+                                else
+                                    codigoExcepcion                 = 0;
+
+
+                                var factura = [];
+                                factura.push({
+                                    cabecera: {
+                                        nitEmisor                       :"5427648016",
+                                        razonSocialEmisor               :'MICAELA QUIROZ ESCOBAR',
+                                        municipio                       :"Santa Cruz",
+                                        telefono                        :"73130500",
+                                        numeroFactura                   :numero_factura,
+                                        cuf                             :cuf,
+                                        cufd                            :cufd,
+                                        codigoSucursal                  :0,
+                                        direccion                       :direccion ,
+                                        codigoPuntoVenta                :0,
+                                        fechaEmision                    :fechaEmision,
+                                        nombreRazonSocial               :nombreRazonSocial,
+                                        codigoTipoDocumentoIdentidad    :codigoTipoDocumentoIdentidad,
+                                        numeroDocumento                 :numeroDocumento,
+                                        // complemento                     :null,
+                                        complemento                     :complemento,
+                                        codigoCliente                   :numeroDocumento,
+                                        codigoMetodoPago                :1,
+                                        numeroTarjeta                   :null,
+                                        montoTotal                      :montoTotal,
+                                        montoTotalSujetoIva             :montoTotal,
+
+                                        codigoMoneda                    :1,
+                                        tipoCambio                      :1,
+                                        montoTotalMoneda                :montoTotal,
+
+                                        montoGiftCard                   :null,
+                                        descuentoAdicional              :descuentoAdicional,//ver llenado
+                                        codigoExcepcion                 :codigoExcepcion,
+                                        cafc                            :null,
+                                        leyenda                         :leyenda,
+                                        usuario                         :usuario,
+                                        codigoDocumentoSector           :1
+                                    }
+                                })
+
+                                detalle.forEach(function (prod1){
+                                    factura.push({
+                                        detalle:prod1
+                                    })
+                                })
+                                var datos = {factura};
+                                var datosVehiculo = {
+                                    'vehiculo_id' : $('#vehiculo_id').val(),
+                                    'pagos'       : arrayPagos,
+                                    'realizo_pago': $("#realizo_pago").prop("checked"),
+                                    'caja'        : $('#caja_id').val()
+                                };
+                                var datosRecepcion = {
+                                    'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
+                                    'codigo_cafc_contingencia': $('#codigo_cafc_contingencia').val()
+                                };
+                                $.ajax({
+                                    url : "{{ url('factura/emitirFactura') }}",
+                                    data: {
+                                        datos         : datos,
+                                        datosVehiculo : datosVehiculo,
+                                        datosRecepcion: datosRecepcion,
+                                        modalidad     : $('#tipo_facturacion').val(),
+                                        tipo_pago     : $('#tipo_pago').val(),
+                                        monto_pagado  : $('#miInput').val(),
+                                        cambio        : $('#cambio').val()
+                                    },
+                                    type: 'POST',
+                                    dataType:'json',
+                                    success: function(data) {
+
+                                        if(data.estado === "VALIDADA"){
+                                            Swal.fire({
+                                                icon : 'success',
+                                                title: 'Excelente!',
+                                                text : 'LA FACTURA FUE VALIDADA',
+                                                timer: 3000
+                                            })
+                                            window.location.href = "{{ url('pago/listado')}}"
+                                        }else if(data.estado === "error_email"){
+                                            Swal.fire({
+                                                icon : 'error',
+                                                title: 'Error!',
+                                                text : data.msg,
+                                            })
+                                            // Habilita el botón y oculta el icono de carga después de completar
+                                            boton.attr("disabled", false);
+                                            iconoCarga.hide();
+                                        }else if(data.estado === "OFFLINE"){
+                                            Swal.fire({
+                                                icon : 'warning',
+                                                title: 'Exito!',
+                                                text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
+                                            })
+                                            window.location.href = "{{ url('pago/listado')}}"
+                                            // location.reload();
+                                        }else{
+                                            Swal.fire({
+                                                icon : 'error',
+                                                title: data.msg,
+                                                text : 'LA FACTURA FUE RECHAZADA',
+                                            })
+                                            // Habilita el botón y oculta el icono de carga después de completar
+                                            boton.attr("disabled", false);
+                                            iconoCarga.hide();
+                                        }
+                                    }
+                                });
+
+                            }else{
+                                $("#formularioGeneraFactura")[0].reportValidity();
+                                $("#formulario_tipo_pagos")[0].reportValidity()
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
       
    </script>
 @endsection

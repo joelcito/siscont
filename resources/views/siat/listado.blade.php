@@ -95,18 +95,18 @@
                                                 </i>Unidad Medida</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#sincro_tipo_documento">
                                                 <i class="ki-duotone ki-save-2 fs-4 me-1">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>Activity</a>
+                                                </i>Tipo de Documento Identidad</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
                                                 <i class="ki-duotone ki-save-2 fs-4 me-1">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>Activity</a>
+                                                </i>Tipo Metodo de Pago</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -211,8 +211,25 @@
                                             </div>
                                             <!--end:::Tab pane-->
                                             <!--begin:::Tab pane-->
+                                            <div class="tab-pane fade" id="sincro_tipo_documento" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="tab_tabla_tipo_documento">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end:::Tab pane-->
+                                            <!--begin:::Tab pane-->
                                             <div class="tab-pane fade" id="kt_contact_view_activity" role="tabpanel">
-                                                <h1>TERCERO</h1>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="tab_tabla_metodo_pago">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <!--end:::Tab pane-->
                                         </div>
@@ -250,8 +267,42 @@
             ajaxListadoTipoDocumentoSector();
             ajaxListadoTipoPuntoVenta();
             ajaxListadoUnidadMedida();
+            ajaxListadoTipoDocumentoIdentidad();
+            ajaxListadoMetodoPago();
 
         });
+
+        function ajaxListadoMetodoPago(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoMetodoPago') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tab_tabla_metodo_pago').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function ajaxListadoTipoDocumentoIdentidad(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoTipoDocumentoIdentidad') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tab_tabla_tipo_documento').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
 
         function ajaxListadoUnidadMedida(){
             let datos = {}
@@ -376,6 +427,81 @@
                 }
             })
         }
+
+        function sincronizarTipoDocumentoIdentidad(){
+            let datos = {
+                empresa_id : 1
+            }
+            $.ajax({
+                url   : "{{ url('sincronizacion/sincronizarTipoDocumentoIdentidad') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoTipoDocumentoIdentidad();
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function sincronizarMetodoPago(){
+            let datos = {
+                empresa_id : 1
+            }
+            $.ajax({
+                url   : "{{ url('sincronizacion/sincronizarMetodoPago') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoMetodoPago();
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        // function sincronizarUnidadMedida(){
+        //     let datos = {
+        //         empresa_id : 1
+        //     }
+        //     $.ajax({
+        //         url   : "{{ url('sincronizacion/sincronizarUnidadMedida') }}",
+        //         method: "POST",
+        //         data  : datos,
+        //         success: function (data) {
+        //             if(data.estado === 'success'){
+        //                 Swal.fire({
+        //                     icon             : 'success',
+        //                     title            : data.msg,
+        //                     showConfirmButton: false,       // No mostrar botón de confirmación
+        //                     timer            : 2000,        // 5 segundos
+        //                     timerProgressBar : true
+        //                 });
+        //                 ajaxListadoUnidadMedida();
+        //             }else{
+
+        //             }
+        //         }
+        //     })
+        // }
    </script>
 @endsection
 

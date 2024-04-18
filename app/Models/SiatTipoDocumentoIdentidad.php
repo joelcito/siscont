@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SiatTipoDocumentoIdentidad extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = "siat_tipo_documento_identidades";
 }

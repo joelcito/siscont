@@ -8,6 +8,8 @@ use App\Models\Empresa;
 use App\Models\Factura;
 use App\Models\PuntoVenta;
 use App\Models\Servicio;
+use App\Models\SiatTipoDocumentoIdentidad;
+use App\Models\SiatTipoMetodoPagos;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -128,7 +130,14 @@ class FacturaController extends Controller
                                 ->where('punto_venta_id', $punto_venta_id)
                                 ->get();
 
-            $data['listado'] = view('factura.ajaxListadoDetalles')->with(compact('detalles'))->render();
+
+            // TIP DE DOCUMENTO
+            $tipoDocumento = SiatTipoDocumentoIdentidad::all();
+            
+            // TIP METO DE PAGO
+            $tipoMetodoPago = SiatTipoMetodoPagos::all();
+
+            $data['listado'] = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago'))->render();
             $data['estado'] = 'success';
 
         }else{

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
+use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoDocumentoSector;
+use App\Models\SiatTipoMetodoPagos;
 use App\Models\SiatTipoPuntoVenta;
 use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
@@ -248,6 +250,168 @@ class SincronizacionSiatController extends Controller
             }
 
             // dd($empresa_id, $sincronizarUnidadMedida);
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    function ajaxListadoTipoDocumentoIdentidad(Request $request){
+        if($request->ajax()){
+            $data['estado']     = 'success';
+            $tipoDocumentoIdentidades = SiatTipoDocumentoIdentidad::all();
+            $data['listado']    = view('siat.ajaxListadoTipoDocumentoIdentidad')->with(compact('tipoDocumentoIdentidades'))->render();
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    function sincronizarTipoDocumentoIdentidad(Request $request){
+        if($request->ajax()){
+            
+            $empresa_id = $request->input('empresa_id');
+
+            $empresa    = Empresa::find($empresa_id);
+
+            $sucursal   = Sucursal::where('empresa_id', $empresa_id)
+                                    ->first();
+
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+            $sincronizacionTipoDocumentoIdentidad   = json_decode($siat->sincronizarParametricaTipoDocumentoIdentidad(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+
+            // dd($sincronizacionTipoDocumentoIdentidad);
+
+            if($sincronizacionTipoDocumentoIdentidad->estado === "success"){
+                if($sincronizacionTipoDocumentoIdentidad->resultado->RespuestaListaParametricas->transaccion){
+                    $listaCodigos = $sincronizacionTipoDocumentoIdentidad->resultado->RespuestaListaParametricas->listaCodigos;
+
+                    foreach ($listaCodigos as $key => $value) {
+                        $tipoDocumentoIdentidad = SiatTipoDocumentoIdentidad::where('tipo_clasificador', $value->codigoClasificador)
+                                                    ->first();
+
+                        if(is_null($tipoDocumentoIdentidad)){
+                            $tipoDocumentoIdentidad                      = new SiatTipoDocumentoIdentidad();
+                            $tipoDocumentoIdentidad->usuario_creador_id  = Auth::user()->id;
+                            $tipoDocumentoIdentidad->tipo_clasificador = $value->codigoClasificador;
+                            $tipoDocumentoIdentidad->descripcion         = $value->descripcion;
+                        }else{
+                            $tipoDocumentoIdentidad->usuario_modificador_id  = Auth::user()->id;
+                            $tipoDocumentoIdentidad->descripcion         = $value->descripcion;
+                        }
+                        $tipoDocumentoIdentidad->save();
+                    }
+
+                    $data['estado'] = 'success';
+                    $data['msg']    = 'SINCRONIZACION EXITOSA!';
+
+                }else{
+                    $data['estado'] = 'error';
+                    $data['msg'] = 'ERROR AL SINCRONIZAR!';
+                }
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    function ajaxListadoMetodoPago(Request $request){
+        if($request->ajax()){
+
+            $data['estado']     = 'success';
+            $tipoMetodosPagos = SiatTipoMetodoPagos::all();
+            $data['listado']    = view('siat.ajaxListadoMetodoPago')->with(compact('tipoMetodosPagos'))->render();
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    function  sincronizarMetodoPago(Request $request) {
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa_id');
+
+            $empresa    = Empresa::find($empresa_id);
+
+            $sucursal   = Sucursal::where('empresa_id', $empresa_id)
+                                    ->first();
+
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+            $sincronizacionTipoMetodoPagos   = json_decode($siat->sincronizarParametricaTipoMetodoPago(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+
+            // dd($sincronizacionTipoMetodoPagos);
+
+            if($sincronizacionTipoMetodoPagos->estado === "success"){
+                if($sincronizacionTipoMetodoPagos->resultado->RespuestaListaParametricas->transaccion){
+                    $listaCodigos = $sincronizacionTipoMetodoPagos->resultado->RespuestaListaParametricas->listaCodigos;
+
+                    foreach ($listaCodigos as $key => $value) {
+                        $tipoMetodopago = SiatTipoMetodoPagos::where('tipo_clasificador', $value->codigoClasificador)
+                                                    ->first();
+
+                        if(is_null($tipoMetodopago)){
+                            $tipoMetodopago                      = new SiatTipoMetodoPagos();
+                            $tipoMetodopago->usuario_creador_id  = Auth::user()->id;
+                            $tipoMetodopago->tipo_clasificador  = $value->codigoClasificador;
+                            $tipoMetodopago->descripcion         = $value->descripcion;
+                        }else{
+                            $tipoMetodopago->usuario_modificador_id  = Auth::user()->id;
+                            $tipoMetodopago->descripcion         = $value->descripcion;
+                        }
+                        $tipoMetodopago->save();
+                    }
+
+                    $data['estado'] = 'success';
+                    $data['msg']    = 'SINCRONIZACION EXITOSA!';
+
+                }else{
+                    $data['estado'] = 'error';
+                    $data['msg'] = 'ERROR AL SINCRONIZAR!';
+                }
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
 
         }else{
             $data['text']   = 'No existe';
