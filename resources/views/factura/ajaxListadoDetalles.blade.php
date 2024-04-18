@@ -75,7 +75,7 @@
 <div id="bloqueDatosFactura">
     <form id="formularioGeneraFactura">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <label for="">M. Pago</label>
                 <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control">
                     @foreach($tipoMetodoPago as $key => $value)
@@ -83,15 +83,15 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <label for="">Tipo Moneda</label>
-                <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control">
+                <select name="facturacion_datos_tipo_moneda" id="facturacion_datos_tipo_moneda" class="form-control">
                     @foreach($tipoMonedas as $key => $value)
                     <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label for="">Tipo Documento</label>
                 <select name="tipo_documento" id="tipo_documento" class="form-control" onchange="verificaNit()" required>
                     <option value="">SELECCIONE</option>
@@ -100,17 +100,20 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-2">
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
                 <label for="">Nit/Cedula</label>
                 <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off">
                 <small style="display: none;" class="text-danger" id="nitnoexiste">NIT INVALIDO</small>
                 <small style="display: none;" class="text-success" id="nitsiexiste">NIT VALIDO</small>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="">Razon Social</label>
                 <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="">Tipo Factura</label>
                 <select name="tipo_facturacion" id="tipo_facturacion" class="form-control" onchange="bloqueCAFC()">
                     <option value="online">En Linea</option>
@@ -175,7 +178,7 @@
             paginate    : false
         });
 
-        $("#facturacion_datos_tipo_metodo_pago").select2();
+        $("#facturacion_datos_tipo_metodo_pago, #facturacion_datos_tipo_moneda").select2();
 
     });
 </script>

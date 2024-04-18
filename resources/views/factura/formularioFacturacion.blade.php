@@ -220,7 +220,7 @@
             // ajaxListadoTipoDocumentoSector();
             ajaxListadoClientes();
 
-            $("#serivicio_id_venta").select2();
+            $("#serivicio_id_venta, #facturacion_datos_tipo_moneda").select2();
 
         });
 
