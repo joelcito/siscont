@@ -109,11 +109,11 @@
                                                 </i>Tipo Metodo de Pago</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#sincro_tipo_moneda">
                                                 <i class="ki-duotone ki-save-2 fs-4 me-1">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>Activity</a>
+                                                </i>Tipo Moneda</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -232,6 +232,17 @@
                                                 </div>
                                             </div>
                                             <!--end:::Tab pane-->
+                                            <!--begin:::Tab pane-->
+                                            <div class="tab-pane fade" id="sincro_tipo_moneda" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="tab_tabla_tipo_moneda">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end:::Tab pane-->
                                         </div>
                                         <!--end::Tab content-->
                                     </div>
@@ -269,8 +280,25 @@
             ajaxListadoUnidadMedida();
             ajaxListadoTipoDocumentoIdentidad();
             ajaxListadoMetodoPago();
+            ajaxListadoTipoMoneda();
 
         });
+
+        function ajaxListadoTipoMoneda(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoTipoMoneda') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tab_tabla_tipo_moneda').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
 
         function ajaxListadoMetodoPago(){
             let datos = {}
@@ -478,30 +506,30 @@
             })
         }
 
-        // function sincronizarUnidadMedida(){
-        //     let datos = {
-        //         empresa_id : 1
-        //     }
-        //     $.ajax({
-        //         url   : "{{ url('sincronizacion/sincronizarUnidadMedida') }}",
-        //         method: "POST",
-        //         data  : datos,
-        //         success: function (data) {
-        //             if(data.estado === 'success'){
-        //                 Swal.fire({
-        //                     icon             : 'success',
-        //                     title            : data.msg,
-        //                     showConfirmButton: false,       // No mostrar botón de confirmación
-        //                     timer            : 2000,        // 5 segundos
-        //                     timerProgressBar : true
-        //                 });
-        //                 ajaxListadoUnidadMedida();
-        //             }else{
+        function sincronizarTipoMoneda(){
+            let datos = {
+                empresa_id : 1
+            }
+            $.ajax({
+                url   : "{{ url('sincronizacion/sincronizarTipoMoneda') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoTipoMoneda();
+                    }else{
 
-        //             }
-        //         }
-        //     })
-        // }
+                    }
+                }
+            })
+        }
    </script>
 @endsection
 

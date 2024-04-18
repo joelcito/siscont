@@ -83,6 +83,14 @@
                     @endforeach
                 </select>
             </div>
+            <div class="col-md-2">
+                <label for="">Tipo Moneda</label>
+                <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control">
+                    @foreach($tipoMonedas as $key => $value)
+                    <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-3">
                 <label for="">Tipo Documento</label>
                 <select name="tipo_documento" id="tipo_documento" class="form-control" onchange="verificaNit()" required>

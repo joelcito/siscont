@@ -8,6 +8,7 @@ use App\Models\PuntoVenta;
 use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoDocumentoSector;
 use App\Models\SiatTipoMetodoPagos;
+use App\Models\SiatTipoMoneda;
 use App\Models\SiatTipoPuntoVenta;
 use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
@@ -399,6 +400,88 @@ class SincronizacionSiatController extends Controller
                             $tipoMetodopago->descripcion         = $value->descripcion;
                         }
                         $tipoMetodopago->save();
+                    }
+
+                    $data['estado'] = 'success';
+                    $data['msg']    = 'SINCRONIZACION EXITOSA!';
+
+                }else{
+                    $data['estado'] = 'error';
+                    $data['msg'] = 'ERROR AL SINCRONIZAR!';
+                }
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    function ajaxListadoTipoMoneda(Request $request){
+        if($request->ajax()){
+
+            $data['estado']     = 'success';
+            $tipoMonedas   = SiatTipoMoneda::all();
+            $data['listado']    = view('siat.ajaxListadoTipoMoneda')->with(compact('tipoMonedas'))->render();
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    function sincronizarTipoMoneda(Request $request){
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa_id');
+
+            $empresa    = Empresa::find($empresa_id);
+
+            $sucursal   = Sucursal::where('empresa_id', $empresa_id)
+                                    ->first();
+
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+            $sincronizacionTipoMoneda   = json_decode($siat->sincronizarParametricaTipoMoneda(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+
+            // dd($sincronizacionTipoMoneda);
+
+            if($sincronizacionTipoMoneda->estado === "success"){
+                if($sincronizacionTipoMoneda->resultado->RespuestaListaParametricas->transaccion){
+                    $listaCodigos = $sincronizacionTipoMoneda->resultado->RespuestaListaParametricas->listaCodigos;
+
+                    foreach ($listaCodigos as $key => $value) {
+                        $tipoMoneda = SiatTipoMoneda::where('tipo_clasificador', $value->codigoClasificador)
+                                                    ->first();
+
+                        if(is_null($tipoMoneda)){
+                            $tipoMoneda                      = new SiatTipoMoneda();
+                            $tipoMoneda->usuario_creador_id  = Auth::user()->id;
+                            $tipoMoneda->tipo_clasificador  = $value->codigoClasificador;
+                            $tipoMoneda->descripcion         = $value->descripcion;
+                        }else{
+                            $tipoMoneda->usuario_modificador_id  = Auth::user()->id;
+                            $tipoMoneda->descripcion         = $value->descripcion;
+                        }
+                        $tipoMoneda->save();
                     }
 
                     $data['estado'] = 'success';

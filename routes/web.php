@@ -82,14 +82,14 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxListadoUnidadMedida', [SincronizacionSiatController::class, 'ajaxListadoUnidadMedida']);
         Route::post('/ajaxListadoTipoDocumentoIdentidad', [SincronizacionSiatController::class, 'ajaxListadoTipoDocumentoIdentidad']);
         Route::post('/ajaxListadoMetodoPago', [SincronizacionSiatController::class, 'ajaxListadoMetodoPago']);
-
+        Route::post('/ajaxListadoTipoMoneda', [SincronizacionSiatController::class, 'ajaxListadoTipoMoneda']);
 
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
         Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
         Route::post('/sincronizarTipoDocumentoIdentidad', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoIdentidad']);
         Route::post('/sincronizarUnidadMedida', [SincronizacionSiatController::class, 'sincronizarUnidadMedida']);
         Route::post('/sincronizarMetodoPago', [SincronizacionSiatController::class, 'sincronizarMetodoPago']);
-        
+        Route::post('/sincronizarTipoMoneda', [SincronizacionSiatController::class, 'sincronizarTipoMoneda']);
 
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });

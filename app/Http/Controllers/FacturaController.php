@@ -10,6 +10,7 @@ use App\Models\PuntoVenta;
 use App\Models\Servicio;
 use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoMetodoPagos;
+use App\Models\SiatTipoMoneda;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -137,7 +138,10 @@ class FacturaController extends Controller
             // TIP METO DE PAGO
             $tipoMetodoPago = SiatTipoMetodoPagos::all();
 
-            $data['listado'] = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago'))->render();
+            // TIPO MONEDA
+            $tipoMonedas = SiatTipoMoneda::all();
+
+            $data['listado'] = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'))->render();
             $data['estado'] = 'success';
 
         }else{
