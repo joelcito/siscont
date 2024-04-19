@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('logo')->nullable();
             $table->string('nit')->nullable();
+            $table->string('municipio')->nullable();
+            $table->string('celular')->nullable();
             $table->string('razon_social')->nullable();
             $table->string('codigo_ambiente')->nullable();
             $table->string('codigo_modalidad')->nullable();

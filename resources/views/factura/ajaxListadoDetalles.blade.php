@@ -67,7 +67,7 @@
 </table>
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-sm w-100 btn-dark">FACTURAR</button>
+        <button class="btn btn-sm w-100 btn-dark" onclick="muestraDatosFactura()">FACTURAR</button>
     </div>
 </div>
 <hr>
@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-md-4">
                 <label for="">M. Pago</label>
-                <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control">
+                <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control" required>
                     @foreach($tipoMetodoPago as $key => $value)
                     <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
                     @endforeach
@@ -85,7 +85,7 @@
             </div>
             <div class="col-md-4">
                 <label for="">Tipo Moneda</label>
-                <select name="facturacion_datos_tipo_moneda" id="facturacion_datos_tipo_moneda" class="form-control">
+                <select name="facturacion_datos_tipo_moneda" id="facturacion_datos_tipo_moneda" class="form-control" required>
                     @foreach($tipoMonedas as $key => $value)
                     <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
                     @endforeach
@@ -105,13 +105,13 @@
         <div class="row">
             <div class="col-md-3">
                 <label for="">Nit/Cedula</label>
-                <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off">
+                <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off" required>
                 <small style="display: none;" class="text-danger" id="nitnoexiste">NIT INVALIDO</small>
                 <small style="display: none;" class="text-success" id="nitsiexiste">NIT VALIDO</small>
             </div>
             <div class="col-md-3">
                 <label for="">Razon Social</label>
-                <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off">
+                <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off" required>
             </div>
             <div class="col-md-3">
                 <label for="">Tipo Factura</label>

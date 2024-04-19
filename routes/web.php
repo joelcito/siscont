@@ -114,7 +114,10 @@ Route::middleware('auth')->group(function(){
         Route::post('/descuentoPorItem', [FacturaController::class, 'descuentoPorItem']);
         Route::post('/eliminarDetalle', [FacturaController::class, 'eliminarDetalle']);
         Route::post('/descuentoAdicionalGlobal', [FacturaController::class, 'descuentoAdicionalGlobal']);
-
+        Route::post('/verificaItemsGeneracion', [FacturaController::class, 'verificaItemsGeneracion']);
+        Route::post('/arrayCuotasPagar', [FacturaController::class, 'arrayCuotasPagar']);
+        Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
+        
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
     });

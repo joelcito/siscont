@@ -591,16 +591,7 @@ class SiatController extends Controller
     }
 
 
-    public function sincronizarParametricaTipoMoneda(
-        $header,
-        $url2,
-        $codigoAmbiente,
-        $codigoPuntoVenta,
-        $codigoSistema,
-        $codigoSucursal,
-        $scuis,
-        $nit
-    ){
+    public function sincronizarParametricaTipoMoneda($header,$url2,$codigoAmbiente,$codigoPuntoVenta,$codigoSistema,$codigoSucursal,$scuis,$nit){
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
         // $this->verificarConeccion();
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
