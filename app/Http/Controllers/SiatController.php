@@ -799,6 +799,109 @@ class SiatController extends Controller
     }
 
 
+
+    public function recepcionFactura(
+        $header,
+        $url3,
+        $codigoAmbiente,
+        $codigoDocumentoSector,
+        $codigoModalidad,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scufd,
+        $scuis,
+        $nit,
+
+
+        $arch, $fecEnv, $hasArch
+        ){
+
+            // dd(
+            //     $header,
+            //     $url3,
+            //     $codigoAmbiente,
+            //     $codigoDocumentoSector,
+            //     $codigoModalidad,
+            //     $codigoPuntoVenta,
+            //     $codigoSistema,
+            //     $codigoSucursal,
+            //     $scufd,
+            //     $scuis,
+            //     $nit,
+
+
+            //     $arch, $fecEnv, $hasArch
+            // );
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        $wsdl                   = $url3;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoDocumentoSector  = $codigoDocumentoSector;     //NUEVO SECTOR EDUCATIIVO
+        $codigoEmision          = 1;                                //NUEVO LINENA
+        $codigoModalidad        = $codigoModalidad;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cufd                   = $scufd; //NUEVO
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+        $tipoFacturaDocumento   = 1;                        //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
+        $archivo                = $arch;
+        $fechaEnvio             = $fecEnv;
+        $hashArchivo            = $hasArch;
+
+        $parametros         =  array(
+            'SolicitudServicioRecepcionFactura' => array(
+                'codigoAmbiente'            => $codigoAmbiente,
+                'codigoDocumentoSector'     => $codigoDocumentoSector,
+                'codigoEmision'             => $codigoEmision,
+                'codigoModalidad'           => $codigoModalidad,
+                'codigoPuntoVenta'          => $codigoPuntoVenta,
+                'codigoSistema'             => $codigoSistema,
+                'codigoSucursal'            => $codigoSucursal,
+                'cufd'                      => $cufd,
+                'cuis'                      => $cuis,
+                'nit'                       => $nit,
+                'tipoFacturaDocumento'      => $tipoFacturaDocumento,
+                'archivo'                   => $archivo,
+                'fechaEnvio'                => $fechaEnvio,
+                'hashArchivo'               => $hashArchivo
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->recepcionFactura($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg'] = $fault->getMessage();
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+
     public function verificarConeccion($empresa_id, $sucursal_id, $cuis_id, $punto_venta_id, $codigoAmbiente ){
 
         $cufdDelDia = Cufd::where('empresa_id', $empresa_id)
