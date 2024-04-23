@@ -355,7 +355,7 @@ class FacturaController extends Controller
             $nitEmisorEmpresa     = $empresa_objeto->nit;
             $sucursalEmpresa      = $sucursal_objeto->codigo_sucursal;
             $numeroFacturaEmpresa = $this->numeroFactura($empresa_objeto->id, $sucursal_objeto->id, $punto_venta_objeto->id);
-            $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : $numeroFacturaEmpresa);
+            $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : ($numeroFacturaEmpresa+1));
 
             // dd(
             //     $nitEmisorEmpresa,
@@ -469,6 +469,14 @@ class FacturaController extends Controller
             $cufPro                                                 = $this->generarBase16($cadenaConM11).$scodigoControl;
 
             // dd($scufd);
+            $datos['factura'][0]['cabecera']['nitEmisor']         = $empresa_objeto->nit;
+            $datos['factura'][0]['cabecera']['razonSocialEmisor'] = $empresa_objeto->razon_social;
+            $datos['factura'][0]['cabecera']['municipio']         = $empresa_objeto->municipio;
+            $datos['factura'][0]['cabecera']['telefono']          = $empresa_objeto->celular;
+            $datos['factura'][0]['cabecera']['numeroFactura']     = $numeroFacturaEmpresa;
+            $datos['factura'][0]['cabecera']['codigoSucursal']    = $sucursal_objeto->codigo_sucursal;
+            
+
 
             $datos['factura'][0]['cabecera']['cuf']                 = $cufPro;
             $datos['factura'][0]['cabecera']['cufd']                = $scufd;
@@ -518,7 +526,7 @@ class FacturaController extends Controller
 
             if($tipo_factura === "online"){
 
-                $header                = $empresa_objeto->api_tpken;
+                $header                = $empresa_objeto->api_token;
                 $url3                  = $empresa_objeto->url_servicio_facturacion_compra_venta;
                 $codigoAmbiente        = $empresa_objeto->codigo_ambiente;
                 $codigoDocumentoSector = $empresa_objeto->codigo_documento_sector;
@@ -529,6 +537,20 @@ class FacturaController extends Controller
                 $scufd                 = $cufdVigente->codigo;
                 $scuis                 = $cuis_objeto->codigo;
                 $nit                   = $empresa_objeto->nit;
+
+                // dd(
+                //     $header,
+                //     $url3,
+                //     $codigoAmbiente,
+                //     $codigoDocumentoSector,
+                //     $codigoModalidad,
+                //     $codigoPuntoVenta,
+                //     $codigoSistema,
+                //     $codigoSucursal,
+                //     $scufd,
+                //     $scuis,
+                //     $nit
+                // );
 
                 $siat = app(SiatController::class);
                 $for  = json_decode($siat->recepcionFactura(
@@ -550,10 +572,11 @@ class FacturaController extends Controller
                 // NUEVO CODIGO PARA EVITAR ERROES DE GENERACION DE FACTURAS Y EVITAR QUE SE CREE MAS FACTURAS ASI NOMAS
                 if($for->estado === "success"){
 
-                    dd($for);
+                    // dd($for);
 
-                    $codigo_descripcion = $for->resultado->RespuestaServicioFacturacion->codigoDescripcion;
+                    // $codigo_descripcion = $for->resultado->RespuestaServicioFacturacion->codigoDescripcion;
                     if($for->resultado->RespuestaServicioFacturacion->transaccion){
+                        $codigo_descripcion = $for->resultado->RespuestaServicioFacturacion->codigoDescripcion;
 
                         // ESTO ES PARA LA FACTURA LA CREACION
                         $facturaVerdad                          = new Factura();
@@ -574,7 +597,7 @@ class FacturaController extends Controller
                         $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxml.xml');
                         $facturaVerdad->codigo_descripcion      = $codigo_descripcion;
                         $facturaVerdad->codigo_recepcion        = $for->resultado->RespuestaServicioFacturacion->codigoRecepcion;
-                        $facturaVerdad->codigo_trancaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
+                        $facturaVerdad->codigo_transaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
                         $facturaVerdad->descripcion             = NULL;
                         $facturaVerdad->save();
 
@@ -657,7 +680,7 @@ class FacturaController extends Controller
                         $data['msg'] = json_encode($for->resultado->RespuestaServicioFacturacion->mensajesList);
                     }
 
-                    dd($for);
+                    // dd($for, $data);
 
                 }else{
                     $data['estado'] = "RECHAZADA";
@@ -777,6 +800,35 @@ class FacturaController extends Controller
         return $numeroFactura;
     }
 
+    public function listado(Request $request){
+        return view('factura.listado');
+    }
+
+    public function ajaxListadoFacturas(Request $request){
+        if($request->ajax()){
+
+            // dd(Auth::user());
+
+            $usuario_id     = Auth::user()->id;
+            $empresa_id     = Auth::user()->empresa_id;
+            $sucursal_id    = Auth::user()->sucursal_id;
+            $punto_venta_id = Auth::user()->punto_venta_id;
+
+            $facturas = Factura::where('empresa_id', $empresa_id)
+                                ->where('sucursal_id', $sucursal_id)
+                                ->where('punto_venta_id', $punto_venta_id)
+                                ->get();
+
+            $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas'))->render();
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
 
     // ===================  FUNCIOENES PROTEGIDAS  ========================
     protected function calculaDigitoMod11($cadena, $numDig, $limMult, $x10){
@@ -827,7 +879,7 @@ class FacturaController extends Controller
 
     protected function generarBase16($caracteres) {
         $pString = ltrim($caracteres, '0');
-        $vValor = gmp_init($pString);
+        $vValor  = gmp_init($pString);
         return strtoupper(gmp_strval($vValor, 16));
     }
 

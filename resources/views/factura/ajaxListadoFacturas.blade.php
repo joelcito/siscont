@@ -1,0 +1,86 @@
+{{-- <div class="row">
+    <div class="col-3">
+        <button class="btn btn-primary btn-sm" onclick="modalNuevoCliente()"><i class="fa fa-plus"></i> Nuevo Cliente</button>
+    </div>
+    <div class="col-3">
+
+    </div>
+    <div class="col-3">
+
+    </div>
+    <div class="col-3">
+
+    </div>
+</div> --}}
+<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_facturas">
+    <thead>
+        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Numero</th>
+            <th>Estado</th>
+            <th>Estado SIAT</th>
+            <th>Emision</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody class="text-gray-600 fw-semibold">
+        @forelse ( $facturas as $fac)
+            <tr>
+                <td>{{ $fac->cliente->nombres." ".$fac->cliente->ap_paterno." ".$fac->cliente->ap_materno }}</td>
+                <td>{{ $fac->fecha }}</td>
+                <td>{{ $fac->monto_total_subjeto_iva }}</td>
+                <td>{{ $fac->numero_factura }}</td>
+                <td>
+                    @if (is_null($fac->estado))
+                        <span class="badge badge-success">VIGENTE</span>
+                    @elseif($fac->estado == "Anulado")
+                        <span class="badge badge-danger">ANULADO</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($fac->codigo_descripcion == "VALIDADA")
+                        <span class="badge badge-success">{{ $fac->codigo_descripcion }}</span>
+                    @else
+                        algo aqui :>
+                    @endif
+                </td>
+                <td>{{ $fac->id }}</td>
+                <td>
+                    {{-- <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $fac->id }}', '{{ $fac->nombre }}', {{ $fac->codigo_sucursal }})"><i class="fa fa-home"></i></button>
+                    <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button> --}}
+                    {{-- <button class="btn btn-sm btn-success btn-icon" onclick="escogerCliente('{{ $fac->id }}', '{{ $fac->nombres }}', '{{ $fac->ap_paterno }}', '{{ $fac->ap_materno }}', '{{ $fac->cedula }}')"><i class="fa fa-dollar"></i></button> --}}
+                </td>
+            </tr>
+        @empty
+            <h4 class="text-danger">No hay datos</h4>
+        @endforelse
+    </tbody>
+</table>
+<script>
+    $(document).ready(function() {
+            $('#kt_table_facturas').DataTable({
+                lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
+                dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
+                language: {
+                paginate: {
+                    first : 'Primero',
+                    last : 'Último',
+                    next : 'Siguiente',
+                    previous: 'Anterior'
+                },
+                search : 'Buscar:',
+                lengthMenu: 'Mostrar _MENU_ registros por página',
+                info : 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+                emptyTable: 'No hay datos disponibles'
+                },
+                order:[],
+                //  searching: true,
+                responsive: true
+            });
+
+
+        });
+</script>

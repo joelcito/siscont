@@ -580,16 +580,16 @@
                                 //     }
                                 // }
 
-                                let montoTotal                      = $('#motoTotalFac').val();
-                                let descuentoAdicional              = $('#descuento_adicional').val();
+                                let montoTotal                      = $('#total_a_pagar_importe').val();
+                                let descuentoAdicional              = $('#descuento_adicional_global').val();
                                 let leyenda                         = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
                                 let usuario                         = "{{ Auth::user()->name }}";
 
                                 let codigoExcepcion;
-                                // if ($('#execpcion').is(':checked'))
-                                //     codigoExcepcion                 = 1;
-                                // else
-                                //     codigoExcepcion                 = 0;
+                                if ($('#execpcion').is(':checked'))
+                                    codigoExcepcion                 = 1;
+                                else
+                                    codigoExcepcion                 = 0;
 
 
                                 var factura = [];
@@ -614,8 +614,8 @@
                                         nombreRazonSocial               :nombreRazonSocial,
                                         codigoTipoDocumentoIdentidad    :codigoTipoDocumentoIdentidad,
                                         numeroDocumento                 :numeroDocumento,
-                                        // complemento                     :null,
-                                        complemento                     :complemento,
+                                        complemento                     :null,
+                                        // complemento                     :complemento,
                                         codigoCliente                   :numeroDocumento,
                                         codigoMetodoPago                :$('#facturacion_datos_tipo_metodo_pago').val(),
                                         numeroTarjeta                   :null,

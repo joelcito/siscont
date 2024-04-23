@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Factura extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function cliente(){
+        return $this->belongsTo('App\Models\Cliente', 'cliente_id');
+    }
 }
