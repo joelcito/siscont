@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SiatMotivoAnulacion extends Model
 {
+    protected $table = "siat_motivo_anulaciones";
     use HasFactory, SoftDeletes;
 }

@@ -675,7 +675,7 @@
                                                 text : 'LA FACTURA FUE VALIDADA',
                                                 timer: 3000
                                             })
-                                            window.location.href = "{{ url('pago/listado')}}"
+                                            window.location.href = "{{ url('factura/listado')}}"
                                         }else if(data.estado === "error_email"){
                                             Swal.fire({
                                                 icon : 'error',

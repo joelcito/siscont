@@ -46,8 +46,19 @@
                         algo aqui :>
                     @endif
                 </td>
-                <td>{{ $fac->id }}</td>
                 <td>
+                    @if ($fac->tipo_factura == "online")
+                        <span class="badge badge-success">ONLINE</span>
+                    @elseif($fac->tipo_factura == "offonline")
+                        <span class="badge badge-warning">OFF ONLINE</span>
+                    @endif
+                </td>
+                <td>
+                    @if (is_null($fac->estado))
+                        <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
+                    @else
+                        
+                    @endif
                     {{-- <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $fac->id }}', '{{ $fac->nombre }}', {{ $fac->codigo_sucursal }})"><i class="fa fa-home"></i></button>
                     <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
                     <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button> --}}

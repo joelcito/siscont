@@ -9,6 +9,7 @@ use App\Models\Empresa;
 use App\Models\Factura;
 use App\Models\PuntoVenta;
 use App\Models\Servicio;
+use App\Models\SiatMotivoAnulacion;
 use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoMetodoPagos;
 use App\Models\SiatTipoMoneda;
@@ -131,8 +132,8 @@ class FacturaController extends Controller
                                 ->where('empresa_id', $empresa_id)
                                 ->where('sucursal_id', $sucursal_id)
                                 ->where('punto_venta_id', $punto_venta_id)
+                                ->where('estado','Parapagar')
                                 ->get();
-
 
             // TIP DE DOCUMENTO
             $tipoDocumento = SiatTipoDocumentoIdentidad::all();
@@ -239,6 +240,15 @@ class FacturaController extends Controller
                                 ->where('estado', 'Parapagar')
                                 // ->get();
                                 ->count();
+                                // ->toSql();
+
+            // dd(
+            //     "detalles => ".$detalles, 
+            //     "cliente_id => ".$cliente_id,
+            //     "empresa_id => ".$empresa_id,
+            //     "sucursal_id => ".$sucursal_id,
+            //     "punto_venta_id => ".$punto_venta_id
+            // );
 
             // $vehiculo_id = $request->input('vehiculo');
 
@@ -589,7 +599,7 @@ class FacturaController extends Controller
                         $facturaVerdad->fecha                   = $datos['factura'][0]['cabecera']['fechaEmision'];
                         $facturaVerdad->nit                     = $empresa_objeto->nit;
                         $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
-                        $facturaVerdad->numero_factura          = $numeroFactura;
+                        $facturaVerdad->numero_factura          = $numeroFacturaEmpresa;
                         $facturaVerdad->facturado               = "Si";
                         $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
@@ -599,6 +609,9 @@ class FacturaController extends Controller
                         $facturaVerdad->codigo_recepcion        = $for->resultado->RespuestaServicioFacturacion->codigoRecepcion;
                         $facturaVerdad->codigo_transaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
                         $facturaVerdad->descripcion             = NULL;
+                        $facturaVerdad->uso_cafc                = "No";
+                        $facturaVerdad->tipo_factura            = "online";
+
                         $facturaVerdad->save();
 
 
@@ -801,7 +814,10 @@ class FacturaController extends Controller
     }
 
     public function listado(Request $request){
-        return view('factura.listado');
+
+        $siat_motivo_anulaciones = SiatMotivoAnulacion::all();
+
+        return view('factura.listado')->with(compact('siat_motivo_anulaciones'));
     }
 
     public function ajaxListadoFacturas(Request $request){
@@ -828,6 +844,107 @@ class FacturaController extends Controller
         }
         return $data;
     }
+
+    public function anularFactura(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+            $factura_id       = $request->input('factura_id');
+            $motivo_anulacion = $request->input('codigoMotivoAnulacion');
+
+            $factura     = Factura::find($factura_id);
+            $empresa_id  = $factura->empresa_id;
+            $empresa     = Empresa::find($empresa_id);
+            $sucursal    = Sucursal::find($factura->sucursal_id);
+            $punto_venta = PuntoVenta::find($factura->punto_venta_id);
+            $cuis        = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
+
+
+            $siat       = app(SiatController::class);
+
+            $cufdVigente = json_decode(
+                $siat->verificarConeccion(
+                    $empresa->id,
+                    $sucursal->id,
+                    $cuis->id,
+                    $punto_venta->id,
+                    $empresa->codigo_ambiente
+                ));
+
+
+            // dd($cufdVigente);
+
+            $header                = $empresa->api_token;
+            $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+            $codigoAmbiente        = $empresa->codigo_ambiente;
+            $codigoDocumentoSector = $empresa->codigo_documento_sector;
+            $codigoModalidad       = $empresa->codigo_modalidad;
+            $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
+            $codigoSistema         = $empresa->codigo_sistema;
+            $codigoSucursal        = $sucursal->codigo_sucursal;
+            $scufd                 = $cufdVigente->codigo;
+            $scuis                 = $cuis->codigo;
+            $nit                   = $empresa->nit;
+            
+            $respuesta = json_decode($siat->anulacionFactura(
+                $header,
+                $url3,
+                $codigoAmbiente,
+                $codigoDocumentoSector,
+                $codigoModalidad,
+                $codigoPuntoVenta,
+                $codigoSistema,
+                $codigoSucursal,
+                $scufd,
+                $scuis,
+                $nit,
+
+                $motivo_anulacion, $factura->cuf
+            ));
+
+            // dd($respuesta);
+
+            if($respuesta->estado == "success"){
+                if($respuesta->resultado->RespuestaServicioFacturacion->transaccion){
+                    $factura->estado = 'Anulado';
+    
+                    // PARA ELIMINAR LOS PAGOS
+                    // Pago::where('factura_id', $fatura->id)->delete();
+    
+                    // PARA ELIMINAR LOS DETALLES
+                    Detalle::where('factura_id', $factura->id)->delete();
+    
+                    // $cliente = Cliente::find($factura->cliente_id);
+    
+                    // $correo = $cliente->correo;
+                    // $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
+                    // $numero = $factura->numero;
+                    // $fecha  = $factura->fecha;
+    
+                    //protected function enviaCorreoAnulacion($correo, $nombre, $numero, $fecha){
+    
+                    // $this->enviaCorreoAnulacion($correo, $nombre, $numero, $fecha );
+    
+                    $data['estado'] = "success";
+                }else{
+                    $factura->descripcion = $respuesta->resultado->RespuestaServicioFacturacion->mensajesList->descripcion;
+                    $data['estado']       = "error";
+                    $data['descripcion']  = $respuesta->resultado->RespuestaServicioFacturacion;
+                    // dd($respuesta->resultado->RespuestaServicioFacturacion);
+                }
+                $factura->save();
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    
 
 
     // ===================  FUNCIOENES PROTEGIDAS  ========================

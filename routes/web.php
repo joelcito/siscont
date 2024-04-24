@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxListadoTipoDocumentoIdentidad', [SincronizacionSiatController::class, 'ajaxListadoTipoDocumentoIdentidad']);
         Route::post('/ajaxListadoMetodoPago', [SincronizacionSiatController::class, 'ajaxListadoMetodoPago']);
         Route::post('/ajaxListadoTipoMoneda', [SincronizacionSiatController::class, 'ajaxListadoTipoMoneda']);
+        Route::post('/ajaxListadoMotivoAnulacion', [SincronizacionSiatController::class, 'ajaxListadoMotivoAnulacion']);
 
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
         Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
@@ -90,6 +91,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/sincronizarUnidadMedida', [SincronizacionSiatController::class, 'sincronizarUnidadMedida']);
         Route::post('/sincronizarMetodoPago', [SincronizacionSiatController::class, 'sincronizarMetodoPago']);
         Route::post('/sincronizarTipoMoneda', [SincronizacionSiatController::class, 'sincronizarTipoMoneda']);
+        Route::post('/sincronizarMotivoAnulacion', [SincronizacionSiatController::class, 'sincronizarMotivoAnulacion']);
 
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });
@@ -120,6 +122,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/verificaItemsGeneracion', [FacturaController::class, 'verificaItemsGeneracion']);
         Route::post('/arrayCuotasPagar', [FacturaController::class, 'arrayCuotasPagar']);
         Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
+        Route::post('/anularFactura', [FacturaController::class, 'anularFactura']);
         
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);

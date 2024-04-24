@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
+use App\Models\SiatMotivoAnulacion;
 use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoDocumentoSector;
 use App\Models\SiatTipoMetodoPagos;
@@ -496,6 +497,83 @@ class SincronizacionSiatController extends Controller
                 $data['estado'] = 'error';
             }
 
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function ajaxListadoMotivoAnulacion(Request $request){
+        if($request->ajax()){
+
+            $data['estado']  = 'success';
+            $motivoAnulaciones     = SiatMotivoAnulacion::all();
+            $data['listado'] = view('siat.ajaxListadoMotivoAnulacion')->with(compact('motivoAnulaciones'))->render();
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function sincronizarMotivoAnulacion(Request $request){
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa_id');
+
+            $empresa    = Empresa::find($empresa_id);
+
+            $sucursal   = Sucursal::where('empresa_id', $empresa_id)
+                                    ->first();
+
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+            $sincronizacionMotivoAnulacion   = json_decode($siat->sincronizarParametricaMotivoAnulacion(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+
+            // dd($sincronizacionMotivoAnulacion);
+
+            if($sincronizacionMotivoAnulacion->estado === "success"){
+                if($sincronizacionMotivoAnulacion->resultado->RespuestaListaParametricas->transaccion){
+                    $listaCodigos = $sincronizacionMotivoAnulacion->resultado->RespuestaListaParametricas->listaCodigos;
+                    foreach ($listaCodigos as $key => $value) {
+                        $motivoAnulacion = SiatMotivoAnulacion::where('tipo_clasificador', $value->codigoClasificador)
+                                                    ->first();
+                        if(is_null($motivoAnulacion)){
+                            $motivoAnulacion                     = new SiatMotivoAnulacion();
+                            $motivoAnulacion->usuario_creador_id = Auth::user()->id;
+                            $motivoAnulacion->tipo_clasificador  = $value->codigoClasificador;
+                            $motivoAnulacion->descripcion        = $value->descripcion;
+                        }else{
+                            $motivoAnulacion->usuario_modificador_id = Auth::user()->id;
+                            $motivoAnulacion->descripcion            = $value->descripcion;
+                        }
+                        $motivoAnulacion->save();
+                    }
+                    $data['estado'] = 'success';
+                    $data['msg']    = 'SINCRONIZACION EXITOSA!';
+                }else{
+                    $data['estado'] = 'error';
+                    $data['msg'] = 'ERROR AL SINCRONIZAR!';
+                }
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';

@@ -7,134 +7,43 @@
 @endsection
 @section('content')
 
-    <!--begin::Modal - Adjust Balance-->
-    {{-- <div class="modal fade" id="modal_new_empresa" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-850px">
-            <!--begin::Modal content-->
+    <!--begin::Modal - Add task-->
+    <div class="modal fade" id="modalAnular" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <!--begin::Modal header-->
-                <div class="modal-header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bold">Formulario Empresa</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                    <!--end::Close-->
+                <div class="modal-header" id="kt_modal_add_user_header">
+                    <h2 class="fw-bold">FORMULARIO DE ANULACION</h2>
                 </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                    <!--begin::Form-->
-                    <form id="formulario_empresa" class="form" action="#">
+                <div class="modal-body scroll-y">
+                    <form id="formularioAnulaciion">
                         <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_empresa" id="nombre_empresa">
-                                <input type="text" name="empresa_id" id="empresa_id" value="0">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2">Nit Empresa</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nit_empresa" id="nit_empresa">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2">Razon Social</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social" id="razon_social">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
-                                    <option></option>
-                                    <option value="1">Produccion</option>
-                                    <option value="2">Desarrollo</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad" id="codigo_modalidad">
-                                    <option></option>
-                                    <option value="1">Electronica en Linea</option>
-                                    <option value="2">Computarizada en linea</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Codigo de Sistema</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="codigo_sistema" id="codigo_sistema">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="documento_sectores" id="documento_sectores">
-                                    <option></option>
-                                    @foreach ($documentosSectores as $ds)
-                                        <option value="2">{{ $ds->descripcion }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
                             <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Api Token</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="api_token" id="api_token">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Codigos</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos" id="url_fac_codigos">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Sincronizacion</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion" id="url_fac_sincronizacion">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Servicio </label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios" id="url_fac_servicios">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Operaciones</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones" id="url_fac_operaciones">
-                            </div>
-                        </div>
-
-                        <div class="row mt-5">
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Codigos</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos_pro" id="url_fac_codigos_pro">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Sincronizacion</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion_pro" id="url_fac_sincronizacion_pro">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Servicio </label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios_pro" id="url_fac_servicios_pro">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Operaciones</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones_pro" id="url_fac_operaciones_pro">
+                                <div class="fv-row mb-7">
+                                    <label class="required fw-semibold fs-6 mb-2">Motivo de anulacion</label>
+                                    <select name="codigoMotivoAnulacion" id="codigoMotivoAnulacion" class="form-control" required>
+                                        <option value="">Seleccione</option>
+                                        @foreach ($siat_motivo_anulaciones as $ma)
+                                            <option value="{{ $ma->tipo_clasificador }}">{{ $ma->descripcion }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" id="factura_id" name="factura_id">
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <!--end::Form-->
-                    <div class="row mt-5">
+                    <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-primary" onclick="guardarEmpresa()">Guardar </button>
+                            <button class="btn btn-success w-100" onclick="anularFactura()" id="boton_anular_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i> Anular Factura</button>
                         </div>
                     </div>
                 </div>
+                <!--end::Modal body-->
             </div>
             <!--end::Modal content-->
         </div>
         <!--end::Modal dialog-->
-    </div> --}}
-    <!--end::Modal - New Card-->
+    </div>
+    <!--end::Modal - Add task-->
 
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
@@ -390,6 +299,44 @@
                         }
                     }
                 })
+        }
+
+        function modalAnularFactura(factura){
+            $('#factura_id').val(factura)
+            $('#modalAnular').modal('show')
+        }
+
+        function anularFactura(){
+            if($("#formularioAnulaciion")[0].checkValidity()){
+                let datos = $('#formularioAnulaciion').serializeArray()
+                $.ajax({
+                    url: "{{ url('factura/anularFactura') }}",
+                    method: "POST",
+                    data: datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon : 'success',
+                                title: "EXITO!",
+                                text : "SE ANULO CON EXITO",
+                            })
+                            ajaxListado();
+                            $('#modalAnular').modal('hide')
+                        }else{
+                            // console.log(data, data.detalle.mensajesList)
+                            Swal.fire({
+                                icon:'error',
+                                title: data.descripcion.codigoDescripcion,
+                                text:  JSON.stringify(data.descripcion.mensajesList),
+                                // timer:1500
+                            })
+                        }
+                    }
+                })
+
+            }else{
+                $("#formularioAnulaciion")[0].reportValidity();
+            }
         }
    </script>
 @endsection

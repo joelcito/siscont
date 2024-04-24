@@ -79,7 +79,7 @@
                 <label for="">M. Pago</label>
                 <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control" required>
                     @foreach($tipoMetodoPago as $key => $value)
-                    <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
+                    <option value="{{ $value->tipo_clasificador }}" {{ ($value->tipo_clasificador == "1")? 'selected' :'' }}>{{ $value->descripcion }}</option>
                     @endforeach
                 </select>
             </div>
@@ -87,7 +87,7 @@
                 <label for="">Tipo Moneda</label>
                 <select name="facturacion_datos_tipo_moneda" id="facturacion_datos_tipo_moneda" class="form-control" required>
                     @foreach($tipoMonedas as $key => $value)
-                    <option value="{{ $value->tipo_clasificador }}">{{ $value->descripcion }}</option>
+                    <option value="{{ $value->tipo_clasificador }}" {{ ($value->tipo_clasificador == "1")? 'selected' :'' }}>{{ $value->descripcion }}</option>
                     @endforeach
                 </select>
             </div>

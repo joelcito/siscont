@@ -116,11 +116,11 @@
                                                 </i>Tipo Moneda</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#sincro_motivo_anulacion">
                                                 <i class="ki-duotone ki-save-2 fs-4 me-1">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>Activity</a>
+                                                </i>Motivo de Anulacion</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -243,6 +243,17 @@
                                                 </div>
                                             </div>
                                             <!--end:::Tab pane-->
+                                            <!--begin:::Tab pane-->
+                                            <div class="tab-pane fade" id="sincro_motivo_anulacion" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="tab_tabla_motivo_anulacion">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end:::Tab pane-->
                                         </div>
                                         <!--end::Tab content-->
                                     </div>
@@ -281,8 +292,25 @@
             ajaxListadoTipoDocumentoIdentidad();
             ajaxListadoMetodoPago();
             ajaxListadoTipoMoneda();
-
+            ajaxListadoMotivoAnulacion();
+            
         });
+
+        function ajaxListadoMotivoAnulacion(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoMotivoAnulacion') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tab_tabla_motivo_anulacion').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
 
         function ajaxListadoTipoMoneda(){
             let datos = {}
@@ -524,6 +552,31 @@
                             timerProgressBar : true
                         });
                         ajaxListadoTipoMoneda();
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function sincronizarMotivoAnulacion(){
+            let datos = {
+                empresa_id : 1
+            }
+            $.ajax({
+                url   : "{{ url('sincronizacion/sincronizarMotivoAnulacion') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoMotivoAnulacion();
                     }else{
 
                     }
