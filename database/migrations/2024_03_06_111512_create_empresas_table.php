@@ -35,10 +35,12 @@ return new class extends Migration
             $table->string('url_facturacionSincronizacion')->nullable();
             $table->string('url_servicio_facturacion_compra_venta')->nullable();
             $table->string('url_facturacion_operaciones')->nullable();
-            $table->string('url_facturacionCodigos_pro')->nullable();
-            $table->string('url_facturacionSincronizacion_pro')->nullable();
-            $table->string('url_servicio_facturacion_compra_venta_pro')->nullable();
-            $table->string('url_facturacion_operaciones_pro')->nullable();
+            $table->string('url_verifica')->nullable();
+            $table->string('cafc')->nullable();
+            // $table->string('url_facturacionCodigos_pro')->nullable();
+            // $table->string('url_facturacionSincronizacion_pro')->nullable();
+            // $table->string('url_servicio_facturacion_compra_venta_pro')->nullable();
+            // $table->string('url_facturacion_operaciones_pro')->nullable();
 
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();

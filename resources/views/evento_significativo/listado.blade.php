@@ -250,20 +250,21 @@
                     success: function(data) {
                         if (data.estado === 'success') {
 
-                            Swal.fire(
-                                'Exito!',
-                                "Se registro con exito con el codigo "+data.msg,
-                                'success'
-                            )
+                            Swal.fire({
+                                icon : 'success',
+                                title: 'Exito!',
+                                text : "Se registro con exito con el codigo "+data.msg,
+                                timer: 1500
+                            })
                             
                             ajaxListado();
-                            // $('#tabla_eventos_significativos').html(data.listado)
+                            $('#modal_evento_significativo').modal('hide')
                         } else {
-                            Swal.fire(
-                                'Error!',
-                                data.msg,
-                                'error'
-                            )
+                            Swal.fire({
+                                title:'Error!',
+                                text : JSON.stringify(data.msg),
+                                icon: 'error'
+                            })
                         }
                     }
                 })

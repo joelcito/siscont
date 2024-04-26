@@ -648,16 +648,17 @@
                                     // 'empresa'   : "{{ $empresa->id }}"
                                     // 'realizo_pago': $("#realizo_pago").prop("checked"),
                                     // 'caja'        : $('#caja_id').val()
+                                    'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
                                 };
-                                // var datosRecepcion = {
-                                //     'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
-                                //     'codigo_cafc_contingencia': $('#codigo_cafc_contingencia').val()
-                                // };
+                                var datosRecepcion = {
+                                    // 'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
+                                    // 'codigo_cafc_contingencia': $('#codigo_cafc_contingencia').val()
+                                };
                                 $.ajax({
                                     url : "{{ url('factura/emitirFactura') }}",
                                     data: {
-                                        datos       : datos,
-                                        datosCliente: datosCliente,
+                                        datos         : datos,
+                                        datosCliente  : datosCliente,
                                         // datosRecepcion: datosRecepcion,
                                         modalidad     : $('#tipo_facturacion').val(),
                                         tipo_pago     : $('#tipo_pago').val(),
@@ -690,8 +691,10 @@
                                                 icon : 'warning',
                                                 title: 'Exito!',
                                                 text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
+                                                timer: 2000
                                             })
-                                            window.location.href = "{{ url('pago/listado')}}"
+                                            window.location.href = "{{ url('factura/listado')}}"
+                                            // window.location.href = "{{ url('pago/listado')}}"
                                             // location.reload();
                                         }else{
                                             Swal.fire({

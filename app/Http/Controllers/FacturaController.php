@@ -361,18 +361,10 @@ class FacturaController extends Controller
             $tipo_factura    = $request->input('modalidad');
             $swFacturaEnvio  = true;
 
-
             $nitEmisorEmpresa     = $empresa_objeto->nit;
             $sucursalEmpresa      = $sucursal_objeto->codigo_sucursal;
             $numeroFacturaEmpresa = $this->numeroFactura($empresa_objeto->id, $sucursal_objeto->id, $punto_venta_objeto->id);
             $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : ($numeroFacturaEmpresa+1));
-
-            // dd(
-            //     $nitEmisorEmpresa,
-            //     $sucursalEmpresa,
-            //     $numeroFacturaEmpresa
-            // );
-
 
             $nitEmisor          = str_pad($nitEmisorEmpresa,13,"0",STR_PAD_LEFT);
             $fechaEmision       = str_replace(".","",str_replace(":","",str_replace("-","",str_replace("T", "",$valoresCabecera['fechaEmision']))));
@@ -381,30 +373,16 @@ class FacturaController extends Controller
             $modalidad          = $empresa_objeto->codigo_modalidad;
             $numeroFactura      = str_pad($numeroFacturaEmpresa,10,"0",STR_PAD_LEFT);
 
-            // dd(
-            //     $datos,
-            //     $datosCliente,
-            //     $valoresCabecera,
-            //     $puntoVenta,
-            //     $tipo_factura,
-            //     $swFacturaEnvio,
-
-            //     $nitEmisor,
-            //     $fechaEmision,
-            //     $sucursal,
-            //     $modalidad,
-            //     $numeroFactura
-            // );
-
             if($tipo_factura === "online"){
                 $tipoEmision        = 1;
             }
             else{
                 // $datosRecepcion       = $request->input('datosRecepcion');
-                // if($datosRecepcion['uso_cafc'] === "Si"){
-                //     $datos['factura'][0]['cabecera']['cafc'] = $datosRecepcion['codigo_cafc_contingencia'];
-                // }
-                // $tipoEmision        = 2;
+                $datosRecepcion       = $datosCliente;
+                if($datosRecepcion['uso_cafc'] === "Si"){
+                    $datos['factura'][0]['cabecera']['cafc'] = $datosRecepcion['codigo_cafc_contingencia'];
+                }
+                $tipoEmision        = 2;
             }
 
             $tipoFactura        = 1;
@@ -464,16 +442,32 @@ class FacturaController extends Controller
                 // $sfechaVigenciaCufd     = session('sfechaVigenciaCufd');
 
             }else{
-                // $cufdController             = app(CufdController::class);
-                // $datosCufdOffLine           = $cufdController->sacarCufdVigenteFueraLinea();
-                // if($datosCufdOffLine['estado'] === "success"){
-                //     $scufd                  = $datosCufdOffLine['scufd'];
-                //     $scodigoControl         = $datosCufdOffLine['scodigoControl'];
-                //     $sdireccion             = $datosCufdOffLine['sdireccion'];
-                //     $sfechaVigenciaCufd     = $datosCufdOffLine['sfechaVigenciaCufd'];
-                // }else{
+                $eventoSignificadoControlller = app(EventoSignificativoController::class);
 
-                // }
+                $empresa_id      = $empresa_objeto->id;
+                $sucursal_id     = $sucursal_objeto->id;
+                $punto_venta_id  = $punto_venta_objeto->id;
+                $codigo_ambiente = $empresa_objeto->codigo_ambiente;
+
+                $datosCufdOffLine             = $eventoSignificadoControlller->sacarCufdVigenteFueraLinea(
+                    $empresa_id,
+                    $sucursal_id,
+                    $punto_venta_id,
+                    $codigo_ambiente
+                );
+
+                if($datosCufdOffLine['estado'] === "success"){
+                    $scufd                  = $datosCufdOffLine['scufd'];
+                    $scodigoControl         = $datosCufdOffLine['scodigoControl'];
+                    $sdireccion             = $datosCufdOffLine['sdireccion'];
+                    $sfechaVigenciaCufd     = $datosCufdOffLine['sfechaVigenciaCufd'];
+                }else{
+
+                    $data['estado'] = "error";
+                    $data['msg']    = "ERROR AL RECUPERAR EL CUFD ANTIGUO";
+
+                    return $data;
+                }
             }
 
             $cufPro                                                 = $this->generarBase16($cadenaConM11).$scodigoControl;
@@ -720,6 +714,33 @@ class FacturaController extends Controller
             }else{
 
 
+                 // ESTO ES PARA LA FACTURA LA CREACION
+                 $facturaVerdad                          = new Factura();
+                 $facturaVerdad->usuario_creador_id      = Auth::user()->id;
+                 $facturaVerdad->cliente_id              = $cliente->id;
+                 $facturaVerdad->empresa_id              = $empresa_objeto->id;
+                 $facturaVerdad->sucursal_id             = $sucursal_objeto->id;
+                 $facturaVerdad->punto_venta_id          = $punto_venta_objeto->id;
+                 $facturaVerdad->cufd_id                 = $datosCufdOffLine['scufd_id'];
+                 $facturaVerdad->fecha                   = $datos['factura'][0]['cabecera']['fechaEmision'];
+                 $facturaVerdad->nit                     = $empresa_objeto->nit;
+                 $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
+                 $facturaVerdad->numero_factura          = $numeroFacturaEmpresa;
+                 $facturaVerdad->facturado               = "Si";
+                 $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
+                 $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
+                 $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
+                 $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxml.xml');
+                 $facturaVerdad->codigo_descripcion      = NULL;
+                 $facturaVerdad->codigo_recepcion        = NULL;
+                 $facturaVerdad->codigo_transaccion      = NULL;
+                 $facturaVerdad->descripcion             = NULL;
+                 $facturaVerdad->uso_cafc                = "No";
+                 $facturaVerdad->tipo_factura            = "offline";
+
+                 $facturaVerdad->save();
+
+
                 // // ESTO ES PARA LA FACTURA LA CREACION
                 // $facturaVerdad                          = new Factura();
                 // $facturaVerdad->creador_id              = Auth::user()->id;
@@ -793,7 +814,7 @@ class FacturaController extends Controller
                 //     );
                 // }
 
-                // $data['estado']     = 'OFFLINE';
+                $data['estado']     = 'OFFLINE';
             }
 
 

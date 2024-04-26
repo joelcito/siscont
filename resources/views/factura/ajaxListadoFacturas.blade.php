@@ -49,13 +49,19 @@
                 <td>
                     @if ($fac->tipo_factura == "online")
                         <span class="badge badge-success">ONLINE</span>
-                    @elseif($fac->tipo_factura == "offonline")
-                        <span class="badge badge-warning">OFF ONLINE</span>
+                    @elseif($fac->tipo_factura == "offline")
+                        <span class="badge badge-warning">OFFLINE</span>
+                    @else
+                        algo aqui :>
                     @endif
                 </td>
                 <td>
+                    {{-- <a href="https://siat.impuestos.gob.bo/consulta/QR?nit=5427648016&cuf={{ $p->cuf }}&numero={{ $p->numero_cafc }}&t=2" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a> --}}
+                    <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a>
+
                     @if (is_null($fac->estado))
                         <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
+
                     @else
                         
                     @endif
