@@ -123,11 +123,11 @@
                                                 </i>Motivo de Anulacion</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#sincro_evento_significativo">
                                                 <i class="ki-duotone ki-save-2 fs-4 me-1">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>Activity</a>
+                                                </i>Evento Significativo</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
@@ -254,6 +254,17 @@
                                                 </div>
                                             </div>
                                             <!--end:::Tab pane-->
+                                            <!--begin:::Tab pane-->
+                                            <div class="tab-pane fade" id="sincro_evento_significativo" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="tab_tabla_evento_significativo">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end:::Tab pane-->
                                         </div>
                                         <!--end::Tab content-->
                                     </div>
@@ -293,8 +304,25 @@
             ajaxListadoMetodoPago();
             ajaxListadoTipoMoneda();
             ajaxListadoMotivoAnulacion();
-            
+            ajaxListadoEventoSignificativo();
+
         });
+
+        function ajaxListadoEventoSignificativo(){
+            let datos = {}
+            $.ajax({
+                url: "{{ url('sincronizacion/ajaxListadoEventoSignificativo') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tab_tabla_evento_significativo').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
 
         function ajaxListadoMotivoAnulacion(){
             let datos = {}
@@ -577,6 +605,31 @@
                             timerProgressBar : true
                         });
                         ajaxListadoMotivoAnulacion();
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function sincronizarEventoSignificativo(){
+            let datos = {
+                empresa_id : 1
+            }
+            $.ajax({
+                url   : "{{ url('sincronizacion/sincronizarEventoSignificativo') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : data.msg,
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                        ajaxListadoEventoSignificativo();
                     }else{
 
                     }

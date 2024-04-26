@@ -702,6 +702,66 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function sincronizarParametricaEventosSignificativos(
+        $header,
+        $url2,
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scuis,
+        $nit
+    ){
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        $wsdl                   = $url2;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+
+        $parametros         =  array(
+            'SolicitudSincronizacion' => array(
+                'codigoAmbiente'    => $codigoAmbiente,
+                'codigoPuntoVenta'  => $codigoPuntoVenta,
+                'codigoSistema'     => $codigoSistema,
+                'codigoSucursal'    => $codigoSucursal,
+                'cuis'              => $cuis,
+                'nit'               => $nit
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->sincronizarParametricaEventosSignificativos($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
     public function anulacionFactura(
         $header,
         $url3,
@@ -1152,6 +1212,83 @@ class SiatController extends Controller
         return $cufdRescatadoUtilizar;
     }
 
-    
+    public function registroEventoSignificativo(
+        $header,
+        $url4,
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scufd,
+        $scuis,
+        $nit,
+
+        $codMotEvent, $cufdEvent, $desc, $fechaIni, $fechaFin
+        ){
+
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url4;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoMotivoEvento     = $codMotEvent;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cufd                   = $scufd;
+        $cufdEvento             = $cufdEvent;
+        $cuis                   = $scuis;
+        $descripcion            = $desc;
+        $fechaHoraFinEvento     = $fechaFin;
+        $fechaHoraInicioEvento  = $fechaIni;
+        $nit                    = $nit;
+
+        $parametros         =  array(
+            'SolicitudEventoSignificativo' => array(
+                'codigoAmbiente'            => $codigoAmbiente,
+                'codigoMotivoEvento'        => $codigoMotivoEvento,
+                'codigoPuntoVenta'          => $codigoPuntoVenta,
+                'codigoSistema'             => $codigoSistema,
+                'codigoSucursal'            => $codigoSucursal,
+                'cufd'                      => $cufd,
+                'cufdEvento'                => $cufdEvento,
+                'cuis'                      => $cuis,
+                'descripcion'               => $descripcion,
+                'fechaHoraFinEvento'        => $fechaHoraFinEvento,
+                'fechaHoraInicioEvento'     => $fechaHoraInicioEvento,
+                'nit'                       => $nit
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->registroEventoSignificativo($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg'] = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EventoSignificativoController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
@@ -84,6 +85,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxListadoMetodoPago', [SincronizacionSiatController::class, 'ajaxListadoMetodoPago']);
         Route::post('/ajaxListadoTipoMoneda', [SincronizacionSiatController::class, 'ajaxListadoTipoMoneda']);
         Route::post('/ajaxListadoMotivoAnulacion', [SincronizacionSiatController::class, 'ajaxListadoMotivoAnulacion']);
+        Route::post('/ajaxListadoEventoSignificativo', [SincronizacionSiatController::class, 'ajaxListadoEventoSignificativo']);
+        
 
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
         Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
@@ -92,6 +95,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/sincronizarMetodoPago', [SincronizacionSiatController::class, 'sincronizarMetodoPago']);
         Route::post('/sincronizarTipoMoneda', [SincronizacionSiatController::class, 'sincronizarTipoMoneda']);
         Route::post('/sincronizarMotivoAnulacion', [SincronizacionSiatController::class, 'sincronizarMotivoAnulacion']);
+        Route::post('/sincronizarEventoSignificativo', [SincronizacionSiatController::class, 'sincronizarEventoSignificativo']);
 
         // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });
@@ -126,6 +130,18 @@ Route::middleware('auth')->group(function(){
         
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
+    });
+
+    Route::prefix('/eventosignificativo')->group(function(){
+        Route::get('/listado', [EventoSignificativoController::class, 'listado']);
+
+        Route::post('/ajaxListado', [EventoSignificativoController::class, 'ajaxListado']);
+        Route::post('/buscarCufd', [EventoSignificativoController::class, 'buscarCufd']);
+        Route::post('/agregarEventoSignificativo', [EventoSignificativoController::class, 'agregarEventoSignificativo']);
+        
+        
+        // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
+
     });
 
 });

@@ -520,11 +520,11 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="pages/user-profile/documents.html">
+                            <a class="menu-link" href="{{ url('eventosignificativo/listado') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Documents</span>
+                                <span class="menu-title">Eventos Significativos</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

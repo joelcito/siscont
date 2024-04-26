@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
+use App\Models\SiatEventoSignificativo;
 use App\Models\SiatMotivoAnulacion;
 use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoDocumentoSector;
@@ -574,6 +575,84 @@ class SincronizacionSiatController extends Controller
                 $data['text']   = 'No existe';
                 $data['estado'] = 'error';
             }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function ajaxListadoEventoSignificativo(Request $request){
+        if($request->ajax()){
+
+            $data['estado']    = 'success';
+            $eventoSignificativo = SiatEventoSignificativo::all();
+            $data['listado']   = view('siat.ajaxListadoEventoSignificativo')->with(compact('eventoSignificativo'))->render();
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function sincronizarEventoSignificativo(Request $request){
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa_id');
+
+            $empresa    = Empresa::find($empresa_id);
+
+            $sucursal   = Sucursal::where('empresa_id', $empresa_id)
+                                    ->first();
+
+            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                    ->first();
+
+            $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+            $sincronizacionEventoSignificativo   = json_decode($siat->sincronizarParametricaEventosSignificativos(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+
+            // dd($sincronizacionEventoSignificativo);
+
+            if($sincronizacionEventoSignificativo->estado === "success"){
+                if($sincronizacionEventoSignificativo->resultado->RespuestaListaParametricas->transaccion){
+                    $listaCodigos = $sincronizacionEventoSignificativo->resultado->RespuestaListaParametricas->listaCodigos;
+                    foreach ($listaCodigos as $key => $value) {
+                        $eventoSignificativo = SiatEventoSignificativo::where('codigo_clasificador', $value->codigoClasificador)
+                                                    ->first();
+                        if(is_null($eventoSignificativo)){
+                            $eventoSignificativo                      = new SiatEventoSignificativo();
+                            $eventoSignificativo->usuario_creador_id  = Auth::user()->id;
+                            $eventoSignificativo->codigo_clasificador = $value->codigoClasificador;
+                            $eventoSignificativo->descripcion         = $value->descripcion;
+                        }else{
+                            $eventoSignificativo->usuario_modificador_id = Auth::user()->id;
+                            $eventoSignificativo->descripcion            = $value->descripcion;
+                        }
+                        $eventoSignificativo->save();
+                    }
+                    $data['estado'] = 'success';
+                    $data['msg']    = 'SINCRONIZACION EXITOSA!';
+                }else{
+                    $data['estado'] = 'error';
+                    $data['msg'] = 'ERROR AL SINCRONIZAR!';
+                }
+            }else{
+                $data['text']   = 'No existe';
+                $data['estado'] = 'error';
+            }
+
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
