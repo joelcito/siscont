@@ -6,12 +6,16 @@ use App\Models\Cufd;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\EventoSignificativo;
+use App\Models\Factura;
 use App\Models\PuntoVenta;
 use App\Models\SiatEventoSignificativo;
 use App\Models\Sucursal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use PharData;
+use SimpleXMLElement;
 
 class EventoSignificativoController extends Controller
 {
@@ -324,6 +328,326 @@ class EventoSignificativoController extends Controller
 
             }
 
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function buscarEventosSignificativos(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $fecha_contingencia = $request->input('fecha_contingencia');
+            $fecha_ini = $fecha_contingencia." 00:00:00";
+            $fecha_fin = $fecha_contingencia." 23:59:59";
+
+            // $eventos_significativos = EventoSignificativo::whereBetween($fecha_contingencia, ['fecha_ini_evento','fecha_fin_evento'])
+            //                                             ->get();
+
+            $eventos_significativos = EventoSignificativo::whereRaw('? BETWEEN LEFT(fecha_ini_evento, 10) AND LEFT(fecha_fin_evento, 10)', [$fecha_contingencia])->get();
+
+            $data['estado'] = 'success';
+            $data['eventos'] = $eventos_significativos;
+
+            // dd($eventos_significativos);
+
+            // $fechaEvento = $request->input('fecha_contingencia');
+            // $siat = app(SiatController::class);
+            // $respuesta = json_decode($siat->consultaEventoSignificativo($fechaEvento));
+            // // dd($respuesta);
+            // if($respuesta->estado === "success"){
+            //     if($respuesta->resultado->RespuestaListaEventos->transaccion){
+            //         $eventos = json_decode(json_encode($respuesta->resultado->RespuestaListaEventos->listaCodigos), true);
+            //         $data['estado'] = 'success';
+            //         $data['eventos'] = $eventos;
+            //         // $data['listado'] = view('eventosignificativo.ajaxListado')->with(compact('eventos'))->render();
+            //     }else{
+            //         //NO EXISTE REGISTRO DE EVENTO SIGNIFICATIVO EN LA BASE DE DATOS DEL SIN
+            //         // dd($respuesta->resultado->RespuestaListaEventos->mensajesList->descripcion);
+            //         $data['estado'] = 'error';
+            //         $data['msg'] = $respuesta->resultado->RespuestaListaEventos->mensajesList->descripcion;
+            //     }
+            // }else{
+            //     $data['estado'] = 'error';
+            //     $data['msg'] = 'ERROR EN LA BASE DE DATOS O CONSULTA';
+            // }
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
+
+    }
+
+    public function muestraTableFacturaPaquete(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $fecha                   = $request->input('fecha');
+            $evento_significativo_id = $request->input('valor');
+            $fecha_ini               = $fecha." 00:00:00";
+            $fecha_fin               = $fecha." 23:59:59";
+            $facturas                = [];
+
+            if(($evento_significativo_id) != null){
+                $evento_significativo = EventoSignificativo::find($evento_significativo_id);
+                $facturas = Factura::where('tipo_factura', 'offline')
+                                    ->where('facturado', "Si")
+                                    ->where('cufd_id',$evento_significativo->cufd_evento_id)
+                                    ->WhereNull('codigo_descripcion')
+                                    ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                                    ->orderBy('id', 'desc')
+                                    ->get();
+                $data['listado'] = view('factura.ajaxMuestraTableFacturaPaquete')->with(compact('facturas'))->render();
+                $data['estado'] = "success";
+            }else{
+                $data['listado'] = view('factura.ajaxMuestraTableFacturaPaquete')->with(compact('facturas'))->render();
+                $data['estado'] = "success";
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }    
+        return $data;
+    }
+
+    public function mandarFacturasPaquete(Request $request){
+        if($request->ajax()){
+
+            $datos = $request->all();
+            $checkboxes = collect($datos)->filter(function ($value, $key) {
+                return Str::startsWith($key, 'check_');
+            })->toArray();
+
+            // dd($checkboxes, $datos, Auth::user());
+
+            $evento_significativo_id = $request->input('evento_significativo_id');
+            $empresa_id              = Auth::user()->empresa_id;
+            $sucursal_id             = Auth::user()->sucursal_id;
+            $punto_venta_id          = Auth::user()->punto_venta_id;
+
+            $evento_significativo = EventoSignificativo::find($evento_significativo_id);
+            $empresa              = Empresa::find($empresa_id);
+            $sucursal             = Sucursal::find($sucursal_id);
+            $punto_venta          = PuntoVenta::find($punto_venta_id);
+            $cuis                 = $empresa->cuisVigente($sucursal_id,$punto_venta_id, $empresa->codigo_ambiente);
+
+            $codigo_evento_significativo    = $evento_significativo->codigoRecepcionEventoSignificativo;
+            $siat                           = app(SiatController::class);
+            // $codigo_cafc_contingencia       = NULL;
+            $codigo_cafc_contingencia       = $empresa->cafc;
+            $fechaActual                    = date('Y-m-d\TH:i:s.v');
+            $fechaEmicion                   = $fechaActual;
+
+            $contado = 0;
+
+            $rutaCarpeta = "assets/docs/paquete";
+            // Verificar si la carpeta existe
+            if (!file_exists($rutaCarpeta))
+                mkdir($rutaCarpeta, 0755, true);
+
+            // Obtener lista de archivos en la carpeta
+            $archivos = glob($rutaCarpeta . '/*');
+            // Eliminar cada archivo
+            foreach ($archivos as $archivo) {
+                if (is_file($archivo))
+                    unlink($archivo);
+            }
+            $file = public_path('assets/docs/paquete.tar.gz');
+            if (file_exists($file))
+                unlink($file);
+
+            $file = public_path('assets/docs/paquete.tar');
+            if (file_exists($file))
+                unlink($file);
+
+            $idsToUpdate = [];
+            foreach($checkboxes as $key => $chek){
+                $ar = explode("_",$key);
+                $factura = Factura::find($ar[1]);
+
+                $idsToUpdate[] = (int)$ar[1];
+
+                $xml                            = $factura->productos_xml;
+                // $uso_cafc                       = $request->input("uso_cafc");
+                $archivoXML                     = new SimpleXMLElement($xml);
+
+                // GUARDAMOS EN LA CARPETA EL XML
+                $archivoXML->asXML("assets/docs/paquete/facturaxmlContingencia$ar[1].xml");
+                $contado++;
+            }
+
+            // Ruta de la carpeta que deseas comprimir
+            $rutaCarpeta = "assets/docs/paquete";
+
+            // Nombre y ruta del archivo TAR resultante
+            $archivoTar = "assets/docs/paquete.tar";
+
+            // Crear el archivo TAR utilizando la biblioteca PharData
+            $tar = new PharData($archivoTar);
+            $tar->buildFromDirectory($rutaCarpeta);
+
+            // Ruta y nombre del archivo comprimido en formato Gzip
+            $archivoGzip = "assets/docs/paquete.tar.gz";
+
+            // Comprimir el archivo TAR en formato Gzip
+            // $comandoGzip = "gzip -c $archivoTar > $archivoGzip";
+            // exec($comandoGzip);
+
+            // ESTE ES OTRO CHEEE
+            // Abre el archivo .gz en modo de escritura
+            $gz = gzopen($archivoGzip, 'wb');
+            // Abre el archivo .tar en modo de lectura
+            $archivo = fopen($archivoTar, 'rb');
+            // Lee el contenido del archivo .tar y escribe en el archivo .gz
+            while (!feof($archivo)) {
+                gzwrite($gz, fread($archivo, 8192));
+            }
+            // Cierra los archivos
+            fclose($archivo);
+            gzclose($gz);
+
+            // Leer el contenido del archivo comprimido
+            $contenidoArchivo = file_get_contents($archivoGzip);
+
+            // Calcular el HASH (SHA256) del contenido del archivo
+            $hashArchivo = hash('sha256', $contenidoArchivo);
+
+
+            try {
+
+                $cufdVigente = json_decode(
+                    $siat->verificarConeccion(
+                        $empresa->id,
+                        $sucursal->id,
+                        $cuis->id,
+                        $punto_venta->id,
+                        $empresa->codigo_ambiente
+                    ));
+
+                $header                = $empresa->api_token;
+                $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+                $codigoAmbiente        = $empresa->codigo_ambiente;
+                $codigoDocumentoSector = $empresa->codigo_documento_sector;
+                $tipo_online_o_offline = 2;                                                // FUERA DE  LINEA (LINEA = 1 | FUERA DE LINEA = 2)
+                $codigoModalidad       = $empresa->codigo_modalidad;
+                $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
+                $codigoSistema         = $empresa->codigo_sistema;
+                $codigoSucursal        = $sucursal->codigo_sucursal;
+                $scufd                 = $cufdVigente->codigo;
+                $scuis                 = $cuis->codigo;
+                $nit                   = $empresa->nit;
+
+                // Código que puede lanzar el error
+                // Por ejemplo, puedes tener algo como:
+                // $resultado = obtenerResultado();
+                $res = json_decode($siat->recepcionPaqueteFactura(
+                    $header,
+                    $url3,
+                    $codigoAmbiente,
+                    $codigoDocumentoSector,
+                    $tipo_online_o_offline,
+                    $codigoModalidad,
+                    $codigoPuntoVenta,
+                    $codigoSistema,
+                    $codigoSucursal,
+                    $scufd,
+                    $scuis,
+                    $nit,
+
+                    $contenidoArchivo, $fechaEmicion, $hashArchivo, $codigo_cafc_contingencia, $contado, $codigo_evento_significativo
+                ));
+                if($res->resultado->RespuestaServicioFacturacion->transaccion){
+
+                    $header                = $empresa->api_token;
+                    $url3                  = $empresa->url_servicio_facturacion_compra_venta;;
+                    $codigoAmbiente        = $empresa->codigo_ambiente;
+                    $codigoDocumentoSector = $empresa->codigo_documento_sector;
+                    $codigoModalidad       = $empresa->codigo_modalidad;
+                    $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
+                    $codigoSistema         = $empresa->codigo_sistema;
+                    $codigoSucursal        = $sucursal->codigo_sucursal;
+                    $scufd                 = $cufdVigente->codigo;
+                    $scuis                 = $cuis->codigo;
+                    $nit                   = $empresa->nit;
+
+                    $validad = json_decode($siat->validacionRecepcionPaqueteFactura(
+                        $header,
+                        $url3,
+                        $codigoAmbiente,
+                        $codigoDocumentoSector,
+                        $codigoModalidad,
+                        $codigoPuntoVenta,
+                        $codigoSistema,
+                        $codigoSucursal,
+                        $scufd,
+                        $scuis,
+                        $nit,
+
+                        2,$res->resultado->RespuestaServicioFacturacion->codigoRecepcion
+                    ));
+                    if($validad->resultado->RespuestaServicioFacturacion->transaccion){
+                        // foreach($checkboxes as $key => $chek){
+                        //     $data['estado'] = "success";
+                        //     $ar = explode("_",$key);
+                        //     $factura = Factura::find($ar[1]);
+                        //     $factura->codigo_descripcion = $validad->resultado->RespuestaServicioFacturacion->codigoDescripcion;
+                        //     $factura->codigo_recepcion  = $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion;
+                        //     $factura->save();
+                        // }
+
+                        $data['estado'] = "success";
+                        $data['msg']    = $validad->resultado;
+
+                        // Realizar la actualización utilizando Eloquent
+                        Factura::whereIn('id', $idsToUpdate)->update([
+                            'codigo_descripcion'    => $validad->resultado->RespuestaServicioFacturacion->codigoDescripcion,
+                            'codigo_recepcion'      => $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion
+                        ]);
+                    }else{
+                        // foreach($checkboxes as $key => $chek){
+                        //     $ar = explode("_",$key);
+                        //     $factura = Factura::find($ar[1]);
+                        //     $factura->codigo_descripcion    = $validad->resultado->RespuestaServicioFacturacion->codigoDescripcion;
+                        //     $factura->codigo_recepcion      = $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion;
+                        //     $factura->descripcion           = $validad->resultado->RespuestaServicioFacturacion->mensajesList;
+                        //     $factura->save();
+                        // }
+                        $data['estado'] = "error";
+                        $data['msg']    = $validad->resultado;
+
+                        // Realizar la actualización utilizando Eloquent
+                        Factura::whereIn('id', $idsToUpdate)->update([
+                            'codigo_descripcion'    => $validad->resultado->RespuestaServicioFacturacion->codigoDescripcion,
+                            'codigo_recepcion'      => $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion,
+                            'descripcion'           => $validad->resultado->RespuestaServicioFacturacion->mensajesList
+                        ]);
+                    }
+                    // dd($res, $validad, "habert");
+                }else{
+                    // dd($res);
+                    $data['estado'] = "error";
+                    $data['msg']    = "ERROR EN EL PRIMERO";
+                }
+
+                // dd($checkboxes, $idsToUpdate);
+                // Intentar acceder a la propiedad RespuestaServicioFacturacion
+                // $valor = $resultado->RespuestaServicioFacturacion;
+            } catch (\Throwable $e) {
+                // Capturar y manejar el error
+                // Aquí puedes realizar acciones para tratar el error, como registrar un mensaje de error, mostrar un mensaje al usuario, etc.
+                // Puedes acceder al mensaje de error específico usando $e->getMessage()
+                // También puedes acceder al número de línea y el archivo donde ocurrió el error usando $e->getLine() y $e->getFile()
+                echo "Error capturado: " . $e->getMessage();
+                $data['estado'] = "error";
+                $data['msg']    = $e->getMessage;
+            }
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';

@@ -740,6 +740,13 @@ class FacturaController extends Controller
 
                  $facturaVerdad->save();
 
+                 // AHORA AREMOS PARA LOS PAGOS
+                Detalle::whereIn('id', $datosCliente['pagos'])
+                 ->update([
+                     'estado'     => 'Finalizado',
+                     'factura_id' => $facturaVerdad->id
+                 ]);
+
 
                 // // ESTO ES PARA LA FACTURA LA CREACION
                 // $facturaVerdad                          = new Factura();
@@ -854,6 +861,7 @@ class FacturaController extends Controller
             $facturas = Factura::where('empresa_id', $empresa_id)
                                 ->where('sucursal_id', $sucursal_id)
                                 ->where('punto_venta_id', $punto_venta_id)
+                                ->orderBy('id', 'desc')
                                 ->get();
 
             $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas'))->render();

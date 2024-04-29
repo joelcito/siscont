@@ -1291,4 +1291,176 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function recepcionPaqueteFactura(
+        $header,
+        $url3,
+        $codigoAmbiente,
+        $codigoDocumentoSector,
+        $tipo_online_o_offline,
+        $codigoModalidad,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scufd,
+        $scuis,
+        $nit,
+
+        $arch, $fechaenv,$hasarch, $cafcC, $canFact, $codEvent
+        ){
+        // $this->verificarConeccion();
+        
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        
+        $wsdl                   = $url3;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoDocumentoSector  = $codigoDocumentoSector;     // SECTOR EDUCATIVO
+        // $codigoEmision          = 2;                                // FUERA DE  LINEA (LINEA = 1 | FUERA DE LINEA = 2)
+        $codigoEmision          = $tipo_online_o_offline;                                // FUERA DE  LINEA (LINEA = 1 | FUERA DE LINEA = 2)
+        $codigoModalidad        = $codigoModalidad;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cufd                   = $scufd;
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+        $tipoFacturaDocumento   = 1;                        //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
+        $archivo                = $arch;
+        $fechaEnvio             = $fechaenv;
+        $hashArchivo            = $hasarch;
+        $cafc                   = $cafcC;
+        $cantidadFacturas       = $canFact;
+        $codigoEvento           = $codEvent;
+
+        $parametros         =  array(
+            'SolicitudServicioRecepcionPaquete' => array(
+                'codigoAmbiente'            => $codigoAmbiente,
+                'codigoDocumentoSector'     => $codigoDocumentoSector,
+                'codigoEmision'             => $codigoEmision,
+                'codigoModalidad'           => $codigoModalidad,
+                'codigoPuntoVenta'          => $codigoPuntoVenta,
+                'codigoSistema'             => $codigoSistema,
+                'codigoSucursal'            => $codigoSucursal,
+                'cufd'                      => $cufd,
+                'cuis'                      => $cuis,
+                'nit'                       => $nit,
+                'tipoFacturaDocumento'      => $tipoFacturaDocumento,
+                'archivo'                   => $archivo,
+                'fechaEnvio'                => $fechaEnvio,
+                'hashArchivo'               => $hashArchivo,
+                'cafc'                      => $cafc,
+                'cantidadFacturas'          => $cantidadFacturas,
+                'codigoEvento'              => $codigoEvento
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->recepcionPaqueteFactura($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg'] = $fault->getMessage();
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function validacionRecepcionPaqueteFactura(
+        $header,
+        $url3,
+        $codigoAmbiente,
+        $codigoDocumentoSector,
+        $codigoModalidad,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scufd,
+        $scuis,
+        $nit,
+
+        $codEmision, $codRecepcion
+        ){
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        $wsdl                   = $url3;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoDocumentoSector  = $codigoDocumentoSector;                           //SECTOR EDUCATIVO
+        $codigoEmision          = $codEmision;                  //NUEVO LINENA 1 LINEA | 2 FUENRA DE LINEA
+        $codigoModalidad        = $codigoModalidad;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cufd                   = $scufd;
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+        $tipoFacturaDocumento   = 1;                            //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
+        $codigoRecepcion        = $codRecepcion;
+
+        $parametros         =  array(
+            'SolicitudServicioValidacionRecepcionPaquete' => array(
+                'codigoAmbiente'          => $codigoAmbiente,
+                'codigoDocumentoSector'   => $codigoDocumentoSector,
+                'codigoEmision'           => $codigoEmision,
+                'codigoModalidad'         => $codigoModalidad,
+                'codigoPuntoVenta'        => $codigoPuntoVenta,
+                'codigoSistema'           => $codigoSistema,
+                'codigoSucursal'          => $codigoSucursal,
+                'cufd'                    => $cufd,
+                'cuis'                    => $cuis,
+                'nit'                     => $nit,
+                'tipoFacturaDocumento'    => $tipoFacturaDocumento,
+                'codigoRecepcion'         => $codigoRecepcion,
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->validacionRecepcionPaqueteFactura($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg'] = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
 }

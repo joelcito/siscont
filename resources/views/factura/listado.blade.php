@@ -7,6 +7,51 @@
 @endsection
 @section('content')
 
+
+    <!--begin::Modal - Add task-->
+    <div class="modal fade" id="modmodalContingenciaFueraLinea" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" id="kt_modal_add_user_header">
+                    <h2 class="fw-bold">FORMULARIO DE CONTINGENCIA</h2>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formularioRecepcionFacuraContingenciaFueraLineaEentoSignificativo">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="fv-row mb-7">
+                                    <label class="required fw-semibold fs-6 mb-2">FECHA</label>
+                                    <input type="date" class="form-control" id="fecha_contingencia" name="fecha_contingencia" required value="{{ date('Y-m-d') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="fv-row mb-7">
+                                    <button class="btn btn-success w-100 mt-4 btn-sm btn-icon" onclick="buscarEventosSignificativos()" type="button"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="fv-row mb-7">
+                                    <label class="required fw-semibold fs-6 mb-2">EVENTO SIGNIFICATIVO</label>
+                                    <select name="evento_significativo_contingencia_select" id="evento_significativo_contingencia_select" class="form-control" onchange="muestraTableFacturaPaquete()">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div id="tablas_facturas_offline" style="display: none">
+
+                    </div>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Add task-->
+
     <!--begin::Modal - Add task-->
     <div class="modal fade" id="modalAnular" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -337,6 +382,98 @@
             }else{
                 $("#formularioAnulaciion")[0].reportValidity();
             }
+        }
+
+        function modalRecepcionFacuraContingenciaFueraLinea(){
+            $('#evento_significativo_contingencia_select').val('')
+            $('#tablas_facturas_offline').hide('toggle');
+            $('#modmodalContingenciaFueraLinea').modal('show')
+        }
+        
+        function buscarEventosSignificativos(){
+            if($("#formularioRecepcionFacuraContingenciaFueraLineaEentoSignificativo")[0].checkValidity()){
+                let datos_formulario = $("#formularioRecepcionFacuraContingenciaFueraLineaEentoSignificativo").serializeArray();
+                $.ajax({
+                    url: "{{ url('eventosignificativo/buscarEventosSignificativos') }}",
+                    method: "POST",
+                    data: datos_formulario,
+                    success: function (data) {
+                        $('#evento_significativo_contingencia_select').empty();
+                        if(data.estado === "success"){
+                            $('#bloque_no_hay_eventos').hide('toggle');
+
+                            var newOption = $('<option>').text("SELECCIONE").val(null);
+                            $('#evento_significativo_contingencia_select').append(newOption);
+
+                            $(data.eventos).each(function(index, element) {
+                                var optionText = element.fecha_ini_evento+" | "+element.fecha_fin_evento+" | "+element.descripcion;
+                                // var optionValue = element.codigoRecepcionEventoSignificativo;
+                                var optionValue = element.id;
+                                var newOption = $('<option>').text(optionText).val(optionValue);
+                                $('#evento_significativo_contingencia_select').append(newOption);
+                            });
+                        }else{
+                            $('#mensaje_contingencia').text(data.msg)
+                            $('#bloque_no_hay_eventos').show('toggle');
+                        }
+                    }
+                })
+            }else{
+                $("#formularioRecepcionFacuraContingenciaFueraLineaEentoSignificativo")[0].reportValidity();
+            }
+        }
+
+        function muestraTableFacturaPaquete(){
+            let valor = $('#evento_significativo_contingencia_select').val();
+            $.ajax({
+                url: "{{ url('eventosignificativo/muestraTableFacturaPaquete') }}",
+                method: "POST",
+                data:{
+                    fecha: $('#fecha_contingencia').val(),
+                    valor: $('#evento_significativo_contingencia_select').val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if(data.estado === "success"){
+                        $('#tablas_facturas_offline').html(data.listado);
+                        $('#tablas_facturas_offline').show('toggle');
+                    }else{
+                    }
+                }
+            })
+        }
+
+        function mandarFacturasPaquete(){
+            let arraye = $('#formularioEnvioPaquete').serializeArray();
+            // Agregar un nuevo elemento al array
+            arraye.push({ name: 'evento_significativo_id', value: $('#evento_significativo_contingencia_select').val() });
+            $.ajax({
+                url: "{{ url('eventosignificativo/mandarFacturasPaquete') }}",
+                method: "POST",
+                data:arraye,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.estado === "success"){
+                        ajaxListado();
+                        $('#modmodalContingenciaFueraLinea').modal('hide')
+                        Swal.fire({
+                            icon             : 'success',
+                            title            : JSON.stringify(data.msg),
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            // timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                    }else{
+                        Swal.fire({
+                            icon             : 'error',
+                            title            : JSON.stringify(data.msg),
+                            showConfirmButton: false,       // No mostrar botón de confirmación
+                            // timer            : 2000,        // 5 segundos
+                            timerProgressBar : true
+                        });
+                    }
+                }
+            })
         }
    </script>
 @endsection

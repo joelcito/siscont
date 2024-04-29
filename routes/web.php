@@ -133,11 +133,15 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::prefix('/eventosignificativo')->group(function(){
+        
         Route::get('/listado', [EventoSignificativoController::class, 'listado']);
 
         Route::post('/ajaxListado', [EventoSignificativoController::class, 'ajaxListado']);
         Route::post('/buscarCufd', [EventoSignificativoController::class, 'buscarCufd']);
         Route::post('/agregarEventoSignificativo', [EventoSignificativoController::class, 'agregarEventoSignificativo']);
+        Route::post('/buscarEventosSignificativos', [EventoSignificativoController::class, 'buscarEventosSignificativos']);
+        Route::post('/muestraTableFacturaPaquete', [EventoSignificativoController::class, 'muestraTableFacturaPaquete']);
+        Route::post('/mandarFacturasPaquete', [EventoSignificativoController::class, 'mandarFacturasPaquete']);
         
         
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);

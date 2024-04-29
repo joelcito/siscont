@@ -58,6 +58,7 @@
                 <td>
                     {{-- <a href="https://siat.impuestos.gob.bo/consulta/QR?nit=5427648016&cuf={{ $p->cuf }}&numero={{ $p->numero_cafc }}&t=2" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a> --}}
                     <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a>
+                    <button class="btn btn-info btn-icon btn-sm" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
 
                     @if (is_null($fac->estado))
                         <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
