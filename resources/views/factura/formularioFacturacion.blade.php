@@ -137,14 +137,14 @@
 
                         </div>
                         <hr>
-                        <div id="tabla_ventas">
-                            <h4 class="text-info text-center">CLIENTE</h4>
+                        <div id="tabla_ventas" style="display: none">
+                            <h4 class="text-info text-center">CLIENTE SELECCIONADO</h4>
                             <form id="formulario_cliente_escogido">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="fs-6 fw-semibold form-label mb-2">Nombre</label>
                                         <input type="text" class="form-control fw-bold form-control-solid" name="nombre_escogido" id="nombre_escogido">
-                                        <input type="text" name="cliente_id_escogido" id="cliente_id_escogido">
+                                        <input type="hidden" name="cliente_id_escogido" id="cliente_id_escogido">
                                     </div>
                                     <div class="col-md-3">
                                         <label class="fs-6 fw-semibold form-label mb-2">Ap Paterno</label>
@@ -188,9 +188,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <hr>
-                            <h4 class="text-info text-center">DETALLES DE VENTA</h4>
-                            <div id="tabla_detalles">
+                            <div id="tabla_detalles" style="display: none">
 
                             </div>
                         </div>
@@ -249,6 +247,9 @@
             $('#ap_paterno_escogido').val(ap_paterno);
             $('#ap_materno_escogido').val(ap_materno);
             $('#cedula_escogido').val(cedula);
+
+            $('#tabla_clientes').hide('toogle')
+            $('#tabla_ventas').show('toogle')
 
             ajaxListadoDetalles(cliente);
         }
@@ -310,41 +311,45 @@
             // let datos = $('#formulario_venta').serializeArray();
             // let datosClie = $('#formulario_cliente_escogido').serializeArray();
 
-            let datoscombi = $('#formulario_venta, #formulario_cliente_escogido').serializeArray();
-
-            // console.log(datos)
-
-            $.ajax({
-                url: "{{ url('factura/agregarProducto') }}",
-                type    : 'POST',
-                // data    : datos,
-                data    : datoscombi,
-                dataType: 'json',
-                success: function(data) {
-                    if(data.estado === 'success'){
-
-                        let cliente = $('#cliente_id_escogido').val();
-                        ajaxListadoDetalles(cliente);
-
-                        // $('#cantidad_almacen').val(data.cantidaAlacen)
-                        // $('#cantidad').attr('max', data.cantidaAlacen)
-                        // $('.servi').hide('toggle');
-                        // $('.serviPro').show('toggle');
-                        // $("#lavador_id").prop("required", false);
-                        // $('.serviAlma').show('toggle');
-
-                        // if(json.id == 213 || json.id == 214 || json.id == 215)
-                        //     $('#precio').prop('readonly', false);
-                        // else
-                        //     $('#precio').prop('readonly', true);
-
-                        // if(data.cantidaAlacen <= 0)
-                        //     $('#btnAgregarProductoChe').prop('disabled', true);
-                        // else
-                        //     $('#btnAgregarProductoChe').prop('disabled', false);
+            if($("#formulario_venta")[0].checkValidity()){
+                let datoscombi = $('#formulario_venta, #formulario_cliente_escogido').serializeArray();
+                $.ajax({
+                    url: "{{ url('factura/agregarProducto') }}",
+                    type    : 'POST',
+                    // data    : datos,
+                    data    : datoscombi,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.estado === 'success'){
+    
+                            let cliente = $('#cliente_id_escogido').val();
+                            ajaxListadoDetalles(cliente);
+    
+                            $('#tabla_detalles').show('toogle')
+    
+                            // $('#cantidad_almacen').val(data.cantidaAlacen)
+                            // $('#cantidad').attr('max', data.cantidaAlacen)
+                            // $('.servi').hide('toggle');
+                            // $('.serviPro').show('toggle');
+                            // $("#lavador_id").prop("required", false);
+                            // $('.serviAlma').show('toggle');
+    
+                            // if(json.id == 213 || json.id == 214 || json.id == 215)
+                            //     $('#precio').prop('readonly', false);
+                            // else
+                            //     $('#precio').prop('readonly', true);
+    
+                            // if(data.cantidaAlacen <= 0)
+                            //     $('#btnAgregarProductoChe').prop('disabled', true);
+                            // else
+                            //     $('#btnAgregarProductoChe').prop('disabled', false);
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                $("#formulario_venta")[0].reportValidity();
+            }
+
 
         }
 
@@ -356,6 +361,9 @@
                 data  : datos,
                 success: function (data) {
                     if(data.estado === 'success'){
+
+                        if(data.cantidad > 0)
+                            $('#tabla_detalles').show('toogle')
 
                         $('#tabla_detalles').html(data.listado)
 
@@ -391,6 +399,7 @@
                         if(data.estado === 'success'){
     
                             ajaxListadoDetalles(cliente)
+                            $('#bloqueDatosFactura').hide('toogle')
     
                             // $('#tabla_detalles').html(data.listado)
     
@@ -434,6 +443,7 @@
                     if(data.estado === 'success'){
 
                         ajaxListadoDetalles(cliente)
+                        $('#bloqueDatosFactura').hide('toogle')
 
                     }else{
 
@@ -456,6 +466,7 @@
                         let dat = (total) - desAdi
                         if(dat > 0){
                             $('#total_a_pagar_importe').val(dat.toFixed(2))
+                            $('#bloqueDatosFactura').hide('toogle')
                         }else{
                             Swal.fire({
                                 icon             : 'error',
@@ -491,6 +502,7 @@
                     if(data.estado === 'success'){
                         arrayPagos     = data.detalles;
                         arrayProductos = JSON.parse(data.lista)
+                        $('#bloqueDatosFactura').show('toogle')
                     }
                 }
             });
@@ -525,12 +537,12 @@
                             if($("#formularioGeneraFactura")[0].checkValidity()){
 
 
-                                // // Obtén el botón y el icono de carga
-                                // var boton = $("#boton_enviar_factura");
-                                // var iconoCarga = boton.find("i");
-                                // // Deshabilita el botón y muestra el icono de carga
-                                // boton.attr("disabled", true);
-                                // iconoCarga.show();
+                                // Obtén el botón y el icono de carga
+                                var boton = $("#boton_enviar_factura");
+                                var iconoCarga = boton.find("i");
+                                // Deshabilita el botón y muestra el icono de carga
+                                boton.attr("disabled", true);
+                                iconoCarga.show();
 
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];

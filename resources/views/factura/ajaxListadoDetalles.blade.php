@@ -1,17 +1,5 @@
-{{-- <div class="row">
-    <div class="col-3">
-        <button class="btn btn-primary btn-sm" onclick="modalNuevoCliente()"><i class="fa fa-plus"></i> Nuevo Cliente</button>
-    </div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-3">
-
-    </div>
-</div> --}}
+<hr>
+<h4 class="text-info text-center">DETALLES DE VENTA</h4>
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_detalles">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -72,7 +60,8 @@
 </div>
 <hr>
 {{-- <div id="bloqueDatosFactura" style="display: none"> --}}
-<div id="bloqueDatosFactura">
+<div id="bloqueDatosFactura" style="display: none">
+    <h3>DATOS PARA FACTURA</h3>
     <form id="formularioGeneraFactura">
         <div class="row">
             <div class="col-md-4">
@@ -148,8 +137,8 @@
     </form>
     <div class="row mt-2">
         <div class="col-md-12">
-            {{-- <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" style="display: none" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i>Enviar</button> --}}
-            <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin"></i>Enviar</button>
+            <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i>Enviar</button>
+            {{-- <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin"></i>Enviar</button> --}}
         </div>
     </div>
 </div>

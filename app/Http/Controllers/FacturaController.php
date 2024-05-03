@@ -144,8 +144,9 @@ class FacturaController extends Controller
             // TIPO MONEDA
             $tipoMonedas = SiatTipoMoneda::all();
 
-            $data['listado'] = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'))->render();
-            $data['estado'] = 'success';
+            $data['listado']  = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'))->render();
+            $data['estado']   = 'success';
+            $data['cantidad'] = count($detalles);
 
         }else{
             $data['text']   = 'No existe';

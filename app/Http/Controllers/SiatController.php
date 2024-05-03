@@ -842,6 +842,85 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function reversionAnulacionFactura(
+        $header,
+        $url3,
+        $codigoAmbiente,
+        $codigoDocumentoSector ,
+        $codigoModalidad,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scufd,
+        $scuis,
+        $nit,
+        $cuf1
+    ){
+
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url3;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoDocumentoSector  = $codigoDocumentoSector; //NUEVO SECTOR EDUCATIIVO
+        $codigoEmision          = 1; //NUEVO LINENA
+        $codigoModalidad        = $codigoModalidad;
+        $codigoPuntoVenta       = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cufd                   = $scufd; //NUEVO
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+        $tipoFacturaDocumento   = 1; //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
+        $cuf                    = $cuf1;
+
+        $parametros         =  array(
+            'SolicitudServicioReversionAnulacionFactura' => array(
+                'codigoAmbiente'            => $codigoAmbiente,
+                'codigoDocumentoSector'     => $codigoDocumentoSector,
+                'codigoEmision'             => $codigoEmision,
+                'codigoModalidad'           => $codigoModalidad,
+                'codigoPuntoVenta'          => $codigoPuntoVenta,
+                'codigoSistema'             => $codigoSistema,
+                'codigoSucursal'            => $codigoSucursal,
+                'cufd'                      => $cufd,
+                'cuis'                      => $cuis,
+                'nit'                       => $nit,
+                'tipoFacturaDocumento'      => $tipoFacturaDocumento,
+                'cuf'                       => $cuf,
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl'     => WSDL_CACHE_NONE,
+                'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->reversionAnulacionFactura($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado = false;
+            $data['estado'] = 'error';
+            $data['resultado'] = $resultado;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+        
+    }
+
 
 
     public function consultaPuntoVenta($header,$url4, $codigoAmbiente, $codigoSistema, $codigoSucursal, $scuis, $nit){

@@ -58,13 +58,18 @@
                 <td>
                     {{-- <a href="https://siat.impuestos.gob.bo/consulta/QR?nit=5427648016&cuf={{ $p->cuf }}&numero={{ $p->numero_cafc }}&t=2" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a> --}}
                     <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a>
-                    <button class="btn btn-info btn-icon btn-sm" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
 
                     @if (is_null($fac->estado))
+                        @if ($fac->tipo_factura == "offline" && is_null($fac->codigo_descripcion) )
+                            <button class="btn btn-info btn-icon btn-sm" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                        @else
+                            
+                        @endif
                         <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
-
+                    @elseif($fac->estado == "Anulado")
+                        <button class="btn btn-warning btn-sm btn-icon" title="Desanular Factura"><i class="fa fa-toggle-off"></i></button>
                     @else
-                        
+
                     @endif
                     {{-- <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $fac->id }}', '{{ $fac->nombre }}', {{ $fac->codigo_sucursal }})"><i class="fa fa-home"></i></button>
                     <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>

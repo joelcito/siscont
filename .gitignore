@@ -17,4 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/public/assets/docs
+/public/assets/docs/facturaxml.xml
+/public/assets/docs/facturaxml.xml.zip
+
