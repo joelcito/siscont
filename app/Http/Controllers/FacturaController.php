@@ -974,6 +974,102 @@ class FacturaController extends Controller
         return $data;
     }
 
+    public function desanularFacturaAnulado(Request $request){
+        if($request->ajax()){
+
+            $factura_id = $request->input('factura');
+            $factura    = Factura::find($factura_id);
+
+            $empresa_id     = $factura->empresa_id;
+            $sucursal_id    = $factura->sucursal_id;
+            $punto_venta_id = $factura->punto_venta_id;
+
+            $empresa     = Empresa::find($empresa_id);
+            $sucursal    = Sucursal::find($sucursal_id);
+            $punto_venta = PuntoVenta::find($punto_venta_id);
+            $cuis        = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
+
+            $siat       = app(SiatController::class);
+
+            $cufdVigente = json_decode(
+                $siat->verificarConeccion(
+                    $empresa->id,
+                    $sucursal->id,
+                    $cuis->id,
+                    $punto_venta->id,
+                    $empresa->codigo_ambiente
+                ));
+
+
+            // dd($cufdVigente);
+
+            // $header                = $empresa->api_token;
+            // $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+            // $codigoAmbiente        = $empresa->codigo_ambiente;
+            // $codigoDocumentoSector = $empresa->codigo_documento_sector;
+            // $codigoModalidad       = $empresa->codigo_modalidad;
+            // $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
+            // $codigoSistema         = $empresa->codigo_sistema;
+            // $codigoSucursal        = $sucursal->codigo_sucursal;
+            // $scufd                 = $cufdVigente->codigo;
+            // $scuis                 = $cuis->codigo;
+            // $nit                   = $empresa->nit;
+
+
+            $header                = $empresa->api_token;
+            $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+            $codigoAmbiente        = $empresa->codigo_ambiente;
+            $codigoDocumentoSector = $empresa->codigo_documento_sector;
+            $codigoModalidad       = $empresa->codigo_modalidad;
+            $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
+            $codigoSistema         = $empresa->codigo_sistema;
+            $codigoSucursal        = $sucursal->codigo_sucursal;
+            $scufd                 = $cufdVigente->codigo;
+            $scuis                 = $cuis->codigo;
+            $nit                   = $empresa->nit;
+            $cuf1                  = $factura->cuf;
+            
+            $respuesta = json_decode($siat->reversionAnulacionFactura(
+                $header,
+                $url3,
+                $codigoAmbiente,
+                $codigoDocumentoSector ,
+                $codigoModalidad,
+                $codigoPuntoVenta,
+                $codigoSistema,
+                $codigoSucursal,
+                $scufd,
+                $scuis,
+                $nit,
+                $cuf1
+            ));
+
+            // dd($respuesta);
+
+            if($respuesta->estado == "success"){
+                if($respuesta->resultado->RespuestaServicioFacturacion->transaccion){
+                    $factura->estado = null;
+                    Detalle::withTrashed()
+                            ->where('factura_id', $factura->id)
+                            ->update(['deleted_at' => null]);
+                    $factura->save();
+                    $data['estado'] = 'success';
+                    $data['msg'] = $respuesta->resultado->RespuestaServicioFacturacion->codigoDescripcion;
+                }else{
+                    $data['msg']   = $respuesta;
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['msg']   = $respuesta;
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
     
 
 

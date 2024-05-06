@@ -854,7 +854,7 @@ class SiatController extends Controller
         $scufd,
         $scuis,
         $nit,
-        $cuf1
+        $cuf
     ){
 
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
@@ -873,7 +873,7 @@ class SiatController extends Controller
         $cuis                   = $scuis;
         $nit                    = $nit;
         $tipoFacturaDocumento   = 1; //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
-        $cuf                    = $cuf1;
+        $cuf                    = $cuf;
 
         $parametros         =  array(
             'SolicitudServicioReversionAnulacionFactura' => array(

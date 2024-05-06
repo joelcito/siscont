@@ -15,6 +15,7 @@ class Empresa extends Model
         return Cuis::where('punto_venta_id', $punto_venta_id)
                     ->where('sucursal_id', $sucursal_id)
                     ->where('codigo_ambiente', $codigoAmbiente)
+                    ->orderBy('id', 'desc')
                     ->first();
         
     }

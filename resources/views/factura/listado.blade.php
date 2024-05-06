@@ -475,6 +475,62 @@
                 }
             })
         }
+
+        function desanularFacturaAnulado(factura){
+            Swal.fire({
+                title: "Estas seguro de desanular la Factura?",
+                text: "Esta accion no se podra revertir!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, estoy seguro!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ url('factura/desanularFacturaAnulado') }}",
+                        method: "POST",
+                        data:{
+                            factura:factura
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if(data.estado === "success"){
+                                ajaxListado();
+                                $('#modmodalContingenciaFueraLinea').modal('hide')
+                                Swal.fire({
+                                    icon             : 'success',
+                                    title            : "EXITO",
+                                    text             : JSON.stringify(data.msg),
+                                    showConfirmButton: false,                      // No mostrar botón de confirmación
+                                    // timer            : 2000,        // 5 segundos
+                                    timerProgressBar : true
+                                });
+                            }else{
+                                Swal.fire({
+                                    icon             : 'error',
+                                    title            : JSON.stringify(data.msg),
+                                    showConfirmButton: false,       // No mostrar botón de confirmación
+                                    // timer            : 2000,        // 5 segundos
+                                    timerProgressBar : true
+                                });
+                            }
+                        }
+                    })
+
+
+                    // Swal.fire({
+                    // title: "Deleted!",
+                    // text: "Your file has been deleted.",
+                    // icon: "success"
+                    // });
+                }
+            });
+
+
+
+            
+        }
    </script>
 @endsection
 

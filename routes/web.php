@@ -127,6 +127,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/arrayCuotasPagar', [FacturaController::class, 'arrayCuotasPagar']);
         Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
         Route::post('/anularFactura', [FacturaController::class, 'anularFactura']);
+        Route::post('/desanularFacturaAnulado', [FacturaController::class, 'desanularFacturaAnulado']);
+        
         
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);

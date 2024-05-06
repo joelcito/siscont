@@ -67,7 +67,7 @@
                         @endif
                         <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
                     @elseif($fac->estado == "Anulado")
-                        <button class="btn btn-warning btn-sm btn-icon" title="Desanular Factura"><i class="fa fa-toggle-off"></i></button>
+                        <button class="btn btn-warning btn-sm btn-icon" onclick="desanularFacturaAnulado('{{ $fac->id }}')"  title="Desanular Factura"><i class="fa fa-toggle-off"></i></button>
                     @else
 
                     @endif
