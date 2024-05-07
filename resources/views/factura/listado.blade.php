@@ -510,7 +510,8 @@
                                 Swal.fire({
                                     icon             : 'error',
                                     title            : JSON.stringify(data.msg),
-                                    showConfirmButton: false,       // No mostrar botón de confirmación
+                                    title            : "ERROR",
+                                    showConfirmButton: false,                      // No mostrar botón de confirmación
                                     // timer            : 2000,        // 5 segundos
                                     timerProgressBar : true
                                 });

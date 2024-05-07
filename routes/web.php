@@ -114,6 +114,8 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('/factura')->group(function(){
         Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
+        Route::get('/formularioFacturacionTasaCero', [FacturaController::class, 'formularioFacturacionTasaCero']);
+        
         Route::get('/listado', [FacturaController::class, 'listado']);
 
         Route::post('/ajaxListadoClientes', [FacturaController::class, 'ajaxListadoClientes']);

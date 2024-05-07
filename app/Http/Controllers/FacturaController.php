@@ -57,6 +57,40 @@ class FacturaController extends Controller
         return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
     }
 
+    public function formularioFacturacionTasaCero(Request $request){
+        
+        $usuario = Auth::user();
+
+        $empresa_id     = $usuario->empresa_id;
+        $punto_venta_id = $usuario->punto_venta_id;
+        $sucursal_id    = $usuario->sucursal_id;
+
+        $empresa     = Empresa::find($empresa_id);
+        $punto_venta = PuntoVenta::find($punto_venta_id);
+        $sucursal    = Sucursal::find($sucursal_id);
+
+        $url1   = $empresa->url_facturacionCodigos;
+        $header = $empresa->api_token;
+
+        // para el siat LA CONECCION
+        $siat = app(SiatController::class);
+        $verificacionSiat = json_decode($siat->verificarComunicacion(
+            $url1,
+            $header
+        ));
+
+        // SACAMOS EL CUIS VIGENTE
+        $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
+
+        // SACAMOS EL CUFD VIGENTE
+        $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
+
+        $servicios = Servicio::where('empresa_id', $empresa_id)
+                            ->get();
+
+        return view('factura.formularioFacturacionTasaCero')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
+    }
+
     public function ajaxListadoClientes(Request $request){
         if($request->ajax()){
 
