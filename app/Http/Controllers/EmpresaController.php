@@ -47,6 +47,9 @@ class EmpresaController extends Controller
                 $empresa                         = Empresa::find($empresa_id);
                 $empresa->usuario_modificador_id = Auth::user()->id;
             }
+
+            // dd($request->all(), $request->has('fila_archivo_p12'));
+
             $empresa->nombre                                    = $request->input('nombre_empresa');
             $empresa->nit                                       = $request->input('nit_empresa');
             $empresa->razon_social                              = $request->input('razon_social');
@@ -59,10 +62,32 @@ class EmpresaController extends Controller
             $empresa->url_facturacionSincronizacion             = $request->input('url_fac_sincronizacion');
             $empresa->url_servicio_facturacion_compra_venta     = $request->input('url_fac_servicios');
             $empresa->url_facturacion_operaciones               = $request->input('url_fac_operaciones');
-            $empresa->url_facturacionCodigos_pro                = $request->input('url_fac_codigos_pro');
-            $empresa->url_facturacionSincronizacion_pro         = $request->input('url_fac_sincronizacion_pro');
-            $empresa->url_servicio_facturacion_compra_venta_pro = $request->input('url_fac_servicios_pro');
-            $empresa->url_facturacion_operaciones_pro           = $request->input('url_fac_operaciones_pro');
+
+
+            if($request->has('fila_archivo_p12')){
+                // Obtén el archivo de la solicitud
+                $file = $request->file('fila_archivo_p12');
+
+                // Define el nombre del archivo y el directorio de almacenamiento
+                $originalName = $file->getClientOriginalName();
+                $filename     = time() . '_'. str_replace(' ', '_', $originalName);
+                $directory    = 'assets/docs/certificate';
+
+                // Guarda el archivo en el directorio especificado
+                $file->move(public_path($directory), $filename);
+
+                // Obtén la ruta completa del archivo
+                $filePath = $directory . '/' . $filename;
+
+                // Guarda la ruta del archivo en la base de datos
+                $empresa->archivop12 = $filePath;
+                $empresa->contrasenia = $request->input('contrasenia_archivo_p12');
+            }
+
+            // $empresa->url_facturacionCodigos_pro                = $request->input('url_fac_codigos_pro');
+            // $empresa->url_facturacionSincronizacion_pro         = $request->input('url_fac_sincronizacion_pro');
+            // $empresa->url_servicio_facturacion_compra_venta_pro = $request->input('url_fac_servicios_pro');
+            // $empresa->url_facturacion_operaciones_pro           = $request->input('url_fac_operaciones_pro');
 
             if($empresa->save()){
                 $data['estado'] = 'success';
@@ -112,7 +137,16 @@ class EmpresaController extends Controller
         // $punto_ventas = PuntoVenta::where('empre')->get();
 
 
-        return view('empresa.detalle')->with(compact('empresa', 'documentosSectores', 'siat_tipo_ventas', 'roles', 'sucursales', 'activiadesEconomica', 'productoServicio', 'unidadMedida'));
+        return view('empresa.detalle')->with(compact(
+            'empresa', 
+            'documentosSectores', 
+            'siat_tipo_ventas', 
+            'roles', 
+            'sucursales', 
+            'activiadesEconomica', 
+            'productoServicio', 
+            'unidadMedida'
+        ));
     }
 
     public function ajaxListadoSucursal(Request $request){

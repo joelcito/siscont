@@ -31,20 +31,28 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                     <!--begin::Form-->
-                    <form id="formulario_empresa" class="form" action="#">
+                    <form id="formulario_empresa" class="form" action="#" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombre_empresa" id="nombre_empresa">
-                                <input type="text" name="empresa_id" id="empresa_id" value="0">
+                                <input type="hidden" name="empresa_id" id="empresa_id" value="0">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Nit Empresa</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nit_empresa" id="nit_empresa">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Razon Social</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="razon_social" id="razon_social">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Tipo Empresa</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
+                                    <option></option>
+                                    <option value="Proveedor">Proveedor</option>
+                                    <option value="Cliente">Cliente</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -86,75 +94,37 @@
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Codigos</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Codigos</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos" id="url_fac_codigos">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Sincronizacion</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Sincronizacion</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion" id="url_fac_sincronizacion">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Servicio </label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Servicio </label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios" id="url_fac_servicios">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Des. Operaciones</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Url Operaciones</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones" id="url_fac_operaciones">
                             </div>
                         </div>
 
                         <div class="row mt-5">
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Codigos</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos_pro" id="url_fac_codigos_pro">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2">Archivo .p12</label>
+                                <input type="file" class="form-control fw-bold form-control-solid" name="fila_archivo_p12" id="fila_archivo_p12">
                             </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Sincronizacion</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion_pro" id="url_fac_sincronizacion_pro">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2">Contraseña</label>
+                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12">
                             </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Servicio </label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios_pro" id="url_fac_servicios_pro">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Url Pro. Operaciones</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones_pro" id="url_fac_operaciones_pro">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2">Archivo</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="existe_archivo_p12" id="existe_archivo_p12">
                             </div>
                         </div>
-
-                        <!--begin::Input group-->
-                        {{-- <div class="fv-row mb-10">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-semibold form-label mb-2">Select Roles:</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <select name="role" data-control="select2" data-placeholder="Select a role" data-hide-search="true" class="form-select form-select-solid fw-bold">
-                                <option></option>
-                                <option value="Administrator">Administrator</option>
-                                <option value="Analyst">Analyst</option>
-                                <option value="Developer">Developer</option>
-                                <option value="Support">Support</option>
-                                <option value="Trial">Trial</option>
-                            </select>
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-10">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-semibold form-label mb-2">Select Export Format:</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <select name="format" data-control="select2" data-placeholder="Select a format" data-hide-search="true" class="form-select form-select-solid fw-bold">
-                                <option></option>
-                                <option value="excel">Excel</option>
-                                <option value="pdf">PDF</option>
-                                <option value="cvs">CVS</option>
-                                <option value="zip">ZIP</option>
-                            </select>
-                            <!--end::Input-->
-                        </div> --}}
-                        <!--end::Input group-->
                     </form>
                     <!--end::Form-->
                     <div class="row mt-5">
@@ -1081,14 +1051,16 @@
 
         function guardarEmpresa(){
             if($("#formulario_empresa")[0].checkValidity()){
-                console.log($('#formulario_empresa').serializeArray())
+                // let datos = $('#formulario_empresa').serializeArray()
+                let datos = new FormData($("#formulario_empresa")[0]);
 
-                let datos = $('#formulario_empresa').serializeArray()
 
                 $.ajax({
                     url: "{{ url('empresa/guarda') }}",
                     method: "POST",
                     data: datos,
+                    contentType: false,
+                    processData: false,
                     success: function (data) {
                         if(data.estado === 'success'){
                             // console.log(data)

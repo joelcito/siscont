@@ -130,6 +130,9 @@ Route::middleware('auth')->group(function(){
         Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
         Route::post('/anularFactura', [FacturaController::class, 'anularFactura']);
         Route::post('/desanularFacturaAnulado', [FacturaController::class, 'desanularFacturaAnulado']);
+
+        Route::post('/emitirFacturaTasaCero', [FacturaController::class, 'emitirFacturaTasaCero']);
+
         
         
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);

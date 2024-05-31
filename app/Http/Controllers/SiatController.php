@@ -1091,6 +1091,7 @@ class SiatController extends Controller
         $scufd,
         $scuis,
         $nit,
+        $tipoFacturaDocumento,
 
 
         $arch, $fecEnv, $hasArch
@@ -1126,7 +1127,7 @@ class SiatController extends Controller
         $cufd                   = $scufd; //NUEVO
         $cuis                   = $scuis;
         $nit                    = $nit;
-        $tipoFacturaDocumento   = 1;                        //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
+        $tipoFacturaDocumento   = $tipoFacturaDocumento;                        //NUEVO FACTURA CON DERECHO A CREDITO FISCAL
         $archivo                = $arch;
         $fechaEnvio             = $fecEnv;
         $hashArchivo            = $hasArch;
