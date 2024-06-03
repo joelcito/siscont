@@ -4959,9 +4959,18 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="index.html">
-								<img alt="Logo" src="{{asset('assets/media/logos/default-dark.svg')}}" class="h-25px app-sidebar-logo-default" />
-								<img alt="Logo" src="{{asset('assets/media/logos/default-small.svg')}}" class="h-20px app-sidebar-logo-minimize" />
+							<a href="{{ url('home') }}">
+								{{-- <img alt="Logo" src="{{asset('assets/media/logos/default-dark.svg')}}" class="h-25px app-sidebar-logo-default" /> --}}
+								<div class="row mt-5">
+									<div class="col-md-6">
+										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-70px app-sidebar-logo-default" />
+										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" />										
+									</div>
+									<div class="col-md-6">
+										<h2 class="text-white text-center mr-10">VIRUSNOT SYSTEN</h2>
+									</div>
+								</div>
+
 							</a>
 							<!--end::Logo image-->
 							<!--begin::Sidebar toggle-->

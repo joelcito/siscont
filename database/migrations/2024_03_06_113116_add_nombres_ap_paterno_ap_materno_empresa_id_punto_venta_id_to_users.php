@@ -34,7 +34,9 @@ return new class extends Migration
             $table->string('ap_materno')->nullable()->after('ap_paterno');
             $table->string('correo')->nullable()->after('ap_materno');
             $table->string('numero_celular')->nullable()->after('correo');
-            $table->string('estado')->nullable()->after('password');
+            $table->text('menus')->nullable()->after('numero_celular');
+            $table->text('permisos')->nullable()->after('menus');
+            $table->string('estado')->nullable()->after('permisos');
 
             $table->datetime('deleted_at')->nullable()->after('remember_token');
         });

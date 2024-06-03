@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('numero_factura')->nullable();
             $table->string('numero_cafc')->nullable();
             $table->string('facturado')->nullable();
+            $table->decimal('total',12,2)->nullable();
             $table->decimal('monto_total_subjeto_iva',12,2)->nullable();
             $table->decimal('descuento_adicional',12,2)->nullable();
             $table->string('cuf')->nullable();

@@ -22,6 +22,8 @@ return new class extends Migration
             
             $table->string('nombres')->nullable();
             $table->string('descripcion')->nullable();
+            $table->text('menus')->nullable();
+            $table->text('permisos')->nullable();
 
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();

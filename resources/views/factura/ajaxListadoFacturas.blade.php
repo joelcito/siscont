@@ -30,7 +30,7 @@
             <tr>
                 <td>{{ $fac->cliente->nombres." ".$fac->cliente->ap_paterno." ".$fac->cliente->ap_materno }}</td>
                 <td>{{ $fac->fecha }}</td>
-                <td>{{ $fac->monto_total_subjeto_iva }}</td>
+                <td>{{ $fac->total }}</td>
                 <td>{{ $fac->numero_factura }}</td>
                 <td>
                     @if (is_null($fac->estado))

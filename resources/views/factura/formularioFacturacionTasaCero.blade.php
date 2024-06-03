@@ -588,7 +588,7 @@
                                         codigoMetodoPago                :$('#facturacion_datos_tipo_metodo_pago').val(),
                                         numeroTarjeta                   :null,
                                         montoTotal                      :montoTotal,
-                                        montoTotalSujetoIva             :montoTotal,
+                                        montoTotalSujetoIva             :0, //PARA ESTE SECTOR POR DEFECOT TIENE QUE IR 0
 
                                         codigoMoneda                    :$('#facturacion_datos_tipo_metodo_pago').val(),
                                         tipoCambio                      :1,
@@ -600,7 +600,7 @@
                                         cafc                            :null,
                                         leyenda                         :leyenda,
                                         usuario                         :usuario,
-                                        codigoDocumentoSector           :8
+                                        codigoDocumentoSector           :8 //EL SECTOR DE TASA CERO 
                                     }
                                 })
 

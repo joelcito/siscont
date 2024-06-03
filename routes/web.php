@@ -21,7 +21,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    // return view('welcome');
+    // return view('home.inicio');
+    return redirect('home');
+
 });
 
 Auth::routes();
@@ -132,6 +136,12 @@ Route::middleware('auth')->group(function(){
         Route::post('/desanularFacturaAnulado', [FacturaController::class, 'desanularFacturaAnulado']);
 
         Route::post('/emitirFacturaTasaCero', [FacturaController::class, 'emitirFacturaTasaCero']);
+
+
+        // PARA LAS SINCRONIZACIONES MASA
+        Route::get('/pruebas', [FacturaController::class, 'pruebas']);
+        // PARA LAS SINCRONIZACIONES MASA
+
 
         
         

@@ -634,6 +634,7 @@ class FacturaController extends Controller
                         $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
                         $facturaVerdad->numero_factura          = $numeroFacturaEmpresa;
                         $facturaVerdad->facturado               = "Si";
+                        $facturaVerdad->total                   = $datos['factura'][0]['cabecera']['montoTotal'];
                         $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                         $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
@@ -923,15 +924,15 @@ class FacturaController extends Controller
             }
             else{
                 // $datosRecepcion       = $request->input('datosRecepcion');
-                $datosRecepcion       = $datosCliente;
+                $datosRecepcion = $datosCliente;
                 if($datosRecepcion['uso_cafc'] === "Si"){
                     $datos['factura'][0]['cabecera']['cafc'] = $datosRecepcion['codigo_cafc_contingencia'];
                 }
-                $tipoEmision        = 2;
+                $tipoEmision = 2;
             }
 
-            $tipoFactura        = 1;
-            $tipoFacturaSector  = str_pad(1,2,"0",STR_PAD_LEFT);;
+            $tipoFactura        = ($empresa_objeto->codigo_documento_sector == 8)? 2 : 1; // Factura sin Derecho a Crédito Fiscal
+            $tipoFacturaSector  = str_pad($valoresCabecera['codigoDocumentoSector'],2,"0",STR_PAD_LEFT);;
             $puntoVenta         = str_pad($puntoVenta,4,"0",STR_PAD_LEFT);
 
             $cadena = $nitEmisor.$fechaEmision.$sucursal.$modalidad.$tipoEmision.$tipoFactura.$tipoFacturaSector.$numeroFactura.$puntoVenta;
@@ -1143,10 +1144,11 @@ class FacturaController extends Controller
                         $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
                         $facturaVerdad->numero_factura          = $numeroFacturaEmpresa;
                         $facturaVerdad->facturado               = "Si";
+                        $facturaVerdad->total                   = $datos['factura'][0]['cabecera']['montoTotal'];
                         $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                         $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                        $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxml.xml');
+                        $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxmlTasaCero.xml');
                         $facturaVerdad->codigo_descripcion      = $codigo_descripcion;
                         $facturaVerdad->codigo_recepcion        = $for->resultado->RespuestaServicioFacturacion->codigoRecepcion;
                         $facturaVerdad->codigo_transaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
@@ -1275,10 +1277,11 @@ class FacturaController extends Controller
                  $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
                  $facturaVerdad->numero_factura          = $numeroFacturaEmpresa;
                  $facturaVerdad->facturado               = "Si";
+                 $facturaVerdad->total                   = $datos['factura'][0]['cabecera']['montoTotal'];
                  $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                  $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                  $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                 $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxml.xml');
+                 $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxmlTasaCero.xml');
                  $facturaVerdad->codigo_descripcion      = NULL;
                  $facturaVerdad->codigo_recepcion        = NULL;
                  $facturaVerdad->codigo_transaccion      = NULL;
@@ -1462,6 +1465,7 @@ class FacturaController extends Controller
             $scufd                 = $cufdVigente->codigo;
             $scuis                 = $cuis->codigo;
             $nit                   = $empresa->nit;
+            $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
             
             $respuesta = json_decode($siat->anulacionFactura(
                 $header,
@@ -1475,6 +1479,7 @@ class FacturaController extends Controller
                 $scufd,
                 $scuis,
                 $nit,
+                $tipoFacturaDocumento,
 
                 $motivo_anulacion, $factura->cuf
             ));
@@ -1575,6 +1580,7 @@ class FacturaController extends Controller
             $scuis                 = $cuis->codigo;
             $nit                   = $empresa->nit;
             $cuf1                  = $factura->cuf;
+            $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
             
             $respuesta = json_decode($siat->reversionAnulacionFactura(
                 $header,
@@ -1588,7 +1594,8 @@ class FacturaController extends Controller
                 $scufd,
                 $scuis,
                 $nit,
-                $cuf1
+                $cuf1,
+                $tipoFacturaDocumento
             ));
 
             // dd($respuesta);
@@ -1611,11 +1618,283 @@ class FacturaController extends Controller
                 $data['estado'] = 'error';
             }
         }else{
-            $data['text']   = 'No existe';
+            $data['msg']   = 'No existe';
             $data['estado'] = 'error';
         }
         return $data;
     }
+
+
+
+
+    
+    // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
+    public function pruebas(){
+
+        
+
+        // $empresa  = Empresa::find(1);
+        // $sucursal = Sucursal::where('empresa_id', $empresa->id)
+        //                             ->first();
+
+        // $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+        //                         ->first();
+
+        // $cuis = Cuis::where('punto_venta_id', $puntoVenta->id)
+        //                     ->where('sucursal_id', $sucursal->id)
+        //                     ->where('codigo_ambiente', $empresa->codigo_ambiente)
+        //                     ->first();
+
+        $usuario = Auth::user();
+
+        $empresa_id     = $usuario->empresa_id;
+        $punto_venta_id = $usuario->punto_venta_id;
+        $sucursal_id    = $usuario->sucursal_id;
+
+        $empresa     = Empresa::find($empresa_id);
+        $puntoVenta = PuntoVenta::find($punto_venta_id);
+        $sucursal    = Sucursal::find($sucursal_id);
+
+        // SACAMOS EL CUIS VIGENTE
+        $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
+
+
+        $siat = app(SiatController::class);
+
+        // dd(
+        //     "api_token => ".$empresa->api_token,
+        //     "url_facturacionSincronizacion => ".$empresa->url_facturacionSincronizacion,
+        //     "codigo_ambiente => ".$empresa->codigo_ambiente,
+        //     "codigoPuntoVenta => ".$puntoVenta->codigoPuntoVenta,
+        //     "codigo_sistema => ".$empresa->codigo_sistema,
+        //     "codigo_sucursal => ".$sucursal->codigo_sucursal,
+        //     "codigo => ".$cuis->codigo,
+        //     "nit => ".$empresa->nit
+        // );
+
+        for ($i = 1; $i <= 50 ; $i++) {
+
+            $sincronizarActividades                         = json_decode($siat->sincronizarActividades(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarFechaHora                           = json_decode($siat->sincronizarFechaHora(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarListaActividadesDocumentoSector     = json_decode($siat->sincronizarListaActividadesDocumentoSector(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarListaLeyendasFactura                = json_decode($siat->sincronizarListaLeyendasFactura(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarListaMensajesServicios              = json_decode($siat->sincronizarListaMensajesServicios(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarListaProductosServicios             = json_decode($siat->sincronizarListaProductosServicios(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaEventosSignificativos    = json_decode($siat->sincronizarParametricaEventosSignificativos(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaMotivoAnulacion          = json_decode($siat->sincronizarParametricaMotivoAnulacion(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaPaisOrigen               = json_decode($siat->sincronizarParametricaPaisOrigen(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaTipoDocumentoIdentidad   = json_decode($siat->sincronizarParametricaTipoDocumentoIdentidad(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaTipoDocumentoSector      = json_decode($siat->sincronizarParametricaTipoDocumentoSector(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaTipoEmision              = json_decode($siat->sincronizarParametricaTipoEmision(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaTipoHabitacion           = json_decode($siat->sincronizarParametricaTipoHabitacion(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit
+            ));
+            $sincronizarParametricaTipoMetodoPago           = json_decode($siat->sincronizarParametricaTipoMetodoPago(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit 
+            ));
+            $sincronizarParametricaTipoMoneda               = json_decode($siat->sincronizarParametricaTipoMoneda(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit 
+            ));
+            $sincronizarParametricaTipoPuntoVenta           = json_decode($siat->sincronizarParametricaTipoPuntoVenta(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit 
+            ));
+            $sincronizarParametricaTiposFactura             = json_decode($siat->sincronizarParametricaTiposFactura(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit 
+            ));
+            $sincronizarParametricaUnidadMedida             = json_decode($siat->sincronizarParametricaUnidadMedida(
+                $empresa->api_token,
+                $empresa->url_facturacionSincronizacion,
+                $empresa->codigo_ambiente,
+                $puntoVenta->codigoPuntoVenta,
+                $empresa->codigo_sistema,
+                $sucursal->codigo_sucursal,
+                $cuis->codigo,
+                $empresa->nit 
+            ));
+
+            var_dump($sincronizarActividades);
+            echo "<br><br><br>";
+            var_dump($sincronizarFechaHora);
+            echo "<br><br><br>";
+            var_dump($sincronizarListaActividadesDocumentoSector);
+            echo "<br><br><br>";
+            var_dump($sincronizarListaLeyendasFactura);
+            echo "<br><br><br>";
+            var_dump($sincronizarListaMensajesServicios);
+            echo "<br><br><br>";
+            var_dump($sincronizarListaProductosServicios);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaEventosSignificativos);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaMotivoAnulacion);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaPaisOrigen);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoDocumentoIdentidad);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoDocumentoSector);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoEmision);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoHabitacion);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoMetodoPago);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoMoneda);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTipoPuntoVenta);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaTiposFactura);
+            echo "<br><br><br>";
+            var_dump($sincronizarParametricaUnidadMedida);
+            echo "****************** => <h1>".$i."</h1><= ******************";
+            sleep(3);
+        }
+    }
+    // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
 
     
 

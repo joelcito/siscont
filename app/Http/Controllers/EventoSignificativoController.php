@@ -543,6 +543,7 @@ class EventoSignificativoController extends Controller
                 $scufd                 = $cufdVigente->codigo;
                 $scuis                 = $cuis->codigo;
                 $nit                   = $empresa->nit;
+                $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
 
                 // Código que puede lanzar el error
                 // Por ejemplo, puedes tener algo como:
@@ -560,6 +561,7 @@ class EventoSignificativoController extends Controller
                     $scufd,
                     $scuis,
                     $nit,
+                    $tipoFacturaDocumento,
 
                     $contenidoArchivo, $fechaEmicion, $hashArchivo, $codigo_cafc_contingencia, $contado, $codigo_evento_significativo
                 ));
@@ -576,6 +578,7 @@ class EventoSignificativoController extends Controller
                     $scufd                 = $cufdVigente->codigo;
                     $scuis                 = $cuis->codigo;
                     $nit                   = $empresa->nit;
+                    $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
 
                     $validad = json_decode($siat->validacionRecepcionPaqueteFactura(
                         $header,
@@ -589,6 +592,7 @@ class EventoSignificativoController extends Controller
                         $scufd,
                         $scuis,
                         $nit,
+                        $tipoFacturaDocumento,
 
                         2,$res->resultado->RespuestaServicioFacturacion->codigoRecepcion
                     ));
@@ -633,7 +637,7 @@ class EventoSignificativoController extends Controller
                 }else{
                     // dd($res);
                     $data['estado'] = "error";
-                    $data['msg']    = "ERROR EN EL PRIMERO";
+                    $data['msg']    = $res->resultado;
                 }
 
                 // dd($checkboxes, $idsToUpdate);
