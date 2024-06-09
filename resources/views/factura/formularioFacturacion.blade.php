@@ -538,11 +538,11 @@
 
 
                                 // Obtén el botón y el icono de carga
-                                var boton = $("#boton_enviar_factura");
-                                var iconoCarga = boton.find("i");
-                                // Deshabilita el botón y muestra el icono de carga
-                                boton.attr("disabled", true);
-                                iconoCarga.show();
+                                // var boton = $("#boton_enviar_factura");
+                                // var iconoCarga = boton.find("i");
+                                // // Deshabilita el botón y muestra el icono de carga
+                                // boton.attr("disabled", true);
+                                // iconoCarga.show();
 
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];

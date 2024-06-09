@@ -546,6 +546,7 @@ class FacturaController extends Controller
             //  =========================   DE AQUI COMENZAMOS EL FIRMADO CHEEEEE ==============================\
             if($empresa_objeto->codigo_modalidad == "1"){
                 // $firmador = new FirmadorBoliviaSingle('assets/certificate/softoken.p12', "5427648Scz");
+                // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
                 $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
                 $xmlFirmado = $firmador->firmarRuta('assets/docs/facturaxml.xml');
                 file_put_contents('assets/docs/facturaxml.xml', $xmlFirmado);
