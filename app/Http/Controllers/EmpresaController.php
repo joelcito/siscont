@@ -15,6 +15,7 @@ use App\Models\SiatTipoPuntoVenta;
 use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -138,13 +139,13 @@ class EmpresaController extends Controller
 
 
         return view('empresa.detalle')->with(compact(
-            'empresa', 
-            'documentosSectores', 
-            'siat_tipo_ventas', 
-            'roles', 
-            'sucursales', 
-            'activiadesEconomica', 
-            'productoServicio', 
+            'empresa',
+            'documentosSectores',
+            'siat_tipo_ventas',
+            'roles',
+            'sucursales',
+            'activiadesEconomica',
+            'productoServicio',
             'unidadMedida'
         ));
     }
@@ -273,7 +274,9 @@ class EmpresaController extends Controller
                         $cuis->punto_venta_id     = $punto_venta->id;
                         $cuis->sucursal_id        = $sucursal->id;
                         $cuis->codigo             = $codigoCuisGenerado;
-                        $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                        // $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                        $cuis->fechaVigencia     = Carbon::parse($fechaVigenciaGenerado)->format('Y-m-d H:i:s');
+
                         $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
                         if($cuis->save()){
                             $data['text']   = 'Se creo el CUIS con exito';
@@ -303,7 +306,8 @@ class EmpresaController extends Controller
                                 $cuis->punto_venta_id     = $punto_venta->id;
                                 $cuis->sucursal_id        = $sucursal->id;
                                 $cuis->codigo             = $codigoCuisGenerado;
-                                $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                                // $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                                $cuis->fechaVigencia     = Carbon::parse($fechaVigenciaGenerado)->format('Y-m-d H:i:s');
                                 $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
                                 if($cuis->save()){
                                     $data['text']   = 'Se creo el CUIS con exito';

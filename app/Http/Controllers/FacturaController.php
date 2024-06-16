@@ -59,7 +59,7 @@ class FacturaController extends Controller
     }
 
     public function formularioFacturacionTasaCero(Request $request){
-        
+
         $usuario = Auth::user();
 
         $empresa_id     = $usuario->empresa_id;
@@ -162,6 +162,10 @@ class FacturaController extends Controller
             $empresa_id     = Auth::user()->empresa_id;
             $sucursal_id    = Auth::user()->sucursal_id;
             $punto_venta_id = Auth::user()->punto_venta_id;
+            $cliente        = Cliente::find($cliente_id);
+
+            $nit          = $cliente->nit;
+            $razon_social = $cliente->razon_social;
 
             $detalles = Detalle::where('cliente_id', $cliente_id)
                                 ->where('empresa_id', $empresa_id)
@@ -172,14 +176,14 @@ class FacturaController extends Controller
 
             // TIP DE DOCUMENTO
             $tipoDocumento = SiatTipoDocumentoIdentidad::all();
-            
+
             // TIP METO DE PAGO
             $tipoMetodoPago = SiatTipoMetodoPagos::all();
 
             // TIPO MONEDA
             $tipoMonedas = SiatTipoMoneda::all();
 
-            $data['listado']  = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'))->render();
+            $data['listado']  = view('factura.ajaxListadoDetalles')->with(compact('detalles', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas', 'nit', 'razon_social'))->render();
             $data['estado']   = 'success';
             $data['cantidad'] = count($detalles);
 
@@ -279,7 +283,7 @@ class FacturaController extends Controller
                                 // ->toSql();
 
             // dd(
-            //     "detalles => ".$detalles, 
+            //     "detalles => ".$detalles,
             //     "cliente_id => ".$cliente_id,
             //     "empresa_id => ".$empresa_id,
             //     "sucursal_id => ".$sucursal_id,
@@ -291,7 +295,7 @@ class FacturaController extends Controller
             // $pagos = Detalle::where('vehiculo_id',$vehiculo_id)
             //                 ->where('estado','Parapagar')
             //                 ->count();
-    
+
             $data['estado']   = 'success';
             $data['cantidad'] = $detalles;
 
@@ -301,7 +305,7 @@ class FacturaController extends Controller
         }
 
         return $data;
-        
+
     }
 
     public function arrayCuotasPagar(Request $request){
@@ -354,7 +358,7 @@ class FacturaController extends Controller
             $data['lista']      = json_encode($datelles);
             $data['estado']     = 'success';
             $data['detalles']   = $detalles_ids;
-            
+
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
@@ -367,7 +371,7 @@ class FacturaController extends Controller
 
             // dd($request->all());
 
-            // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************            
+            // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************
             $usuario        = Auth::user();
             $empresa_id     = $usuario->empresa_id;
             $punto_venta_id = $usuario->punto_venta_id;
@@ -515,7 +519,7 @@ class FacturaController extends Controller
             $datos['factura'][0]['cabecera']['telefono']          = $empresa_objeto->celular;
             $datos['factura'][0]['cabecera']['numeroFactura']     = $numeroFacturaEmpresa;
             $datos['factura'][0]['cabecera']['codigoSucursal']    = $sucursal_objeto->codigo_sucursal;
-            
+
 
 
             $datos['factura'][0]['cabecera']['cuf']                 = $cufPro;
@@ -878,7 +882,7 @@ class FacturaController extends Controller
 
             // dd($request->all());
 
-            // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************            
+            // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************
             $usuario        = Auth::user();
             $empresa_id     = $usuario->empresa_id;
             $punto_venta_id = $usuario->punto_venta_id;
@@ -1026,7 +1030,7 @@ class FacturaController extends Controller
             $datos['factura'][0]['cabecera']['telefono']          = $empresa_objeto->celular;
             $datos['factura'][0]['cabecera']['numeroFactura']     = $numeroFacturaEmpresa;
             $datos['factura'][0]['cabecera']['codigoSucursal']    = $sucursal_objeto->codigo_sucursal;
-            
+
 
 
             $datos['factura'][0]['cabecera']['cuf']                 = $cufPro;
@@ -1467,7 +1471,7 @@ class FacturaController extends Controller
             $scuis                 = $cuis->codigo;
             $nit                   = $empresa->nit;
             $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
-            
+
             $respuesta = json_decode($siat->anulacionFactura(
                 $header,
                 $url3,
@@ -1490,24 +1494,24 @@ class FacturaController extends Controller
             if($respuesta->estado == "success"){
                 if($respuesta->resultado->RespuestaServicioFacturacion->transaccion){
                     $factura->estado = 'Anulado';
-    
+
                     // PARA ELIMINAR LOS PAGOS
                     // Pago::where('factura_id', $fatura->id)->delete();
-    
+
                     // PARA ELIMINAR LOS DETALLES
                     Detalle::where('factura_id', $factura->id)->delete();
-    
+
                     // $cliente = Cliente::find($factura->cliente_id);
-    
+
                     // $correo = $cliente->correo;
                     // $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
                     // $numero = $factura->numero;
                     // $fecha  = $factura->fecha;
-    
+
                     //protected function enviaCorreoAnulacion($correo, $nombre, $numero, $fecha){
-    
+
                     // $this->enviaCorreoAnulacion($correo, $nombre, $numero, $fecha );
-    
+
                     $data['estado'] = "success";
                 }else{
                     $factura->descripcion = $respuesta->resultado->RespuestaServicioFacturacion->mensajesList->descripcion;
@@ -1582,7 +1586,7 @@ class FacturaController extends Controller
             $nit                   = $empresa->nit;
             $cuf1                  = $factura->cuf;
             $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
-            
+
             $respuesta = json_decode($siat->reversionAnulacionFactura(
                 $header,
                 $url3,
@@ -1628,11 +1632,11 @@ class FacturaController extends Controller
 
 
 
-    
+
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
     public function pruebas(){
 
-        
+
 
         // $empresa  = Empresa::find(1);
         // $sucursal = Sucursal::where('empresa_id', $empresa->id)
@@ -1813,7 +1817,7 @@ class FacturaController extends Controller
                 $empresa->codigo_sistema,
                 $sucursal->codigo_sucursal,
                 $cuis->codigo,
-                $empresa->nit 
+                $empresa->nit
             ));
             $sincronizarParametricaTipoMoneda               = json_decode($siat->sincronizarParametricaTipoMoneda(
                 $empresa->api_token,
@@ -1823,7 +1827,7 @@ class FacturaController extends Controller
                 $empresa->codigo_sistema,
                 $sucursal->codigo_sucursal,
                 $cuis->codigo,
-                $empresa->nit 
+                $empresa->nit
             ));
             $sincronizarParametricaTipoPuntoVenta           = json_decode($siat->sincronizarParametricaTipoPuntoVenta(
                 $empresa->api_token,
@@ -1833,7 +1837,7 @@ class FacturaController extends Controller
                 $empresa->codigo_sistema,
                 $sucursal->codigo_sucursal,
                 $cuis->codigo,
-                $empresa->nit 
+                $empresa->nit
             ));
             $sincronizarParametricaTiposFactura             = json_decode($siat->sincronizarParametricaTiposFactura(
                 $empresa->api_token,
@@ -1843,7 +1847,7 @@ class FacturaController extends Controller
                 $empresa->codigo_sistema,
                 $sucursal->codigo_sucursal,
                 $cuis->codigo,
-                $empresa->nit 
+                $empresa->nit
             ));
             $sincronizarParametricaUnidadMedida             = json_decode($siat->sincronizarParametricaUnidadMedida(
                 $empresa->api_token,
@@ -1853,7 +1857,7 @@ class FacturaController extends Controller
                 $empresa->codigo_sistema,
                 $sucursal->codigo_sucursal,
                 $cuis->codigo,
-                $empresa->nit 
+                $empresa->nit
             ));
 
             var_dump($sincronizarActividades);
@@ -1897,7 +1901,7 @@ class FacturaController extends Controller
     }
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
 
-    
+
 
 
     // ===================  FUNCIOENES PROTEGIDAS  ========================

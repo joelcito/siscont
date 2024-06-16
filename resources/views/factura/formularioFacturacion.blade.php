@@ -321,24 +321,24 @@
                     dataType: 'json',
                     success: function(data) {
                         if(data.estado === 'success'){
-    
+
                             let cliente = $('#cliente_id_escogido').val();
                             ajaxListadoDetalles(cliente);
-    
+
                             $('#tabla_detalles').show('toogle')
-    
+
                             // $('#cantidad_almacen').val(data.cantidaAlacen)
                             // $('#cantidad').attr('max', data.cantidaAlacen)
                             // $('.servi').hide('toggle');
                             // $('.serviPro').show('toggle');
                             // $("#lavador_id").prop("required", false);
                             // $('.serviAlma').show('toggle');
-    
+
                             // if(json.id == 213 || json.id == 214 || json.id == 215)
                             //     $('#precio').prop('readonly', false);
                             // else
                             //     $('#precio').prop('readonly', true);
-    
+
                             // if(data.cantidaAlacen <= 0)
                             //     $('#btnAgregarProductoChe').prop('disabled', true);
                             // else
@@ -397,12 +397,12 @@
                     },
                     success: function (data) {
                         if(data.estado === 'success'){
-    
+
                             ajaxListadoDetalles(cliente)
                             $('#bloqueDatosFactura').hide('toogle')
-    
+
                             // $('#tabla_detalles').html(data.listado)
-    
+
                             // Swal.fire({
                             //     icon             : 'success',
                             //     title            : data.msg,
@@ -411,9 +411,9 @@
                             //     timerProgressBar : true
                             // });
                             // ajaxListadoTipoDocumentoSector();
-    
+
                         }else{
-    
+
                         }
                     }
                 })
@@ -611,7 +611,7 @@
                                         // razonSocialEmisor               :'{{ $empresa->razon_social }}',
                                         // municipio                       :"Santa Cruz",
                                         // telefono                        :"73130500",
-                                        
+
                                         nitEmisor                       :null,
                                         razonSocialEmisor               :null,
                                         municipio                       :null,
@@ -688,7 +688,8 @@
                                                 text : 'LA FACTURA FUE VALIDADA',
                                                 timer: 3000
                                             })
-                                            window.location.href = "{{ url('factura/listado')}}"
+                                            {{--  window.location.href = "{{ url('factura/listado')}}"  --}}
+                                            location.reload();
                                         }else if(data.estado === "error_email"){
                                             Swal.fire({
                                                 icon : 'error',
@@ -731,7 +732,7 @@
             });
 
         }
-      
+
    </script>
 @endsection
 

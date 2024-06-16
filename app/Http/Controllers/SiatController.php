@@ -7,6 +7,7 @@ use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
 use App\Models\Sucursal;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -1396,7 +1397,7 @@ class SiatController extends Controller
             $data['resultado'] = $resultado;
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
-        
+
     }
 
 
@@ -1719,7 +1720,8 @@ class SiatController extends Controller
                         $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
                         $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
                         $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
-                        $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                        // $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                        $cufdNew->fecha_vigencia     = Carbon::parse($cufd->resultado->RespuestaCufd->fechaVigencia)->format('Y-m-d H:i:s');
                         $cufdNew->save();
                         $cufdRescatadoUtilizar =  $cufdNew;
                     }else{
@@ -1755,7 +1757,8 @@ class SiatController extends Controller
                     $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
                     $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
                     $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
-                    $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                    // $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                    $cufdNew->fecha_vigencia     = Carbon::parse($cufd->resultado->RespuestaCufd->fechaVigencia)->format('Y-m-d H:i:s');
                     $cufdNew->save();
 
                     $cufdRescatadoUtilizar =  $cufdNew;
@@ -1867,11 +1870,11 @@ class SiatController extends Controller
         $arch, $fechaenv,$hasarch, $cafcC, $canFact, $codEvent
         ){
         // $this->verificarConeccion();
-        
+
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
         // $this->verificarConeccion();
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
-        
+
         $wsdl                   = $url3;
         $codigoAmbiente         = $codigoAmbiente;
         $codigoDocumentoSector  = $codigoDocumentoSector;     // SECTOR EDUCATIVO
