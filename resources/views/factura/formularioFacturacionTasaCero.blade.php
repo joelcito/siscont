@@ -176,12 +176,16 @@
 
         $(document).ready(function() {
 
-            // ajaxListadoTipoDocumentoSector();
             ajaxListadoClientes();
 
             $("#serivicio_id_venta").select2();
 
+
+
         });
+
+
+
 
         function ajaxListadoClientes(){
             let datos = {}
@@ -496,11 +500,11 @@
 
 
                                 // Obtén el botón y el icono de carga
-                                // var boton = $("#boton_enviar_factura");
-                                // var iconoCarga = boton.find("i");
-                                // // Deshabilita el botón y muestra el icono de carga
-                                // boton.attr("disabled", true);
-                                // iconoCarga.show();
+                                var boton = $("#boton_enviar_factura");
+                                var iconoCarga = boton.find("i");
+                                // Deshabilita el botón y muestra el icono de carga
+                                boton.attr("disabled", true);
+                                iconoCarga.show();
 
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];
@@ -615,8 +619,8 @@
                                     'pagos'     : arrayPagos,
                                     // 'empresa'   : "{{ $empresa->id }}"
                                     // 'realizo_pago': $("#realizo_pago").prop("checked"),
-                                    // 'caja'        : $('#caja_id').val()
-                                    'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
+                                    'numero_cafc': $('#numero_factura_cafc').val(),
+                                    'uso_cafc'   : $('input[name="uso_cafc"]:checked').val(),
                                 };
                                 var datosRecepcion = {
                                     // 'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
@@ -644,7 +648,7 @@
                                                 text : 'LA FACTURA FUE VALIDADA',
                                                 timer: 3000
                                             })
-                                            {{--  window.location.href = "{{ url('factura/listado')}}"  --}}
+                                            window.location.href = "{{ url('factura/listado')}}"
                                         }else if(data.estado === "error_email"){
                                             Swal.fire({
                                                 icon : 'error',
@@ -686,6 +690,14 @@
                 }
             });
 
+        }
+
+        function bloqueCAFC(){
+            if($('#tipo_facturacion').val() === "offline"){
+                $('#bloque_cafc').show('toggle')
+            }else{
+                $('#bloque_cafc').hide('toggle')
+            }
         }
 
    </script>

@@ -17,7 +17,9 @@ class SiatController extends Controller
 {
 
     protected $header ;
-    protected $timeout = 5;
+    protected $timeout = 1;
+    // protected $timeout = 5;
+    // protected $timeout = 20;
     protected $codigoAmbiente ;
     protected $codigoModalidad ;
     protected $codigoPuntoVenta ;
@@ -1313,9 +1315,10 @@ class SiatController extends Controller
             $data['estado'] = 'success';
             $data['resultado'] = $resultado;
         } catch (SoapFault $fault) {
-            $resultado = false;
-            $data['estado'] = 'error';
+            $resultado         = false;
+            $data['estado']    = 'error';
             $data['resultado'] = $resultado;
+            $data['msg'] = $fault;
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
@@ -1682,6 +1685,7 @@ class SiatController extends Controller
 
 
         $header           = $empresa->api_token;
+        // dd($header);
         $url1             = $empresa->url_facturacionCodigos;
         $codigoAmbiente   = $empresa->codigo_ambiente;
         $codigoModalidad  = $empresa->codigo_modalidad;

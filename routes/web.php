@@ -90,7 +90,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxListadoTipoMoneda', [SincronizacionSiatController::class, 'ajaxListadoTipoMoneda']);
         Route::post('/ajaxListadoMotivoAnulacion', [SincronizacionSiatController::class, 'ajaxListadoMotivoAnulacion']);
         Route::post('/ajaxListadoEventoSignificativo', [SincronizacionSiatController::class, 'ajaxListadoEventoSignificativo']);
-        
+
 
         Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
         Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function(){
     Route::prefix('/factura')->group(function(){
         Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
         Route::get('/formularioFacturacionTasaCero', [FacturaController::class, 'formularioFacturacionTasaCero']);
-        
+
         Route::get('/listado', [FacturaController::class, 'listado']);
 
         Route::post('/ajaxListadoClientes', [FacturaController::class, 'ajaxListadoClientes']);
@@ -137,20 +137,29 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/emitirFacturaTasaCero', [FacturaController::class, 'emitirFacturaTasaCero']);
 
+        Route::post('/sacaNumeroCafcUltimo', [FacturaController::class, 'sacaNumeroCafcUltimo']);
+
 
         // PARA LAS SINCRONIZACIONES MASA
         Route::get('/pruebas', [FacturaController::class, 'pruebas']);
         // PARA LAS SINCRONIZACIONES MASA
 
+        // PARA CREACION DE FACTURAS MASA
+        Route::get('/emiteFacturaMasa', [FacturaController::class, 'emiteFacturaMasa']);
+        // PARA CREACION DE FACTURAS MASA
 
-        
-        
+
+
+
+
+
+
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
     });
 
     Route::prefix('/eventosignificativo')->group(function(){
-        
+
         Route::get('/listado', [EventoSignificativoController::class, 'listado']);
 
         Route::post('/ajaxListado', [EventoSignificativoController::class, 'ajaxListado']);
@@ -159,8 +168,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/buscarEventosSignificativos', [EventoSignificativoController::class, 'buscarEventosSignificativos']);
         Route::post('/muestraTableFacturaPaquete', [EventoSignificativoController::class, 'muestraTableFacturaPaquete']);
         Route::post('/mandarFacturasPaquete', [EventoSignificativoController::class, 'mandarFacturasPaquete']);
-        
-        
+
+
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
 
     });

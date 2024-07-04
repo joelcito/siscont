@@ -11,11 +11,13 @@ use App\Models\PuntoVenta;
 use App\Models\SiatEventoSignificativo;
 use App\Models\Sucursal;
 use Carbon\Carbon;
+use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use PharData;
 use SimpleXMLElement;
+use TypeError;
 
 class EventoSignificativoController extends Controller
 {
@@ -37,9 +39,10 @@ class EventoSignificativoController extends Controller
             $eventosSignificativos = EventoSignificativo::where('empresa_id', $empresa_id)
                                                         ->where('punto_venta_id',$punto_venta_id)
                                                         ->where('sucursal_id',$sucursal_id)
+                                                        ->orderBy('id','desc')
                                                         ->get();
         //                                                 ->toSql();
-        //     dd($eventosSignificativos, 
+        //     dd($eventosSignificativos,
         //     "usuario_id => ".$usuario_id,
         //     "empresa_id => ".$empresa_id,
         //     "sucursal_id => ".$sucursal_id,
@@ -186,7 +189,7 @@ class EventoSignificativoController extends Controller
             // $fechaFin       = $request->input('fechafin').":00";
             // $fechaIni       = str_replace(' ', 'T', trim($request->input('fechainicio')));
             // $fechaFin       = str_replace(' ', 'T', trim($request->input('fechafin')));
-            
+
             $fechaIni       = $fecha_inicio."T".$hora_inicio;
             $fechaFin       = $fecha_fin."T".$hora_fin;
 
@@ -201,132 +204,136 @@ class EventoSignificativoController extends Controller
             $nit              = $empresa->nit;
 
             $siat = app(SiatController::class);
-            // AQUI CREAMOS EL NUEVO CUFD PARA EL NUEVO DIA
-            $cufd = json_decode($siat->cufd(
-                $header,
-                $url1,
-                $codigoAmbiente,
-                $codigoModalidad,
-                $codigoPuntoVenta,
-                $codigoSistema,
-                $codigoSucursal,
-                $scuis,
-                $nit 
-            ));
-            if($cufd->estado === "success"){
-                if($cufd->resultado->RespuestaCufd->transaccion){
-
-                    $cufdNew                     = new Cufd();
-                    $cufdNew->usuario_creador_id = Auth::user()->id;
-                    $cufdNew->empresa_id         = $empresa_id;
-                    $cufdNew->sucursal_id        = $sucursal_id;
-                    $cufdNew->cuis_id            = $cuis_id;
-                    $cufdNew->punto_venta_id     = $punto_venta_id;
-                    $cufdNew->codigo_ambiente    = $codigoAmbiente;
-                    $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
-                    $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
-                    $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
-                    $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
-                    $cufdNew->save();
-                    $cufdRescatadoUtilizar =  $cufdNew;
-
-                    // session(['scufd' => $cufd->resultado->RespuestaCufd->codigo]);
-                    // session(['scodigoControl' => $cufd->resultado->RespuestaCufd->codigoControl]);
-                    // session(['sdireccion' => $cufd->resultado->RespuestaCufd->direccion]);
-                    // session(['sfechaVigenciaCufd' => $cufd->resultado->RespuestaCufd->fechaVigencia]);
-                    // $cufdNew = app(CufdController::class);
-                    // $cufdNew->create(
-                    //                 $cufd->resultado->RespuestaCufd->codigo,
-                    //                 $cufd->resultado->RespuestaCufd->codigoControl,
-                    //                 $cufd->resultado->RespuestaCufd->direccion,
-                    //                 $cufd->resultado->RespuestaCufd->fechaVigencia,
-                    //                 Auth::user()->codigo_punto_venta
-                    //             );
-                }
-            }
-
-            $header           = $empresa->api_token;
-            $url4             = $empresa->url_facturacion_operaciones;
-            $codigoAmbiente   = $empresa->codigo_ambiente;
-            $codigoPuntoVenta = $punto_venta->codigoPuntoVenta;
-            $codigoSistema    = $empresa->codigo_sistema;
-            $codigoSucursal   = $sucursal->codigo_sucursal;
-
-            $cufdVigente = json_decode(
-                $siat->verificarConeccion(
-                    $empresa->id,
-                    $sucursal->id,
-                    $cuis->id,
-                    $punto_venta->id,
-                    $empresa->codigo_ambiente
+            try {
+                // AQUI CREAMOS EL NUEVO CUFD PARA EL NUEVO DIA
+                $cufd = json_decode($siat->cufd(
+                    $header,
+                    $url1,
+                    $codigoAmbiente,
+                    $codigoModalidad,
+                    $codigoPuntoVenta,
+                    $codigoSistema,
+                    $codigoSucursal,
+                    $scuis,
+                    $nit
                 ));
 
-            $scufd            = $cufdVigente->codigo;
-            $scuis            = $cuis->codigo;
-            $nit              = $empresa->nit;
 
-            // END AQUI CREAMOS EL NUEVO CUFD PARA EL NUEVO DIA
-            $respuesta = json_decode($siat->registroEventoSignificativo(
-                $header,
-                $url4,
-                $codigoAmbiente,
-                $codigoPuntoVenta,
-                $codigoSistema,
-                $codigoSucursal,
-                $scufd,
-                $scuis,
-                $nit,
 
-                $codMotEvent, $cufdEvent, $desc, $fechaIni, $fechaFin
-            ));
+                if($cufd->estado === "success"){
+                    if($cufd->resultado->RespuestaCufd->transaccion){
 
-            if($respuesta->estado === "success"){
-                if($respuesta->resultado->RespuestaListaEventos->transaccion){
+                        $cufdNew                     = new Cufd();
+                        $cufdNew->usuario_creador_id = Auth::user()->id;
+                        $cufdNew->empresa_id         = $empresa_id;
+                        $cufdNew->sucursal_id        = $sucursal_id;
+                        $cufdNew->cuis_id            = $cuis_id;
+                        $cufdNew->punto_venta_id     = $punto_venta_id;
+                        $cufdNew->codigo_ambiente    = $codigoAmbiente;
+                        $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
+                        $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
+                        $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
+                        // $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
+                        $cufdNew->fecha_vigencia     = Carbon::parse($cufd->resultado->RespuestaCufd->fechaVigencia)->format('Y-m-d H:i:s');
+                        $cufdNew->save();
+                        $cufdRescatadoUtilizar =  $cufdNew;
 
-                    $evento_significativo                                     = new EventoSignificativo();
-                    $evento_significativo->usuario_creador_id                 = Auth::user()->id;
-                    $evento_significativo->empresa_id                         = $empresa->id;
-                    $evento_significativo->siat_evento_significativo_id       = $siat_evento_significativo->id;
-                    $evento_significativo->punto_venta_id                     = $punto_venta->id;
-                    $evento_significativo->sucursal_id                        = $sucursal->id;
-                    $evento_significativo->cufd_activo_id                     = $cufdVigente->id;
-                    $evento_significativo->cufd_evento_id                     = $cufdOffLine->id;
-                    $evento_significativo->cuis_id                            = $cuis->id;
-                    $evento_significativo->descripcion                        = $descripcion;
-                    $evento_significativo->fecha_ini_evento                   = $fechaIni;
-                    $evento_significativo->fecha_fin_evento                   = $fechaFin;
-                    $evento_significativo->codigoRecepcionEventoSignificativo = $respuesta->resultado->RespuestaListaEventos->codigoRecepcionEventoSignificativo;
-                    
-                    $evento_significativo->save();
-
-                    $data['estado']     = "success";
-                    $data['msg']        = $respuesta->resultado->RespuestaListaEventos->codigoRecepcionEventoSignificativo;
-                }else{
-                    $data['estado']     = "error";
-                    $data['msg']        = $respuesta->resultado->RespuestaListaEventos;
+                        // session(['scufd' => $cufd->resultado->RespuestaCufd->codigo]);
+                        // session(['scodigoControl' => $cufd->resultado->RespuestaCufd->codigoControl]);
+                        // session(['sdireccion' => $cufd->resultado->RespuestaCufd->direccion]);
+                        // session(['sfechaVigenciaCufd' => $cufd->resultado->RespuestaCufd->fechaVigencia]);
+                        // $cufdNew = app(CufdController::class);
+                        // $cufdNew->create(
+                        //                 $cufd->resultado->RespuestaCufd->codigo,
+                        //                 $cufd->resultado->RespuestaCufd->codigoControl,
+                        //                 $cufd->resultado->RespuestaCufd->direccion,
+                        //                 $cufd->resultado->RespuestaCufd->fechaVigencia,
+                        //                 Auth::user()->codigo_punto_venta
+                        //             );
+                    }
                 }
-            }else{
 
-            //     dd( 
-            //     $respuesta, 
-            
-            //     $header,
-            //     $url4,
-            //     $codigoAmbiente,
-            //     $codigoPuntoVenta,
-            //     $codigoSistema,
-            //     $codigoSucursal,
-            //     $scufd,
-            //     $scuis,
-            //     $nit,
+                $header           = $empresa->api_token;
+                $url4             = $empresa->url_facturacion_operaciones;
+                $codigoAmbiente   = $empresa->codigo_ambiente;
+                $codigoPuntoVenta = $punto_venta->codigoPuntoVenta;
+                $codigoSistema    = $empresa->codigo_sistema;
+                $codigoSucursal   = $sucursal->codigo_sucursal;
 
-            //     $codMotEvent, $cufdEvent, $desc, $fechaIni, $fechaFin
-            // );
+                $cufdVigente = json_decode(
+                    $siat->verificarConeccion(
+                        $empresa->id,
+                        $sucursal->id,
+                        $cuis->id,
+                        $punto_venta->id,
+                        $empresa->codigo_ambiente
+                    ));
 
-                $data['estado']     = "error";
-                $data['msg']        = $respuesta->resultado->RespuestaListaEventos->mensajesList->descripcion;
+                $scufd            = $cufdVigente->codigo;
+                $scuis            = $cuis->codigo;
+                $nit              = $empresa->nit;
 
+                try {
+                    // END AQUI CREAMOS EL NUEVO CUFD PARA EL NUEVO DIA
+                    $respuesta = json_decode($siat->registroEventoSignificativo(
+                        $header,
+                        $url4,
+                        $codigoAmbiente,
+                        $codigoPuntoVenta,
+                        $codigoSistema,
+                        $codigoSucursal,
+                        $scufd,
+                        $scuis,
+                        $nit,
+
+                        $codMotEvent, $cufdEvent, $desc, $fechaIni, $fechaFin
+                    ));
+
+                    if($respuesta->estado === "success"){
+                        if($respuesta->resultado->RespuestaListaEventos->transaccion){
+
+                            $evento_significativo                                     = new EventoSignificativo();
+                            $evento_significativo->usuario_creador_id                 = Auth::user()->id;
+                            $evento_significativo->empresa_id                         = $empresa->id;
+                            $evento_significativo->siat_evento_significativo_id       = $siat_evento_significativo->id;
+                            $evento_significativo->punto_venta_id                     = $punto_venta->id;
+                            $evento_significativo->sucursal_id                        = $sucursal->id;
+                            $evento_significativo->cufd_activo_id                     = $cufdVigente->id;
+                            $evento_significativo->cufd_evento_id                     = $cufdOffLine->id;
+                            $evento_significativo->cuis_id                            = $cuis->id;
+                            $evento_significativo->descripcion                        = $descripcion;
+                            $evento_significativo->fecha_ini_evento                   = $fechaIni;
+                            $evento_significativo->fecha_fin_evento                   = $fechaFin;
+                            $evento_significativo->codigoRecepcionEventoSignificativo = $respuesta->resultado->RespuestaListaEventos->codigoRecepcionEventoSignificativo;
+
+                            $evento_significativo->save();
+
+                            $data['estado']     = "success";
+                            $data['msg']        = $respuesta->resultado->RespuestaListaEventos->codigoRecepcionEventoSignificativo;
+                        }else{
+                            $data['estado']     = "error";
+                            $data['msg']        = $respuesta->resultado->RespuestaListaEventos;
+
+                            // ELIMINAMOS EL PRIMERO CREADO
+                            Cufd::destroy($cufdNew->id);
+                            // ELIMINAMOS EL PRIMERO CREADO
+                        }
+                    }else{
+                        $data['estado']     = "error";
+                        $data['msg']        = $respuesta->resultado->RespuestaListaEventos->mensajesList->descripcion;
+                    }
+                } catch (ErrorException $e) {
+                    $data['estado']     = "error";
+                    $data['msg']        = $e->getMessage();
+                }
+
+            } catch (TypeError $th) {
+                $data['estado']    = 'error';
+                $data['msg']       = $th->getMessage();
+                $data['num_error'] = 1;
+                return $data;
             }
+
 
         }else{
             $data['text']   = 'No existe';
@@ -413,7 +420,7 @@ class EventoSignificativoController extends Controller
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
-        }    
+        }
         return $data;
     }
 
@@ -643,14 +650,15 @@ class EventoSignificativoController extends Controller
                 // dd($checkboxes, $idsToUpdate);
                 // Intentar acceder a la propiedad RespuestaServicioFacturacion
                 // $valor = $resultado->RespuestaServicioFacturacion;
-            } catch (\Throwable $e) {
+            // } catch (\Throwable $e) {
+            } catch (ErrorException $e) {
                 // Capturar y manejar el error
                 // Aquí puedes realizar acciones para tratar el error, como registrar un mensaje de error, mostrar un mensaje al usuario, etc.
                 // Puedes acceder al mensaje de error específico usando $e->getMessage()
                 // También puedes acceder al número de línea y el archivo donde ocurrió el error usando $e->getLine() y $e->getFile()
-                echo "Error capturado: " . $e->getMessage();
+                // echo "Error capturado: " . $e->getMessage();
                 $data['estado'] = "error";
-                $data['msg']    = $e->getMessage;
+                $data['msg']    = $e->getMessage();
             }
         }else{
             $data['text']   = 'No existe';

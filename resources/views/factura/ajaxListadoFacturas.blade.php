@@ -31,7 +31,13 @@
                 <td>{{ $fac->cliente->nombres." ".$fac->cliente->ap_paterno." ".$fac->cliente->ap_materno }}</td>
                 <td>{{ $fac->fecha }}</td>
                 <td>{{ $fac->total }}</td>
-                <td>{{ $fac->numero_factura }}</td>
+                <td>
+                    @if ($fac->uso_cafc == "Si")
+                        <span class="text-primary">N° Cafc: </span>{{ $fac->numero_cafc }}
+                    @else
+                        {{ $fac->numero_factura }}
+                    @endif
+                </td>
                 <td>
                     @if (is_null($fac->estado))
                         <span class="badge badge-success">VIGENTE</span>
@@ -42,8 +48,12 @@
                 <td>
                     @if ($fac->codigo_descripcion == "VALIDADA")
                         <span class="badge badge-success">{{ $fac->codigo_descripcion }}</span>
+                    @elseif($fac->codigo_descripcion == "OBSERVADA")
+                        <span class="badge badge-danger">{{ $fac->codigo_descripcion }}</span>
+                    @elseif($fac->codigo_descripcion == "PENDIENTE")
+                        <span class="badge badge-warning">{{ $fac->codigo_descripcion }}</span>
                     @else
-                        algo aqui :>
+                        <span class="badge badge-info">PARA SU ENVIO FUERA DE LINEA 1</span>
                     @endif
                 </td>
                 <td>
@@ -52,7 +62,8 @@
                     @elseif($fac->tipo_factura == "offline")
                         <span class="badge badge-warning">OFFLINE</span>
                     @else
-                        algo aqui :>
+                        {{--  algo aqui :>  --}}
+                        {{--  <span class="badge badge-info">PARA SU ENVIO FUERA DE LINEA 2</span>  --}}
                     @endif
                 </td>
                 <td>
@@ -63,7 +74,7 @@
                         @if ($fac->tipo_factura == "offline" && is_null($fac->codigo_descripcion) )
                             <button class="btn btn-info btn-icon btn-sm" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
                         @else
-                            
+
                         @endif
                         <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
                     @elseif($fac->estado == "Anulado")

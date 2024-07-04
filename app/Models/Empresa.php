@@ -17,9 +17,11 @@ class Empresa extends Model
                     ->where('codigo_ambiente', $codigoAmbiente)
                     ->orderBy('id', 'desc')
                     ->first();
-        
+                    // ->toSql();
+
+
     }
 
-    
+
 
 }

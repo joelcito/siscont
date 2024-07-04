@@ -689,7 +689,7 @@
                                                 timer: 3000
                                             })
                                             {{--  window.location.href = "{{ url('factura/listado')}}"  --}}
-                                            location.reload();
+                                            {{--  location.reload();  --}}
                                         }else if(data.estado === "error_email"){
                                             Swal.fire({
                                                 icon : 'error',

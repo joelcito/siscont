@@ -10,6 +10,8 @@ use DOMXPath;
 // require_once('/../Exceptions/FirmaException.php');
 require_once('FirmaException.php' );
 
+// use FirmaException;
+
 class FirmadorBoliviaSingle
 {
     /**

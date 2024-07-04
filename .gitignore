@@ -19,4 +19,6 @@ yarn-error.log
 /.vscode
 /public/assets/docs/facturaxml.xml
 /public/assets/docs/facturaxml.xml.zip
+/public/assets/docs/paquete/
+/public/assets/docs/certificate/
 

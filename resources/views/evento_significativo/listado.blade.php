@@ -88,7 +88,7 @@
                         <div class="row mt-5">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-success w-100 btn-sm"
-                                    onclick="agregarEventoSignificativo()">Generar</button>
+                                    onclick="agregarEventoSignificativo()" id="boton_enviar"><i class="fa fa-spinner fa-spin" style="display:none;"></i>Generar</button>
                             </div>
                         </div>
                     </form>
@@ -232,13 +232,26 @@
         }
 
         function modalRol() {
-            // $('#nombre').val("")
-            // $('#descripcion').val("")
+            $('#descripcion').val('')
+            $('#codigo_tipo_evento').val(null).trigger('change');
+            $('#fecha_inicio').val('')
+            $('#hora_inicio').val('')
+            $('#fecha_fin').val('')
+            $('#hora_fin').val('')
+            $('#bloque_bloque_cufds').html('<select name="cufd_id" id="cufd_id" class="form-control" required><option value="">Seleccionar</option></select>');
             $('#modal_evento_significativo').modal('show')
         }
 
         function agregarEventoSignificativo() {
             if ($("#formulario_new_evento_significativo")[0].checkValidity()) {
+
+                // Obtén el botón y el icono de carga
+                var boton = $("#boton_enviar");
+                var iconoCarga = boton.find("i");
+                // Deshabilita el botón y muestra el icono de carga
+                boton.attr("disabled", true);
+                iconoCarga.show();
+
 
                 let datos = $('#formulario_new_evento_significativo').serializeArray();
 
@@ -256,14 +269,27 @@
                                 text : "Se registro con exito con el codigo "+data.msg,
                                 timer: 1500
                             })
-                            
+
                             ajaxListado();
                             $('#modal_evento_significativo').modal('hide')
+
+                            //DESABILITAMOS EL BOTON
+                            boton.attr("disabled", false);
+                            iconoCarga.hide();
+                            //DESABILITAMOS EL BOTON
+
                         } else {
+                            let j = "";
+                            if(data.num_error == 1){
+                                j = "Error al recuperar el CUFD intente otra vez"
+                                //DESABILITAMOS EL BOTON
+                                boton.attr("disabled", false);
+                                iconoCarga.hide();
+                            }
                             Swal.fire({
-                                title:'Error!',
-                                text : JSON.stringify(data.msg),
-                                icon: 'error'
+                                title: JSON.stringify(data.msg),
+                                text : j,
+                                icon : 'error'
                             })
                         }
                     }

@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-3">
                 <label for="">Nit/Cedula</label>
                 <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off" required value="{{ $nit }}">
@@ -102,14 +102,14 @@
                 <label for="">Razon Social</label>
                 <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off" required value="{{ $razon_social }}">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="">Tipo Factura</label>
                 <select name="tipo_facturacion" id="tipo_facturacion" class="form-control" onchange="bloqueCAFC()">
                     <option value="online">En Linea</option>
                     <option value="offline">Fuera de Linea</option>
                 </select>
             </div>
-            <div class="col-md-1" style="display: none;" id="bloque_cafc">
+            <div class="col-md-2" style="display: none;" id="bloque_cafc">
                 <label for="">Uso del CAFC?</label>
                 <div class="row mt-5">
                     <div class="col-md-6">
@@ -119,9 +119,12 @@
                     <div class="col-md-6">
                         <label for="radioSi">Si</label>
                         <input type="radio" name="uso_cafc" id="radioSi" value="Si">
-                        <input type="hidden" id="codigo_cafc_contingencia" name="codigo_cafc_contingencia">
                     </div>
                 </div>
+            </div>
+            <div class="col-md-2" id="numero_fac_cafc" style="display: none;">
+                <label for="">Numero de CAFC:</label>
+                <input type="number" class="form-control" id="numero_factura_cafc" name="numero_factura_cafc">
             </div>
         </div>
         {{-- <h3 class="text-center text-info">PAGO</h3> --}}
@@ -169,5 +172,59 @@
 
         $("#facturacion_datos_tipo_metodo_pago, #facturacion_datos_tipo_moneda").select2();
 
+         // Agregar un evento para verificar el radio seleccionado al cambiar
+        $('input[name="uso_cafc"]').on('change', function() {
+            verificarRadioSeleccionado();
+        });
+
     });
+
+    function verificarRadioSeleccionado() {
+        var valorSeleccionado = $('input[name="uso_cafc"]:checked').val();
+        if (valorSeleccionado === 'No') {
+
+            $('#numero_fac_cafc').hide('toggle');
+            $('#numero_factura_cafc').val(0)
+
+
+
+            /*
+            $.ajax({
+                url: "{{ url('factura/sacaNumeroFactura') }}",
+                method: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.estado === "success"){
+                        $("#numero_factura").val(data.numero);
+                        $("#codigo_cafc_contingencia").val("");
+                    }else{
+                        Swal.fire({
+                            icon:   'error',
+                            title:  'Error!',
+                            text:   "Algo fallo"
+                        })
+                    }
+                }
+            })
+            */
+        } else if (valorSeleccionado === 'Si') {
+            $.ajax({
+                url: "{{ url('factura/sacaNumeroCafcUltimo') }}",
+                method: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.estado === "success"){
+                        $("#numero_factura_cafc").val(data.numero);
+                        $('#numero_fac_cafc').show('toggle');
+                    }else{
+                        Swal.fire({
+                            icon:   'error',
+                            title:  'Error!',
+                            text:   "Algo fallo"
+                        })
+                    }
+                }
+            })
+        }
+    }
 </script>
