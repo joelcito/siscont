@@ -92,6 +92,8 @@ class FacturaController extends Controller
             $header
         ));
 
+        // dd($verificacionSiat);
+
         // SACAMOS EL CUIS VIGENTE
         $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
 
@@ -901,7 +903,7 @@ class FacturaController extends Controller
     public function  emitirFacturaTasaCero(Request $request){
         if($request->ajax()){
 
-            dd($request->all());
+            // dd($request->all());
 
             // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************
             $usuario        = Auth::user();
@@ -1475,6 +1477,7 @@ class FacturaController extends Controller
                                 // ->where('estado','ANULADO')
 
                                 ->orderBy('id', 'desc')
+                                ->limit(100)
                                 ->get();
 
             $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas'))->render();
