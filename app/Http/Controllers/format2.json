@@ -1,0 +1,5426 @@
+[
+  {
+    "pais": "Andorra",
+    "codigo": "AD",
+    "estado": [
+      {
+        "1": ["AD", "Andorra la Vella", "07 "],
+        "2": ["AD", "Canillo", "02 "],
+        "3": ["AD", "Encamp", "03 "],
+        "4": ["AD", "Escaldes-Engordany", "08 "],
+        "5": ["AD", "La Massana", "04 "],
+        "6": ["AD", "Ordino", "05 "],
+        "7": ["AD", "Sant Julia de Loria", "06 "]
+      }
+    ]
+  },
+  {
+    "pais": "United Arab Emirates",
+    "codigo": "AE",
+    "estado": [
+      {
+        "8": ["AE", "'Ajman", "AJ "],
+        "9": ["AE", "Abu Zaby", "AZ "],
+        "10": ["AE", "Al Fujayrah", "FU "],
+        "11": ["AE", "Ash Shariqah", "SH "],
+        "12": ["AE", "Dubayy", "DU "],
+        "13": ["AE", "Ra's al Khaymah", "RK "],
+        "14": ["AE", "Umm al Qaywayn", "UQ "]
+      }
+    ]
+  },
+  {
+    "pais": "Afghanistan",
+    "codigo": "AF",
+    "estado": [
+      {
+        "15": ["AF", "Badakhshan", "BDS"],
+        "16": ["AF", "Baghlan", "BGL"],
+        "17": ["AF", "Balkh", "BAL"],
+        "18": ["AF", "Bamyan", "BAM"],
+        "19": ["AF", "Daykundi", "DAY"],
+        "20": ["AF", "Farah", "FRA"],
+        "21": ["AF", "Faryab", "FYB"],
+        "22": ["AF", "Ghazni", "GHA"],
+        "23": ["AF", "Ghor", "GHO"],
+        "24": ["AF", "Helmand", "HEL"],
+        "25": ["AF", "Herat", "HER"],
+        "26": ["AF", "Jowzjan", "JOW"],
+        "27": ["AF", "Kabul", "KAB"],
+        "28": ["AF", "Kandahar", "KAN"],
+        "29": ["AF", "Khost", "KHO"],
+        "30": ["AF", "Kunduz", "KDZ"],
+        "31": ["AF", "Laghman", "LAG"],
+        "32": ["AF", "Logar", "LOG"],
+        "33": ["AF", "Nangarhar", "NAN"],
+        "34": ["AF", "Nimroz", "NIM"],
+        "35": ["AF", "Paktiya", "PIA"],
+        "36": ["AF", "Parwan", "PAR"],
+        "37": ["AF", "Takhar", "TAK"],
+        "38": ["AF", "Uruzgan", "URU"]
+      }
+    ]
+  },
+  {
+    "pais": "Antigua and Barbuda",
+    "codigo": "AG",
+    "estado": [
+      {
+        "39": ["AG", "Redonda", "11 "],
+        "40": ["AG", "Saint George", "03 "],
+        "41": ["AG", "Saint John", "04 "],
+        "42": ["AG", "Saint Mary", "05 "],
+        "43": ["AG", "Saint Paul", "06 "],
+        "44": ["AG", "Saint Peter", "07 "],
+        "45": ["AG", "Saint Philip", "08 "]
+      }
+    ]
+  },
+  {
+    "pais": "Anguilla",
+    "codigo": "AI",
+    "estado": [
+      {
+        "46": ["AI", "Anguilla", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Albania",
+    "codigo": "AL",
+    "estado": [
+      {
+        "47": ["AL", "Berat", "01 "],
+        "48": ["AL", "Diber", "09 "],
+        "49": ["AL", "Durres", "02 "],
+        "50": ["AL", "Elbasan", "03 "],
+        "51": ["AL", "Fier", "04 "],
+        "52": ["AL", "Gjirokaster", "05 "],
+        "53": ["AL", "Korce", "06 "],
+        "54": ["AL", "Kukes", "07 "],
+        "55": ["AL", "Lezhe", "08 "],
+        "56": ["AL", "Shkoder", "10 "],
+        "57": ["AL", "Tirane", "11 "],
+        "58": ["AL", "Vlore", "12 "]
+      }
+    ]
+  },
+  {
+    "pais": "Armenia",
+    "codigo": "AM",
+    "estado": [
+      {
+        "59": ["AM", "Aragacotn", "AG "],
+        "60": ["AM", "Ararat", "AR "],
+        "61": ["AM", "Armavir", "AV "],
+        "62": ["AM", "Erevan", "ER "],
+        "63": ["AM", "Gegark'unik'", "GR "],
+        "64": ["AM", "Kotayk'", "KT "],
+        "65": ["AM", "Lori", "LO "],
+        "66": ["AM", "Sirak", "SH "],
+        "67": ["AM", "Syunik'", "SU "],
+        "68": ["AM", "Tavus", "TV "],
+        "69": ["AM", "Vayoc Jor", "VD "]
+      }
+    ]
+  },
+  {
+    "pais": "Angola",
+    "codigo": "AO",
+    "estado": [
+      {
+        "70": ["AO", "Bengo", "BGO"],
+        "71": ["AO", "Benguela", "BGU"],
+        "72": ["AO", "Bie", "BIE"],
+        "73": ["AO", "Cabinda", "CAB"],
+        "74": ["AO", "Cunene", "CNN"],
+        "75": ["AO", "Huambo", "HUA"],
+        "76": ["AO", "Huila", "HUI"],
+        "77": ["AO", "Kuando Kubango", "CCU"],
+        "78": ["AO", "Kwanza Norte", "CNO"],
+        "79": ["AO", "Kwanza Sul", "CUS"],
+        "80": ["AO", "Luanda", "LUA"],
+        "81": ["AO", "Lunda Norte", "LNO"],
+        "82": ["AO", "Lunda Sul", "LSU"],
+        "83": ["AO", "Malange", "MAL"],
+        "84": ["AO", "Moxico", "MOX"],
+        "85": ["AO", "Namibe", "NAM"],
+        "86": ["AO", "Uige", "UIG"],
+        "87": ["AO", "Zaire", "ZAI"]
+      }
+    ]
+  },
+  {
+    "pais": "Antarctica",
+    "codigo": "AQ",
+    "estado": [[]]
+  },
+  {
+    "pais": "Argentina",
+    "codigo": "AR",
+    "estado": [
+      {
+        "88": ["AR", "Buenos Aires", "B  "],
+        "89": ["AR", "Catamarca", "K  "],
+        "90": ["AR", "Chaco", "H  "],
+        "91": ["AR", "Chubut", "U  "],
+        "92": ["AR", "Ciudad Autonoma de Buenos Aires", "C  "],
+        "93": ["AR", "Cordoba", "X  "],
+        "94": ["AR", "Corrientes", "W  "],
+        "95": ["AR", "Entre Rios", "E  "],
+        "96": ["AR", "Formosa", "P  "],
+        "97": ["AR", "Jujuy", "Y  "],
+        "98": ["AR", "La Pampa", "L  "],
+        "99": ["AR", "La Rioja", "F  "],
+        "100": ["AR", "Mendoza", "M  "],
+        "101": ["AR", "Misiones", "N  "],
+        "102": ["AR", "Neuquen", "Q  "],
+        "103": ["AR", "Rio Negro", "R  "],
+        "104": ["AR", "Salta", "A  "],
+        "105": ["AR", "San Juan", "J  "],
+        "106": ["AR", "San Luis", "D  "],
+        "107": ["AR", "Santa Cruz", "Z  "],
+        "108": ["AR", "Santa Fe", "S  "],
+        "109": ["AR", "Santiago del Estero", "G  "],
+        "110": ["AR", "Tierra del Fuego", "V  "],
+        "111": ["AR", "Tucuman", "T  "]
+      }
+    ]
+  },
+  {
+    "pais": "American Samoa",
+    "codigo": "AS",
+    "estado": [
+      {
+        "112": ["AS", "Eastern District", "   "],
+        "113": ["AS", "Western District", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Austria",
+    "codigo": "AT",
+    "estado": [
+      {
+        "114": ["AT", "Burgenland", "1  "],
+        "115": ["AT", "Karnten", "2  "],
+        "116": ["AT", "Niederosterreich", "3  "],
+        "117": ["AT", "Oberosterreich", "4  "],
+        "118": ["AT", "Salzburg", "5  "],
+        "119": ["AT", "Steiermark", "6  "],
+        "120": ["AT", "Tirol", "7  "],
+        "121": ["AT", "Vorarlberg", "8  "],
+        "122": ["AT", "Wien", "9  "]
+      }
+    ]
+  },
+  {
+    "pais": "Australia",
+    "codigo": "AU",
+    "estado": [
+      {
+        "123": ["AU", "Australian Capital Territory", "ACT"],
+        "124": ["AU", "New South Wales", "NSW"],
+        "125": ["AU", "Northern Territory", "NT "],
+        "126": ["AU", "Queensland", "QLD"],
+        "127": ["AU", "South Australia", "SA "],
+        "128": ["AU", "Tasmania", "TAS"],
+        "129": ["AU", "Victoria", "VIC"],
+        "130": ["AU", "Western Australia", "WA "]
+      }
+    ]
+  },
+  {
+    "pais": "Aruba",
+    "codigo": "AW",
+    "estado": [
+      {
+        "131": ["AW", "Aruba", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Aland Islands",
+    "codigo": "AX",
+    "estado": [
+      {
+        "132": ["AX", "Eckeroe", "   "],
+        "133": ["AX", "Finstroem", "   "],
+        "134": ["AX", "Hammarland", "   "],
+        "135": ["AX", "Jomala", "   "],
+        "136": ["AX", "Mariehamn", "   "],
+        "137": ["AX", "Saltvik", "   "],
+        "138": ["AX", "Sund", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Azerbaijan",
+    "codigo": "AZ",
+    "estado": [
+      {
+        "139": ["AZ", "Abseron", "ABS"],
+        "140": ["AZ", "Agcabadi", "AGC"],
+        "141": ["AZ", "Agstafa", "AGA"],
+        "142": ["AZ", "Agsu", "AGU"],
+        "143": ["AZ", "Astara", "AST"],
+        "144": ["AZ", "Baki", "BA "],
+        "145": ["AZ", "Balakan", "BAL"],
+        "146": ["AZ", "Barda", "BAR"],
+        "147": ["AZ", "Beylaqan", "BEY"],
+        "148": ["AZ", "Bilasuvar", "BIL"],
+        "149": ["AZ", "Calilabad", "CAL"],
+        "150": ["AZ", "Fuzuli", "FUZ"],
+        "151": ["AZ", "Gadabay", "GAD"],
+        "152": ["AZ", "Ganca", "GA "],
+        "153": ["AZ", "Goranboy", "GOR"],
+        "154": ["AZ", "Goycay", "GOY"],
+        "155": ["AZ", "Goygol", "GYG"],
+        "156": ["AZ", "Haciqabul", "HAC"],
+        "157": ["AZ", "Imisli", "IMI"],
+        "158": ["AZ", "Ismayilli", "ISM"],
+        "159": ["AZ", "Kurdamir", "KUR"],
+        "160": ["AZ", "Lankaran", "LA "],
+        "161": ["AZ", "Masalli", "MAS"],
+        "162": ["AZ", "Mingacevir", "MI "],
+        "163": ["AZ", "Naftalan", "NA "],
+        "164": ["AZ", "Naxcivan", "NX "],
+        "165": ["AZ", "Neftcala", "NEF"],
+        "166": ["AZ", "Oguz", "OGU"],
+        "167": ["AZ", "Qabala", "QAB"],
+        "168": ["AZ", "Qax", "QAX"],
+        "169": ["AZ", "Qazax", "QAZ"],
+        "170": ["AZ", "Quba", "QBA"],
+        "171": ["AZ", "Qusar", "QUS"],
+        "172": ["AZ", "Saatli", "SAT"],
+        "173": ["AZ", "Sabirabad", "SAB"],
+        "174": ["AZ", "Saki", "SAK"],
+        "175": ["AZ", "Salyan", "SAL"],
+        "176": ["AZ", "Samaxi", "SMI"],
+        "177": ["AZ", "Samkir", "SKR"],
+        "178": ["AZ", "Samux", "SMX"],
+        "179": ["AZ", "Sirvan", "SR "],
+        "180": ["AZ", "Siyazan", "SIY"],
+        "181": ["AZ", "Sumqayit", "SM "],
+        "182": ["AZ", "Tartar", "TAR"],
+        "183": ["AZ", "Tovuz", "TOV"],
+        "184": ["AZ", "Xacmaz", "XAC"],
+        "185": ["AZ", "Xizi", "XIZ"],
+        "186": ["AZ", "Yardimli", "YAR"],
+        "187": ["AZ", "Yevlax", "YEV"],
+        "188": ["AZ", "Zaqatala", "ZAQ"]
+      }
+    ]
+  },
+  {
+    "pais": "Bosnia and Herzegovina",
+    "codigo": "BA",
+    "estado": [
+      {
+        "189": ["BA", "Brcko distrikt", "BRC"],
+        "190": ["BA", "Federacija Bosne i Hercegovine", "BIH"],
+        "191": ["BA", "Republika Srpska", "SRP"]
+      }
+    ]
+  },
+  {
+    "pais": "Barbados",
+    "codigo": "BB",
+    "estado": [
+      {
+        "192": ["BB", "Christ Church", "01 "],
+        "193": ["BB", "Saint Andrew", "02 "],
+        "194": ["BB", "Saint George", "03 "],
+        "195": ["BB", "Saint James", "04 "],
+        "196": ["BB", "Saint John", "05 "],
+        "197": ["BB", "Saint Joseph", "06 "],
+        "198": ["BB", "Saint Lucy", "07 "],
+        "199": ["BB", "Saint Michael", "08 "],
+        "200": ["BB", "Saint Peter", "09 "],
+        "201": ["BB", "Saint Philip", "10 "],
+        "202": ["BB", "Saint Thomas", "11 "]
+      }
+    ]
+  },
+  {
+    "pais": "Bangladesh",
+    "codigo": "BD",
+    "estado": [
+      {
+        "203": ["BD", "Barisal", "A  "],
+        "204": ["BD", "Chittagong", "B  "],
+        "205": ["BD", "Dhaka", "C  "],
+        "206": ["BD", "Khulna", "D  "],
+        "207": ["BD", "Rajshahi", "E  "],
+        "208": ["BD", "Rangpur", "F  "],
+        "209": ["BD", "Sylhet", "G  "]
+      }
+    ]
+  },
+  {
+    "pais": "Belgium",
+    "codigo": "BE",
+    "estado": [
+      {
+        "210": ["BE", "Antwerpen", "VAN"],
+        "211": ["BE", "Brabant wallon", "WBR"],
+        "212": ["BE", "Brussels Hoofdstedelijk Gewest", "BRU"],
+        "213": ["BE", "Hainaut", "WHT"],
+        "214": ["BE", "Liege", "WLG"],
+        "215": ["BE", "Limburg", "VLI"],
+        "216": ["BE", "Luxembourg", "WLX"],
+        "217": ["BE", "Namur", "WNA"],
+        "218": ["BE", "Oost-Vlaanderen", "VOV"],
+        "219": ["BE", "Vlaams-Brabant", "VBR"],
+        "220": ["BE", "West-Vlaanderen", "VWV"]
+      }
+    ]
+  },
+  {
+    "pais": "Burkina Faso",
+    "codigo": "BF",
+    "estado": [
+      {
+        "221": ["BF", "Bale", "BAL"],
+        "222": ["BF", "Bam", "BAM"],
+        "223": ["BF", "Bazega", "BAZ"],
+        "224": ["BF", "Boulgou", "BLG"],
+        "225": ["BF", "Boulkiemde", "BLK"],
+        "226": ["BF", "Comoe", "COM"],
+        "227": ["BF", "Gnagna", "GNA"],
+        "228": ["BF", "Houet", "HOU"],
+        "229": ["BF", "Kadiogo", "KAD"],
+        "230": ["BF", "Kourweogo", "KOW"],
+        "231": ["BF", "Leraba", "LER"],
+        "232": ["BF", "Mouhoun", "MOU"],
+        "233": ["BF", "Poni", "PON"],
+        "234": ["BF", "Sanmatenga", "SMT"],
+        "235": ["BF", "Tapoa", "TAP"],
+        "236": ["BF", "Tuy", "TUI"],
+        "237": ["BF", "Yatenga", "YAT"],
+        "238": ["BF", "Zoundweogo", "ZOU"]
+      }
+    ]
+  },
+  {
+    "pais": "Bulgaria",
+    "codigo": "BG",
+    "estado": [
+      {
+        "239": ["BG", "Blagoevgrad", "01 "],
+        "240": ["BG", "Burgas", "02 "],
+        "241": ["BG", "Dobrich", "08 "],
+        "242": ["BG", "Gabrovo", "07 "],
+        "243": ["BG", "Haskovo", "26 "],
+        "244": ["BG", "Kardzhali", "09 "],
+        "245": ["BG", "Kyustendil", "10 "],
+        "246": ["BG", "Lovech", "11 "],
+        "247": ["BG", "Montana", "12 "],
+        "248": ["BG", "Pazardzhik", "13 "],
+        "249": ["BG", "Pernik", "14 "],
+        "250": ["BG", "Pleven", "15 "],
+        "251": ["BG", "Plovdiv", "16 "],
+        "252": ["BG", "Razgrad", "17 "],
+        "253": ["BG", "Ruse", "18 "],
+        "254": ["BG", "Shumen", "27 "],
+        "255": ["BG", "Silistra", "19 "],
+        "256": ["BG", "Sliven", "20 "],
+        "257": ["BG", "Smolyan", "21 "],
+        "258": ["BG", "Sofia", "23 "],
+        "259": ["BG", "Sofia (stolitsa)", "22 "],
+        "260": ["BG", "Stara Zagora", "24 "],
+        "261": ["BG", "Targovishte", "25 "],
+        "262": ["BG", "Varna", "03 "],
+        "263": ["BG", "Veliko Tarnovo", "04 "],
+        "264": ["BG", "Vidin", "05 "],
+        "265": ["BG", "Vratsa", "06 "],
+        "266": ["BG", "Yambol", "28 "]
+      }
+    ]
+  },
+  {
+    "pais": "Bahrain",
+    "codigo": "BH",
+    "estado": [
+      {
+        "267": ["BH", "Al 'Asimah", "13 "],
+        "268": ["BH", "Al Janubiyah", "14 "],
+        "269": ["BH", "Al Muharraq", "15 "],
+        "270": ["BH", "Ash Shamaliyah", "17 "]
+      }
+    ]
+  },
+  {
+    "pais": "Burundi",
+    "codigo": "BI",
+    "estado": [
+      {
+        "271": ["BI", "Bubanza", "BB "],
+        "272": ["BI", "Bujumbura Mairie", "BM "],
+        "273": ["BI", "Bururi", "BR "],
+        "274": ["BI", "Cibitoke", "CI "],
+        "275": ["BI", "Gitega", "GI "],
+        "276": ["BI", "Kirundo", "KI "],
+        "277": ["BI", "Muramvya", "MU "],
+        "278": ["BI", "Mwaro", "MW "],
+        "279": ["BI", "Ngozi", "NG "],
+        "280": ["BI", "Rutana", "RT "],
+        "281": ["BI", "Ruyigi", "RY "]
+      }
+    ]
+  },
+  {
+    "pais": "Benin",
+    "codigo": "BJ",
+    "estado": [
+      {
+        "282": ["BJ", "Alibori", "AL "],
+        "283": ["BJ", "Atacora", "AK "],
+        "284": ["BJ", "Atlantique", "AQ "],
+        "285": ["BJ", "Borgou", "BO "],
+        "286": ["BJ", "Donga", "DO "],
+        "287": ["BJ", "Littoral", "LI "],
+        "288": ["BJ", "Mono", "MO "],
+        "289": ["BJ", "Oueme", "OU "],
+        "290": ["BJ", "Plateau", "PL "],
+        "291": ["BJ", "Zou", "ZO "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Barth\u00e9lemy",
+    "codigo": "BL",
+    "estado": [
+      {
+        "292": ["BL", "Saint Barthelemy", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Bermuda",
+    "codigo": "BM",
+    "estado": [
+      {
+        "293": ["BM", "Hamilton", "   "],
+        "294": ["BM", "Saint George", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Brunei Darussalam",
+    "codigo": "BN",
+    "estado": [
+      {
+        "295": ["BN", "Belait", "BE "],
+        "296": ["BN", "Brunei-Muara", "BM "],
+        "297": ["BN", "Temburong", "TE "],
+        "298": ["BN", "Tutong", "TU "]
+      }
+    ]
+  },
+  {
+    "pais": "Bolivia (Plurinational State of)",
+    "codigo": "BO",
+    "estado": [
+      {
+        "299": ["BO", "Chuquisaca", "H  "],
+        "300": ["BO", "Cochabamba", "C  "],
+        "301": ["BO", "El Beni", "B  "],
+        "302": ["BO", "La Paz", "L  "],
+        "303": ["BO", "Oruro", "O  "],
+        "304": ["BO", "Pando", "N  "],
+        "305": ["BO", "Potosi", "P  "],
+        "306": ["BO", "Santa Cruz", "S  "],
+        "307": ["BO", "Tarija", "T  "]
+      }
+    ]
+  },
+  {
+    "pais": "Bonaire, Sint Eustatius and Saba",
+    "codigo": "BQ",
+    "estado": [
+      {
+        "308": ["BQ", "Bonaire", "BO "],
+        "309": ["BQ", "Saba", "SA "],
+        "310": ["BQ", "Sint Eustatius", "SE "]
+      }
+    ]
+  },
+  {
+    "pais": "Brazil",
+    "codigo": "BR",
+    "estado": [
+      {
+        "311": ["BR", "Acre", "AC "],
+        "312": ["BR", "Alagoas", "AL "],
+        "313": ["BR", "Amapa", "AP "],
+        "314": ["BR", "Amazonas", "AM "],
+        "315": ["BR", "Bahia", "BA "],
+        "316": ["BR", "Ceara", "CE "],
+        "317": ["BR", "Distrito Federal", "DF "],
+        "318": ["BR", "Espirito Santo", "ES "],
+        "319": ["BR", "Goias", "GO "],
+        "320": ["BR", "Maranhao", "MA "],
+        "321": ["BR", "Mato Grosso", "MT "],
+        "322": ["BR", "Mato Grosso do Sul", "MS "],
+        "323": ["BR", "Minas Gerais", "MG "],
+        "324": ["BR", "Para", "PA "],
+        "325": ["BR", "Paraiba", "PB "],
+        "326": ["BR", "Parana", "PR "],
+        "327": ["BR", "Pernambuco", "PE "],
+        "328": ["BR", "Piaui", "PI "],
+        "329": ["BR", "Rio Grande do Norte", "RN "],
+        "330": ["BR", "Rio Grande do Sul", "RS "],
+        "331": ["BR", "Rio de Janeiro", "RJ "],
+        "332": ["BR", "Rondonia", "RO "],
+        "333": ["BR", "Roraima", "RR "],
+        "334": ["BR", "Santa Catarina", "SC "],
+        "335": ["BR", "Sao Paulo", "SP "],
+        "336": ["BR", "Sergipe", "SE "],
+        "337": ["BR", "Tocantins", "TO "]
+      }
+    ]
+  },
+  {
+    "pais": "Bahamas",
+    "codigo": "BS",
+    "estado": [
+      {
+        "338": ["BS", "Central Andros", "CS "],
+        "339": ["BS", "City of Freeport", "FP "],
+        "340": ["BS", "Harbour Island", "HI "],
+        "341": ["BS", "Hope Town", "HT "],
+        "342": ["BS", "Long Island", "LI "],
+        "343": ["BS", "New Providence", "NP "],
+        "344": ["BS", "South Eleuthera", "SE "]
+      }
+    ]
+  },
+  {
+    "pais": "Bhutan",
+    "codigo": "BT",
+    "estado": [
+      {
+        "345": ["BT", "Bumthang", "33 "],
+        "346": ["BT", "Chhukha", "12 "],
+        "347": ["BT", "Gasa", "GA "],
+        "348": ["BT", "Haa", "13 "],
+        "349": ["BT", "Lhuentse", "44 "],
+        "350": ["BT", "Monggar", "42 "],
+        "351": ["BT", "Paro", "11 "],
+        "352": ["BT", "Pemagatshel", "43 "],
+        "353": ["BT", "Punakha", "23 "],
+        "354": ["BT", "Samdrup Jongkhar", "45 "],
+        "355": ["BT", "Samtse", "14 "],
+        "356": ["BT", "Thimphu", "15 "],
+        "357": ["BT", "Trashigang", "41 "],
+        "358": ["BT", "Trongsa", "32 "],
+        "359": ["BT", "Tsirang", "21 "],
+        "360": ["BT", "Wangdue Phodrang", "24 "]
+      }
+    ]
+  },
+  {
+    "pais": "Bouvet Island",
+    "codigo": "BV",
+    "estado": [[]]
+  },
+  {
+    "pais": "Botswana",
+    "codigo": "BW",
+    "estado": [
+      {
+        "361": ["BW", "Central", "CE "],
+        "362": ["BW", "Kgalagadi", "KG "],
+        "363": ["BW", "Kgatleng", "KL "],
+        "364": ["BW", "Kweneng", "KW "],
+        "365": ["BW", "North East", "NE "],
+        "366": ["BW", "North West", "NW "],
+        "367": ["BW", "South East", "SE "],
+        "368": ["BW", "Southern", "SO "]
+      }
+    ]
+  },
+  {
+    "pais": "Belarus",
+    "codigo": "BY",
+    "estado": [
+      {
+        "369": ["BY", "Brestskaya voblasts'", "BR "],
+        "370": ["BY", "Homyel'skaya voblasts'", "HO "],
+        "371": ["BY", "Horad Minsk", "HM "],
+        "372": ["BY", "Hrodzenskaya voblasts'", "HR "],
+        "373": ["BY", "Mahilyowskaya voblasts'", "MA "],
+        "374": ["BY", "Minskaya voblasts'", "MI "],
+        "375": ["BY", "Vitsyebskaya voblasts'", "VI "]
+      }
+    ]
+  },
+  {
+    "pais": "Belize",
+    "codigo": "BZ",
+    "estado": [
+      {
+        "376": ["BZ", "Belize", "BZ "],
+        "377": ["BZ", "Cayo", "CY "],
+        "378": ["BZ", "Corozal", "CZL"],
+        "379": ["BZ", "Orange Walk", "OW "],
+        "380": ["BZ", "Stann Creek", "SC "],
+        "381": ["BZ", "Toledo", "TOL"]
+      }
+    ]
+  },
+  {
+    "pais": "Canada",
+    "codigo": "CA",
+    "estado": [
+      {
+        "382": ["CA", "Alberta", "AB "],
+        "383": ["CA", "British Columbia", "BC "],
+        "384": ["CA", "Manitoba", "MB "],
+        "385": ["CA", "New Brunswick", "NB "],
+        "386": ["CA", "Newfoundland and Labrador", "NL "],
+        "387": ["CA", "Northwest Territories", "NT "],
+        "388": ["CA", "Nova Scotia", "NS "],
+        "389": ["CA", "Nunavut", "NU "],
+        "390": ["CA", "Ontario", "ON "],
+        "391": ["CA", "Prince Edward Island", "PE "],
+        "392": ["CA", "Quebec", "QC "],
+        "393": ["CA", "Saskatchewan", "SK "],
+        "394": ["CA", "Yukon", "YT "]
+      }
+    ]
+  },
+  {
+    "pais": "Cocos (Keeling) Islands",
+    "codigo": "CC",
+    "estado": [[]]
+  },
+  {
+    "pais": "Congo, Democratic Republic of the",
+    "codigo": "CD",
+    "estado": [
+      {
+        "395": ["CD", "Equateur", "EQ "],
+        "396": ["CD", "Haut-Katanga", "HK "],
+        "397": ["CD", "Haut-Lomami", "HL "],
+        "398": ["CD", "Haut-Uele", "HU "],
+        "399": ["CD", "Ituri", "IT "],
+        "400": ["CD", "Kasai Central", "KC "],
+        "401": ["CD", "Kasai Oriental", "KE "],
+        "402": ["CD", "Kinshasa", "KN "],
+        "403": ["CD", "Kongo Central", "BC "],
+        "404": ["CD", "Kwilu", "KL "],
+        "405": ["CD", "Lualaba", "LU "],
+        "406": ["CD", "Maniema", "MA "],
+        "407": ["CD", "Nord-Kivu", "NK "],
+        "408": ["CD", "Nord-Ubangi", "NU "],
+        "409": ["CD", "Sankuru", "SA "],
+        "410": ["CD", "Sud-Kivu", "SK "],
+        "411": ["CD", "Sud-Ubangi", "SU "],
+        "412": ["CD", "Tanganyika", "TA "],
+        "413": ["CD", "Tshopo", "TO "],
+        "414": ["CD", "Tshuapa", "TU "]
+      }
+    ]
+  },
+  {
+    "pais": "Central African Republic",
+    "codigo": "CF",
+    "estado": [
+      {
+        "415": ["CF", "Bangui", "BGF"],
+        "416": ["CF", "Nana-Mambere", "NM "],
+        "417": ["CF", "Ouham", "AC "],
+        "418": ["CF", "Ouham-Pende", "OP "]
+      }
+    ]
+  },
+  {
+    "pais": "Congo",
+    "codigo": "CG",
+    "estado": [
+      {
+        "419": ["CG", "Brazzaville", "BZV"],
+        "420": ["CG", "Cuvette-Ouest", "15 "],
+        "421": ["CG", "Pointe-Noire", "16 "],
+        "422": ["CG", "Sangha", "13 "]
+      }
+    ]
+  },
+  {
+    "pais": "Switzerland",
+    "codigo": "CH",
+    "estado": [
+      {
+        "423": ["CH", "Aargau", "AG "],
+        "424": ["CH", "Appenzell Ausserrhoden", "AR "],
+        "425": ["CH", "Appenzell Innerrhoden", "AI "],
+        "426": ["CH", "Basel-Landschaft", "BL "],
+        "427": ["CH", "Basel-Stadt", "BS "],
+        "428": ["CH", "Bern", "BE "],
+        "429": ["CH", "Fribourg", "FR "],
+        "430": ["CH", "Geneve", "GE "],
+        "431": ["CH", "Glarus", "GL "],
+        "432": ["CH", "Graubunden", "GR "],
+        "433": ["CH", "Jura", "JU "],
+        "434": ["CH", "Luzern", "LU "],
+        "435": ["CH", "Neuchatel", "NE "],
+        "436": ["CH", "Nidwalden", "NW "],
+        "437": ["CH", "Obwalden", "OW "],
+        "438": ["CH", "Sankt Gallen", "SG "],
+        "439": ["CH", "Schaffhausen", "SH "],
+        "440": ["CH", "Schwyz", "SZ "],
+        "441": ["CH", "Solothurn", "SO "],
+        "442": ["CH", "Thurgau", "TG "],
+        "443": ["CH", "Ticino", "TI "],
+        "444": ["CH", "Uri", "UR "],
+        "445": ["CH", "Valais", "VS "],
+        "446": ["CH", "Vaud", "VD "],
+        "447": ["CH", "Zug", "ZG "],
+        "448": ["CH", "Zurich", "ZH "]
+      }
+    ]
+  },
+  {
+    "pais": "Cote d'Ivoire",
+    "codigo": "CI",
+    "estado": [
+      {
+        "449": ["CI", "Abidjan", "AB "],
+        "450": ["CI", "Bas-Sassandra", "BS "],
+        "451": ["CI", "Comoe", "CM "],
+        "452": ["CI", "Denguele", "DN "],
+        "453": ["CI", "Goh-Djiboua", "GD "],
+        "454": ["CI", "Lacs", "LC "],
+        "455": ["CI", "Lagunes", "LG "],
+        "456": ["CI", "Montagnes", "MG "],
+        "457": ["CI", "Sassandra-Marahoue", "SM "],
+        "458": ["CI", "Savanes", "SV "],
+        "459": ["CI", "Vallee du Bandama", "VB "],
+        "460": ["CI", "Woroba", "WR "],
+        "461": ["CI", "Yamoussoukro", "YM "],
+        "462": ["CI", "Zanzan", "ZZ "]
+      }
+    ]
+  },
+  {
+    "pais": "Cook Islands",
+    "codigo": "CK",
+    "estado": [
+      {
+        "463": ["CK", "Cook Islands", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Chile",
+    "codigo": "CL",
+    "estado": [
+      {
+        "464": ["CL", "Aisen del General Carlos Ibanez del Campo", "AI "],
+        "465": ["CL", "Antofagasta", "AN "],
+        "466": ["CL", "Arica y Parinacota", "AP "],
+        "467": ["CL", "Atacama", "AT "],
+        "468": ["CL", "Biobio", "BI "],
+        "469": ["CL", "Coquimbo", "CO "],
+        "470": ["CL", "La Araucania", "AR "],
+        "471": ["CL", "Libertador General Bernardo O'Higgins", "LI "],
+        "472": ["CL", "Los Lagos", "LL "],
+        "473": ["CL", "Los Rios", "LR "],
+        "474": ["CL", "Magallanes", "MA "],
+        "475": ["CL", "Maule", "ML "],
+        "476": ["CL", "Region Metropolitana de Santiago", "RM "],
+        "477": ["CL", "Tarapaca", "TA "],
+        "478": ["CL", "Valparaiso", "VS "]
+      }
+    ]
+  },
+  {
+    "pais": "Cameroon",
+    "codigo": "CM",
+    "estado": [
+      {
+        "479": ["CM", "Adamaoua", "AD "],
+        "480": ["CM", "Centre", "CE "],
+        "481": ["CM", "Est", "ES "],
+        "482": ["CM", "Extreme-Nord", "EN "],
+        "483": ["CM", "Littoral", "LT "],
+        "484": ["CM", "Nord", "NO "],
+        "485": ["CM", "Nord-Ouest", "NW "],
+        "486": ["CM", "Ouest", "OU "],
+        "487": ["CM", "Sud", "SU "],
+        "488": ["CM", "Sud-Ouest", "SW "]
+      }
+    ]
+  },
+  {
+    "pais": "China",
+    "codigo": "CN",
+    "estado": [
+      {
+        "489": ["CN", "Anhui", "AH "],
+        "490": ["CN", "Beijing", "BJ "],
+        "491": ["CN", "Chongqing", "CQ "],
+        "492": ["CN", "Fujian", "FJ "],
+        "493": ["CN", "Gansu", "GS "],
+        "494": ["CN", "Guangdong", "GD "],
+        "495": ["CN", "Guangxi", "GX "],
+        "496": ["CN", "Guizhou", "GZ "],
+        "497": ["CN", "Hainan", "HI "],
+        "498": ["CN", "Hebei", "HE "],
+        "499": ["CN", "Heilongjiang", "HL "],
+        "500": ["CN", "Henan", "HA "],
+        "501": ["CN", "Hubei", "HB "],
+        "502": ["CN", "Hunan", "HN "],
+        "503": ["CN", "Jiangsu", "JS "],
+        "504": ["CN", "Jiangxi", "JX "],
+        "505": ["CN", "Jilin", "JL "],
+        "506": ["CN", "Liaoning", "LN "],
+        "507": ["CN", "Nei Mongol", "NM "],
+        "508": ["CN", "Ningxia", "NX "],
+        "509": ["CN", "Qinghai", "QH "],
+        "510": ["CN", "Shaanxi", "SN "],
+        "511": ["CN", "Shandong", "SD "],
+        "512": ["CN", "Shanghai", "SH "],
+        "513": ["CN", "Shanxi", "SX "],
+        "514": ["CN", "Sichuan", "SC "],
+        "515": ["CN", "Tianjin", "TJ "],
+        "516": ["CN", "Xinjiang", "XJ "],
+        "517": ["CN", "Xizang", "XZ "],
+        "518": ["CN", "Yunnan", "YN "],
+        "519": ["CN", "Zhejiang", "ZJ "]
+      }
+    ]
+  },
+  {
+    "pais": "Colombia",
+    "codigo": "CO",
+    "estado": [
+      {
+        "520": ["CO", "Amazonas", "AMA"],
+        "521": ["CO", "Antioquia", "ANT"],
+        "522": ["CO", "Arauca", "ARA"],
+        "523": ["CO", "Atlantico", "ATL"],
+        "524": ["CO", "Bolivar", "BOL"],
+        "525": ["CO", "Boyaca", "BOY"],
+        "526": ["CO", "Caldas", "CAL"],
+        "527": ["CO", "Caqueta", "CAQ"],
+        "528": ["CO", "Casanare", "CAS"],
+        "529": ["CO", "Cauca", "CAU"],
+        "530": ["CO", "Cesar", "CES"],
+        "531": ["CO", "Choco", "CHO"],
+        "532": ["CO", "Cordoba", "COR"],
+        "533": ["CO", "Cundinamarca", "CUN"],
+        "534": ["CO", "Distrito Capital de Bogota", "DC "],
+        "535": ["CO", "Guainia", "GUA"],
+        "536": ["CO", "Guaviare", "GUV"],
+        "537": ["CO", "Huila", "HUI"],
+        "538": ["CO", "La Guajira", "LAG"],
+        "539": ["CO", "Magdalena", "MAG"],
+        "540": ["CO", "Meta", "MET"],
+        "541": ["CO", "Narino", "NAR"],
+        "542": ["CO", "Norte de Santander", "NSA"],
+        "543": ["CO", "Putumayo", "PUT"],
+        "544": ["CO", "Quindio", "QUI"],
+        "545": ["CO", "Risaralda", "RIS"],
+        "546": ["CO", "San Andres, Providencia y Santa Catalina", "SAP"],
+        "547": ["CO", "Santander", "SAN"],
+        "548": ["CO", "Sucre", "SUC"],
+        "549": ["CO", "Tolima", "TOL"],
+        "550": ["CO", "Valle del Cauca", "VAC"],
+        "551": ["CO", "Vichada", "VID"]
+      }
+    ]
+  },
+  {
+    "pais": "Costa Rica",
+    "codigo": "CR",
+    "estado": [
+      {
+        "552": ["CR", "Alajuela", "A  "],
+        "553": ["CR", "Cartago", "C  "],
+        "554": ["CR", "Guanacaste", "G  "],
+        "555": ["CR", "Heredia", "H  "],
+        "556": ["CR", "Limon", "L  "],
+        "557": ["CR", "Puntarenas", "P  "],
+        "558": ["CR", "San Jose", "SJ "]
+      }
+    ]
+  },
+  {
+    "pais": "Cuba",
+    "codigo": "CU",
+    "estado": [
+      {
+        "559": ["CU", "Artemisa", "15 "],
+        "560": ["CU", "Camaguey", "09 "],
+        "561": ["CU", "Ciego de Avila", "08 "],
+        "562": ["CU", "Cienfuegos", "06 "],
+        "563": ["CU", "Granma", "12 "],
+        "564": ["CU", "Guantanamo", "14 "],
+        "565": ["CU", "Holguin", "11 "],
+        "566": ["CU", "Isla de la Juventud", "99 "],
+        "567": ["CU", "La Habana", "03 "],
+        "568": ["CU", "Las Tunas", "10 "],
+        "569": ["CU", "Matanzas", "04 "],
+        "570": ["CU", "Mayabeque", "16 "],
+        "571": ["CU", "Pinar del Rio", "01 "],
+        "572": ["CU", "Sancti Spiritus", "07 "],
+        "573": ["CU", "Santiago de Cuba", "13 "],
+        "574": ["CU", "Villa Clara", "05 "]
+      }
+    ]
+  },
+  {
+    "pais": "Cabo Verde",
+    "codigo": "CV",
+    "estado": [
+      {
+        "575": ["CV", "Boa Vista", "BV "],
+        "576": ["CV", "Porto Novo", "PN "],
+        "577": ["CV", "Praia", "PR "],
+        "578": ["CV", "Ribeira Grande", "RG "],
+        "579": ["CV", "Sal", "SL "],
+        "580": ["CV", "Sao Filipe", "SF "],
+        "581": ["CV", "Sao Vicente", "SV "],
+        "582": ["CV", "Tarrafal", "TA "]
+      }
+    ]
+  },
+  {
+    "pais": "Curacao",
+    "codigo": "CW",
+    "estado": [
+      {
+        "583": ["CW", "Curacao", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Christmas Island",
+    "codigo": "CX",
+    "estado": [[]]
+  },
+  {
+    "pais": "Cyprus",
+    "codigo": "CY",
+    "estado": [
+      {
+        "584": ["CY", "Ammochostos", "04 "],
+        "585": ["CY", "Keryneia", "06 "],
+        "586": ["CY", "Larnaka", "03 "],
+        "587": ["CY", "Lefkosia", "01 "],
+        "588": ["CY", "Lemesos", "02 "],
+        "589": ["CY", "Pafos", "05 "]
+      }
+    ]
+  },
+  {
+    "pais": "Czechia",
+    "codigo": "CZ",
+    "estado": [
+      {
+        "590": ["CZ", "Jihocesky kraj", "31 "],
+        "591": ["CZ", "Jihomoravsky kraj", "64 "],
+        "592": ["CZ", "Karlovarsky kraj", "41 "],
+        "593": ["CZ", "Kraj Vysocina", "63 "],
+        "594": ["CZ", "Kralovehradecky kraj", "52 "],
+        "595": ["CZ", "Liberecky kraj", "51 "],
+        "596": ["CZ", "Moravskoslezsky kraj", "80 "],
+        "597": ["CZ", "Olomoucky kraj", "71 "],
+        "598": ["CZ", "Pardubicky kraj", "53 "],
+        "599": ["CZ", "Plzensky kraj", "32 "],
+        "600": ["CZ", "Praha, Hlavni mesto", "10 "],
+        "601": ["CZ", "Stredocesky kraj", "20 "],
+        "602": ["CZ", "Ustecky kraj", "42 "],
+        "603": ["CZ", "Zlinsky kraj", "72 "]
+      }
+    ]
+  },
+  {
+    "pais": "Germany",
+    "codigo": "DE",
+    "estado": [
+      {
+        "604": ["DE", "Baden-Wurttemberg", "BW "],
+        "605": ["DE", "Bayern", "BY "],
+        "606": ["DE", "Berlin", "BE "],
+        "607": ["DE", "Brandenburg", "BB "],
+        "608": ["DE", "Bremen", "HB "],
+        "609": ["DE", "Hamburg", "HH "],
+        "610": ["DE", "Hessen", "HE "],
+        "611": ["DE", "Mecklenburg-Vorpommern", "MV "],
+        "612": ["DE", "Niedersachsen", "NI "],
+        "613": ["DE", "Nordrhein-Westfalen", "NW "],
+        "614": ["DE", "Rheinland-Pfalz", "RP "],
+        "615": ["DE", "Saarland", "SL "],
+        "616": ["DE", "Sachsen", "SN "],
+        "617": ["DE", "Sachsen-Anhalt", "ST "],
+        "618": ["DE", "Schleswig-Holstein", "SH "],
+        "619": ["DE", "Thuringen", "TH "]
+      }
+    ]
+  },
+  {
+    "pais": "Djibouti",
+    "codigo": "DJ",
+    "estado": [
+      {
+        "620": ["DJ", "Djibouti", "DJ "]
+      }
+    ]
+  },
+  {
+    "pais": "Denmark",
+    "codigo": "DK",
+    "estado": [
+      {
+        "621": ["DK", "Hovedstaden", "84 "],
+        "622": ["DK", "Midtjylland", "82 "],
+        "623": ["DK", "Nordjylland", "81 "],
+        "624": ["DK", "Sjaelland", "85 "],
+        "625": ["DK", "Syddanmark", "83 "]
+      }
+    ]
+  },
+  {
+    "pais": "Dominica",
+    "codigo": "DM",
+    "estado": [
+      {
+        "626": ["DM", "Saint Andrew", "02 "],
+        "627": ["DM", "Saint David", "03 "],
+        "628": ["DM", "Saint George", "04 "],
+        "629": ["DM", "Saint John", "05 "],
+        "630": ["DM", "Saint Luke", "07 "],
+        "631": ["DM", "Saint Mark", "08 "],
+        "632": ["DM", "Saint Patrick", "09 "],
+        "633": ["DM", "Saint Paul", "10 "]
+      }
+    ]
+  },
+  {
+    "pais": "Dominican Republic",
+    "codigo": "DO",
+    "estado": [
+      {
+        "634": ["DO", "Azua", "02 "],
+        "635": ["DO", "Baoruco", "03 "],
+        "636": ["DO", "Barahona", "04 "],
+        "637": ["DO", "Dajabon", "05 "],
+        "638": ["DO", "Distrito Nacional (Santo Domingo)", "01 "],
+        "639": ["DO", "Duarte", "06 "],
+        "640": ["DO", "El Seibo", "08 "],
+        "641": ["DO", "Elias Pina", "07 "],
+        "642": ["DO", "Espaillat", "09 "],
+        "643": ["DO", "Hato Mayor", "30 "],
+        "644": ["DO", "Hermanas Mirabal", "19 "],
+        "645": ["DO", "Independencia", "10 "],
+        "646": ["DO", "La Altagracia", "11 "],
+        "647": ["DO", "La Romana", "12 "],
+        "648": ["DO", "La Vega", "13 "],
+        "649": ["DO", "Maria Trinidad Sanchez", "14 "],
+        "650": ["DO", "Monsenor Nouel", "28 "],
+        "651": ["DO", "Monte Cristi", "15 "],
+        "652": ["DO", "Monte Plata", "29 "],
+        "653": ["DO", "Peravia", "17 "],
+        "654": ["DO", "Puerto Plata", "18 "],
+        "655": ["DO", "Samana", "20 "],
+        "656": ["DO", "San Cristobal", "21 "],
+        "657": ["DO", "San Jose de Ocoa", "31 "],
+        "658": ["DO", "San Juan", "22 "],
+        "659": ["DO", "San Pedro de Macoris", "23 "],
+        "660": ["DO", "Sanchez Ramirez", "24 "],
+        "661": ["DO", "Santiago", "25 "],
+        "662": ["DO", "Santiago Rodriguez", "26 "],
+        "663": ["DO", "Valverde", "27 "]
+      }
+    ]
+  },
+  {
+    "pais": "Algeria",
+    "codigo": "DZ",
+    "estado": [
+      {
+        "664": ["DZ", "Adrar", "01 "],
+        "665": ["DZ", "Ain Defla", "44 "],
+        "666": ["DZ", "Ain Temouchent", "46 "],
+        "667": ["DZ", "Alger", "16 "],
+        "668": ["DZ", "Annaba", "23 "],
+        "669": ["DZ", "Batna", "05 "],
+        "670": ["DZ", "Bechar", "08 "],
+        "671": ["DZ", "Bejaia", "06 "],
+        "672": ["DZ", "Biskra", "07 "],
+        "673": ["DZ", "Blida", "09 "],
+        "674": ["DZ", "Bordj Bou Arreridj", "34 "],
+        "675": ["DZ", "Bouira", "10 "],
+        "676": ["DZ", "Boumerdes", "35 "],
+        "677": ["DZ", "Chlef", "02 "],
+        "678": ["DZ", "Constantine", "25 "],
+        "679": ["DZ", "Djelfa", "17 "],
+        "680": ["DZ", "El Bayadh", "32 "],
+        "681": ["DZ", "El Oued", "39 "],
+        "682": ["DZ", "El Tarf", "36 "],
+        "683": ["DZ", "Ghardaia", "47 "],
+        "684": ["DZ", "Guelma", "24 "],
+        "685": ["DZ", "Illizi", "33 "],
+        "686": ["DZ", "Jijel", "18 "],
+        "687": ["DZ", "Khenchela", "40 "],
+        "688": ["DZ", "Laghouat", "03 "],
+        "689": ["DZ", "M'sila", "28 "],
+        "690": ["DZ", "Mascara", "29 "],
+        "691": ["DZ", "Medea", "26 "],
+        "692": ["DZ", "Mila", "43 "],
+        "693": ["DZ", "Mostaganem", "27 "],
+        "694": ["DZ", "Naama", "45 "],
+        "695": ["DZ", "Oran", "31 "],
+        "696": ["DZ", "Ouargla", "30 "],
+        "697": ["DZ", "Oum el Bouaghi", "04 "],
+        "698": ["DZ", "Relizane", "48 "],
+        "699": ["DZ", "Saida", "20 "],
+        "700": ["DZ", "Setif", "19 "],
+        "701": ["DZ", "Sidi Bel Abbes", "22 "],
+        "702": ["DZ", "Skikda", "21 "],
+        "703": ["DZ", "Souk Ahras", "41 "],
+        "704": ["DZ", "Tamanrasset", "11 "],
+        "705": ["DZ", "Tebessa", "12 "],
+        "706": ["DZ", "Tiaret", "14 "],
+        "707": ["DZ", "Tindouf", "37 "],
+        "708": ["DZ", "Tipaza", "42 "],
+        "709": ["DZ", "Tissemsilt", "38 "],
+        "710": ["DZ", "Tizi Ouzou", "15 "],
+        "711": ["DZ", "Tlemcen", "13 "]
+      }
+    ]
+  },
+  {
+    "pais": "Ecuador",
+    "codigo": "EC",
+    "estado": [
+      {
+        "712": ["EC", "Azuay", "A  "],
+        "713": ["EC", "Bolivar", "B  "],
+        "714": ["EC", "Canar", "F  "],
+        "715": ["EC", "Carchi", "C  "],
+        "716": ["EC", "Chimborazo", "H  "],
+        "717": ["EC", "Cotopaxi", "X  "],
+        "718": ["EC", "El Oro", "O  "],
+        "719": ["EC", "Esmeraldas", "E  "],
+        "720": ["EC", "Galapagos", "W  "],
+        "721": ["EC", "Guayas", "G  "],
+        "722": ["EC", "Imbabura", "I  "],
+        "723": ["EC", "Loja", "L  "],
+        "724": ["EC", "Los Rios", "R  "],
+        "725": ["EC", "Manabi", "M  "],
+        "726": ["EC", "Morona Santiago", "S  "],
+        "727": ["EC", "Napo", "N  "],
+        "728": ["EC", "Orellana", "D  "],
+        "729": ["EC", "Pastaza", "Y  "],
+        "730": ["EC", "Pichincha", "P  "],
+        "731": ["EC", "Santa Elena", "SE "],
+        "732": ["EC", "Santo Domingo de los Tsachilas", "SD "],
+        "733": ["EC", "Sucumbios", "U  "],
+        "734": ["EC", "Tungurahua", "T  "],
+        "735": ["EC", "Zamora Chinchipe", "Z  "]
+      }
+    ]
+  },
+  {
+    "pais": "Estonia",
+    "codigo": "EE",
+    "estado": [
+      {
+        "736": ["EE", "Harjumaa", "37 "],
+        "737": ["EE", "Hiiumaa", "39 "],
+        "738": ["EE", "Ida-Virumaa", "44 "],
+        "739": ["EE", "Jarvamaa", "51 "],
+        "740": ["EE", "Jogevamaa", "49 "],
+        "741": ["EE", "Laane-Virumaa", "59 "],
+        "742": ["EE", "Laanemaa", "57 "],
+        "743": ["EE", "Parnumaa", "67 "],
+        "744": ["EE", "Polvamaa", "65 "],
+        "745": ["EE", "Raplamaa", "70 "],
+        "746": ["EE", "Saaremaa", "74 "],
+        "747": ["EE", "Tartumaa", "78 "],
+        "748": ["EE", "Valgamaa", "82 "],
+        "749": ["EE", "Viljandimaa", "84 "],
+        "750": ["EE", "Vorumaa", "86 "]
+      }
+    ]
+  },
+  {
+    "pais": "Egypt",
+    "codigo": "EG",
+    "estado": [
+      {
+        "751": ["EG", "Ad Daqahliyah", "DK "],
+        "752": ["EG", "Al Bahr al Ahmar", "BA "],
+        "753": ["EG", "Al Buhayrah", "BH "],
+        "754": ["EG", "Al Fayyum", "FYM"],
+        "755": ["EG", "Al Gharbiyah", "GH "],
+        "756": ["EG", "Al Iskandariyah", "ALX"],
+        "757": ["EG", "Al Isma'iliyah", "IS "],
+        "758": ["EG", "Al Jizah", "GZ "],
+        "759": ["EG", "Al Minufiyah", "MNF"],
+        "760": ["EG", "Al Minya", "MN "],
+        "761": ["EG", "Al Qahirah", "C  "],
+        "762": ["EG", "Al Qalyubiyah", "KB "],
+        "763": ["EG", "Al Uqsur", "LX "],
+        "764": ["EG", "Al Wadi al Jadid", "WAD"],
+        "765": ["EG", "As Suways", "SUZ"],
+        "766": ["EG", "Ash Sharqiyah", "SHR"],
+        "767": ["EG", "Aswan", "ASN"],
+        "768": ["EG", "Asyut", "AST"],
+        "769": ["EG", "Bani Suwayf", "BNS"],
+        "770": ["EG", "Bur Sa'id", "PTS"],
+        "771": ["EG", "Dumyat", "DT "],
+        "772": ["EG", "Janub Sina'", "JS "],
+        "773": ["EG", "Kafr ash Shaykh", "KFS"],
+        "774": ["EG", "Matruh", "MT "],
+        "775": ["EG", "Qina", "KN "],
+        "776": ["EG", "Shamal Sina'", "SIN"],
+        "777": ["EG", "Suhaj", "SHG"]
+      }
+    ]
+  },
+  {
+    "pais": "Western Sahara",
+    "codigo": "EH",
+    "estado": [[]]
+  },
+  {
+    "pais": "Eritrea",
+    "codigo": "ER",
+    "estado": [
+      {
+        "778": ["ER", "Al Awsat", "MA "]
+      }
+    ]
+  },
+  {
+    "pais": "Spain",
+    "codigo": "ES",
+    "estado": [
+      {
+        "779": ["ES", "Andalucia", "AN "],
+        "780": ["ES", "Aragon", "AR "],
+        "781": ["ES", "Asturias, Principado de", "AS "],
+        "782": ["ES", "Canarias", "CN "],
+        "783": ["ES", "Cantabria", "CB "],
+        "784": ["ES", "Castilla y Leon", "CL "],
+        "785": ["ES", "Castilla-La Mancha", "CM "],
+        "786": ["ES", "Catalunya", "CT "],
+        "787": ["ES", "Ceuta", "CE "],
+        "788": ["ES", "Extremadura", "EX "],
+        "789": ["ES", "Salamanca", "SA"],
+        "790": ["ES", "Galicia", "GA "],
+        "791": ["ES", "Illes Balears", "IB "],
+        "792": ["ES", "La Rioja", "RI "],
+        "793": ["ES", "Madrid, Comunidad de", "MD "],
+        "794": ["ES", "Melilla", "ML "],
+        "795": ["ES", "Murcia, Region de", "MC "],
+        "796": ["ES", "Navarra, Comunidad Foral de", "NC "],
+        "797": ["ES", "Pais Vasco", "PV "],
+        "798": ["ES", "Valenciana, Comunidad", "VC "]
+      }
+    ]
+  },
+  {
+    "pais": "Ethiopia",
+    "codigo": "ET",
+    "estado": [
+      {
+        "799": ["ET", "Adis Abeba", "AA "],
+        "800": ["ET", "Afar", "AF "],
+        "801": ["ET", "Amara", "AM "],
+        "802": ["ET", "Binshangul Gumuz", "BE "],
+        "803": ["ET", "Hareri Hizb", "HA "],
+        "804": ["ET", "Oromiya", "OR "],
+        "805": ["ET", "Sumale", "SO "],
+        "806": ["ET", "Tigray", "TI "],
+        "807": ["ET", "YeDebub Biheroch Bihereseboch na Hizboch", "SN "]
+      }
+    ]
+  },
+  {
+    "pais": "Finland",
+    "codigo": "FI",
+    "estado": [
+      {
+        "808": ["FI", "Etela-Karjala", "02 "],
+        "809": ["FI", "Etela-Pohjanmaa", "03 "],
+        "810": ["FI", "Etela-Savo", "04 "],
+        "811": ["FI", "Kainuu", "05 "],
+        "812": ["FI", "Kanta-Hame", "06 "],
+        "813": ["FI", "Keski-Pohjanmaa", "07 "],
+        "814": ["FI", "Keski-Suomi", "08 "],
+        "815": ["FI", "Kymenlaakso", "09 "],
+        "816": ["FI", "Lappi", "10 "],
+        "817": ["FI", "Paijat-Hame", "16 "],
+        "818": ["FI", "Pirkanmaa", "11 "],
+        "819": ["FI", "Pohjanmaa", "12 "],
+        "820": ["FI", "Pohjois-Karjala", "13 "],
+        "821": ["FI", "Pohjois-Pohjanmaa", "14 "],
+        "822": ["FI", "Pohjois-Savo", "15 "],
+        "823": ["FI", "Satakunta", "17 "],
+        "824": ["FI", "Uusimaa", "18 "],
+        "825": ["FI", "Varsinais-Suomi", "19 "]
+      }
+    ]
+  },
+  {
+    "pais": "Fiji",
+    "codigo": "FJ",
+    "estado": [
+      {
+        "826": ["FJ", "Central", "C  "],
+        "827": ["FJ", "Eastern", "E  "],
+        "828": ["FJ", "Northern", "N  "],
+        "829": ["FJ", "Rotuma", "R  "],
+        "830": ["FJ", "Western", "W  "]
+      }
+    ]
+  },
+  {
+    "pais": "Falkland Islands (Malvinas)",
+    "codigo": "FK",
+    "estado": [
+      {
+        "831": ["FK", "Falkland Islands (Malvinas)", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Micronesia (Federated States of)",
+    "codigo": "FM",
+    "estado": [
+      {
+        "832": ["FM", "Chuuk", "TRK"],
+        "833": ["FM", "Kosrae", "KSA"],
+        "834": ["FM", "Pohnpei", "PNI"],
+        "835": ["FM", "Yap", "YAP"]
+      }
+    ]
+  },
+  {
+    "pais": "Faroe Islands",
+    "codigo": "FO",
+    "estado": [
+      {
+        "836": ["FO", "Eysturoy", "   "],
+        "837": ["FO", "Nordoyar", "   "],
+        "838": ["FO", "Streymoy", "   "],
+        "839": ["FO", "Suduroy", "   "],
+        "840": ["FO", "Vagar", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "France",
+    "codigo": "FR",
+    "estado": [
+      {
+        "841": ["FR", "Auvergne-Rhone-Alpes", "ARA"],
+        "842": ["FR", "Bourgogne-Franche-Comte", "BFC"],
+        "843": ["FR", "Bretagne", "BRE"],
+        "844": ["FR", "Centre-Val de Loire", "CVL"],
+        "845": ["FR", "Corse", "COR"],
+        "846": ["FR", "Grand-Est", "GES"],
+        "847": ["FR", "Hauts-de-France", "HDF"],
+        "848": ["FR", "Ile-de-France", "IDF"],
+        "849": ["FR", "Normandie", "NOR"],
+        "850": ["FR", "Nouvelle-Aquitaine", "NAQ"],
+        "851": ["FR", "Occitanie", "OCC"],
+        "852": ["FR", "Pays-de-la-Loire", "PDL"],
+        "853": ["FR", "Provence-Alpes-Cote-d'Azur", "PAC"]
+      }
+    ]
+  },
+  {
+    "pais": "Gabon",
+    "codigo": "GA",
+    "estado": [
+      {
+        "854": ["GA", "Estuaire", "1  "],
+        "855": ["GA", "Haut-Ogooue", "2  "],
+        "856": ["GA", "Moyen-Ogooue", "3  "],
+        "857": ["GA", "Ngounie", "4  "],
+        "858": ["GA", "Ogooue-Ivindo", "6  "],
+        "859": ["GA", "Ogooue-Maritime", "8  "],
+        "860": ["GA", "Woleu-Ntem", "9  "]
+      }
+    ]
+  },
+  {
+    "pais": "United Kingdom of Great Britain and Northern Ireland",
+    "codigo": "GB",
+    "estado": [
+      {
+        "861": ["GB", "England", "ENG"],
+        "862": ["GB", "Northern Ireland", "NIR"],
+        "863": ["GB", "Scotland", "SCT"],
+        "864": ["GB", "Wales", "WLS"],
+        "3456": ["GB", "London", "LND"],
+        "3457": ["GB", "Manchester", "MAN"],
+        "3458": ["GB", "Flintshire", "FLN"],
+        "3459": ["GB", "Wales", "WLS"],
+        "3460": ["GB", "West Berkshire", "WBK"]
+      }
+    ]
+  },
+  {
+    "pais": "Grenada",
+    "codigo": "GD",
+    "estado": [
+      {
+        "865": ["GD", "Saint Andrew", "01 "],
+        "866": ["GD", "Saint David", "02 "],
+        "867": ["GD", "Saint George", "03 "],
+        "868": ["GD", "Saint John", "04 "],
+        "869": ["GD", "Saint Mark", "05 "],
+        "870": ["GD", "Saint Patrick", "06 "],
+        "871": ["GD", "Southern Grenadine Islands", "10 "]
+      }
+    ]
+  },
+  {
+    "pais": "Georgia",
+    "codigo": "GE",
+    "estado": [
+      {
+        "872": ["GE", "Abkhazia", "AB "],
+        "873": ["GE", "Ajaria", "AJ "],
+        "874": ["GE", "Guria", "GU "],
+        "875": ["GE", "Imereti", "IM "],
+        "876": ["GE", "K'akheti", "KA "],
+        "877": ["GE", "Kvemo Kartli", "KK "],
+        "878": ["GE", "Mtskheta-Mtianeti", "MM "],
+        "879": ["GE", "Rach'a-Lechkhumi-Kvemo Svaneti", "RL "],
+        "880": ["GE", "Samegrelo-Zemo Svaneti", "SZ "],
+        "881": ["GE", "Samtskhe-Javakheti", "SJ "],
+        "882": ["GE", "Shida Kartli", "SK "],
+        "883": ["GE", "Tbilisi", "TB "]
+      }
+    ]
+  },
+  {
+    "pais": "French Guiana",
+    "codigo": "GF",
+    "estado": [
+      {
+        "884": ["GF", "Guyane", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Guernsey",
+    "codigo": "GG",
+    "estado": [
+      {
+        "885": ["GG", "Guernsey", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Ghana",
+    "codigo": "GH",
+    "estado": [
+      {
+        "886": ["GH", "Ashanti", "AH "],
+        "887": ["GH", "Brong-Ahafo", "BA "],
+        "888": ["GH", "Central", "CP "],
+        "889": ["GH", "Eastern", "EP "],
+        "890": ["GH", "Greater Accra", "AA "],
+        "891": ["GH", "Northern", "NP "],
+        "892": ["GH", "Upper East", "UE "],
+        "893": ["GH", "Volta", "TV "],
+        "894": ["GH", "Western", "WP "]
+      }
+    ]
+  },
+  {
+    "pais": "Gibraltar",
+    "codigo": "GI",
+    "estado": [
+      {
+        "895": ["GI", "Gibraltar", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Greenland",
+    "codigo": "GL",
+    "estado": [
+      {
+        "896": ["GL", "Avannaata Kommunia", "AV "],
+        "897": ["GL", "Kommune Kujalleq", "KU "],
+        "898": ["GL", "Kommune Qeqertalik", "QT "],
+        "899": ["GL", "Kommuneqarfik Sermersooq", "SM "],
+        "900": ["GL", "Qeqqata Kommunia", "QE "]
+      }
+    ]
+  },
+  {
+    "pais": "Gambia",
+    "codigo": "GM",
+    "estado": [
+      {
+        "901": ["GM", "Banjul", "B  "],
+        "902": ["GM", "Central River", "M  "],
+        "903": ["GM", "Lower River", "L  "],
+        "904": ["GM", "North Bank", "N  "],
+        "905": ["GM", "Upper River", "U  "],
+        "906": ["GM", "Western", "W  "]
+      }
+    ]
+  },
+  {
+    "pais": "Guinea",
+    "codigo": "GN",
+    "estado": [
+      {
+        "907": ["GN", "Boffa", "BF "],
+        "908": ["GN", "Boke", "B  "],
+        "909": ["GN", "Conakry", "C  "],
+        "910": ["GN", "Coyah", "CO "],
+        "911": ["GN", "Dabola", "DB "],
+        "912": ["GN", "Dalaba", "DL "],
+        "913": ["GN", "Dubreka", "DU "],
+        "914": ["GN", "Kankan", "K  "],
+        "915": ["GN", "Kissidougou", "KS "],
+        "916": ["GN", "Labe", "L  "],
+        "917": ["GN", "Macenta", "MC "],
+        "918": ["GN", "Nzerekore", "N  "],
+        "919": ["GN", "Siguiri", "SI "]
+      }
+    ]
+  },
+  {
+    "pais": "Guadeloupe",
+    "codigo": "GP",
+    "estado": [
+      {
+        "920": ["GP", "Guadeloupe", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Equatorial Guinea",
+    "codigo": "GQ",
+    "estado": [
+      {
+        "921": ["GQ", "Bioko Norte", "BN "],
+        "922": ["GQ", "Bioko Sur", "BS "],
+        "923": ["GQ", "Litoral", "LI "],
+        "924": ["GQ", "Wele-Nzas", "WN "]
+      }
+    ]
+  },
+  {
+    "pais": "Greece",
+    "codigo": "GR",
+    "estado": [
+      {
+        "925": ["GR", "Anatoliki Makedonia kai Thraki", "A  "],
+        "926": ["GR", "Attiki", "I  "],
+        "927": ["GR", "Dytiki Ellada", "G  "],
+        "928": ["GR", "Dytiki Makedonia", "C  "],
+        "929": ["GR", "Ionia Nisia", "F  "],
+        "930": ["GR", "Ipeiros", "D  "],
+        "931": ["GR", "Kentriki Makedonia", "B  "],
+        "932": ["GR", "Kriti", "M  "],
+        "933": ["GR", "Notio Aigaio", "L  "],
+        "934": ["GR", "Peloponnisos", "J  "],
+        "935": ["GR", "Sterea Ellada", "H  "],
+        "936": ["GR", "Thessalia", "E  "],
+        "937": ["GR", "Voreio Aigaio", "K  "]
+      }
+    ]
+  },
+  {
+    "pais": "South Georgia and the South Sandwich Islands",
+    "codigo": "GS",
+    "estado": [
+      {
+        "938": ["GS", "South Georgia and the South Sandwich Islands", ""]
+      }
+    ]
+  },
+  {
+    "pais": "Guatemala",
+    "codigo": "GT",
+    "estado": [
+      {
+        "939": ["GT", "Alta Verapaz", "AV "],
+        "940": ["GT", "Baja Verapaz", "BV "],
+        "941": ["GT", "Chimaltenango", "CM "],
+        "942": ["GT", "Chiquimula", "CQ "],
+        "943": ["GT", "El Progreso", "PR "],
+        "944": ["GT", "Escuintla", "ES "],
+        "945": ["GT", "Guatemala", "GU "],
+        "946": ["GT", "Huehuetenango", "HU "],
+        "947": ["GT", "Izabal", "IZ "],
+        "948": ["GT", "Jalapa", "JA "],
+        "949": ["GT", "Jutiapa", "JU "],
+        "950": ["GT", "Peten", "PE "],
+        "951": ["GT", "Quetzaltenango", "QZ "],
+        "952": ["GT", "Quiche", "QC "],
+        "953": ["GT", "Retalhuleu", "RE "],
+        "954": ["GT", "Sacatepequez", "SA "],
+        "955": ["GT", "San Marcos", "SM "],
+        "956": ["GT", "Santa Rosa", "SR "],
+        "957": ["GT", "Solola", "SO "],
+        "958": ["GT", "Suchitepequez", "SU "],
+        "959": ["GT", "Totonicapan", "TO "],
+        "960": ["GT", "Zacapa", "ZA "]
+      }
+    ]
+  },
+  {
+    "pais": "Guam",
+    "codigo": "GU",
+    "estado": [
+      {
+        "961": ["GU", "Agat", "   "],
+        "962": ["GU", "Barrigada", "   "],
+        "963": ["GU", "Chalan Pago-Ordot", "   "],
+        "964": ["GU", "Dededo", "   "],
+        "965": ["GU", "Hagatna", "   "],
+        "966": ["GU", "Mangilao", "   "],
+        "967": ["GU", "Mongmong-Toto-Maite", "   "],
+        "968": ["GU", "Piti", "   "],
+        "969": ["GU", "Santa Rita", "   "],
+        "970": ["GU", "Sinajana", "   "],
+        "971": ["GU", "Tamuning-Tumon-Harmon", "   "],
+        "972": ["GU", "Yigo", "   "],
+        "973": ["GU", "Yona", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Guinea-Bissau",
+    "codigo": "GW",
+    "estado": [
+      {
+        "974": ["GW", "Bissau", "BS "],
+        "975": ["GW", "Gabu", "GA "]
+      }
+    ]
+  },
+  {
+    "pais": "Guyana",
+    "codigo": "GY",
+    "estado": [
+      {
+        "976": ["GY", "Barima-Waini", "BA "],
+        "977": ["GY", "Demerara-Mahaica", "DE "],
+        "978": ["GY", "East Berbice-Corentyne", "EB "],
+        "979": ["GY", "Essequibo Islands-West Demerara", "ES "],
+        "980": ["GY", "Mahaica-Berbice", "MA "],
+        "981": ["GY", "Pomeroon-Supenaam", "PM "],
+        "982": ["GY", "Potaro-Siparuni", "PT "],
+        "983": ["GY", "Upper Demerara-Berbice", "UD "]
+      }
+    ]
+  },
+  {
+    "pais": "Hong Kong",
+    "codigo": "HK",
+    "estado": [
+      {
+        "984": ["HK", "Hong Kong", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Heard Island and McDonald Islands",
+    "codigo": "HM",
+    "estado": [[]]
+  },
+  {
+    "pais": "Honduras",
+    "codigo": "HN",
+    "estado": [
+      {
+        "985": ["HN", "Atlantida", "AT "],
+        "986": ["HN", "Choluteca", "CH "],
+        "987": ["HN", "Colon", "CL "],
+        "988": ["HN", "Comayagua", "CM "],
+        "989": ["HN", "Copan", "CP "],
+        "990": ["HN", "Cortes", "CR "],
+        "991": ["HN", "El Paraiso", "EP "],
+        "992": ["HN", "Francisco Morazan", "FM "],
+        "993": ["HN", "Intibuca", "IN "],
+        "994": ["HN", "Islas de la Bahia", "IB "],
+        "995": ["HN", "La Paz", "LP "],
+        "996": ["HN", "Lempira", "LE "],
+        "997": ["HN", "Ocotepeque", "OC "],
+        "998": ["HN", "Olancho", "OL "],
+        "999": ["HN", "Santa Barbara", "SB "],
+        "1000": ["HN", "Valle", "VA "],
+        "1001": ["HN", "Yoro", "YO "]
+      }
+    ]
+  },
+  {
+    "pais": "Croatia",
+    "codigo": "HR",
+    "estado": [
+      {
+        "1002": ["HR", "Bjelovarsko-bilogorska zupanija", "07 "],
+        "1003": ["HR", "Brodsko-posavska zupanija", "12 "],
+        "1004": ["HR", "Dubrovacko-neretvanska zupanija", "19 "],
+        "1005": ["HR", "Grad Zagreb", "21 "],
+        "1006": ["HR", "Istarska zupanija", "18 "],
+        "1007": ["HR", "Karlovacka zupanija", "04 "],
+        "1008": ["HR", "Koprivnicko-krizevacka zupanija", "06 "],
+        "1009": ["HR", "Krapinsko-zagorska zupanija", "02 "],
+        "1010": ["HR", "Licko-senjska zupanija", "09 "],
+        "1011": ["HR", "Medimurska zupanija", "20 "],
+        "1012": ["HR", "Osjecko-baranjska zupanija", "14 "],
+        "1013": ["HR", "Pozesko-slavonska zupanija", "11 "],
+        "1014": ["HR", "Primorsko-goranska zupanija", "08 "],
+        "1015": ["HR", "Sibensko-kninska zupanija", "15 "],
+        "1016": ["HR", "Sisacko-moslavacka zupanija", "03 "],
+        "1017": ["HR", "Splitsko-dalmatinska zupanija", "17 "],
+        "1018": ["HR", "Varazdinska zupanija", "05 "],
+        "1019": ["HR", "Viroviticko-podravska zupanija", "10 "],
+        "1020": ["HR", "Vukovarsko-srijemska zupanija", "16 "],
+        "1021": ["HR", "Zadarska zupanija", "13 "],
+        "1022": ["HR", "Zagrebacka zupanija", "01 "]
+      }
+    ]
+  },
+  {
+    "pais": "Haiti",
+    "codigo": "HT",
+    "estado": [
+      {
+        "1023": ["HT", "Artibonite", "AR "],
+        "1024": ["HT", "Centre", "CE "],
+        "1025": ["HT", "Grande'Anse", "GA "],
+        "1026": ["HT", "Nord", "ND "],
+        "1027": ["HT", "Ouest", "OU "],
+        "1028": ["HT", "Sud", "SD "],
+        "1029": ["HT", "Sud-Est", "SE "]
+      }
+    ]
+  },
+  {
+    "pais": "Hungary",
+    "codigo": "HU",
+    "estado": [
+      {
+        "1030": ["HU", "Bacs-Kiskun", "BK "],
+        "1031": ["HU", "Baranya", "BA "],
+        "1032": ["HU", "Bekes", "BE "],
+        "1033": ["HU", "Borsod-Abauj-Zemplen", "BZ "],
+        "1034": ["HU", "Budapest", "BU "],
+        "1035": ["HU", "Csongrad", "CS "],
+        "1036": ["HU", "Fejer", "FE "],
+        "1037": ["HU", "Gyor-Moson-Sopron", "GS "],
+        "1038": ["HU", "Hajdu-Bihar", "HB "],
+        "1039": ["HU", "Heves", "HE "],
+        "1040": ["HU", "Jasz-Nagykun-Szolnok", "JN "],
+        "1041": ["HU", "Komarom-Esztergom", "KE "],
+        "1042": ["HU", "Nograd", "NO "],
+        "1043": ["HU", "Pest", "PE "],
+        "1044": ["HU", "Somogy", "SO "],
+        "1045": ["HU", "Szabolcs-Szatmar-Bereg", "SZ "],
+        "1046": ["HU", "Tolna", "TO "],
+        "1047": ["HU", "Vas", "VA "],
+        "1048": ["HU", "Veszprem", "VE "],
+        "1049": ["HU", "Zala", "ZA "]
+      }
+    ]
+  },
+  {
+    "pais": "Indonesia",
+    "codigo": "ID",
+    "estado": [
+      {
+        "1050": ["ID", "Aceh", "AC "],
+        "1051": ["ID", "Bali", "BA "],
+        "1052": ["ID", "Banten", "BT "],
+        "1053": ["ID", "Bengkulu", "BE "],
+        "1054": ["ID", "Gorontalo", "GO "],
+        "1055": ["ID", "Jakarta Raya", "JK "],
+        "1056": ["ID", "Jambi", "JA "],
+        "1057": ["ID", "Jawa Barat", "JB "],
+        "1058": ["ID", "Jawa Tengah", "JT "],
+        "1059": ["ID", "Jawa Timur", "JI "],
+        "1060": ["ID", "Kalimantan Barat", "KB "],
+        "1061": ["ID", "Kalimantan Selatan", "KS "],
+        "1062": ["ID", "Kalimantan Tengah", "KT "],
+        "1063": ["ID", "Kalimantan Timur", "KI "],
+        "1064": ["ID", "Kalimantan Utara", "KU "],
+        "1065": ["ID", "Kepulauan Bangka Belitung", "BB "],
+        "1066": ["ID", "Kepulauan Riau", "KR "],
+        "1067": ["ID", "Lampung", "LA "],
+        "1068": ["ID", "Maluku", "ML "],
+        "1069": ["ID", "Maluku Utara", "MU "],
+        "1070": ["ID", "Nusa Tenggara Barat", "NB "],
+        "1071": ["ID", "Nusa Tenggara Timur", "NT "],
+        "1072": ["ID", "Papua", "PP "],
+        "1073": ["ID", "Papua Barat", "PB "],
+        "1074": ["ID", "Riau", "RI "],
+        "1075": ["ID", "Sulawesi Barat", "SR "],
+        "1076": ["ID", "Sulawesi Selatan", "SN "],
+        "1077": ["ID", "Sulawesi Tengah", "ST "],
+        "1078": ["ID", "Sulawesi Tenggara", "SG "],
+        "1079": ["ID", "Sulawesi Utara", "SA "],
+        "1080": ["ID", "Sumatera Barat", "SB "],
+        "1081": ["ID", "Sumatera Selatan", "SS "],
+        "1082": ["ID", "Sumatera Utara", "SU "],
+        "1083": ["ID", "Yogyakarta", "YO "]
+      }
+    ]
+  },
+  {
+    "pais": "Ireland",
+    "codigo": "IE",
+    "estado": [
+      {
+        "1084": ["IE", "Carlow", "CW "],
+        "1085": ["IE", "Cavan", "CN "],
+        "1086": ["IE", "Clare", "CE "],
+        "1087": ["IE", "Cork", "CO "],
+        "1088": ["IE", "Donegal", "DL "],
+        "1089": ["IE", "Dublin", "D  "],
+        "1090": ["IE", "Galway", "G  "],
+        "1091": ["IE", "Kerry", "KY "],
+        "1092": ["IE", "Kildare", "KE "],
+        "1093": ["IE", "Kilkenny", "KK "],
+        "1094": ["IE", "Laois", "LS "],
+        "1095": ["IE", "Leitrim", "LM "],
+        "1096": ["IE", "Limerick", "LK "],
+        "1097": ["IE", "Longford", "LD "],
+        "1098": ["IE", "Louth", "LH "],
+        "1099": ["IE", "Mayo", "MO "],
+        "1100": ["IE", "Meath", "MH "],
+        "1101": ["IE", "Monaghan", "MN "],
+        "1102": ["IE", "Offaly", "OY "],
+        "1103": ["IE", "Roscommon", "RN "],
+        "1104": ["IE", "Sligo", "SO "],
+        "1105": ["IE", "Tipperary", "TA "],
+        "1106": ["IE", "Waterford", "WD "],
+        "1107": ["IE", "Westmeath", "WH "],
+        "1108": ["IE", "Wexford", "WX "],
+        "1109": ["IE", "Wicklow", "WW "]
+      }
+    ]
+  },
+  {
+    "pais": "Israel",
+    "codigo": "IL",
+    "estado": [
+      {
+        "1110": ["IL", "HaDarom", "D  "],
+        "1111": ["IL", "HaMerkaz", "M  "],
+        "1112": ["IL", "HaTsafon", "Z  "],
+        "1113": ["IL", "Hefa", "HA "],
+        "1114": ["IL", "Tel Aviv", "TA "],
+        "1115": ["IL", "Yerushalayim", "JM "]
+      }
+    ]
+  },
+  {
+    "pais": "Isle of Man",
+    "codigo": "IM",
+    "estado": [
+      {
+        "1116": ["IM", "Isle of Man", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "India",
+    "codigo": "IN",
+    "estado": [
+      {
+        "1117": ["IN", "Andaman and Nicobar Islands", "AN "],
+        "1118": ["IN", "Andhra Pradesh", "AP "],
+        "1119": ["IN", "Arunachal Pradesh", "AR "],
+        "1120": ["IN", "Assam", "AS "],
+        "1121": ["IN", "Bihar", "BR "],
+        "1122": ["IN", "Chandigarh", "CH "],
+        "1123": ["IN", "Chhattisgarh", "CT "],
+        "1124": ["IN", "Dadra and Nagar Haveli", "DN "],
+        "1125": ["IN", "Daman and Diu", "DD "],
+        "1126": ["IN", "Delhi", "DL "],
+        "1127": ["IN", "Goa", "GA "],
+        "1128": ["IN", "Gujarat", "GJ "],
+        "1129": ["IN", "Haryana", "HR "],
+        "1130": ["IN", "Himachal Pradesh", "HP "],
+        "1131": ["IN", "Jammu and Kashmir", "JK "],
+        "1132": ["IN", "Jharkhand", "JH "],
+        "1133": ["IN", "Karnataka", "KA "],
+        "1134": ["IN", "Kerala", "KL "],
+        "1135": ["IN", "Lakshadweep", "LD "],
+        "1136": ["IN", "Madhya Pradesh", "MP "],
+        "1137": ["IN", "Maharashtra", "MH "],
+        "1138": ["IN", "Manipur", "MN "],
+        "1139": ["IN", "Meghalaya", "ML "],
+        "1140": ["IN", "Mizoram", "MZ "],
+        "1141": ["IN", "Nagaland", "NL "],
+        "1142": ["IN", "Odisha", "OR "],
+        "1143": ["IN", "Puducherry", "PY "],
+        "1144": ["IN", "Punjab", "PB "],
+        "1145": ["IN", "Rajasthan", "RJ "],
+        "1146": ["IN", "Sikkim", "SK "],
+        "1147": ["IN", "Tamil Nadu", "TN "],
+        "1148": ["IN", "Telangana", "TG "],
+        "1149": ["IN", "Tripura", "TR "],
+        "1150": ["IN", "Uttar Pradesh", "UP "],
+        "1151": ["IN", "Uttarakhand", "UT "],
+        "1152": ["IN", "West Bengal", "WB "]
+      }
+    ]
+  },
+  {
+    "pais": "British Indian Ocean Territory",
+    "codigo": "IO",
+    "estado": [
+      {
+        "1153": ["IO", "British Indian Ocean Territory", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Iraq",
+    "codigo": "IQ",
+    "estado": [
+      {
+        "1154": ["IQ", "Al Anbar", "AN "],
+        "1155": ["IQ", "Al Basrah", "BA "],
+        "1156": ["IQ", "Al Muthanna", "MU "],
+        "1157": ["IQ", "Al Qadisiyah", "QA "],
+        "1158": ["IQ", "An Najaf", "NA "],
+        "1159": ["IQ", "Arbil", "AR "],
+        "1160": ["IQ", "As Sulaymaniyah", "SU "],
+        "1161": ["IQ", "Babil", "BB "],
+        "1162": ["IQ", "Baghdad", "BG "],
+        "1163": ["IQ", "Dahuk", "DA "],
+        "1164": ["IQ", "Dhi Qar", "DQ "],
+        "1165": ["IQ", "Diyala", "DI "],
+        "1166": ["IQ", "Karbala'", "KA "],
+        "1167": ["IQ", "Kirkuk", "KI "],
+        "1168": ["IQ", "Maysan", "MA "],
+        "1169": ["IQ", "Ninawa", "NI "],
+        "1170": ["IQ", "Salah ad Din", "SD "],
+        "1171": ["IQ", "Wasit", "WA "]
+      }
+    ]
+  },
+  {
+    "pais": "Iran (Islamic Republic of)",
+    "codigo": "IR",
+    "estado": [
+      {
+        "1172": ["IR", "Alborz", "32 "],
+        "1173": ["IR", "Ardabil", "03 "],
+        "1174": ["IR", "Azarbayjan-e Gharbi", "02 "],
+        "1175": ["IR", "Azarbayjan-e Sharqi", "01 "],
+        "1176": ["IR", "Bushehr", "06 "],
+        "1177": ["IR", "Chahar Mahal va Bakhtiari", "08 "],
+        "1178": ["IR", "Esfahan", "04 "],
+        "1179": ["IR", "Fars", "14 "],
+        "1180": ["IR", "Gilan", "19 "],
+        "1181": ["IR", "Golestan", "27 "],
+        "1182": ["IR", "Hamadan", "24 "],
+        "1183": ["IR", "Hormozgan", "23 "],
+        "1184": ["IR", "Ilam", "05 "],
+        "1185": ["IR", "Kerman", "15 "],
+        "1186": ["IR", "Kermanshah", "17 "],
+        "1187": ["IR", "Khorasan-e Jonubi", "29 "],
+        "1188": ["IR", "Khorasan-e Razavi", "30 "],
+        "1189": ["IR", "Khorasan-e Shomali", "31 "],
+        "1190": ["IR", "Khuzestan", "10 "],
+        "1191": ["IR", "Kohgiluyeh va Bowyer Ahmad", "18 "],
+        "1192": ["IR", "Kordestan", "16 "],
+        "1193": ["IR", "Lorestan", "20 "],
+        "1194": ["IR", "Markazi", "22 "],
+        "1195": ["IR", "Mazandaran", "21 "],
+        "1196": ["IR", "Qazvin", "28 "],
+        "1197": ["IR", "Qom", "26 "],
+        "1198": ["IR", "Semnan", "12 "],
+        "1199": ["IR", "Sistan va Baluchestan", "13 "],
+        "1200": ["IR", "Tehran", "07 "],
+        "1201": ["IR", "Yazd", "25 "],
+        "1202": ["IR", "Zanjan", "11 "]
+      }
+    ]
+  },
+  {
+    "pais": "Iceland",
+    "codigo": "IS",
+    "estado": [
+      {
+        "1203": ["IS", "Austurland", "7  "],
+        "1204": ["IS", "Hofudborgarsvaedi", "1  "],
+        "1205": ["IS", "Nordurland eystra", "6  "],
+        "1206": ["IS", "Nordurland vestra", "5  "],
+        "1207": ["IS", "Sudurland", "8  "],
+        "1208": ["IS", "Sudurnes", "2  "],
+        "1209": ["IS", "Vestfirdir", "4  "],
+        "1210": ["IS", "Vesturland", "3  "]
+      }
+    ]
+  },
+  {
+    "pais": "Italy",
+    "codigo": "IT",
+    "estado": [
+      {
+        "1211": ["IT", "Abruzzo", "65 "],
+        "1212": ["IT", "Basilicata", "77 "],
+        "1213": ["IT", "Calabria", "78 "],
+        "1214": ["IT", "Campania", "72 "],
+        "1215": ["IT", "Emilia-Romagna", "45 "],
+        "1216": ["IT", "Friuli-Venezia Giulia", "36 "],
+        "1217": ["IT", "Lazio", "62 "],
+        "1218": ["IT", "Liguria", "42 "],
+        "1219": ["IT", "Lombardia", "25 "],
+        "1220": ["IT", "Marche", "57 "],
+        "1221": ["IT", "Molise", "67 "],
+        "1222": ["IT", "Piemonte", "21 "],
+        "1223": ["IT", "Puglia", "75 "],
+        "1224": ["IT", "Sardegna", "88 "],
+        "1225": ["IT", "Sicilia", "82 "],
+        "1226": ["IT", "Toscana", "52 "],
+        "1227": ["IT", "Trentino-Alto Adige", "32 "],
+        "1228": ["IT", "Umbria", "55 "],
+        "1229": ["IT", "Valle d'Aosta", "23 "],
+        "1230": ["IT", "Veneto", "34 "]
+      }
+    ]
+  },
+  {
+    "pais": "Jersey",
+    "codigo": "JE",
+    "estado": [
+      {
+        "1231": ["JE", "Jersey", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Jamaica",
+    "codigo": "JM",
+    "estado": [
+      {
+        "1232": ["JM", "Clarendon", "13 "],
+        "1233": ["JM", "Hanover", "09 "],
+        "1234": ["JM", "Kingston", "01 "],
+        "1235": ["JM", "Manchester", "12 "],
+        "1236": ["JM", "Portland", "04 "],
+        "1237": ["JM", "Saint Andrew", "02 "],
+        "1238": ["JM", "Saint Ann", "06 "],
+        "1239": ["JM", "Saint Catherine", "14 "],
+        "1240": ["JM", "Saint Elizabeth", "11 "],
+        "1241": ["JM", "Saint James", "08 "],
+        "1242": ["JM", "Saint Mary", "05 "],
+        "1243": ["JM", "Saint Thomas", "03 "],
+        "1244": ["JM", "Trelawny", "07 "],
+        "1245": ["JM", "Westmoreland", "10 "]
+      }
+    ]
+  },
+  {
+    "pais": "Jordan",
+    "codigo": "JO",
+    "estado": [
+      {
+        "1246": ["JO", "'Ajlun", "AJ "],
+        "1247": ["JO", "Al 'Aqabah", "AQ "],
+        "1248": ["JO", "Al 'Asimah", "AM "],
+        "1249": ["JO", "Al Balqa'", "BA "],
+        "1250": ["JO", "Al Karak", "KA "],
+        "1251": ["JO", "Al Mafraq", "MA "],
+        "1252": ["JO", "Az Zarqa'", "AZ "],
+        "1253": ["JO", "Irbid", "IR "],
+        "1254": ["JO", "Jarash", "JA "],
+        "1255": ["JO", "Ma'an", "MN "],
+        "1256": ["JO", "Madaba", "MD "]
+      }
+    ]
+  },
+  {
+    "pais": "Japan",
+    "codigo": "JP",
+    "estado": [
+      {
+        "1257": ["JP", "Aichi", "23 "],
+        "1258": ["JP", "Akita", "05 "],
+        "1259": ["JP", "Aomori", "02 "],
+        "1260": ["JP", "Chiba", "12 "],
+        "1261": ["JP", "Ehime", "38 "],
+        "1262": ["JP", "Fukui", "18 "],
+        "1263": ["JP", "Fukuoka", "40 "],
+        "1264": ["JP", "Fukushima", "07 "],
+        "1265": ["JP", "Gifu", "21 "],
+        "1266": ["JP", "Gunma", "10 "],
+        "1267": ["JP", "Hiroshima", "34 "],
+        "1268": ["JP", "Hokkaido", "01 "],
+        "1269": ["JP", "Hyogo", "28 "],
+        "1270": ["JP", "Ibaraki", "08 "],
+        "1271": ["JP", "Ishikawa", "17 "],
+        "1272": ["JP", "Iwate", "03 "],
+        "1273": ["JP", "Kagawa", "37 "],
+        "1274": ["JP", "Kagoshima", "46 "],
+        "1275": ["JP", "Kanagawa", "14 "],
+        "1276": ["JP", "Kochi", "39 "],
+        "1277": ["JP", "Kumamoto", "43 "],
+        "1278": ["JP", "Kyoto", "26 "],
+        "1279": ["JP", "Mie", "24 "],
+        "1280": ["JP", "Miyagi", "04 "],
+        "1281": ["JP", "Miyazaki", "45 "],
+        "1282": ["JP", "Nagano", "20 "],
+        "1283": ["JP", "Nagasaki", "42 "],
+        "1284": ["JP", "Nara", "29 "],
+        "1285": ["JP", "Niigata", "15 "],
+        "1286": ["JP", "Oita", "44 "],
+        "1287": ["JP", "Okayama", "33 "],
+        "1288": ["JP", "Okinawa", "47 "],
+        "1289": ["JP", "Osaka", "27 "],
+        "1290": ["JP", "Saga", "41 "],
+        "1291": ["JP", "Saitama", "11 "],
+        "1292": ["JP", "Shiga", "25 "],
+        "1293": ["JP", "Shimane", "32 "],
+        "1294": ["JP", "Shizuoka", "22 "],
+        "1295": ["JP", "Tochigi", "09 "],
+        "1296": ["JP", "Tokushima", "36 "],
+        "1297": ["JP", "Tokyo", "13 "],
+        "1298": ["JP", "Tottori", "31 "],
+        "1299": ["JP", "Toyama", "16 "],
+        "1300": ["JP", "Wakayama", "30 "],
+        "1301": ["JP", "Yamagata", "06 "],
+        "1302": ["JP", "Yamaguchi", "35 "],
+        "1303": ["JP", "Yamanashi", "19 "]
+      }
+    ]
+  },
+  {
+    "pais": "Kenya",
+    "codigo": "KE",
+    "estado": [
+      {
+        "1304": ["KE", "Baringo", "01 "],
+        "1305": ["KE", "Bomet", "02 "],
+        "1306": ["KE", "Bungoma", "03 "],
+        "1307": ["KE", "Busia", "04 "],
+        "1308": ["KE", "Elgeyo/Marakwet", "05 "],
+        "1309": ["KE", "Embu", "06 "],
+        "1310": ["KE", "Garissa", "07 "],
+        "1311": ["KE", "Homa Bay", "08 "],
+        "1312": ["KE", "Isiolo", "09 "],
+        "1313": ["KE", "Kajiado", "10 "],
+        "1314": ["KE", "Kakamega", "11 "],
+        "1315": ["KE", "Kericho", "12 "],
+        "1316": ["KE", "Kiambu", "13 "],
+        "1317": ["KE", "Kilifi", "14 "],
+        "1318": ["KE", "Kirinyaga", "15 "],
+        "1319": ["KE", "Kisii", "16 "],
+        "1320": ["KE", "Kisumu", "17 "],
+        "1321": ["KE", "Kitui", "18 "],
+        "1322": ["KE", "Kwale", "19 "],
+        "1323": ["KE", "Laikipia", "20 "],
+        "1324": ["KE", "Lamu", "21 "],
+        "1325": ["KE", "Machakos", "22 "],
+        "1326": ["KE", "Makueni", "23 "],
+        "1327": ["KE", "Mandera", "24 "],
+        "1328": ["KE", "Marsabit", "25 "],
+        "1329": ["KE", "Meru", "26 "],
+        "1330": ["KE", "Migori", "27 "],
+        "1331": ["KE", "Mombasa", "28 "],
+        "1332": ["KE", "Murang'a", "29 "],
+        "1333": ["KE", "Nairobi City", "30 "],
+        "1334": ["KE", "Nakuru", "31 "],
+        "1335": ["KE", "Nandi", "32 "],
+        "1336": ["KE", "Narok", "33 "],
+        "1337": ["KE", "Nyamira", "34 "],
+        "1338": ["KE", "Nyandarua", "35 "],
+        "1339": ["KE", "Nyeri", "36 "],
+        "1340": ["KE", "Siaya", "38 "],
+        "1341": ["KE", "Taita/Taveta", "39 "],
+        "1342": ["KE", "Tharaka-Nithi", "41 "],
+        "1343": ["KE", "Trans Nzoia", "42 "],
+        "1344": ["KE", "Turkana", "43 "],
+        "1345": ["KE", "Uasin Gishu", "44 "],
+        "1346": ["KE", "Wajir", "46 "]
+      }
+    ]
+  },
+  {
+    "pais": "Kyrgyzstan",
+    "codigo": "KG",
+    "estado": [
+      {
+        "1347": ["KG", "Batken", "B  "],
+        "1348": ["KG", "Bishkek", "GB "],
+        "1349": ["KG", "Chuy", "C  "],
+        "1350": ["KG", "Jalal-Abad", "J  "],
+        "1351": ["KG", "Naryn", "N  "],
+        "1352": ["KG", "Osh", "GO "],
+        "1353": ["KG", "Talas", "T  "],
+        "1354": ["KG", "Ysyk-Kol", "Y  "]
+      }
+    ]
+  },
+  {
+    "pais": "Cambodia",
+    "codigo": "KH",
+    "estado": [
+      {
+        "1355": ["KH", "Baat Dambang", "2  "],
+        "1356": ["KH", "Banteay Mean Chey", "1  "],
+        "1357": ["KH", "Kampong Chaam", "3  "],
+        "1358": ["KH", "Kampong Chhnang", "4  "],
+        "1359": ["KH", "Kampong Spueu", "5  "],
+        "1360": ["KH", "Kampong Thum", "6  "],
+        "1361": ["KH", "Kampot", "7  "],
+        "1362": ["KH", "Kandaal", "8  "],
+        "1363": ["KH", "Kaoh Kong", "9  "],
+        "1364": ["KH", "Kracheh", "10 "],
+        "1365": ["KH", "Krong Kaeb", "23 "],
+        "1366": ["KH", "Krong Pailin", "24 "],
+        "1367": ["KH", "Krong Preah Sihanouk", "18 "],
+        "1368": ["KH", "Mondol Kiri", "11 "],
+        "1369": ["KH", "Otdar Mean Chey", "22 "],
+        "1370": ["KH", "Phnom Penh", "12 "],
+        "1371": ["KH", "Pousaat", "15 "],
+        "1372": ["KH", "Prey Veaeng", "14 "],
+        "1373": ["KH", "Rotanak Kiri", "16 "],
+        "1374": ["KH", "Siem Reab", "17 "],
+        "1375": ["KH", "Svaay Rieng", "20 "],
+        "1376": ["KH", "Taakaev", "21 "]
+      }
+    ]
+  },
+  {
+    "pais": "Kiribati",
+    "codigo": "KI",
+    "estado": [
+      {
+        "1377": ["KI", "Gilbert Islands", "G  "],
+        "1378": ["KI", "Line Islands", "L  "]
+      }
+    ]
+  },
+  {
+    "pais": "Comoros",
+    "codigo": "KM",
+    "estado": [
+      {
+        "1379": ["KM", "Grande Comore", "G  "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Kitts and Nevis",
+    "codigo": "KN",
+    "estado": [
+      {
+        "1380": ["KN", "Saint Anne Sandy Point", "02 "],
+        "1381": ["KN", "Saint George Basseterre", "03 "],
+        "1382": ["KN", "Saint James Windward", "05 "],
+        "1383": ["KN", "Saint John Capisterre", "06 "],
+        "1384": ["KN", "Saint John Figtree", "07 "],
+        "1385": ["KN", "Saint Mary Cayon", "08 "],
+        "1386": ["KN", "Saint Paul Capisterre", "09 "],
+        "1387": ["KN", "Saint Paul Charlestown", "10 "],
+        "1388": ["KN", "Saint Peter Basseterre", "11 "],
+        "1389": ["KN", "Saint Thomas Lowland", "12 "],
+        "1390": ["KN", "Saint Thomas Middle Island", "13 "]
+      }
+    ]
+  },
+  {
+    "pais": "Korea (Democratic People's Republic of)",
+    "codigo": "KP",
+    "estado": [
+      {
+        "1391": ["KP", "P'yongyang", "01 "]
+      }
+    ]
+  },
+  {
+    "pais": "Korea, Republic of",
+    "codigo": "KR",
+    "estado": [
+      {
+        "1392": ["KR", "Busan-gwangyeoksi", "26 "],
+        "1393": ["KR", "Chungcheongbuk-do", "43 "],
+        "1394": ["KR", "Chungcheongnam-do", "44 "],
+        "1395": ["KR", "Daegu-gwangyeoksi", "27 "],
+        "1396": ["KR", "Daejeon-gwangyeoksi", "30 "],
+        "1397": ["KR", "Gangwon-do", "42 "],
+        "1398": ["KR", "Gwangju-gwangyeoksi", "29 "],
+        "1399": ["KR", "Gyeonggi-do", "41 "],
+        "1400": ["KR", "Gyeongsangbuk-do", "47 "],
+        "1401": ["KR", "Gyeongsangnam-do", "48 "],
+        "1402": ["KR", "Incheon-gwangyeoksi", "28 "],
+        "1403": ["KR", "Jeju-teukbyeoljachido", "49 "],
+        "1404": ["KR", "Jeollabuk-do", "45 "],
+        "1405": ["KR", "Jeollanam-do", "46 "],
+        "1406": ["KR", "Seoul-teukbyeolsi", "11 "],
+        "1407": ["KR", "Ulsan-gwangyeoksi", "31 "]
+      }
+    ]
+  },
+  {
+    "pais": "Kuwait",
+    "codigo": "KW",
+    "estado": [
+      {
+        "1408": ["KW", "Al 'Asimah", "KU "],
+        "1409": ["KW", "Al Ahmadi", "AH "],
+        "1410": ["KW", "Al Farwaniyah", "FA "],
+        "1411": ["KW", "Al Jahra'", "JA "],
+        "1412": ["KW", "Hawalli", "HA "],
+        "1413": ["KW", "Mubarak al Kabir", "MU "]
+      }
+    ]
+  },
+  {
+    "pais": "Cayman Islands",
+    "codigo": "KY",
+    "estado": [
+      {
+        "1414": ["KY", "Cayman Islands", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Kazakhstan",
+    "codigo": "KZ",
+    "estado": [
+      {
+        "1415": ["KZ", "Almaty", "ALA"],
+        "1416": ["KZ", "Almaty oblysy", "ALM"],
+        "1417": ["KZ", "Aqmola oblysy", "AKM"],
+        "1418": ["KZ", "Aqtobe oblysy", "AKT"],
+        "1419": ["KZ", "Astana", "AST"],
+        "1420": ["KZ", "Atyrau oblysy", "ATY"],
+        "1421": ["KZ", "Batys Qazaqstan oblysy", "ZAP"],
+        "1422": ["KZ", "Bayqongyr", "BAY"],
+        "1423": ["KZ", "Mangghystau oblysy", "MAN"],
+        "1424": ["KZ", "Ongtustik Qazaqstan oblysy", "YUZ"],
+        "1425": ["KZ", "Pavlodar oblysy", "PAV"],
+        "1426": ["KZ", "Qaraghandy oblysy", "KAR"],
+        "1427": ["KZ", "Qostanay oblysy", "KUS"],
+        "1428": ["KZ", "Qyzylorda oblysy", "KZY"],
+        "1429": ["KZ", "Shyghys Qazaqstan oblysy", "VOS"],
+        "1430": ["KZ", "Soltustik Qazaqstan oblysy", "SEV"],
+        "1431": ["KZ", "Zhambyl oblysy", "ZHA"]
+      }
+    ]
+  },
+  {
+    "pais": "Lao People's Democratic Republic",
+    "codigo": "LA",
+    "estado": [
+      {
+        "1432": ["LA", "Attapu", "AT "],
+        "1433": ["LA", "Champasak", "CH "],
+        "1434": ["LA", "Houaphan", "HO "],
+        "1435": ["LA", "Khammouan", "KH "],
+        "1436": ["LA", "Louang Namtha", "LM "],
+        "1437": ["LA", "Louangphabang", "LP "],
+        "1438": ["LA", "Oudomxai", "OU "],
+        "1439": ["LA", "Salavan", "SL "],
+        "1440": ["LA", "Savannakhet", "SV "],
+        "1441": ["LA", "Viangchan", "VI "],
+        "1442": ["LA", "Xaignabouli", "XA "],
+        "1443": ["LA", "Xekong", "XE "],
+        "1444": ["LA", "Xiangkhouang", "XI "]
+      }
+    ]
+  },
+  {
+    "pais": "Lebanon",
+    "codigo": "LB",
+    "estado": [
+      {
+        "1445": ["LB", "Aakkar", "AK "],
+        "1446": ["LB", "Baalbek-Hermel", "BH "],
+        "1447": ["LB", "Beqaa", "BI "],
+        "1448": ["LB", "Beyrouth", "BA "],
+        "1449": ["LB", "Liban-Nord", "AS "],
+        "1450": ["LB", "Liban-Sud", "JA "],
+        "1451": ["LB", "Mont-Liban", "JL "],
+        "1452": ["LB", "Nabatiye", "NA "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Lucia",
+    "codigo": "LC",
+    "estado": [
+      {
+        "1453": ["LC", "Anse la Raye", "01 "],
+        "1454": ["LC", "Castries", "02 "],
+        "1455": ["LC", "Choiseul", "03 "],
+        "1456": ["LC", "Dennery", "05 "],
+        "1457": ["LC", "Gros Islet", "06 "],
+        "1458": ["LC", "Laborie", "07 "],
+        "1459": ["LC", "Micoud", "08 "],
+        "1460": ["LC", "Soufriere", "10 "],
+        "1461": ["LC", "Vieux Fort", "11 "]
+      }
+    ]
+  },
+  {
+    "pais": "Liechtenstein",
+    "codigo": "LI",
+    "estado": [
+      {
+        "1462": ["LI", "Balzers", "01 "],
+        "1463": ["LI", "Eschen", "02 "],
+        "1464": ["LI", "Gamprin", "03 "],
+        "1465": ["LI", "Mauren", "04 "],
+        "1466": ["LI", "Planken", "05 "],
+        "1467": ["LI", "Ruggell", "06 "],
+        "1468": ["LI", "Schaan", "07 "],
+        "1469": ["LI", "Schellenberg", "08 "],
+        "1470": ["LI", "Triesen", "09 "],
+        "1471": ["LI", "Triesenberg", "10 "],
+        "1472": ["LI", "Vaduz", "11 "]
+      }
+    ]
+  },
+  {
+    "pais": "Sri Lanka",
+    "codigo": "LK",
+    "estado": [
+      {
+        "1473": ["LK", "Central Province", "2  "],
+        "1474": ["LK", "Eastern Province", "5  "],
+        "1475": ["LK", "North Central Province", "7  "],
+        "1476": ["LK", "North Western Province", "6  "],
+        "1477": ["LK", "Northern Province", "4  "],
+        "1478": ["LK", "Sabaragamuwa Province", "9  "],
+        "1479": ["LK", "Southern Province", "3  "],
+        "1480": ["LK", "Uva Province", "8  "],
+        "1481": ["LK", "Western Province", "1  "]
+      }
+    ]
+  },
+  {
+    "pais": "Liberia",
+    "codigo": "LR",
+    "estado": [
+      {
+        "1482": ["LR", "Grand Bassa", "GB "],
+        "1483": ["LR", "Grand Gedeh", "GG "],
+        "1484": ["LR", "Margibi", "MG "],
+        "1485": ["LR", "Maryland", "MY "],
+        "1486": ["LR", "Montserrado", "MO "],
+        "1487": ["LR", "Nimba", "NI "],
+        "1488": ["LR", "Sinoe", "SI "]
+      }
+    ]
+  },
+  {
+    "pais": "Lesotho",
+    "codigo": "LS",
+    "estado": [
+      {
+        "1489": ["LS", "Berea", "D  "],
+        "1490": ["LS", "Leribe", "C  "],
+        "1491": ["LS", "Mafeteng", "E  "],
+        "1492": ["LS", "Maseru", "A  "],
+        "1493": ["LS", "Quthing", "G  "]
+      }
+    ]
+  },
+  {
+    "pais": "Lithuania",
+    "codigo": "LT",
+    "estado": [
+      {
+        "1494": ["LT", "Alytaus apskritis", "AL "],
+        "1495": ["LT", "Kauno apskritis", "KU "],
+        "1496": ["LT", "Klaipedos apskritis", "KL "],
+        "1497": ["LT", "Marijampoles apskritis", "MR "],
+        "1498": ["LT", "Panevezio apskritis", "PN "],
+        "1499": ["LT", "Siauliu apskritis", "SA "],
+        "1500": ["LT", "Taurages apskritis", "TA "],
+        "1501": ["LT", "Telsiu apskritis", "TE "],
+        "1502": ["LT", "Utenos apskritis", "UT "],
+        "1503": ["LT", "Vilniaus apskritis", "VL "]
+      }
+    ]
+  },
+  {
+    "pais": "Luxembourg",
+    "codigo": "LU",
+    "estado": [
+      {
+        "1504": ["LU", "Diekirch", "DI "],
+        "1505": ["LU", "Grevenmacher", "GR "],
+        "1506": ["LU", "Luxembourg", "LU "]
+      }
+    ]
+  },
+  {
+    "pais": "Latvia",
+    "codigo": "LV",
+    "estado": [
+      {
+        "1507": ["LV", "Adazu novads", "011"],
+        "1508": ["LV", "Aglonas novads", "001"],
+        "1509": ["LV", "Aizkraukles novads", "002"],
+        "1510": ["LV", "Aizputes novads", "003"],
+        "1511": ["LV", "Alojas novads", "005"],
+        "1512": ["LV", "Aluksnes novads", "007"],
+        "1513": ["LV", "Babites novads", "012"],
+        "1514": ["LV", "Baldones novads", "013"],
+        "1515": ["LV", "Balvu novads", "015"],
+        "1516": ["LV", "Bauskas novads", "016"],
+        "1517": ["LV", "Beverinas novads", "017"],
+        "1518": ["LV", "Brocenu novads", "018"],
+        "1519": ["LV", "Carnikavas novads", "020"],
+        "1520": ["LV", "Cesu novads", "022"],
+        "1521": ["LV", "Cesvaines novads", "021"],
+        "1522": ["LV", "Daugavpils novads", "025"],
+        "1523": ["LV", "Dobeles novads", "026"],
+        "1524": ["LV", "Dundagas novads", "027"],
+        "1525": ["LV", "Erglu novads", "030"],
+        "1526": ["LV", "Gulbenes novads", "033"],
+        "1527": ["LV", "Iecavas novads", "034"],
+        "1528": ["LV", "Ikskiles novads", "035"],
+        "1529": ["LV", "Incukalna novads", "037"],
+        "1530": ["LV", "Jaunjelgavas novads", "038"],
+        "1531": ["LV", "Jaunpiebalgas novads", "039"],
+        "1532": ["LV", "Jaunpils novads", "040"],
+        "1533": ["LV", "Jekabpils novads", "042"],
+        "1534": ["LV", "Jelgava", "JEL"],
+        "1535": ["LV", "Jelgavas novads", "041"],
+        "1536": ["LV", "Jurmala", "JUR"],
+        "1537": ["LV", "Kekavas novads", "052"],
+        "1538": ["LV", "Kokneses novads", "046"],
+        "1539": ["LV", "Kraslavas novads", "047"],
+        "1540": ["LV", "Kuldigas novads", "050"],
+        "1541": ["LV", "Lielvardes novads", "053"],
+        "1542": ["LV", "Liepaja", "LPX"],
+        "1543": ["LV", "Limbazu novads", "054"],
+        "1544": ["LV", "Livanu novads", "056"],
+        "1545": ["LV", "Lubanas novads", "057"],
+        "1546": ["LV", "Ludzas novads", "058"],
+        "1547": ["LV", "Madonas novads", "059"],
+        "1548": ["LV", "Malpils novads", "061"],
+        "1549": ["LV", "Nauksenu novads", "064"],
+        "1550": ["LV", "Ogres novads", "067"],
+        "1551": ["LV", "Olaines novads", "068"],
+        "1552": ["LV", "Ozolnieku novads", "069"],
+        "1553": ["LV", "Preilu novads", "073"],
+        "1554": ["LV", "Rezeknes novads", "077"],
+        "1555": ["LV", "Riebinu novads", "078"],
+        "1556": ["LV", "Riga", "RIX"],
+        "1557": ["LV", "Rojas novads", "079"],
+        "1558": ["LV", "Ropazu novads", "080"],
+        "1559": ["LV", "Rundales novads", "083"],
+        "1560": ["LV", "Salacgrivas novads", "086"],
+        "1561": ["LV", "Salaspils novads", "087"],
+        "1562": ["LV", "Saldus novads", "088"],
+        "1563": ["LV", "Saulkrastu novads", "089"],
+        "1564": ["LV", "Sejas novads", "090"],
+        "1565": ["LV", "Siguldas novads", "091"],
+        "1566": ["LV", "Skrundas novads", "093"],
+        "1567": ["LV", "Stopinu novads", "095"],
+        "1568": ["LV", "Strencu novads", "096"],
+        "1569": ["LV", "Talsu novads", "097"],
+        "1570": ["LV", "Tukuma novads", "099"],
+        "1571": ["LV", "Valkas novads", "101"],
+        "1572": ["LV", "Valmiera", "VMR"],
+        "1573": ["LV", "Varkavas novads", "103"],
+        "1574": ["LV", "Vecumnieku novads", "105"],
+        "1575": ["LV", "Ventspils novads", "106"]
+      }
+    ]
+  },
+  {
+    "pais": "Libya",
+    "codigo": "LY",
+    "estado": [
+      {
+        "1576": ["LY", "Al Butnan", "BU "],
+        "1577": ["LY", "Al Jabal al Akhdar", "JA "],
+        "1578": ["LY", "Al Jabal al Gharbi", "JG "],
+        "1579": ["LY", "Al Jufrah", "JU "],
+        "1580": ["LY", "Al Kufrah", "KF "],
+        "1581": ["LY", "Al Marj", "MJ "],
+        "1582": ["LY", "Al Marqab", "MB "],
+        "1583": ["LY", "Al Wahat", "WA "],
+        "1584": ["LY", "An Nuqat al Khams", "NQ "],
+        "1585": ["LY", "Az Zawiyah", "ZA "],
+        "1586": ["LY", "Banghazi", "BA "],
+        "1587": ["LY", "Darnah", "DR "],
+        "1588": ["LY", "Misratah", "MI "],
+        "1589": ["LY", "Murzuq", "MQ "],
+        "1590": ["LY", "Nalut", "NL "],
+        "1591": ["LY", "Sabha", "SB "],
+        "1592": ["LY", "Tarabulus", "TB "]
+      }
+    ]
+  },
+  {
+    "pais": "Morocco",
+    "codigo": "MA",
+    "estado": [
+      {
+        "1593": ["MA", "Beni-Mellal-Khenifra", "05 "],
+        "1594": ["MA", "Casablanca-Settat", "06 "],
+        "1595": ["MA", "Draa-Tafilalet", "08 "],
+        "1596": ["MA", "Fes- Meknes", "03 "],
+        "1597": ["MA", "Guelmim-Oued Noun (EH-partial)", "10 "],
+        "1598": ["MA", "L'Oriental", "02 "],
+        "1599": ["MA", "Laayoune-Sakia El Hamra (EH-partial)", "11 "],
+        "1600": ["MA", "Marrakech-Safi", "07 "],
+        "1601": ["MA", "Rabat-Sale-Kenitra", "04 "],
+        "1602": ["MA", "Souss-Massa", "09 "],
+        "1603": ["MA", "Tanger-Tetouan-Al Hoceima", "01 "]
+      }
+    ]
+  },
+  {
+    "pais": "Monaco",
+    "codigo": "MC",
+    "estado": [
+      {
+        "1604": ["MC", "Fontvieille", "FO "],
+        "1605": ["MC", "La Condamine", "CO "],
+        "1606": ["MC", "Monaco-Ville", "MO "],
+        "1607": ["MC", "Monte-Carlo", "MC "],
+        "1608": ["MC", "Saint-Roman", "SR "]
+      }
+    ]
+  },
+  {
+    "pais": "Moldova, Republic of",
+    "codigo": "MD",
+    "estado": [
+      {
+        "1609": ["MD", "Anenii Noi", "AN "],
+        "1610": ["MD", "Balti", "BA "],
+        "1611": ["MD", "Basarabeasca", "BS "],
+        "1612": ["MD", "Bender", "BD "],
+        "1613": ["MD", "Briceni", "BR "],
+        "1614": ["MD", "Cahul", "CA "],
+        "1615": ["MD", "Calarasi", "CL "],
+        "1616": ["MD", "Cantemir", "CT "],
+        "1617": ["MD", "Causeni", "CS "],
+        "1618": ["MD", "Chisinau", "CU "],
+        "1619": ["MD", "Cimislia", "CM "],
+        "1620": ["MD", "Criuleni", "CR "],
+        "1621": ["MD", "Donduseni", "DO "],
+        "1622": ["MD", "Drochia", "DR "],
+        "1623": ["MD", "Dubasari", "DU "],
+        "1624": ["MD", "Edinet", "ED "],
+        "1625": ["MD", "Falesti", "FA "],
+        "1626": ["MD", "Floresti", "FL "],
+        "1627": ["MD", "Gagauzia, Unitatea teritoriala autonoma", "GA "],
+        "1628": ["MD", "Glodeni", "GL "],
+        "1629": ["MD", "Hincesti", "HI "],
+        "1630": ["MD", "Ialoveni", "IA "],
+        "1631": ["MD", "Leova", "LE "],
+        "1632": ["MD", "Nisporeni", "NI "],
+        "1633": ["MD", "Ocnita", "OC "],
+        "1634": ["MD", "Orhei", "OR "],
+        "1635": ["MD", "Rezina", "RE "],
+        "1636": ["MD", "Riscani", "RI "],
+        "1637": ["MD", "Singerei", "SI "],
+        "1638": ["MD", "Soldanesti", "SD "],
+        "1639": ["MD", "Soroca", "SO "],
+        "1640": ["MD", "Stefan Voda", "SV "],
+        "1641": ["MD", "Stinga Nistrului, unitatea teritoriala din", "SN"],
+        "1642": ["MD", "Straseni", "ST "],
+        "1643": ["MD", "Taraclia", "TA "],
+        "1644": ["MD", "Telenesti", "TE "],
+        "1645": ["MD", "Ungheni", "UN "]
+      }
+    ]
+  },
+  {
+    "pais": "Montenegro",
+    "codigo": "ME",
+    "estado": [
+      {
+        "1646": ["ME", "Bar", "02 "],
+        "1647": ["ME", "Berane", "03 "],
+        "1648": ["ME", "Bijelo Polje", "04 "],
+        "1649": ["ME", "Budva", "05 "],
+        "1650": ["ME", "Cetinje", "06 "],
+        "1651": ["ME", "Danilovgrad", "07 "],
+        "1652": ["ME", "Herceg-Novi", "08 "],
+        "1653": ["ME", "Kolasin", "09 "],
+        "1654": ["ME", "Kotor", "10 "],
+        "1655": ["ME", "Niksic", "12 "],
+        "1656": ["ME", "Plav", "13 "],
+        "1657": ["ME", "Pljevlja", "14 "],
+        "1658": ["ME", "Pluzine", "15 "],
+        "1659": ["ME", "Podgorica", "16 "],
+        "1660": ["ME", "Rozaje", "17 "],
+        "1661": ["ME", "Savnik", "18 "],
+        "1662": ["ME", "Tivat", "19 "],
+        "1663": ["ME", "Ulcinj", "20 "],
+        "1664": ["ME", "Zabljak", "21 "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Martin (French part)",
+    "codigo": "MF",
+    "estado": [
+      {
+        "1665": ["MF", "Saint Martin (French Part)", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Madagascar",
+    "codigo": "MG",
+    "estado": [
+      {
+        "1666": ["MG", "Antananarivo", "T  "],
+        "1667": ["MG", "Antsiranana", "D  "],
+        "1668": ["MG", "Fianarantsoa", "F  "],
+        "1669": ["MG", "Mahajanga", "M  "],
+        "1670": ["MG", "Toamasina", "A  "],
+        "1671": ["MG", "Toliara", "U  "]
+      }
+    ]
+  },
+  {
+    "pais": "Marshall Islands",
+    "codigo": "MH",
+    "estado": [
+      {
+        "1672": ["MH", "Kwajalein", "KWA"],
+        "1673": ["MH", "Majuro", "MAJ"]
+      }
+    ]
+  },
+  {
+    "pais": "North Macedonia",
+    "codigo": "MK",
+    "estado": [
+      {
+        "1674": ["MK", "Aracinovo", "802"],
+        "1675": ["MK", "Berovo", "201"],
+        "1676": ["MK", "Bitola", "501"],
+        "1677": ["MK", "Bogdanci", "401"],
+        "1678": ["MK", "Bogovinje", "601"],
+        "1679": ["MK", "Bosilovo", "402"],
+        "1680": ["MK", "Brvenica", "602"],
+        "1681": ["MK", "Centar Zupa", "313"],
+        "1682": ["MK", "Cesinovo-Oblesevo", "210"],
+        "1683": ["MK", "Debar", "303"],
+        "1684": ["MK", "Delcevo", "203"],
+        "1685": ["MK", "Demir Kapija", "103"],
+        "1686": ["MK", "Dolneni", "503"],
+        "1687": ["MK", "Gevgelija", "405"],
+        "1688": ["MK", "Gostivar", "604"],
+        "1689": ["MK", "Ilinden", "807"],
+        "1690": ["MK", "Jegunovce", "606"],
+        "1691": ["MK", "Karbinci", "205"],
+        "1692": ["MK", "Kavadarci", "104"],
+        "1693": ["MK", "Kicevo", "307"],
+        "1694": ["MK", "Kocani", "206"],
+        "1695": ["MK", "Kratovo", "701"],
+        "1696": ["MK", "Kriva Palanka", "702"],
+        "1697": ["MK", "Krivogastani", "504"],
+        "1698": ["MK", "Krusevo", "505"],
+        "1699": ["MK", "Kumanovo", "703"],
+        "1700": ["MK", "Lipkovo", "704"],
+        "1701": ["MK", "Makedonska Kamenica", "207"],
+        "1702": ["MK", "Mavrovo i Rostusa", "607"],
+        "1703": ["MK", "Negotino", "106"],
+        "1704": ["MK", "Novaci", "507"],
+        "1705": ["MK", "Novo Selo", "408"],
+        "1706": ["MK", "Ohrid", "310"],
+        "1707": ["MK", "Pehcevo", "208"],
+        "1708": ["MK", "Petrovec", "810"],
+        "1709": ["MK", "Plasnica", "311"],
+        "1710": ["MK", "Prilep", "508"],
+        "1711": ["MK", "Probistip", "209"],
+        "1712": ["MK", "Radovis", "409"],
+        "1713": ["MK", "Resen", "509"],
+        "1714": ["MK", "Rosoman", "107"],
+        "1715": ["MK", "Skopje", "85 "],
+        "1716": ["MK", "Sopiste", "812"],
+        "1717": ["MK", "Stip", "211"],
+        "1718": ["MK", "Struga", "312"],
+        "1719": ["MK", "Strumica", "410"],
+        "1720": ["MK", "Studenicani", "813"],
+        "1721": ["MK", "Sveti Nikole", "108"],
+        "1722": ["MK", "Tearce", "608"],
+        "1723": ["MK", "Tetovo", "609"],
+        "1724": ["MK", "Valandovo", "403"],
+        "1725": ["MK", "Vasilevo", "404"],
+        "1726": ["MK", "Veles", "101"],
+        "1727": ["MK", "Vevcani", "301"],
+        "1728": ["MK", "Vinica", "202"],
+        "1729": ["MK", "Vrapciste", "603"],
+        "1730": ["MK", "Zelenikovo", "806"],
+        "1731": ["MK", "Zelino", "605"]
+      }
+    ]
+  },
+  {
+    "pais": "Mali",
+    "codigo": "ML",
+    "estado": [
+      {
+        "1732": ["ML", "Bamako", "BKO"],
+        "1733": ["ML", "Gao", "7  "],
+        "1734": ["ML", "Kayes", "1  "],
+        "1735": ["ML", "Kidal", "8  "],
+        "1736": ["ML", "Koulikoro", "2  "],
+        "1737": ["ML", "Mopti", "5  "],
+        "1738": ["ML", "Segou", "4  "],
+        "1739": ["ML", "Sikasso", "3  "],
+        "1740": ["ML", "Tombouctou", "6  "]
+      }
+    ]
+  },
+  {
+    "pais": "Myanmar",
+    "codigo": "MM",
+    "estado": [
+      {
+        "1741": ["MM", "Ayeyarwady", "07 "],
+        "1742": ["MM", "Bago", "02 "],
+        "1743": ["MM", "Chin", "14 "],
+        "1744": ["MM", "Kachin", "11 "],
+        "1745": ["MM", "Kayah", "12 "],
+        "1746": ["MM", "Kayin", "13 "],
+        "1747": ["MM", "Magway", "03 "],
+        "1748": ["MM", "Mandalay", "04 "],
+        "1749": ["MM", "Mon", "15 "],
+        "1750": ["MM", "Nay Pyi Taw", "18 "],
+        "1751": ["MM", "Sagaing", "01 "],
+        "1752": ["MM", "Shan", "17 "],
+        "1753": ["MM", "Tanintharyi", "05 "],
+        "1754": ["MM", "Yangon", "06 "]
+      }
+    ]
+  },
+  {
+    "pais": "Mongolia",
+    "codigo": "MN",
+    "estado": [
+      {
+        "1755": ["MN", "Bayan-Olgiy", "071"],
+        "1756": ["MN", "Dornogovi", "063"],
+        "1757": ["MN", "Govi-Altay", "065"],
+        "1758": ["MN", "Omnogovi", "053"],
+        "1759": ["MN", "Orhon", "035"],
+        "1760": ["MN", "Ovorhangay", "055"],
+        "1761": ["MN", "Selenge", "049"],
+        "1762": ["MN", "Tov", "047"],
+        "1763": ["MN", "Ulaanbaatar", "1  "]
+      }
+    ]
+  },
+  {
+    "pais": "Macao",
+    "codigo": "MO",
+    "estado": [
+      {
+        "1764": ["MO", "Macao", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Northern Mariana Islands",
+    "codigo": "MP",
+    "estado": [
+      {
+        "1765": ["MP", "Northern Mariana Islands", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Martinique",
+    "codigo": "MQ",
+    "estado": [
+      {
+        "1766": ["MQ", "Martinique", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Mauritania",
+    "codigo": "MR",
+    "estado": [
+      {
+        "1767": ["MR", "Dakhlet Nouadhibou", "08 "],
+        "1768": ["MR", "Nouakchott Nord", "14 "],
+        "1769": ["MR", "Tiris Zemmour", "11 "],
+        "1770": ["MR", "Trarza", "06 "]
+      }
+    ]
+  },
+  {
+    "pais": "Montserrat",
+    "codigo": "MS",
+    "estado": [
+      {
+        "1771": ["MS", "Saint Anthony", "   "],
+        "1772": ["MS", "Saint Peter", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Malta",
+    "codigo": "MT",
+    "estado": [
+      {
+        "1773": ["MT", "Attard", "01 "],
+        "1774": ["MT", "Balzan", "02 "],
+        "1775": ["MT", "Birgu", "03 "],
+        "1776": ["MT", "Birkirkara", "04 "],
+        "1777": ["MT", "Birzebbuga", "05 "],
+        "1778": ["MT", "Bormla", "06 "],
+        "1779": ["MT", "Dingli", "07 "],
+        "1780": ["MT", "Fgura", "08 "],
+        "1781": ["MT", "Floriana", "09 "],
+        "1782": ["MT", "Fontana", "10 "],
+        "1783": ["MT", "Gharb", "14 "],
+        "1784": ["MT", "Gharghur", "15 "],
+        "1785": ["MT", "Ghasri", "16 "],
+        "1786": ["MT", "Ghaxaq", "17 "],
+        "1787": ["MT", "Gudja", "11 "],
+        "1788": ["MT", "Gzira", "12 "],
+        "1789": ["MT", "Hamrun", "18 "],
+        "1790": ["MT", "Iklin", "19 "],
+        "1791": ["MT", "Isla", "20 "],
+        "1792": ["MT", "Kalkara", "21 "],
+        "1793": ["MT", "Kercem", "22 "],
+        "1794": ["MT", "Kirkop", "23 "],
+        "1795": ["MT", "Lija", "24 "],
+        "1796": ["MT", "Luqa", "25 "],
+        "1797": ["MT", "Marsa", "26 "],
+        "1798": ["MT", "Marsaskala", "27 "],
+        "1799": ["MT", "Marsaxlokk", "28 "],
+        "1800": ["MT", "Mdina", "29 "],
+        "1801": ["MT", "Mellieha", "30 "],
+        "1802": ["MT", "Mgarr", "31 "],
+        "1803": ["MT", "Mosta", "32 "],
+        "1804": ["MT", "Mqabba", "33 "],
+        "1805": ["MT", "Msida", "34 "],
+        "1806": ["MT", "Mtarfa", "35 "],
+        "1807": ["MT", "Munxar", "36 "],
+        "1808": ["MT", "Nadur", "37 "],
+        "1809": ["MT", "Naxxar", "38 "],
+        "1810": ["MT", "Paola", "39 "],
+        "1811": ["MT", "Pembroke", "40 "],
+        "1812": ["MT", "Pieta", "41 "],
+        "1813": ["MT", "Qala", "42 "],
+        "1814": ["MT", "Qormi", "43 "],
+        "1815": ["MT", "Rabat Gozo", "45 "],
+        "1816": ["MT", "Rabat Malta", "46 "],
+        "1817": ["MT", "Saint John", "49 "],
+        "1818": ["MT", "Saint Julian's", "48 "],
+        "1819": ["MT", "Saint Lucia's", "53 "],
+        "1820": ["MT", "Saint Paul's Bay", "51 "],
+        "1821": ["MT", "Sannat", "52 "],
+        "1822": ["MT", "Santa Venera", "54 "],
+        "1823": ["MT", "Siggiewi", "55 "],
+        "1824": ["MT", "Sliema", "56 "],
+        "1825": ["MT", "Swieqi", "57 "],
+        "1826": ["MT", "Ta' Xbiex", "58 "],
+        "1827": ["MT", "Tarxien", "59 "],
+        "1828": ["MT", "Valletta", "60 "],
+        "1829": ["MT", "Xaghra", "61 "],
+        "1830": ["MT", "Xewkija", "62 "],
+        "1831": ["MT", "Xghajra", "63 "],
+        "1832": ["MT", "Zabbar", "64 "],
+        "1833": ["MT", "Zebbug Gozo", "65 "],
+        "1834": ["MT", "Zejtun", "67 "],
+        "1835": ["MT", "Zurrieq", "68 "]
+      }
+    ]
+  },
+  {
+    "pais": "Mauritius",
+    "codigo": "MU",
+    "estado": [
+      {
+        "1836": ["MU", "Black River", "BL "],
+        "1837": ["MU", "Flacq", "FL "],
+        "1838": ["MU", "Grand Port", "GP "],
+        "1839": ["MU", "Moka", "MO "],
+        "1840": ["MU", "Pamplemousses", "PA "],
+        "1841": ["MU", "Plaines Wilhems", "PW "],
+        "1842": ["MU", "Port Louis", "PL "],
+        "1843": ["MU", "Riviere du Rempart", "RR "],
+        "1844": ["MU", "Rodrigues Islands", "RO "],
+        "1845": ["MU", "Savanne", "SA "]
+      }
+    ]
+  },
+  {
+    "pais": "Maldives",
+    "codigo": "MV",
+    "estado": [
+      {
+        "1846": ["MV", "Alifu Alifu", "02 "],
+        "1847": ["MV", "Baa", "20 "],
+        "1848": ["MV", "Dhaalu", "17 "],
+        "1849": ["MV", "Gaafu Dhaalu", "28 "],
+        "1850": ["MV", "Haa Alifu", "07 "],
+        "1851": ["MV", "Haa Dhaalu", "23 "],
+        "1852": ["MV", "Kaafu", "26 "],
+        "1853": ["MV", "Laamu", "05 "],
+        "1854": ["MV", "Maale", "MLE"],
+        "1855": ["MV", "Meemu", "12 "],
+        "1856": ["MV", "Noonu", "25 "],
+        "1857": ["MV", "Raa", "13 "],
+        "1858": ["MV", "Seenu", "01 "],
+        "1859": ["MV", "Vaavu", "04 "]
+      }
+    ]
+  },
+  {
+    "pais": "Malawi",
+    "codigo": "MW",
+    "estado": [
+      {
+        "1860": ["MW", "Balaka", "BA "],
+        "1861": ["MW", "Blantyre", "BL "],
+        "1862": ["MW", "Dowa", "DO "],
+        "1863": ["MW", "Lilongwe", "LI "],
+        "1864": ["MW", "Machinga", "MH "],
+        "1865": ["MW", "Mangochi", "MG "],
+        "1866": ["MW", "Mzimba", "MZ "],
+        "1867": ["MW", "Ntchisi", "NI "],
+        "1868": ["MW", "Salima", "SA "],
+        "1869": ["MW", "Zomba", "ZO "]
+      }
+    ]
+  },
+  {
+    "pais": "Mexico",
+    "codigo": "MX",
+    "estado": [
+      {
+        "1870": ["MX", "Aguascalientes", "AGU"],
+        "1871": ["MX", "Baja California", "BCN"],
+        "1872": ["MX", "Baja California Sur", "BCS"],
+        "1873": ["MX", "Campeche", "CAM"],
+        "1874": ["MX", "Chiapas", "CHP"],
+        "1875": ["MX", "Chihuahua", "CHH"],
+        "1876": ["MX", "Ciudad de Mexico", "CMX"],
+        "1877": ["MX", "Coahuila de Zaragoza", "COA"],
+        "1878": ["MX", "Colima", "COL"],
+        "1879": ["MX", "Durango", "DUR"],
+        "1880": ["MX", "Guanajuato", "GUA"],
+        "1881": ["MX", "Guerrero", "GRO"],
+        "1882": ["MX", "Hidalgo", "HID"],
+        "1883": ["MX", "Jalisco", "JAL"],
+        "1884": ["MX", "Mexico", "MEX"],
+        "1885": ["MX", "Michoacan de Ocampo", "MIC"],
+        "1886": ["MX", "Morelos", "MOR"],
+        "1887": ["MX", "Nayarit", "NAY"],
+        "1888": ["MX", "Nuevo Leon", "NLE"],
+        "1889": ["MX", "Oaxaca", "OAX"],
+        "1890": ["MX", "Puebla", "PUE"],
+        "1891": ["MX", "Queretaro", "QUE"],
+        "1892": ["MX", "Quintana Roo", "ROO"],
+        "1893": ["MX", "San Luis Potosi", "SLP"],
+        "1894": ["MX", "Sinaloa", "SIN"],
+        "1895": ["MX", "Sonora", "SON"],
+        "1896": ["MX", "Tabasco", "TAB"],
+        "1897": ["MX", "Tamaulipas", "TAM"],
+        "1898": ["MX", "Tlaxcala", "TLA"],
+        "1899": ["MX", "Veracruz de Ignacio de la Llave", "VER"],
+        "1900": ["MX", "Yucatan", "YUC"],
+        "1901": ["MX", "Zacatecas", "ZAC"]
+      }
+    ]
+  },
+  {
+    "pais": "Malaysia",
+    "codigo": "MY",
+    "estado": [
+      {
+        "1902": ["MY", "Johor", "01 "],
+        "1903": ["MY", "Kedah", "02 "],
+        "1904": ["MY", "Kelantan", "03 "],
+        "1905": ["MY", "Melaka", "04 "],
+        "1906": ["MY", "Negeri Sembilan", "05 "],
+        "1907": ["MY", "Pahang", "06 "],
+        "1908": ["MY", "Perak", "08 "],
+        "1909": ["MY", "Perlis", "09 "],
+        "1910": ["MY", "Pulau Pinang", "07 "],
+        "1911": ["MY", "Sabah", "12 "],
+        "1912": ["MY", "Sarawak", "13 "],
+        "1913": ["MY", "Selangor", "10 "],
+        "1914": ["MY", "Terengganu", "11 "],
+        "1915": ["MY", "Wilayah Persekutuan Kuala Lumpur", "14 "],
+        "1916": ["MY", "Wilayah Persekutuan Labuan", "15 "],
+        "1917": ["MY", "Wilayah Persekutuan Putrajaya", "16 "]
+      }
+    ]
+  },
+  {
+    "pais": "Mozambique",
+    "codigo": "MZ",
+    "estado": [
+      {
+        "1918": ["MZ", "Cabo Delgado", "P  "],
+        "1919": ["MZ", "Gaza", "G  "],
+        "1920": ["MZ", "Inhambane", "I  "],
+        "1921": ["MZ", "Manica", "B  "],
+        "1922": ["MZ", "Maputo", "L  "],
+        "1923": ["MZ", "Nampula", "N  "],
+        "1924": ["MZ", "Niassa", "A  "],
+        "1925": ["MZ", "Sofala", "S  "],
+        "1926": ["MZ", "Tete", "T  "],
+        "1927": ["MZ", "Zambezia", "Q  "]
+      }
+    ]
+  },
+  {
+    "pais": "Namibia",
+    "codigo": "NA",
+    "estado": [
+      {
+        "1928": ["NA", "Erongo", "ER "],
+        "1929": ["NA", "Hardap", "HA "],
+        "1930": ["NA", "Karas", "KA "],
+        "1931": ["NA", "Kavango East", "KE "],
+        "1932": ["NA", "Khomas", "KH "],
+        "1933": ["NA", "Kunene", "KU "],
+        "1934": ["NA", "Ohangwena", "OW "],
+        "1935": ["NA", "Omaheke", "OH "],
+        "1936": ["NA", "Omusati", "OS "],
+        "1937": ["NA", "Oshana", "ON "],
+        "1938": ["NA", "Oshikoto", "OT "],
+        "1939": ["NA", "Otjozondjupa", "OD "],
+        "1940": ["NA", "Zambezi", "CA "]
+      }
+    ]
+  },
+  {
+    "pais": "New Caledonia",
+    "codigo": "NC",
+    "estado": [
+      {
+        "1941": ["NC", "Province Nord", "   "],
+        "1942": ["NC", "Province Sud", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Niger",
+    "codigo": "NE",
+    "estado": [
+      {
+        "1943": ["NE", "Agadez", "1  "],
+        "1944": ["NE", "Diffa", "2  "],
+        "1945": ["NE", "Dosso", "3  "],
+        "1946": ["NE", "Niamey", "8  "],
+        "1947": ["NE", "Tahoua", "5  "],
+        "1948": ["NE", "Tillaberi", "6  "],
+        "1949": ["NE", "Zinder", "7  "]
+      }
+    ]
+  },
+  {
+    "pais": "Norfolk Island",
+    "codigo": "NF",
+    "estado": [
+      {
+        "1950": ["NF", "Norfolk Island", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Nigeria",
+    "codigo": "NG",
+    "estado": [
+      {
+        "1951": ["NG", "Abia", "AB "],
+        "1952": ["NG", "Abuja Federal Capital Territory", "FC "],
+        "1953": ["NG", "Adamawa", "AD "],
+        "1954": ["NG", "Akwa Ibom", "AK "],
+        "1955": ["NG", "Anambra", "AN "],
+        "1956": ["NG", "Bauchi", "BA "],
+        "1957": ["NG", "Bayelsa", "BY "],
+        "1958": ["NG", "Benue", "BE "],
+        "1959": ["NG", "Borno", "BO "],
+        "1960": ["NG", "Cross River", "CR "],
+        "1961": ["NG", "Delta", "DE "],
+        "1962": ["NG", "Ebonyi", "EB "],
+        "1963": ["NG", "Edo", "ED "],
+        "1964": ["NG", "Ekiti", "EK "],
+        "1965": ["NG", "Enugu", "EN "],
+        "1966": ["NG", "Gombe", "GO "],
+        "1967": ["NG", "Imo", "IM "],
+        "1968": ["NG", "Jigawa", "JI "],
+        "1969": ["NG", "Kaduna", "KD "],
+        "1970": ["NG", "Kano", "KN "],
+        "1971": ["NG", "Katsina", "KT "],
+        "1972": ["NG", "Kebbi", "KE "],
+        "1973": ["NG", "Kogi", "KO "],
+        "1974": ["NG", "Kwara", "KW "],
+        "1975": ["NG", "Lagos", "LA "],
+        "1976": ["NG", "Nasarawa", "NA "],
+        "1977": ["NG", "Niger", "NI "],
+        "1978": ["NG", "Ogun", "OG "],
+        "1979": ["NG", "Ondo", "ON "],
+        "1980": ["NG", "Osun", "OS "],
+        "1981": ["NG", "Oyo", "OY "],
+        "1982": ["NG", "Plateau", "PL "],
+        "1983": ["NG", "Rivers", "RI "],
+        "1984": ["NG", "Sokoto", "SO "],
+        "1985": ["NG", "Taraba", "TA "],
+        "1986": ["NG", "Yobe", "YO "],
+        "1987": ["NG", "Zamfara", "ZA "]
+      }
+    ]
+  },
+  {
+    "pais": "Nicaragua",
+    "codigo": "NI",
+    "estado": [
+      {
+        "1988": ["NI", "Boaco", "BO "],
+        "1989": ["NI", "Carazo", "CA "],
+        "1990": ["NI", "Chinandega", "CI "],
+        "1991": ["NI", "Chontales", "CO "],
+        "1992": ["NI", "Costa Caribe Norte", "AN "],
+        "1993": ["NI", "Costa Caribe Sur", "AS "],
+        "1994": ["NI", "Esteli", "ES "],
+        "1995": ["NI", "Granada", "GR "],
+        "1996": ["NI", "Jinotega", "JI "],
+        "1997": ["NI", "Leon", "LE "],
+        "1998": ["NI", "Madriz", "MD "],
+        "1999": ["NI", "Managua", "MN "],
+        "2000": ["NI", "Masaya", "MS "],
+        "2001": ["NI", "Matagalpa", "MT "],
+        "2002": ["NI", "Nueva Segovia", "NS "],
+        "2003": ["NI", "Rio San Juan", "SJ "],
+        "2004": ["NI", "Rivas", "RI "]
+      }
+    ]
+  },
+  {
+    "pais": "Netherlands",
+    "codigo": "NL",
+    "estado": [
+      {
+        "2005": ["NL", "Drenthe", "DR "],
+        "2006": ["NL", "Flevoland", "FL "],
+        "2007": ["NL", "Fryslan", "FR "],
+        "2008": ["NL", "Gelderland", "GE "],
+        "2009": ["NL", "Groningen", "GR "],
+        "2010": ["NL", "Limburg", "LI "],
+        "2011": ["NL", "Noord-Brabant", "NB "],
+        "2012": ["NL", "Noord-Holland", "NH "],
+        "2013": ["NL", "Overijssel", "OV "],
+        "2014": ["NL", "Utrecht", "UT "],
+        "2015": ["NL", "Zeeland", "ZE "],
+        "2016": ["NL", "Zuid-Holland", "ZH "]
+      }
+    ]
+  },
+  {
+    "pais": "Norway",
+    "codigo": "NO",
+    "estado": [
+      {
+        "2017": ["NO", "Akershus", "02 "],
+        "2018": ["NO", "Aust-Agder", "09 "],
+        "2019": ["NO", "Buskerud", "06 "],
+        "2020": ["NO", "Finnmark", "20 "],
+        "2021": ["NO", "Hedmark", "04 "],
+        "2022": ["NO", "Hordaland", "12 "],
+        "2023": ["NO", "More og Romsdal", "15 "],
+        "2024": ["NO", "Nord-Trondelag", "17 "],
+        "2025": ["NO", "Nordland", "18 "],
+        "2026": ["NO", "Oppland", "05 "],
+        "2027": ["NO", "Oslo", "03 "],
+        "2028": ["NO", "Ostfold", "01 "],
+        "2029": ["NO", "Rogaland", "11 "],
+        "2030": ["NO", "Sogn og Fjordane", "14 "],
+        "2031": ["NO", "Sor-Trondelag", "16 "],
+        "2032": ["NO", "Telemark", "08 "],
+        "2033": ["NO", "Troms", "19 "],
+        "2034": ["NO", "Vest-Agder", "10 "],
+        "2035": ["NO", "Vestfold", "07 "]
+      }
+    ]
+  },
+  {
+    "pais": "Nepal",
+    "codigo": "NP",
+    "estado": [
+      {
+        "2036": ["NP", "Bagmati", "BA "],
+        "2037": ["NP", "Bheri", "BH "],
+        "2038": ["NP", "Dhawalagiri", "DH "],
+        "2039": ["NP", "Gandaki", "GA "],
+        "2040": ["NP", "Janakpur", "JA "],
+        "2041": ["NP", "Kosi", "KO "],
+        "2042": ["NP", "Lumbini", "LU "],
+        "2043": ["NP", "Mahakali", "MA "],
+        "2044": ["NP", "Mechi", "ME "],
+        "2045": ["NP", "Narayani", "NA "],
+        "2046": ["NP", "Rapti", "RA "],
+        "2047": ["NP", "Sagarmatha", "SA "],
+        "2048": ["NP", "Seti", "SE "]
+      }
+    ]
+  },
+  {
+    "pais": "Nauru",
+    "codigo": "NR",
+    "estado": [
+      {
+        "2049": ["NR", "Yaren", "14 "]
+      }
+    ]
+  },
+  {
+    "pais": "Niue",
+    "codigo": "NU",
+    "estado": [
+      {
+        "2050": ["NU", "Niue", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "New Zealand",
+    "codigo": "NZ",
+    "estado": [
+      {
+        "2051": ["NZ", "Auckland", "AUK"],
+        "2052": ["NZ", "Bay of Plenty", "BOP"],
+        "2053": ["NZ", "Canterbury", "CAN"],
+        "2054": ["NZ", "Chatham Islands Territory", "CIT"],
+        "2055": ["NZ", "Gisborne", "GIS"],
+        "2056": ["NZ", "Hawke's Bay", "HKB"],
+        "2057": ["NZ", "Manawatu-Wanganui", "MWT"],
+        "2058": ["NZ", "Marlborough", "MBH"],
+        "2059": ["NZ", "Nelson", "NSN"],
+        "2060": ["NZ", "Northland", "NTL"],
+        "2061": ["NZ", "Otago", "OTA"],
+        "2062": ["NZ", "Southland", "STL"],
+        "2063": ["NZ", "Taranaki", "TKI"],
+        "2064": ["NZ", "Tasman", "TAS"],
+        "2065": ["NZ", "Waikato", "WKO"],
+        "2066": ["NZ", "Wellington", "WGN"],
+        "2067": ["NZ", "West Coast", "WTC"]
+      }
+    ]
+  },
+  {
+    "pais": "Oman",
+    "codigo": "OM",
+    "estado": [
+      {
+        "2068": ["OM", "Ad Dakhiliyah", "DA "],
+        "2069": ["OM", "Al Buraymi", "BU "],
+        "2070": ["OM", "Al Wusta", "WU "],
+        "2071": ["OM", "Az Zahirah", "ZA "],
+        "2072": ["OM", "Janub al Batinah", "BJ "],
+        "2073": ["OM", "Janub ash Sharqiyah", "SJ "],
+        "2074": ["OM", "Masqat", "MA "],
+        "2075": ["OM", "Musandam", "MU "],
+        "2076": ["OM", "Shamal al Batinah", "BS "],
+        "2077": ["OM", "Shamal ash Sharqiyah", "SS "],
+        "2078": ["OM", "Zufar", "ZU "]
+      }
+    ]
+  },
+  {
+    "pais": "Panama",
+    "codigo": "PA",
+    "estado": [
+      {
+        "2079": ["PA", "Bocas del Toro", "1  "],
+        "2080": ["PA", "Chiriqui", "4  "],
+        "2081": ["PA", "Cocle", "2  "],
+        "2082": ["PA", "Colon", "3  "],
+        "2083": ["PA", "Herrera", "6  "],
+        "2084": ["PA", "Los Santos", "7  "],
+        "2085": ["PA", "Ngobe-Bugle", "NB "],
+        "2086": ["PA", "Panama", "8  "],
+        "2087": ["PA", "Veraguas", "9  "]
+      }
+    ]
+  },
+  {
+    "pais": "Peru",
+    "codigo": "PE",
+    "estado": [
+      {
+        "2088": ["PE", "Amazonas", "AMA"],
+        "2089": ["PE", "Ancash", "ANC"],
+        "2090": ["PE", "Apurimac", "APU"],
+        "2091": ["PE", "Arequipa", "ARE"],
+        "2092": ["PE", "Ayacucho", "AYA"],
+        "2093": ["PE", "Cajamarca", "CAJ"],
+        "2094": ["PE", "Cusco", "CUS"],
+        "2095": ["PE", "El Callao", "CAL"],
+        "2096": ["PE", "Huancavelica", "HUV"],
+        "2097": ["PE", "Huanuco", "HUC"],
+        "2098": ["PE", "Ica", "ICA"],
+        "2099": ["PE", "Junin", "JUN"],
+        "2100": ["PE", "La Libertad", "LAL"],
+        "2101": ["PE", "Lambayeque", "LAM"],
+        "2102": ["PE", "Lima", "LIM"],
+        "2103": ["PE", "Loreto", "LOR"],
+        "2104": ["PE", "Madre de Dios", "MDD"],
+        "2105": ["PE", "Moquegua", "MOQ"],
+        "2106": ["PE", "Pasco", "PAS"],
+        "2107": ["PE", "Piura", "PIU"],
+        "2108": ["PE", "Puno", "PUN"],
+        "2109": ["PE", "San Martin", "SAM"],
+        "2110": ["PE", "Tacna", "TAC"],
+        "2111": ["PE", "Tumbes", "TUM"],
+        "2112": ["PE", "Ucayali", "UCA"]
+      }
+    ]
+  },
+  {
+    "pais": "French Polynesia",
+    "codigo": "PF",
+    "estado": [
+      {
+        "2113": ["PF", "Iles Marquises", "   "],
+        "2114": ["PF", "Iles Sous-le-Vent", "   "],
+        "2115": ["PF", "Iles Tuamotu-Gambier", "   "],
+        "2116": ["PF", "Iles du Vent", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Papua New Guinea",
+    "codigo": "PG",
+    "estado": [
+      {
+        "2117": ["PG", "Bougainville", "NSB"],
+        "2118": ["PG", "Central", "CPM"],
+        "2119": ["PG", "Chimbu", "CPK"],
+        "2120": ["PG", "East New Britain", "EBR"],
+        "2121": ["PG", "East Sepik", "ESW"],
+        "2122": ["PG", "Eastern Highlands", "EHG"],
+        "2123": ["PG", "Madang", "MPM"],
+        "2124": ["PG", "Manus", "MRL"],
+        "2125": ["PG", "Milne Bay", "MBA"],
+        "2126": ["PG", "Morobe", "MPL"],
+        "2127": ["PG", "National Capital District (Port Moresby)", "NCD"],
+        "2128": ["PG", "New Ireland", "NIK"],
+        "2129": ["PG", "Southern Highlands", "SHM"],
+        "2130": ["PG", "West New Britain", "WBK"],
+        "2131": ["PG", "West Sepik", "SAN"],
+        "2132": ["PG", "Western", "WPD"],
+        "2133": ["PG", "Western Highlands", "WHM"]
+      }
+    ]
+  },
+  {
+    "pais": "Philippines",
+    "codigo": "PH",
+    "estado": [
+      {
+        "2134": ["PH", "Abra", "ABR"],
+        "2135": ["PH", "Agusan del Norte", "AGN"],
+        "2136": ["PH", "Agusan del Sur", "AGS"],
+        "2137": ["PH", "Aklan", "AKL"],
+        "2138": ["PH", "Albay", "ALB"],
+        "2139": ["PH", "Antique", "ANT"],
+        "2140": ["PH", "Apayao", "APA"],
+        "2141": ["PH", "Aurora", "AUR"],
+        "2142": ["PH", "Basilan", "BAS"],
+        "2143": ["PH", "Bataan", "BAN"],
+        "2144": ["PH", "Batanes", "BTN"],
+        "2145": ["PH", "Batangas", "BTG"],
+        "2146": ["PH", "Benguet", "BEN"],
+        "2147": ["PH", "Biliran", "BIL"],
+        "2148": ["PH", "Bohol", "BOH"],
+        "2149": ["PH", "Bukidnon", "BUK"],
+        "2150": ["PH", "Bulacan", "BUL"],
+        "2151": ["PH", "Cagayan", "CAG"],
+        "2152": ["PH", "Camarines Norte", "CAN"],
+        "2153": ["PH", "Camarines Sur", "CAS"],
+        "2154": ["PH", "Camiguin", "CAM"],
+        "2155": ["PH", "Capiz", "CAP"],
+        "2156": ["PH", "Catanduanes", "CAT"],
+        "2157": ["PH", "Cavite", "CAV"],
+        "2158": ["PH", "Cebu", "CEB"],
+        "2159": ["PH", "Compostela Valley", "COM"],
+        "2160": ["PH", "Cotabato", "NCO"],
+        "2161": ["PH", "Davao Oriental", "DAO"],
+        "2162": ["PH", "Davao del Norte", "DAV"],
+        "2163": ["PH", "Davao del Sur", "DAS"],
+        "2164": ["PH", "Dinagat Islands", "DIN"],
+        "2165": ["PH", "Eastern Samar", "EAS"],
+        "2166": ["PH", "Guimaras", "GUI"],
+        "2167": ["PH", "Ifugao", "IFU"],
+        "2168": ["PH", "Ilocos Norte", "ILN"],
+        "2169": ["PH", "Ilocos Sur", "ILS"],
+        "2170": ["PH", "Iloilo", "ILI"],
+        "2171": ["PH", "Isabela", "ISA"],
+        "2172": ["PH", "Kalinga", "KAL"],
+        "2173": ["PH", "La Union", "LUN"],
+        "2174": ["PH", "Laguna", "LAG"],
+        "2175": ["PH", "Lanao del Norte", "LAN"],
+        "2176": ["PH", "Lanao del Sur", "LAS"],
+        "2177": ["PH", "Leyte", "LEY"],
+        "2178": ["PH", "Maguindanao", "MAG"],
+        "2179": ["PH", "Marinduque", "MAD"],
+        "2180": ["PH", "Masbate", "MAS"],
+        "2181": ["PH", "Mindoro Occidental", "MDC"],
+        "2182": ["PH", "Mindoro Oriental", "MDR"],
+        "2183": ["PH", "Misamis Occidental", "MSC"],
+        "2184": ["PH", "Misamis Oriental", "MSR"],
+        "2185": ["PH", "Mountain Province", "MOU"],
+        "2186": ["PH", "National Capital Region", "00 "],
+        "2187": ["PH", "Negros Occidental", "NEC"],
+        "2188": ["PH", "Negros Oriental", "NER"],
+        "2189": ["PH", "Northern Samar", "NSA"],
+        "2190": ["PH", "Nueva Ecija", "NUE"],
+        "2191": ["PH", "Nueva Vizcaya", "NUV"],
+        "2192": ["PH", "Palawan", "PLW"],
+        "2193": ["PH", "Pampanga", "PAM"],
+        "2194": ["PH", "Pangasinan", "PAN"],
+        "2195": ["PH", "Quezon", "QUE"],
+        "2196": ["PH", "Quirino", "QUI"],
+        "2197": ["PH", "Rizal", "RIZ"],
+        "2198": ["PH", "Romblon", "ROM"],
+        "2199": ["PH", "Samar", "WSA"],
+        "2200": ["PH", "Sarangani", "SAR"],
+        "2201": ["PH", "Siquijor", "SIG"],
+        "2202": ["PH", "Sorsogon", "SOR"],
+        "2203": ["PH", "South Cotabato", "SCO"],
+        "2204": ["PH", "Southern Leyte", "SLE"],
+        "2205": ["PH", "Sultan Kudarat", "SUK"],
+        "2206": ["PH", "Sulu", "SLU"],
+        "2207": ["PH", "Surigao del Norte", "SUN"],
+        "2208": ["PH", "Surigao del Sur", "SUR"],
+        "2209": ["PH", "Tarlac", "TAR"],
+        "2210": ["PH", "Tawi-Tawi", "TAW"],
+        "2211": ["PH", "Zambales", "ZMB"],
+        "2212": ["PH", "Zamboanga Sibugay", "ZSI"],
+        "2213": ["PH", "Zamboanga del Norte", "ZAN"],
+        "2214": ["PH", "Zamboanga del Sur", "ZAS"]
+      }
+    ]
+  },
+  {
+    "pais": "Pakistan",
+    "codigo": "PK",
+    "estado": [
+      {
+        "2215": ["PK", "Azad Jammu and Kashmir", "JK "],
+        "2216": ["PK", "Balochistan", "BA "],
+        "2217": ["PK", "Federally Administered Tribal Areas", "TA "],
+        "2218": ["PK", "Gilgit-Baltistan", "GB "],
+        "2219": ["PK", "Islamabad", "IS "],
+        "2220": ["PK", "Khyber Pakhtunkhwa", "KP "],
+        "2221": ["PK", "Punjab", "PB "],
+        "2222": ["PK", "Sindh", "SD "]
+      }
+    ]
+  },
+  {
+    "pais": "Poland",
+    "codigo": "PL",
+    "estado": [
+      {
+        "2223": ["PL", "Dolnoslaskie", "02 "],
+        "2224": ["PL", "Kujawsko-pomorskie", "04 "],
+        "2225": ["PL", "Lodzkie", "10 "],
+        "2226": ["PL", "Lubelskie", "06 "],
+        "2227": ["PL", "Lubuskie", "08 "],
+        "2228": ["PL", "Malopolskie", "12 "],
+        "2229": ["PL", "Mazowieckie", "14 "],
+        "2230": ["PL", "Opolskie", "16 "],
+        "2231": ["PL", "Podkarpackie", "18 "],
+        "2232": ["PL", "Podlaskie", "20 "],
+        "2233": ["PL", "Pomorskie", "22 "],
+        "2234": ["PL", "Slaskie", "24 "],
+        "2235": ["PL", "Swietokrzyskie", "26 "],
+        "2236": ["PL", "Warminsko-mazurskie", "28 "],
+        "2237": ["PL", "Wielkopolskie", "30 "],
+        "2238": ["PL", "Zachodniopomorskie", "32 "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Pierre and Miquelon",
+    "codigo": "PM",
+    "estado": [
+      {
+        "2239": ["PM", "Saint Pierre and Miquelon", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Pitcairn",
+    "codigo": "PN",
+    "estado": [[]]
+  },
+  {
+    "pais": "Puerto Rico",
+    "codigo": "PR",
+    "estado": [
+      {
+        "2240": ["PR", "Adjuntas", "   "],
+        "2241": ["PR", "Aguada", "   "],
+        "2242": ["PR", "Aguadilla", "   "],
+        "2243": ["PR", "Aguas Buenas", "   "],
+        "2244": ["PR", "Aibonito", "   "],
+        "2245": ["PR", "Anasco", "   "],
+        "2246": ["PR", "Arecibo", "   "],
+        "2247": ["PR", "Arroyo", "   "],
+        "2248": ["PR", "Barceloneta", "   "],
+        "2249": ["PR", "Barranquitas", "   "],
+        "2250": ["PR", "Bayamon", "   "],
+        "2251": ["PR", "Cabo Rojo", "   "],
+        "2252": ["PR", "Caguas", "   "],
+        "2253": ["PR", "Camuy", "   "],
+        "2254": ["PR", "Canovanas", "   "],
+        "2255": ["PR", "Carolina", "   "],
+        "2256": ["PR", "Catano", "   "],
+        "2257": ["PR", "Cayey", "   "],
+        "2258": ["PR", "Ceiba", "   "],
+        "2259": ["PR", "Ciales", "   "],
+        "2260": ["PR", "Cidra", "   "],
+        "2261": ["PR", "Coamo", "   "],
+        "2262": ["PR", "Comerio", "   "],
+        "2263": ["PR", "Corozal", "   "],
+        "2264": ["PR", "Culebra", "   "],
+        "2265": ["PR", "Dorado", "   "],
+        "2266": ["PR", "Fajardo", "   "],
+        "2267": ["PR", "Florida", "   "],
+        "2268": ["PR", "Guanica", "   "],
+        "2269": ["PR", "Guayama", "   "],
+        "2270": ["PR", "Guayanilla", "   "],
+        "2271": ["PR", "Guaynabo", "   "],
+        "2272": ["PR", "Gurabo", "   "],
+        "2273": ["PR", "Hatillo", "   "],
+        "2274": ["PR", "Hormigueros", "   "],
+        "2275": ["PR", "Humacao", "   "],
+        "2276": ["PR", "Isabela", "   "],
+        "2277": ["PR", "Juana Diaz", "   "],
+        "2278": ["PR", "Lajas", "   "],
+        "2279": ["PR", "Lares", "   "],
+        "2280": ["PR", "Las Marias", "   "],
+        "2281": ["PR", "Las Piedras", "   "],
+        "2282": ["PR", "Loiza", "   "],
+        "2283": ["PR", "Luquillo", "   "],
+        "2284": ["PR", "Manati", "   "],
+        "2285": ["PR", "Maricao", "   "],
+        "2286": ["PR", "Mayaguez", "   "],
+        "2287": ["PR", "Moca", "   "],
+        "2288": ["PR", "Morovis", "   "],
+        "2289": ["PR", "Municipio de Jayuya", "   "],
+        "2290": ["PR", "Municipio de Juncos", "   "],
+        "2291": ["PR", "Naguabo", "   "],
+        "2292": ["PR", "Naranjito", "   "],
+        "2293": ["PR", "Patillas", "   "],
+        "2294": ["PR", "Penuelas", "   "],
+        "2295": ["PR", "Ponce", "   "],
+        "2296": ["PR", "Quebradillas", "   "],
+        "2297": ["PR", "Rincon", "   "],
+        "2298": ["PR", "Rio Grande", "   "],
+        "2299": ["PR", "Sabana Grande", "   "],
+        "2300": ["PR", "Salinas", "   "],
+        "2301": ["PR", "San German", "   "],
+        "2302": ["PR", "San Juan", "   "],
+        "2303": ["PR", "San Lorenzo", "   "],
+        "2304": ["PR", "San Sebastian", "   "],
+        "2305": ["PR", "Santa Isabel Municipio", "   "],
+        "2306": ["PR", "Toa Alta", "   "],
+        "2307": ["PR", "Toa Baja", "   "],
+        "2308": ["PR", "Trujillo Alto", "   "],
+        "2309": ["PR", "Utuado", "   "],
+        "2310": ["PR", "Vega Alta", "   "],
+        "2311": ["PR", "Vega Baja", "   "],
+        "2312": ["PR", "Vieques", "   "],
+        "2313": ["PR", "Villalba", "   "],
+        "2314": ["PR", "Yabucoa", "   "],
+        "2315": ["PR", "Yauco", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Palestine, State of",
+    "codigo": "PS",
+    "estado": [
+      {
+        "2316": ["PS", "Bethlehem", "BTH"],
+        "2317": ["PS", "Gaza", "GZA"],
+        "2318": ["PS", "Hebron", "HBN"],
+        "2319": ["PS", "Jenin", "JEN"],
+        "2320": ["PS", "Jericho and Al Aghwar", "JRH"],
+        "2321": ["PS", "Jerusalem", "JEM"],
+        "2322": ["PS", "Nablus", "NBS"],
+        "2323": ["PS", "Qalqilya", "QQA"],
+        "2324": ["PS", "Ramallah", "RBH"],
+        "2325": ["PS", "Salfit", "SLT"],
+        "2326": ["PS", "Tubas", "TBS"],
+        "2327": ["PS", "Tulkarm", "TKM"]
+      }
+    ]
+  },
+  {
+    "pais": "Portugal",
+    "codigo": "PT",
+    "estado": [
+      {
+        "2328": ["PT", "Aveiro", "01 "],
+        "2329": ["PT", "Beja", "02 "],
+        "2330": ["PT", "Braga", "03 "],
+        "2331": ["PT", "Braganca", "04 "],
+        "2332": ["PT", "Castelo Branco", "05 "],
+        "2333": ["PT", "Coimbra", "06 "],
+        "2334": ["PT", "Evora", "07 "],
+        "2335": ["PT", "Faro", "08 "],
+        "2336": ["PT", "Guarda", "09 "],
+        "2337": ["PT", "Leiria", "10 "],
+        "2338": ["PT", "Lisboa", "11 "],
+        "2339": ["PT", "Portalegre", "12 "],
+        "2340": ["PT", "Porto", "13 "],
+        "2341": ["PT", "Regiao Autonoma da Madeira", "30 "],
+        "2342": ["PT", "Regiao Autonoma dos Acores", "20 "],
+        "2343": ["PT", "Santarem", "14 "],
+        "2344": ["PT", "Setubal", "15 "],
+        "2345": ["PT", "Viana do Castelo", "16 "],
+        "2346": ["PT", "Vila Real", "17 "],
+        "2347": ["PT", "Viseu", "18 "]
+      }
+    ]
+  },
+  {
+    "pais": "Palau",
+    "codigo": "PW",
+    "estado": [
+      {
+        "2348": ["PW", "Airai", "004"],
+        "2349": ["PW", "Kayangel", "100"],
+        "2350": ["PW", "Koror", "150"],
+        "2351": ["PW", "Melekeok", "212"],
+        "2352": ["PW", "Ngaraard", "214"],
+        "2353": ["PW", "Ngardmau", "222"]
+      }
+    ]
+  },
+  {
+    "pais": "Paraguay",
+    "codigo": "PY",
+    "estado": [
+      {
+        "2354": ["PY", "Alto Paraguay", "16 "],
+        "2355": ["PY", "Alto Parana", "10 "],
+        "2356": ["PY", "Amambay", "13 "],
+        "2357": ["PY", "Asuncion", "ASU"],
+        "2358": ["PY", "Boqueron", "19 "],
+        "2359": ["PY", "Caaguazu", "5  "],
+        "2360": ["PY", "Caazapa", "6  "],
+        "2361": ["PY", "Canindeyu", "14 "],
+        "2362": ["PY", "Central", "11 "],
+        "2363": ["PY", "Concepcion", "1  "],
+        "2364": ["PY", "Cordillera", "3  "],
+        "2365": ["PY", "Guaira", "4  "],
+        "2366": ["PY", "Itapua", "7  "],
+        "2367": ["PY", "Misiones", "8  "],
+        "2368": ["PY", "Neembucu", "12 "],
+        "2369": ["PY", "Paraguari", "9  "],
+        "2370": ["PY", "Presidente Hayes", "15 "],
+        "2371": ["PY", "San Pedro", "2  "]
+      }
+    ]
+  },
+  {
+    "pais": "Qatar",
+    "codigo": "QA",
+    "estado": [
+      {
+        "2372": ["QA", "Ad Dawhah", "DA "],
+        "2373": ["QA", "Al Khawr wa adh Dhakhirah", "KH "],
+        "2374": ["QA", "Al Wakrah", "WA "],
+        "2375": ["QA", "Ar Rayyan", "RA "],
+        "2376": ["QA", "Ash Shamal", "MS "],
+        "2377": ["QA", "Az Za'ayin", "ZA "],
+        "2378": ["QA", "Umm Salal", "US "]
+      }
+    ]
+  },
+  {
+    "pais": "Reunion",
+    "codigo": "RE",
+    "estado": [
+      {
+        "2379": ["RE", "Reunion", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Romania",
+    "codigo": "RO",
+    "estado": [
+      {
+        "2380": ["RO", "Alba", "AB "],
+        "2381": ["RO", "Arad", "AR "],
+        "2382": ["RO", "Arges", "AG "],
+        "2383": ["RO", "Bacau", "BC "],
+        "2384": ["RO", "Bihor", "BH "],
+        "2385": ["RO", "Bistrita-Nasaud", "BN "],
+        "2386": ["RO", "Botosani", "BT "],
+        "2387": ["RO", "Braila", "BR "],
+        "2388": ["RO", "Brasov", "BV "],
+        "2389": ["RO", "Bucuresti", "B  "],
+        "2390": ["RO", "Buzau", "BZ "],
+        "2391": ["RO", "Calarasi", "CL "],
+        "2392": ["RO", "Caras-Severin", "CS "],
+        "2393": ["RO", "Cluj", "CJ "],
+        "2394": ["RO", "Constanta", "CT "],
+        "2395": ["RO", "Covasna", "CV "],
+        "2396": ["RO", "Dambovita", "DB "],
+        "2397": ["RO", "Dolj", "DJ "],
+        "2398": ["RO", "Galati", "GL "],
+        "2399": ["RO", "Giurgiu", "GR "],
+        "2400": ["RO", "Gorj", "GJ "],
+        "2401": ["RO", "Harghita", "HR "],
+        "2402": ["RO", "Hunedoara", "HD "],
+        "2403": ["RO", "Ialomita", "IL "],
+        "2404": ["RO", "Iasi", "IS "],
+        "2405": ["RO", "Ilfov", "IF "],
+        "2406": ["RO", "Maramures", "MM "],
+        "2407": ["RO", "Mehedinti", "MH "],
+        "2408": ["RO", "Mures", "MS "],
+        "2409": ["RO", "Neamt", "NT "],
+        "2410": ["RO", "Olt", "OT "],
+        "2411": ["RO", "Prahova", "PH "],
+        "2412": ["RO", "Salaj", "SJ "],
+        "2413": ["RO", "Satu Mare", "SM "],
+        "2414": ["RO", "Sibiu", "SB "],
+        "2415": ["RO", "Suceava", "SV "],
+        "2416": ["RO", "Teleorman", "TR "],
+        "2417": ["RO", "Timis", "TM "],
+        "2418": ["RO", "Tulcea", "TL "],
+        "2419": ["RO", "Valcea", "VL "],
+        "2420": ["RO", "Vaslui", "VS "],
+        "2421": ["RO", "Vrancea", "VN "]
+      }
+    ]
+  },
+  {
+    "pais": "Serbia",
+    "codigo": "RS",
+    "estado": [
+      {
+        "2422": ["RS", "Beograd", "00 "],
+        "2423": ["RS", "Borski okrug", "14 "],
+        "2424": ["RS", "Branicevski okrug", "11 "],
+        "2425": ["RS", "Jablanicki okrug", "23 "],
+        "2426": ["RS", "Juznobacki okrug", "06 "],
+        "2427": ["RS", "Juznobanatski okrug", "04 "],
+        "2428": ["RS", "Kolubarski okrug", "09 "],
+        "2429": ["RS", "Kosovsko-Mitrovacki okrug", "28 "],
+        "2430": ["RS", "Macvanski okrug", "08 "],
+        "2431": ["RS", "Moravicki okrug", "17 "],
+        "2432": ["RS", "Nisavski okrug", "20 "],
+        "2433": ["RS", "Pcinjski okrug", "24 "],
+        "2434": ["RS", "Pecki okrug", "26 "],
+        "2435": ["RS", "Pirotski okrug", "22 "],
+        "2436": ["RS", "Podunavski okrug", "10 "],
+        "2437": ["RS", "Pomoravski okrug", "13 "],
+        "2438": ["RS", "Prizrenski okrug", "27 "],
+        "2439": ["RS", "Rasinski okrug", "19 "],
+        "2440": ["RS", "Raski okrug", "18 "],
+        "2441": ["RS", "Severnobacki okrug", "01 "],
+        "2442": ["RS", "Severnobanatski okrug", "03 "],
+        "2443": ["RS", "Srednjebanatski okrug", "02 "],
+        "2444": ["RS", "Sremski okrug", "07 "],
+        "2445": ["RS", "Sumadijski okrug", "12 "],
+        "2446": ["RS", "Toplicki okrug", "21 "],
+        "2447": ["RS", "Zajecarski okrug", "15 "],
+        "2448": ["RS", "Zapadnobacki okrug", "05 "],
+        "2449": ["RS", "Zlatiborski okrug", "16 "]
+      }
+    ]
+  },
+  {
+    "pais": "Russian Federation",
+    "codigo": "RU",
+    "estado": [
+      {
+        "2450": ["RU", "Adygeya, Respublika", "AD "],
+        "2451": ["RU", "Altay, Respublika", "AL "],
+        "2452": ["RU", "Altayskiy kray", "ALT"],
+        "2453": ["RU", "Amurskaya oblast'", "AMU"],
+        "2454": ["RU", "Arkhangel'skaya oblast'", "ARK"],
+        "2455": ["RU", "Astrakhanskaya oblast'", "AST"],
+        "2456": ["RU", "Bashkortostan, Respublika", "BA "],
+        "2457": ["RU", "Belgorodskaya oblast'", "BEL"],
+        "2458": ["RU", "Bryanskaya oblast'", "BRY"],
+        "2459": ["RU", "Buryatiya, Respublika", "BU "],
+        "2460": ["RU", "Chechenskaya Respublika", "CE "],
+        "2461": ["RU", "Chelyabinskaya oblast'", "CHE"],
+        "2462": ["RU", "Chukotskiy avtonomnyy okrug", "CHU"],
+        "2463": ["RU", "Chuvashskaya Respublika", "CU "],
+        "2464": ["RU", "Dagestan, Respublika", "DA "],
+        "2465": ["RU", "Ingushetiya, Respublika", "IN "],
+        "2466": ["RU", "Irkutskaya oblast'", "IRK"],
+        "2467": ["RU", "Ivanovskaya oblast'", "IVA"],
+        "2468": ["RU", "Kabardino-Balkarskaya Respublika", "KB "],
+        "2469": ["RU", "Kaliningradskaya oblast'", "KGD"],
+        "2470": ["RU", "Kalmykiya, Respublika", "KL "],
+        "2471": ["RU", "Kaluzhskaya oblast'", "KLU"],
+        "2472": ["RU", "Kamchatskiy kray", "KAM"],
+        "2473": ["RU", "Karachayevo-Cherkesskaya Respublika", "KC "],
+        "2474": ["RU", "Kareliya, Respublika", "KR "],
+        "2475": ["RU", "Kemerovskaya oblast'", "KEM"],
+        "2476": ["RU", "Khabarovskiy kray", "KHA"],
+        "2477": ["RU", "Khakasiya, Respublika", "KK "],
+        "2478": ["RU", "Khanty-Mansiyskiy avtonomnyy okrug", "KHM"],
+        "2479": ["RU", "Kirovskaya oblast'", "KIR"],
+        "2480": ["RU", "Komi, Respublika", "KO "],
+        "2481": ["RU", "Kostromskaya oblast'", "KOS"],
+        "2482": ["RU", "Krasnodarskiy kray", "KDA"],
+        "2483": ["RU", "Krasnoyarskiy kray", "KYA"],
+        "2484": ["RU", "Kurganskaya oblast'", "KGN"],
+        "2485": ["RU", "Kurskaya oblast'", "KRS"],
+        "2486": ["RU", "Leningradskaya oblast'", "LEN"],
+        "2487": ["RU", "Lipetskaya oblast'", "LIP"],
+        "2488": ["RU", "Magadanskaya oblast'", "MAG"],
+        "2489": ["RU", "Mariy El, Respublika", "ME "],
+        "2490": ["RU", "Mordoviya, Respublika", "MO "],
+        "2491": ["RU", "Moskovskaya oblast'", "MOS"],
+        "2492": ["RU", "Moskva", "MOW"],
+        "2493": ["RU", "Murmanskaya oblast'", "MUR"],
+        "2494": ["RU", "Nenetskiy avtonomnyy okrug", "NEN"],
+        "2495": ["RU", "Nizhegorodskaya oblast'", "NIZ"],
+        "2496": ["RU", "Novgorodskaya oblast'", "NGR"],
+        "2497": ["RU", "Novosibirskaya oblast'", "NVS"],
+        "2498": ["RU", "Omskaya oblast'", "OMS"],
+        "2499": ["RU", "Orenburgskaya oblast'", "ORE"],
+        "2500": ["RU", "Orlovskaya oblast'", "ORL"],
+        "2501": ["RU", "Penzenskaya oblast'", "PNZ"],
+        "2502": ["RU", "Permskiy kray", "PER"],
+        "2503": ["RU", "Primorskiy kray", "PRI"],
+        "2504": ["RU", "Pskovskaya oblast'", "PSK"],
+        "2505": ["RU", "Rostovskaya oblast'", "ROS"],
+        "2506": ["RU", "Ryazanskaya oblast'", "RYA"],
+        "2507": ["RU", "Saha, Respublika", "SA "],
+        "2508": ["RU", "Sakhalinskaya oblast'", "SAK"],
+        "2509": ["RU", "Samarskaya oblast'", "SAM"],
+        "2510": ["RU", "Sankt-Peterburg", "SPE"],
+        "2511": ["RU", "Saratovskaya oblast'", "SAR"],
+        "2512": ["RU", "Severnaya Osetiya, Respublika", "SE "],
+        "2513": ["RU", "Smolenskaya oblast'", "SMO"],
+        "2514": ["RU", "Stavropol'skiy kray", "STA"],
+        "2515": ["RU", "Sverdlovskaya oblast'", "SVE"],
+        "2516": ["RU", "Tambovskaya oblast'", "TAM"],
+        "2517": ["RU", "Tatarstan, Respublika", "TA "],
+        "2518": ["RU", "Tomskaya oblast'", "TOM"],
+        "2519": ["RU", "Tul'skaya oblast'", "TUL"],
+        "2520": ["RU", "Tverskaya oblast'", "TVE"],
+        "2521": ["RU", "Tyumenskaya oblast'", "TYU"],
+        "2522": ["RU", "Tyva, Respublika", "TY "],
+        "2523": ["RU", "Udmurtskaya Respublika", "UD "],
+        "2524": ["RU", "Ul'yanovskaya oblast'", "ULY"],
+        "2525": ["RU", "Vladimirskaya oblast'", "VLA"],
+        "2526": ["RU", "Volgogradskaya oblast'", "VGG"],
+        "2527": ["RU", "Vologodskaya oblast'", "VLG"],
+        "2528": ["RU", "Voronezhskaya oblast'", "VOR"],
+        "2529": ["RU", "Yamalo-Nenetskiy avtonomnyy okrug", "YAN"],
+        "2530": ["RU", "Yaroslavskaya oblast'", "YAR"],
+        "2531": ["RU", "Yevreyskaya avtonomnaya oblast'", "YEV"],
+        "2532": ["RU", "Zabaykal'skiy kray", "ZAB"]
+      }
+    ]
+  },
+  {
+    "pais": "Rwanda",
+    "codigo": "RW",
+    "estado": [
+      {
+        "2533": ["RW", "Est", "02 "],
+        "2534": ["RW", "Nord", "03 "],
+        "2535": ["RW", "Ouest", "04 "],
+        "2536": ["RW", "Sud", "05 "],
+        "2537": ["RW", "Ville de Kigali", "01 "]
+      }
+    ]
+  },
+  {
+    "pais": "Saudi Arabia",
+    "codigo": "SA",
+    "estado": [
+      {
+        "2538": ["SA", "'Asir", "14 "],
+        "2539": ["SA", "Al Bahah", "11 "],
+        "2540": ["SA", "Al Hudud ash Shamaliyah", "08 "],
+        "2541": ["SA", "Al Jawf", "12 "],
+        "2542": ["SA", "Al Madinah al Munawwarah", "03 "],
+        "2543": ["SA", "Al Qasim", "05 "],
+        "2544": ["SA", "Ar Riyad", "01 "],
+        "2545": ["SA", "Ash Sharqiyah", "04 "],
+        "2546": ["SA", "Ha'il", "06 "],
+        "2547": ["SA", "Jazan", "09 "],
+        "2548": ["SA", "Makkah al Mukarramah", "02 "],
+        "2549": ["SA", "Najran", "10 "],
+        "2550": ["SA", "Tabuk", "07 "]
+      }
+    ]
+  },
+  {
+    "pais": "Solomon Islands",
+    "codigo": "SB",
+    "estado": [
+      {
+        "2551": ["SB", "Choiseul", "CH "],
+        "2552": ["SB", "Guadalcanal", "GU "]
+      }
+    ]
+  },
+  {
+    "pais": "Seychelles",
+    "codigo": "SC",
+    "estado": [
+      {
+        "2553": ["SC", "Anse Boileau", "02 "],
+        "2554": ["SC", "Anse aux Pins", "01 "],
+        "2555": ["SC", "Baie Lazare", "06 "],
+        "2556": ["SC", "Beau Vallon", "08 "],
+        "2557": ["SC", "Bel Ombre", "10 "],
+        "2558": ["SC", "Cascade", "11 "],
+        "2559": ["SC", "English River", "16 "],
+        "2560": ["SC", "Grand Anse Mahe", "13 "],
+        "2561": ["SC", "La Digue", "15 "],
+        "2562": ["SC", "Pointe Larue", "20 "],
+        "2563": ["SC", "Takamaka", "23 "]
+      }
+    ]
+  },
+  {
+    "pais": "Sudan",
+    "codigo": "SD",
+    "estado": [
+      {
+        "2564": ["SD", "Blue Nile", "NB "],
+        "2565": ["SD", "Gedaref", "GD "],
+        "2566": ["SD", "Gezira", "GZ "],
+        "2567": ["SD", "Kassala", "KA "],
+        "2568": ["SD", "Khartoum", "KH "],
+        "2569": ["SD", "North Darfur", "DN "],
+        "2570": ["SD", "North Kordofan", "KN "],
+        "2571": ["SD", "Northern", "NO "],
+        "2572": ["SD", "Red Sea", "RS "],
+        "2573": ["SD", "River Nile", "NR "],
+        "2574": ["SD", "Sennar", "SI "],
+        "2575": ["SD", "South Darfur", "DS "],
+        "2576": ["SD", "South Kordofan", "KS "],
+        "2577": ["SD", "West Darfur", "DW "],
+        "2578": ["SD", "White Nile", "NW "]
+      }
+    ]
+  },
+  {
+    "pais": "Sweden",
+    "codigo": "SE",
+    "estado": [
+      {
+        "2579": ["SE", "Blekinge lan", "K  "],
+        "2580": ["SE", "Dalarnas lan", "W  "],
+        "2581": ["SE", "Gavleborgs lan", "X  "],
+        "2582": ["SE", "Gotlands lan", "I  "],
+        "2583": ["SE", "Hallands lan", "N  "],
+        "2584": ["SE", "Jamtlands lan", "Z  "],
+        "2585": ["SE", "Jonkopings lan", "F  "],
+        "2586": ["SE", "Kalmar lan", "H  "],
+        "2587": ["SE", "Kronobergs lan", "G  "],
+        "2588": ["SE", "Norrbottens lan", "BD "],
+        "2589": ["SE", "Orebro lan", "T  "],
+        "2590": ["SE", "Ostergotlands lan", "E  "],
+        "2591": ["SE", "Skane lan", "M  "],
+        "2592": ["SE", "Sodermanlands lan", "D  "],
+        "2593": ["SE", "Stockholms lan", "AB "],
+        "2594": ["SE", "Uppsala lan", "C  "],
+        "2595": ["SE", "Varmlands lan", "S  "],
+        "2596": ["SE", "Vasterbottens lan", "AC "],
+        "2597": ["SE", "Vasternorrlands lan", "Y  "],
+        "2598": ["SE", "Vastmanlands lan", "U  "],
+        "2599": ["SE", "Vastra Gotalands lan", "O  "]
+      }
+    ]
+  },
+  {
+    "pais": "Singapore",
+    "codigo": "SG",
+    "estado": [
+      {
+        "2600": ["SG", "Singapore", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Helena, Ascension and Tristan da Cunha",
+    "codigo": "SH",
+    "estado": [
+      {
+        "2601": ["SH", "Saint Helena", "HL "]
+      }
+    ]
+  },
+  {
+    "pais": "Slovenia",
+    "codigo": "SI",
+    "estado": [
+      {
+        "2602": ["SI", "Ajdovscina", "001"],
+        "2603": ["SI", "Apace", "195"],
+        "2604": ["SI", "Beltinci", "002"],
+        "2605": ["SI", "Benedikt", "148"],
+        "2606": ["SI", "Bistrica ob Sotli", "149"],
+        "2607": ["SI", "Bled", "003"],
+        "2608": ["SI", "Bloke", "150"],
+        "2609": ["SI", "Bohinj", "004"],
+        "2610": ["SI", "Borovnica", "005"],
+        "2611": ["SI", "Bovec", "006"],
+        "2612": ["SI", "Braslovce", "151"],
+        "2613": ["SI", "Brda", "007"],
+        "2614": ["SI", "Brezice", "009"],
+        "2615": ["SI", "Brezovica", "008"],
+        "2616": ["SI", "Cankova", "152"],
+        "2617": ["SI", "Celje", "011"],
+        "2618": ["SI", "Cerklje na Gorenjskem", "012"],
+        "2619": ["SI", "Cerknica", "013"],
+        "2620": ["SI", "Cerkno", "014"],
+        "2621": ["SI", "Cirkulane", "196"],
+        "2622": ["SI", "Crensovci", "015"],
+        "2623": ["SI", "Crnomelj", "017"],
+        "2624": ["SI", "Destrnik", "018"],
+        "2625": ["SI", "Divaca", "019"],
+        "2626": ["SI", "Dobje", "154"],
+        "2627": ["SI", "Dobrepolje", "020"],
+        "2628": ["SI", "Dobrna", "155"],
+        "2629": ["SI", "Dobrova-Polhov Gradec", "021"],
+        "2630": ["SI", "Dobrovnik", "156"],
+        "2631": ["SI", "Domzale", "023"],
+        "2632": ["SI", "Dornava", "024"],
+        "2633": ["SI", "Dravograd", "025"],
+        "2634": ["SI", "Duplek", "026"],
+        "2635": ["SI", "Gorje", "207"],
+        "2636": ["SI", "Gornja Radgona", "029"],
+        "2637": ["SI", "Gornji Petrovci", "031"],
+        "2638": ["SI", "Grad", "158"],
+        "2639": ["SI", "Grosuplje", "032"],
+        "2640": ["SI", "Hajdina", "159"],
+        "2641": ["SI", "Hoce-Slivnica", "160"],
+        "2642": ["SI", "Hodos", "161"],
+        "2643": ["SI", "Horjul", "162"],
+        "2644": ["SI", "Hrastnik", "034"],
+        "2645": ["SI", "Hrpelje-Kozina", "035"],
+        "2646": ["SI", "Idrija", "036"],
+        "2647": ["SI", "Ig", "037"],
+        "2648": ["SI", "Ilirska Bistrica", "038"],
+        "2649": ["SI", "Ivancna Gorica", "039"],
+        "2650": ["SI", "Izola", "040"],
+        "2651": ["SI", "Jesenice", "041"],
+        "2652": ["SI", "Jursinci", "042"],
+        "2653": ["SI", "Kamnik", "043"],
+        "2654": ["SI", "Kanal", "044"],
+        "2655": ["SI", "Kidricevo", "045"],
+        "2656": ["SI", "Kobarid", "046"],
+        "2657": ["SI", "Kobilje", "047"],
+        "2658": ["SI", "Kocevje", "048"],
+        "2659": ["SI", "Komen", "049"],
+        "2660": ["SI", "Komenda", "164"],
+        "2661": ["SI", "Koper", "050"],
+        "2662": ["SI", "Kosanjevica na Krki", "197"],
+        "2663": ["SI", "Kostel", "165"],
+        "2664": ["SI", "Kranj", "052"],
+        "2665": ["SI", "Kranjska Gora", "053"],
+        "2666": ["SI", "Krizevci", "166"],
+        "2667": ["SI", "Krsko", "054"],
+        "2668": ["SI", "Kungota", "055"],
+        "2669": ["SI", "Kuzma", "056"],
+        "2670": ["SI", "Lasko", "057"],
+        "2671": ["SI", "Lenart", "058"],
+        "2672": ["SI", "Lendava", "059"],
+        "2673": ["SI", "Litija", "060"],
+        "2674": ["SI", "Ljubljana", "061"],
+        "2675": ["SI", "Ljutomer", "063"],
+        "2676": ["SI", "Log-Dragomer", "208"],
+        "2677": ["SI", "Logatec", "064"],
+        "2678": ["SI", "Loska Dolina", "065"],
+        "2679": ["SI", "Lovrenc na Pohorju", "167"],
+        "2680": ["SI", "Luce", "067"],
+        "2681": ["SI", "Lukovica", "068"],
+        "2682": ["SI", "Majsperk", "069"],
+        "2683": ["SI", "Makole", "198"],
+        "2684": ["SI", "Maribor", "070"],
+        "2685": ["SI", "Markovci", "168"],
+        "2686": ["SI", "Medvode", "071"],
+        "2687": ["SI", "Menges", "072"],
+        "2688": ["SI", "Metlika", "073"],
+        "2689": ["SI", "Mezica", "074"],
+        "2690": ["SI", "Miklavz na Dravskem Polju", "169"],
+        "2691": ["SI", "Miren-Kostanjevica", "075"],
+        "2692": ["SI", "Mirna Pec", "170"],
+        "2693": ["SI", "Mislinja", "076"],
+        "2694": ["SI", "Mokronog-Trebelno", "199"],
+        "2695": ["SI", "Moravce", "077"],
+        "2696": ["SI", "Mozirje", "079"],
+        "2697": ["SI", "Murska Sobota", "080"],
+        "2698": ["SI", "Muta", "081"],
+        "2699": ["SI", "Naklo", "082"],
+        "2700": ["SI", "Nazarje", "083"],
+        "2701": ["SI", "Nova Gorica", "084"],
+        "2702": ["SI", "Novo Mesto", "085"],
+        "2703": ["SI", "Odranci", "086"],
+        "2704": ["SI", "Oplotnica", "171"],
+        "2705": ["SI", "Ormoz", "087"],
+        "2706": ["SI", "Piran", "090"],
+        "2707": ["SI", "Pivka", "091"],
+        "2708": ["SI", "Podcetrtek", "092"],
+        "2709": ["SI", "Podlehnik", "172"],
+        "2710": ["SI", "Poljcane", "200"],
+        "2711": ["SI", "Polzela", "173"],
+        "2712": ["SI", "Postojna", "094"],
+        "2713": ["SI", "Prebold", "174"],
+        "2714": ["SI", "Preddvor", "095"],
+        "2715": ["SI", "Prevalje", "175"],
+        "2716": ["SI", "Ptuj", "096"],
+        "2717": ["SI", "Puconci", "097"],
+        "2718": ["SI", "Race-Fram", "098"],
+        "2719": ["SI", "Radece", "099"],
+        "2720": ["SI", "Radenci", "100"],
+        "2721": ["SI", "Radlje ob Dravi", "101"],
+        "2722": ["SI", "Radovljica", "102"],
+        "2723": ["SI", "Ravne na Koroskem", "103"],
+        "2724": ["SI", "Razkrizje", "176"],
+        "2725": ["SI", "Recica ob Savinji", "209"],
+        "2726": ["SI", "Rence-Vogrsko", "201"],
+        "2727": ["SI", "Ribnica", "104"],
+        "2728": ["SI", "Rogaska Slatina", "106"],
+        "2729": ["SI", "Rogasovci", "105"],
+        "2730": ["SI", "Ruse", "108"],
+        "2731": ["SI", "Salovci", "033"],
+        "2732": ["SI", "Semic", "109"],
+        "2733": ["SI", "Sempeter-Vrtojba", "183"],
+        "2734": ["SI", "Sencur", "117"],
+        "2735": ["SI", "Sentilj", "118"],
+        "2736": ["SI", "Sentjernej", "119"],
+        "2737": ["SI", "Sentjur", "120"],
+        "2738": ["SI", "Sentrupert", "211"],
+        "2739": ["SI", "Sevnica", "110"],
+        "2740": ["SI", "Sezana", "111"],
+        "2741": ["SI", "Skocjan", "121"],
+        "2742": ["SI", "Skofja Loka", "122"],
+        "2743": ["SI", "Skofljica", "123"],
+        "2744": ["SI", "Slovenj Gradec", "112"],
+        "2745": ["SI", "Slovenska Bistrica", "113"],
+        "2746": ["SI", "Slovenske Konjice", "114"],
+        "2747": ["SI", "Smarje pri Jelsah", "124"],
+        "2748": ["SI", "Smarjeske Toplice", "206"],
+        "2749": ["SI", "Smartno ob Paki", "125"],
+        "2750": ["SI", "Smartno pri Litiji", "194"],
+        "2751": ["SI", "Sodrazica", "179"],
+        "2752": ["SI", "Solcava", "180"],
+        "2753": ["SI", "Sostanj", "126"],
+        "2754": ["SI", "Starse", "115"],
+        "2755": ["SI", "Store", "127"],
+        "2756": ["SI", "Straza", "203"],
+        "2757": ["SI", "Sveta Trojica v Slovenskih Goricah", "204"],
+        "2758": ["SI", "Sveti Andraz v Slovenskih Goricah", "182"],
+        "2759": ["SI", "Sveti Jurij", "116"],
+        "2760": ["SI", "Sveti Jurij v Slovenskih Goricah", "210"],
+        "2761": ["SI", "Sveti Tomaz", "205"],
+        "2762": ["SI", "Tabor", "184"],
+        "2763": ["SI", "Tisina", "010"],
+        "2764": ["SI", "Tolmin", "128"],
+        "2765": ["SI", "Trbovlje", "129"],
+        "2766": ["SI", "Trebnje", "130"],
+        "2767": ["SI", "Trnovska Vas", "185"],
+        "2768": ["SI", "Trzic", "131"],
+        "2769": ["SI", "Trzin", "186"],
+        "2770": ["SI", "Turnisce", "132"],
+        "2771": ["SI", "Velenje", "133"],
+        "2772": ["SI", "Velika Polana", "187"],
+        "2773": ["SI", "Velike Lasce", "134"],
+        "2774": ["SI", "Verzej", "188"],
+        "2775": ["SI", "Videm", "135"],
+        "2776": ["SI", "Vipava", "136"],
+        "2777": ["SI", "Vitanje", "137"],
+        "2778": ["SI", "Vodice", "138"],
+        "2779": ["SI", "Vojnik", "139"],
+        "2780": ["SI", "Vransko", "189"],
+        "2781": ["SI", "Vrhnika", "140"],
+        "2782": ["SI", "Vuzenica", "141"],
+        "2783": ["SI", "Zagorje ob Savi", "142"],
+        "2784": ["SI", "Zalec", "190"],
+        "2785": ["SI", "Zavrc", "143"],
+        "2786": ["SI", "Zelezniki", "146"],
+        "2787": ["SI", "Zetale", "191"],
+        "2788": ["SI", "Ziri", "147"],
+        "2789": ["SI", "Zrece", "144"],
+        "2790": ["SI", "Zuzemberk", "193"]
+      }
+    ]
+  },
+  {
+    "pais": "Svalbard and Jan Mayen",
+    "codigo": "SJ",
+    "estado": [[]]
+  },
+  {
+    "pais": "Slovakia",
+    "codigo": "SK",
+    "estado": [
+      {
+        "2791": ["SK", "Banskobystricky kraj", "BC "],
+        "2792": ["SK", "Bratislavsky kraj", "BL "],
+        "2793": ["SK", "Kosicky kraj", "KI "],
+        "2794": ["SK", "Nitriansky kraj", "NI "],
+        "2795": ["SK", "Presovsky kraj", "PV "],
+        "2796": ["SK", "Trenciansky kraj", "TC "],
+        "2797": ["SK", "Trnavsky kraj", "TA "],
+        "2798": ["SK", "Zilinsky kraj", "ZI "]
+      }
+    ]
+  },
+  {
+    "pais": "Sierra Leone",
+    "codigo": "SL",
+    "estado": [
+      {
+        "2799": ["SL", "Eastern", "E  "],
+        "2800": ["SL", "Northern", "N  "],
+        "2801": ["SL", "Western Area", "W  "]
+      }
+    ]
+  },
+  {
+    "pais": "San Marino",
+    "codigo": "SM",
+    "estado": [
+      {
+        "2802": ["SM", "Domagnano", "03 "],
+        "2803": ["SM", "San Marino", "07 "],
+        "2804": ["SM", "Serravalle", "09 "]
+      }
+    ]
+  },
+  {
+    "pais": "Senegal",
+    "codigo": "SN",
+    "estado": [
+      {
+        "2805": ["SN", "Dakar", "DK "],
+        "2806": ["SN", "Diourbel", "DB "],
+        "2807": ["SN", "Fatick", "FK "],
+        "2808": ["SN", "Kaffrine", "KA "],
+        "2809": ["SN", "Kaolack", "KL "],
+        "2810": ["SN", "Louga", "LG "],
+        "2811": ["SN", "Saint-Louis", "SL "],
+        "2812": ["SN", "Tambacounda", "TC "],
+        "2813": ["SN", "Thies", "TH "],
+        "2814": ["SN", "Ziguinchor", "ZG "]
+      }
+    ]
+  },
+  {
+    "pais": "Somalia",
+    "codigo": "SO",
+    "estado": [
+      {
+        "2815": ["SO", "Awdal", "AW "],
+        "2816": ["SO", "Banaadir", "BN "],
+        "2817": ["SO", "Bay", "BY "],
+        "2818": ["SO", "Nugaal", "NU "],
+        "2819": ["SO", "Shabeellaha Hoose", "SH "],
+        "2820": ["SO", "Togdheer", "TO "],
+        "2821": ["SO", "Woqooyi Galbeed", "WO "]
+      }
+    ]
+  },
+  {
+    "pais": "Suriname",
+    "codigo": "SR",
+    "estado": [
+      {
+        "2822": ["SR", "Brokopondo", "BR "],
+        "2823": ["SR", "Commewijne", "CM "],
+        "2824": ["SR", "Nickerie", "NI "],
+        "2825": ["SR", "Para", "PR "],
+        "2826": ["SR", "Paramaribo", "PM "],
+        "2827": ["SR", "Saramacca", "SA "],
+        "2828": ["SR", "Sipaliwini", "SI "],
+        "2829": ["SR", "Wanica", "WA "]
+      }
+    ]
+  },
+  {
+    "pais": "South Sudan",
+    "codigo": "SS",
+    "estado": [
+      {
+        "2830": ["SS", "Central Equatoria", "EC "],
+        "2831": ["SS", "Eastern Equatoria", "EE "],
+        "2832": ["SS", "Lakes", "LK "],
+        "2833": ["SS", "Northern Bahr el Ghazal", "BN "],
+        "2834": ["SS", "Unity", "UY "],
+        "2835": ["SS", "Upper Nile", "NU "],
+        "2836": ["SS", "Western Equatoria", "EW "]
+      }
+    ]
+  },
+  {
+    "pais": "Sao Tome and Principe",
+    "codigo": "ST",
+    "estado": [
+      {
+        "2837": ["ST", "Principe", "P  "],
+        "2838": ["ST", "Sao Tome", "S  "]
+      }
+    ]
+  },
+  {
+    "pais": "El Salvador",
+    "codigo": "SV",
+    "estado": [
+      {
+        "2839": ["SV", "Ahuachapan", "AH "],
+        "2840": ["SV", "Cabanas", "CA "],
+        "2841": ["SV", "Chalatenango", "CH "],
+        "2842": ["SV", "Cuscatlan", "CU "],
+        "2843": ["SV", "La Libertad", "LI "],
+        "2844": ["SV", "La Paz", "PA "],
+        "2845": ["SV", "La Union", "UN "],
+        "2846": ["SV", "Morazan", "MO "],
+        "2847": ["SV", "San Miguel", "SM "],
+        "2848": ["SV", "San Salvador", "SS "],
+        "2849": ["SV", "San Vicente", "SV "],
+        "2850": ["SV", "Santa Ana", "SA "],
+        "2851": ["SV", "Sonsonate", "SO "],
+        "2852": ["SV", "Usulutan", "US "]
+      }
+    ]
+  },
+  {
+    "pais": "Sint Maarten (Dutch part)",
+    "codigo": "SX",
+    "estado": [
+      {
+        "2853": ["SX", "Sint Maarten (Dutch Part)", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Syrian Arab Republic",
+    "codigo": "SY",
+    "estado": [
+      {
+        "2854": ["SY", "Al Hasakah", "HA "],
+        "2855": ["SY", "Al Ladhiqiyah", "LA "],
+        "2856": ["SY", "Al Qunaytirah", "QU "],
+        "2857": ["SY", "Ar Raqqah", "RA "],
+        "2858": ["SY", "As Suwayda'", "SU "],
+        "2859": ["SY", "Dar'a", "DR "],
+        "2860": ["SY", "Dayr az Zawr", "DY "],
+        "2861": ["SY", "Dimashq", "DI "],
+        "2862": ["SY", "Halab", "HL "],
+        "2863": ["SY", "Hamah", "HM "],
+        "2864": ["SY", "Hims", "HI "],
+        "2865": ["SY", "Idlib", "ID "],
+        "2866": ["SY", "Rif Dimashq", "RD "],
+        "2867": ["SY", "Tartus", "TA "]
+      }
+    ]
+  },
+  {
+    "pais": "Eswatini",
+    "codigo": "SZ",
+    "estado": [
+      {
+        "2868": ["SZ", "Hhohho", "HH "],
+        "2869": ["SZ", "Lubombo", "LU "],
+        "2870": ["SZ", "Manzini", "MA "]
+      }
+    ]
+  },
+  {
+    "pais": "Turks and Caicos Islands",
+    "codigo": "TC",
+    "estado": [
+      {
+        "2871": ["TC", "Turks and Caicos Islands", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Chad",
+    "codigo": "TD",
+    "estado": [
+      {
+        "2872": ["TD", "Guera", "GR "],
+        "2873": ["TD", "Hadjer Lamis", "HL "],
+        "2874": ["TD", "Logone-Occidental", "LO "],
+        "2875": ["TD", "Ouaddai", "OD "],
+        "2876": ["TD", "Tibesti", "TI "],
+        "2877": ["TD", "Ville de Ndjamena", "ND "]
+      }
+    ]
+  },
+  {
+    "pais": "French Southern Territories",
+    "codigo": "TF",
+    "estado": [[]]
+  },
+  {
+    "pais": "Togo",
+    "codigo": "TG",
+    "estado": [
+      {
+        "2878": ["TG", "Centrale", "C  "],
+        "2879": ["TG", "Kara", "K  "],
+        "2880": ["TG", "Maritime", "M  "],
+        "2881": ["TG", "Plateaux", "P  "]
+      }
+    ]
+  },
+  {
+    "pais": "Thailand",
+    "codigo": "TH",
+    "estado": [
+      {
+        "2882": ["TH", "Amnat Charoen", "37 "],
+        "2883": ["TH", "Ang Thong", "15 "],
+        "2884": ["TH", "Bueng Kan", "38 "],
+        "2885": ["TH", "Buri Ram", "31 "],
+        "2886": ["TH", "Chachoengsao", "24 "],
+        "2887": ["TH", "Chai Nat", "18 "],
+        "2888": ["TH", "Chaiyaphum", "36 "],
+        "2889": ["TH", "Chanthaburi", "22 "],
+        "2890": ["TH", "Chiang Mai", "50 "],
+        "2891": ["TH", "Chiang Rai", "57 "],
+        "2892": ["TH", "Chon Buri", "20 "],
+        "2893": ["TH", "Chumphon", "86 "],
+        "2894": ["TH", "Kalasin", "46 "],
+        "2895": ["TH", "Kamphaeng Phet", "62 "],
+        "2896": ["TH", "Kanchanaburi", "71 "],
+        "2897": ["TH", "Khon Kaen", "40 "],
+        "2898": ["TH", "Krabi", "81 "],
+        "2899": ["TH", "Krung Thep Maha Nakhon", "10 "],
+        "2900": ["TH", "Lampang", "52 "],
+        "2901": ["TH", "Lamphun", "51 "],
+        "2902": ["TH", "Loei", "42 "],
+        "2903": ["TH", "Lop Buri", "16 "],
+        "2904": ["TH", "Mae Hong Son", "58 "],
+        "2905": ["TH", "Maha Sarakham", "44 "],
+        "2906": ["TH", "Mukdahan", "49 "],
+        "2907": ["TH", "Nakhon Nayok", "26 "],
+        "2908": ["TH", "Nakhon Pathom", "73 "],
+        "2909": ["TH", "Nakhon Phanom", "48 "],
+        "2910": ["TH", "Nakhon Ratchasima", "30 "],
+        "2911": ["TH", "Nakhon Sawan", "60 "],
+        "2912": ["TH", "Nakhon Si Thammarat", "80 "],
+        "2913": ["TH", "Nan", "55 "],
+        "2914": ["TH", "Narathiwat", "96 "],
+        "2915": ["TH", "Nong Bua Lam Phu", "39 "],
+        "2916": ["TH", "Nong Khai", "43 "],
+        "2917": ["TH", "Nonthaburi", "12 "],
+        "2918": ["TH", "Pathum Thani", "13 "],
+        "2919": ["TH", "Pattani", "94 "],
+        "2920": ["TH", "Phangnga", "82 "],
+        "2921": ["TH", "Phatthalung", "93 "],
+        "2922": ["TH", "Phayao", "56 "],
+        "2923": ["TH", "Phetchabun", "67 "],
+        "2924": ["TH", "Phetchaburi", "76 "],
+        "2925": ["TH", "Phichit", "66 "],
+        "2926": ["TH", "Phitsanulok", "65 "],
+        "2927": ["TH", "Phra Nakhon Si Ayutthaya", "14 "],
+        "2928": ["TH", "Phrae", "54 "],
+        "2929": ["TH", "Phuket", "83 "],
+        "2930": ["TH", "Prachin Buri", "25 "],
+        "2931": ["TH", "Prachuap Khiri Khan", "77 "],
+        "2932": ["TH", "Ranong", "85 "],
+        "2933": ["TH", "Ratchaburi", "70 "],
+        "2934": ["TH", "Rayong", "21 "],
+        "2935": ["TH", "Roi Et", "45 "],
+        "2936": ["TH", "Sa Kaeo", "27 "],
+        "2937": ["TH", "Sakon Nakhon", "47 "],
+        "2938": ["TH", "Samut Prakan", "11 "],
+        "2939": ["TH", "Samut Sakhon", "74 "],
+        "2940": ["TH", "Samut Songkhram", "75 "],
+        "2941": ["TH", "Saraburi", "19 "],
+        "2942": ["TH", "Satun", "91 "],
+        "2943": ["TH", "Si Sa Ket", "33 "],
+        "2944": ["TH", "Sing Buri", "17 "],
+        "2945": ["TH", "Songkhla", "90 "],
+        "2946": ["TH", "Sukhothai", "64 "],
+        "2947": ["TH", "Suphan Buri", "72 "],
+        "2948": ["TH", "Surat Thani", "84 "],
+        "2949": ["TH", "Surin", "32 "],
+        "2950": ["TH", "Tak", "63 "],
+        "2951": ["TH", "Trang", "92 "],
+        "2952": ["TH", "Trat", "23 "],
+        "2953": ["TH", "Ubon Ratchathani", "34 "],
+        "2954": ["TH", "Udon Thani", "41 "],
+        "2955": ["TH", "Uthai Thani", "61 "],
+        "2956": ["TH", "Uttaradit", "53 "],
+        "2957": ["TH", "Yala", "95 "],
+        "2958": ["TH", "Yasothon", "35 "]
+      }
+    ]
+  },
+  {
+    "pais": "Tajikistan",
+    "codigo": "TJ",
+    "estado": [
+      {
+        "2959": ["TJ", "Dushanbe", "DU "],
+        "2960": ["TJ", "Khatlon", "KT "],
+        "2961": ["TJ", "Kuhistoni Badakhshon", "GB "],
+        "2962": ["TJ", "Nohiyahoi Tobei Jumhuri", "RA "],
+        "2963": ["TJ", "Sughd", "SU "]
+      }
+    ]
+  },
+  {
+    "pais": "Tokelau",
+    "codigo": "TK",
+    "estado": [
+      {
+        "2964": ["TK", "Tokelau", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Timor-Leste",
+    "codigo": "TL",
+    "estado": [
+      {
+        "2965": ["TL", "Ainaro", "AN "],
+        "2966": ["TL", "Cova Lima", "CO "],
+        "2967": ["TL", "Dili", "DI "]
+      }
+    ]
+  },
+  {
+    "pais": "Turkmenistan",
+    "codigo": "TM",
+    "estado": [
+      {
+        "2968": ["TM", "Ahal", "A  "],
+        "2969": ["TM", "Balkan", "B  "],
+        "2970": ["TM", "Dasoguz", "D  "],
+        "2971": ["TM", "Lebap", "L  "],
+        "2972": ["TM", "Mary", "M  "]
+      }
+    ]
+  },
+  {
+    "pais": "Tunisia",
+    "codigo": "TN",
+    "estado": [
+      {
+        "2973": ["TN", "Beja", "31 "],
+        "2974": ["TN", "Ben Arous", "13 "],
+        "2975": ["TN", "Bizerte", "23 "],
+        "2976": ["TN", "Gabes", "81 "],
+        "2977": ["TN", "Gafsa", "71 "],
+        "2978": ["TN", "Jendouba", "32 "],
+        "2979": ["TN", "Kairouan", "41 "],
+        "2980": ["TN", "Kasserine", "42 "],
+        "2981": ["TN", "Kebili", "73 "],
+        "2982": ["TN", "L'Ariana", "12 "],
+        "2983": ["TN", "La Manouba", "14 "],
+        "2984": ["TN", "Le Kef", "33 "],
+        "2985": ["TN", "Mahdia", "53 "],
+        "2986": ["TN", "Medenine", "82 "],
+        "2987": ["TN", "Monastir", "52 "],
+        "2988": ["TN", "Nabeul", "21 "],
+        "2989": ["TN", "Sfax", "61 "],
+        "2990": ["TN", "Sidi Bouzid", "43 "],
+        "2991": ["TN", "Siliana", "34 "],
+        "2992": ["TN", "Sousse", "51 "],
+        "2993": ["TN", "Tataouine", "83 "],
+        "2994": ["TN", "Tozeur", "72 "],
+        "2995": ["TN", "Tunis", "11 "],
+        "2996": ["TN", "Zaghouan", "22 "]
+      }
+    ]
+  },
+  {
+    "pais": "Tonga",
+    "codigo": "TO",
+    "estado": [
+      {
+        "2997": ["TO", "Niuas", "03 "],
+        "2998": ["TO", "Tongatapu", "04 "]
+      }
+    ]
+  },
+  {
+    "pais": "Turkey",
+    "codigo": "TR",
+    "estado": [
+      {
+        "2999": ["TR", "Adana", "01 "],
+        "3000": ["TR", "Adiyaman", "02 "],
+        "3001": ["TR", "Afyonkarahisar", "03 "],
+        "3002": ["TR", "Agri", "04 "],
+        "3003": ["TR", "Aksaray", "68 "],
+        "3004": ["TR", "Amasya", "05 "],
+        "3005": ["TR", "Ankara", "06 "],
+        "3006": ["TR", "Antalya", "07 "],
+        "3007": ["TR", "Ardahan", "75 "],
+        "3008": ["TR", "Artvin", "08 "],
+        "3009": ["TR", "Aydin", "09 "],
+        "3010": ["TR", "Balikesir", "10 "],
+        "3011": ["TR", "Bartin", "74 "],
+        "3012": ["TR", "Batman", "72 "],
+        "3013": ["TR", "Bayburt", "69 "],
+        "3014": ["TR", "Bilecik", "11 "],
+        "3015": ["TR", "Bingol", "12 "],
+        "3016": ["TR", "Bitlis", "13 "],
+        "3017": ["TR", "Bolu", "14 "],
+        "3018": ["TR", "Burdur", "15 "],
+        "3019": ["TR", "Bursa", "16 "],
+        "3020": ["TR", "Canakkale", "17 "],
+        "3021": ["TR", "Cankiri", "18 "],
+        "3022": ["TR", "Corum", "19 "],
+        "3023": ["TR", "Denizli", "20 "],
+        "3024": ["TR", "Diyarbakir", "21 "],
+        "3025": ["TR", "Duzce", "81 "],
+        "3026": ["TR", "Edirne", "22 "],
+        "3027": ["TR", "Elazig", "23 "],
+        "3028": ["TR", "Erzincan", "24 "],
+        "3029": ["TR", "Erzurum", "25 "],
+        "3030": ["TR", "Eskisehir", "26 "],
+        "3031": ["TR", "Gaziantep", "27 "],
+        "3032": ["TR", "Giresun", "28 "],
+        "3033": ["TR", "Gumushane", "29 "],
+        "3034": ["TR", "Hakkari", "30 "],
+        "3035": ["TR", "Hatay", "31 "],
+        "3036": ["TR", "Igdir", "76 "],
+        "3037": ["TR", "Isparta", "32 "],
+        "3038": ["TR", "Istanbul", "34 "],
+        "3039": ["TR", "Izmir", "35 "],
+        "3040": ["TR", "Kahramanmaras", "46 "],
+        "3041": ["TR", "Karabuk", "78 "],
+        "3042": ["TR", "Karaman", "70 "],
+        "3043": ["TR", "Kars", "36 "],
+        "3044": ["TR", "Kastamonu", "37 "],
+        "3045": ["TR", "Kayseri", "38 "],
+        "3046": ["TR", "Kilis", "79 "],
+        "3047": ["TR", "Kirikkale", "71 "],
+        "3048": ["TR", "Kirklareli", "39 "],
+        "3049": ["TR", "Kirsehir", "40 "],
+        "3050": ["TR", "Kocaeli", "41 "],
+        "3051": ["TR", "Konya", "42 "],
+        "3052": ["TR", "Kutahya", "43 "],
+        "3053": ["TR", "Malatya", "44 "],
+        "3054": ["TR", "Manisa", "45 "],
+        "3055": ["TR", "Mardin", "47 "],
+        "3056": ["TR", "Mersin", "33 "],
+        "3057": ["TR", "Mugla", "48 "],
+        "3058": ["TR", "Mus", "49 "],
+        "3059": ["TR", "Nevsehir", "50 "],
+        "3060": ["TR", "Nigde", "51 "],
+        "3061": ["TR", "Ordu", "52 "],
+        "3062": ["TR", "Osmaniye", "80 "],
+        "3063": ["TR", "Rize", "53 "],
+        "3064": ["TR", "Sakarya", "54 "],
+        "3065": ["TR", "Samsun", "55 "],
+        "3066": ["TR", "Sanliurfa", "63 "],
+        "3067": ["TR", "Siirt", "56 "],
+        "3068": ["TR", "Sinop", "57 "],
+        "3069": ["TR", "Sirnak", "73 "],
+        "3070": ["TR", "Sivas", "58 "],
+        "3071": ["TR", "Tekirdag", "59 "],
+        "3072": ["TR", "Tokat", "60 "],
+        "3073": ["TR", "Trabzon", "61 "],
+        "3074": ["TR", "Tunceli", "62 "],
+        "3075": ["TR", "Usak", "64 "],
+        "3076": ["TR", "Van", "65 "],
+        "3077": ["TR", "Yalova", "77 "],
+        "3078": ["TR", "Yozgat", "66 "],
+        "3079": ["TR", "Zonguldak", "67 "]
+      }
+    ]
+  },
+  {
+    "pais": "Trinidad and Tobago",
+    "codigo": "TT",
+    "estado": [
+      {
+        "3080": ["TT", "Arima", "ARI"],
+        "3081": ["TT", "Chaguanas", "CHA"],
+        "3082": ["TT", "Couva-Tabaquite-Talparo", "CTT"],
+        "3083": ["TT", "Diego Martin", "DMN"],
+        "3084": ["TT", "Mayaro-Rio Claro", "MRC"],
+        "3085": ["TT", "Penal-Debe", "PED"],
+        "3086": ["TT", "Point Fortin", "PTF"],
+        "3087": ["TT", "Port of Spain", "POS"],
+        "3088": ["TT", "Princes Town", "PRT"],
+        "3089": ["TT", "San Fernando", "SFO"],
+        "3090": ["TT", "San Juan-Laventille", "SJL"],
+        "3091": ["TT", "Sangre Grande", "SGE"],
+        "3092": ["TT", "Siparia", "SIP"],
+        "3093": ["TT", "Tobago", "TOB"],
+        "3094": ["TT", "Tunapuna-Piarco", "TUP"]
+      }
+    ]
+  },
+  {
+    "pais": "Tuvalu",
+    "codigo": "TV",
+    "estado": [
+      {
+        "3095": ["TV", "Funafuti", "FUN"]
+      }
+    ]
+  },
+  {
+    "pais": "Taiwan, Province of China",
+    "codigo": "TW",
+    "estado": [
+      {
+        "3096": ["TW", "Changhua", "CHA"],
+        "3097": ["TW", "Chiayi", "CYQ"],
+        "3098": ["TW", "Hsinchu", "HSQ"],
+        "3099": ["TW", "Hualien", "HUA"],
+        "3100": ["TW", "Kaohsiung", "KHH"],
+        "3101": ["TW", "Keelung", "KEE"],
+        "3102": ["TW", "Kinmen", "KIN"],
+        "3103": ["TW", "Lienchiang", "LIE"],
+        "3104": ["TW", "Miaoli", "MIA"],
+        "3105": ["TW", "Nantou", "NAN"],
+        "3106": ["TW", "New Taipei", "NWT"],
+        "3107": ["TW", "Penghu", "PEN"],
+        "3108": ["TW", "Pingtung", "PIF"],
+        "3109": ["TW", "Taichung", "TXG"],
+        "3110": ["TW", "Tainan", "TNN"],
+        "3111": ["TW", "Taipei", "TPE"],
+        "3112": ["TW", "Taitung", "TTT"],
+        "3113": ["TW", "Taoyuan", "TAO"],
+        "3114": ["TW", "Yilan", "ILA"],
+        "3115": ["TW", "Yunlin", "YUN"]
+      }
+    ]
+  },
+  {
+    "pais": "Tanzania, United Republic of",
+    "codigo": "TZ",
+    "estado": [
+      {
+        "3116": ["TZ", "Arusha", "01 "],
+        "3117": ["TZ", "Dar es Salaam", "02 "],
+        "3118": ["TZ", "Dodoma", "03 "],
+        "3119": ["TZ", "Geita", "27 "],
+        "3120": ["TZ", "Iringa", "04 "],
+        "3121": ["TZ", "Kagera", "05 "],
+        "3122": ["TZ", "Kaskazini Unguja", "07 "],
+        "3123": ["TZ", "Katavi", "28 "],
+        "3124": ["TZ", "Kigoma", "08 "],
+        "3125": ["TZ", "Kilimanjaro", "09 "],
+        "3126": ["TZ", "Kusini Pemba", "10 "],
+        "3127": ["TZ", "Kusini Unguja", "11 "],
+        "3128": ["TZ", "Lindi", "12 "],
+        "3129": ["TZ", "Manyara", "26 "],
+        "3130": ["TZ", "Mara", "13 "],
+        "3131": ["TZ", "Mbeya", "14 "],
+        "3132": ["TZ", "Mjini Magharibi", "15 "],
+        "3133": ["TZ", "Morogoro", "16 "],
+        "3134": ["TZ", "Mtwara", "17 "],
+        "3135": ["TZ", "Mwanza", "18 "],
+        "3136": ["TZ", "Njombe", "29 "],
+        "3137": ["TZ", "Pwani", "19 "],
+        "3138": ["TZ", "Rukwa", "20 "],
+        "3139": ["TZ", "Ruvuma", "21 "],
+        "3140": ["TZ", "Shinyanga", "22 "],
+        "3141": ["TZ", "Simiyu", "30 "],
+        "3142": ["TZ", "Singida", "23 "],
+        "3143": ["TZ", "Tabora", "24 "],
+        "3144": ["TZ", "Tanga", "25 "]
+      }
+    ]
+  },
+  {
+    "pais": "Ukraine",
+    "codigo": "UA",
+    "estado": [
+      {
+        "3145": ["UA", "Avtonomna Respublika Krym", "43 "],
+        "3146": ["UA", "Cherkaska oblast", "71 "],
+        "3147": ["UA", "Chernihivska oblast", "74 "],
+        "3148": ["UA", "Chernivetska oblast", "77 "],
+        "3149": ["UA", "Dnipropetrovska oblast", "12 "],
+        "3150": ["UA", "Donetska oblast", "14 "],
+        "3151": ["UA", "Ivano-Frankivska oblast", "26 "],
+        "3152": ["UA", "Kharkivska oblast", "63 "],
+        "3153": ["UA", "Khersonska oblast", "65 "],
+        "3154": ["UA", "Khmelnytska oblast", "68 "],
+        "3155": ["UA", "Kirovohradska oblast", "35 "],
+        "3156": ["UA", "Kyiv", "30 "],
+        "3157": ["UA", "Kyivska oblast", "32 "],
+        "3158": ["UA", "Luhanska oblast", "09 "],
+        "3159": ["UA", "Lvivska oblast", "46 "],
+        "3160": ["UA", "Mykolaivska oblast", "48 "],
+        "3161": ["UA", "Odeska oblast", "51 "],
+        "3162": ["UA", "Poltavska oblast", "53 "],
+        "3163": ["UA", "Rivnenska oblast", "56 "],
+        "3164": ["UA", "Sevastopol", "40 "],
+        "3165": ["UA", "Sumska oblast", "59 "],
+        "3166": ["UA", "Ternopilska oblast", "61 "],
+        "3167": ["UA", "Vinnytska oblast", "05 "],
+        "3168": ["UA", "Volynska oblast", "07 "],
+        "3169": ["UA", "Zakarpatska oblast", "21 "],
+        "3170": ["UA", "Zaporizka oblast", "23 "],
+        "3171": ["UA", "Zhytomyrska oblast", "18 "]
+      }
+    ]
+  },
+  {
+    "pais": "Uganda",
+    "codigo": "UG",
+    "estado": [
+      {
+        "3172": ["UG", "Amuru", "316"],
+        "3173": ["UG", "Arua", "303"],
+        "3174": ["UG", "Bugiri", "201"],
+        "3175": ["UG", "Buikwe", "117"],
+        "3176": ["UG", "Bukedea", "219"],
+        "3177": ["UG", "Buliisa", "416"],
+        "3178": ["UG", "Buvuma", "120"],
+        "3179": ["UG", "Gulu", "304"],
+        "3180": ["UG", "Hoima", "403"],
+        "3181": ["UG", "Iganga", "203"],
+        "3182": ["UG", "Jinja", "204"],
+        "3183": ["UG", "Kabale", "404"],
+        "3184": ["UG", "Kabarole", "405"],
+        "3185": ["UG", "Kalangala", "101"],
+        "3186": ["UG", "Kaliro", "222"],
+        "3187": ["UG", "Kalungu", "122"],
+        "3188": ["UG", "Kampala", "102"],
+        "3189": ["UG", "Kamuli", "205"],
+        "3190": ["UG", "Kapchorwa", "206"],
+        "3191": ["UG", "Kasese", "406"],
+        "3192": ["UG", "Kayunga", "112"],
+        "3193": ["UG", "Kibaale", "407"],
+        "3194": ["UG", "Kiboga", "103"],
+        "3195": ["UG", "Kiruhura", "419"],
+        "3196": ["UG", "Kitgum", "305"],
+        "3197": ["UG", "Kumi", "208"],
+        "3198": ["UG", "Kyenjojo", "415"],
+        "3199": ["UG", "Lira", "307"],
+        "3200": ["UG", "Luwero", "104"],
+        "3201": ["UG", "Masaka", "105"],
+        "3202": ["UG", "Masindi", "409"],
+        "3203": ["UG", "Mayuge", "214"],
+        "3204": ["UG", "Mbale", "209"],
+        "3205": ["UG", "Mbarara", "410"],
+        "3206": ["UG", "Mityana", "115"],
+        "3207": ["UG", "Mpigi", "106"],
+        "3208": ["UG", "Mukono", "108"],
+        "3209": ["UG", "Nakaseke", "116"],
+        "3210": ["UG", "Namayingo", "230"],
+        "3211": ["UG", "Nwoya", "328"],
+        "3212": ["UG", "Oyam", "321"],
+        "3213": ["UG", "Pallisa", "210"],
+        "3214": ["UG", "Rukungiri", "412"],
+        "3215": ["UG", "Sironko", "215"],
+        "3216": ["UG", "Soroti", "211"],
+        "3217": ["UG", "Wakiso", "113"]
+      }
+    ]
+  },
+  {
+    "pais": "United States Minor Outlying Islands",
+    "codigo": "UM",
+    "estado": [
+      {
+        "3218": ["UM", "Palmyra Atoll", "95 "]
+      }
+    ]
+  },
+  {
+    "pais": "United States of America",
+    "codigo": "US",
+    "estado": [
+      {
+        "3219": ["US", "Alabama", "AL "],
+        "3220": ["US", "Alaska", "AK "],
+        "3221": ["US", "Arizona", "AZ "],
+        "3222": ["US", "Arkansas", "AR "],
+        "3223": ["US", "California", "CA "],
+        "3224": ["US", "Colorado", "CO "],
+        "3225": ["US", "Connecticut", "CT "],
+        "3226": ["US", "Delaware", "DE "],
+        "3227": ["US", "District of Columbia", "DC "],
+        "3228": ["US", "Florida", "FL "],
+        "3229": ["US", "Georgia", "GA "],
+        "3230": ["US", "Hawaii", "HI "],
+        "3231": ["US", "Idaho", "ID "],
+        "3232": ["US", "Illinois", "IL "],
+        "3233": ["US", "Indiana", "IN "],
+        "3234": ["US", "Iowa", "IA "],
+        "3235": ["US", "Kansas", "KS "],
+        "3236": ["US", "Kentucky", "KY "],
+        "3237": ["US", "Louisiana", "LA "],
+        "3238": ["US", "Maine", "ME "],
+        "3239": ["US", "Maryland", "MD "],
+        "3240": ["US", "Massachusetts", "MA "],
+        "3241": ["US", "Michigan", "MI "],
+        "3242": ["US", "Minnesota", "MN "],
+        "3243": ["US", "Mississippi", "MS "],
+        "3244": ["US", "Missouri", "MO "],
+        "3245": ["US", "Montana", "MT "],
+        "3246": ["US", "Nebraska", "NE "],
+        "3247": ["US", "Nevada", "NV "],
+        "3248": ["US", "New Hampshire", "NH "],
+        "3249": ["US", "New Jersey", "NJ "],
+        "3250": ["US", "New Mexico", "NM "],
+        "3251": ["US", "New York", "NY "],
+        "3252": ["US", "North Carolina", "NC "],
+        "3253": ["US", "North Dakota", "ND "],
+        "3254": ["US", "Ohio", "OH "],
+        "3255": ["US", "Oklahoma", "OK "],
+        "3256": ["US", "Oregon", "OR "],
+        "3257": ["US", "Pennsylvania", "PA "],
+        "3258": ["US", "Rhode Island", "RI "],
+        "3259": ["US", "South Carolina", "SC "],
+        "3260": ["US", "South Dakota", "SD "],
+        "3261": ["US", "Tennessee", "TN "],
+        "3262": ["US", "Texas", "TX "],
+        "3263": ["US", "Utah", "UT "],
+        "3264": ["US", "Vermont", "VT "],
+        "3265": ["US", "Virginia", "VA "],
+        "3266": ["US", "Washington", "WA "],
+        "3267": ["US", "West Virginia", "WV "],
+        "3268": ["US", "Wisconsin", "WI "],
+        "3269": ["US", "Wyoming", "WY "]
+      }
+    ]
+  },
+  {
+    "pais": "Uruguay",
+    "codigo": "UY",
+    "estado": [
+      {
+        "3270": ["UY", "Artigas", "AR "],
+        "3271": ["UY", "Canelones", "CA "],
+        "3272": ["UY", "Cerro Largo", "CL "],
+        "3273": ["UY", "Colonia", "CO "],
+        "3274": ["UY", "Durazno", "DU "],
+        "3275": ["UY", "Flores", "FS "],
+        "3276": ["UY", "Florida", "FD "],
+        "3277": ["UY", "Lavalleja", "LA "],
+        "3278": ["UY", "Maldonado", "MA "],
+        "3279": ["UY", "Montevideo", "MO "],
+        "3280": ["UY", "Paysandu", "PA "],
+        "3281": ["UY", "Rio Negro", "RN "],
+        "3282": ["UY", "Rivera", "RV "],
+        "3283": ["UY", "Rocha", "RO "],
+        "3284": ["UY", "Salto", "SA "],
+        "3285": ["UY", "San Jose", "SJ "],
+        "3286": ["UY", "Soriano", "SO "],
+        "3287": ["UY", "Tacuarembo", "TA "],
+        "3288": ["UY", "Treinta y Tres", "TT "]
+      }
+    ]
+  },
+  {
+    "pais": "Uzbekistan",
+    "codigo": "UZ",
+    "estado": [
+      {
+        "3289": ["UZ", "Andijon", "AN "],
+        "3290": ["UZ", "Buxoro", "BU "],
+        "3291": ["UZ", "Farg'ona", "FA "],
+        "3292": ["UZ", "Jizzax", "JI "],
+        "3293": ["UZ", "Namangan", "NG "],
+        "3294": ["UZ", "Navoiy", "NW "],
+        "3295": ["UZ", "Qashqadaryo", "QA "],
+        "3296": ["UZ", "Qoraqalpog'iston Respublikasi", "QR "],
+        "3297": ["UZ", "Samarqand", "SA "],
+        "3298": ["UZ", "Sirdaryo", "SI "],
+        "3299": ["UZ", "Surxondaryo", "SU "],
+        "3300": ["UZ", "Toshkent", "TK "],
+        "3301": ["UZ", "Xorazm", "XO "]
+      }
+    ]
+  },
+  {
+    "pais": "Holy See",
+    "codigo": "VA",
+    "estado": [
+      {
+        "3302": ["VA", "Vatican City", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Saint Vincent and the Grenadines",
+    "codigo": "VC",
+    "estado": [
+      {
+        "3303": ["VC", "Charlotte", "01 "],
+        "3304": ["VC", "Grenadines", "06 "],
+        "3305": ["VC", "Saint David", "03 "],
+        "3306": ["VC", "Saint George", "04 "],
+        "3307": ["VC", "Saint Patrick", "05 "]
+      }
+    ]
+  },
+  {
+    "pais": "Venezuela (Bolivarian Republic of)",
+    "codigo": "VE",
+    "estado": [
+      {
+        "3308": ["VE", "Amazonas", "Z  "],
+        "3309": ["VE", "Anzoategui", "B  "],
+        "3310": ["VE", "Apure", "C  "],
+        "3311": ["VE", "Aragua", "D  "],
+        "3312": ["VE", "Barinas", "E  "],
+        "3313": ["VE", "Bolivar", "F  "],
+        "3314": ["VE", "Carabobo", "G  "],
+        "3315": ["VE", "Cojedes", "H  "],
+        "3316": ["VE", "Delta Amacuro", "Y  "],
+        "3317": ["VE", "Distrito Capital", "A  "],
+        "3318": ["VE", "Falcon", "I  "],
+        "3319": ["VE", "Guarico", "J  "],
+        "3320": ["VE", "Lara", "K  "],
+        "3321": ["VE", "Merida", "L  "],
+        "3322": ["VE", "Miranda", "M  "],
+        "3323": ["VE", "Monagas", "N  "],
+        "3324": ["VE", "Nueva Esparta", "O  "],
+        "3325": ["VE", "Portuguesa", "P  "],
+        "3326": ["VE", "Sucre", "R  "],
+        "3327": ["VE", "Tachira", "S  "],
+        "3328": ["VE", "Trujillo", "T  "],
+        "3329": ["VE", "Vargas", "X  "],
+        "3330": ["VE", "Yaracuy", "U  "],
+        "3331": ["VE", "Zulia", "V  "]
+      }
+    ]
+  },
+  {
+    "pais": "Virgin Islands (British)",
+    "codigo": "VG",
+    "estado": [
+      {
+        "3332": ["VG", "Virgin Islands, British", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Virgin Islands (U.S.)",
+    "codigo": "VI",
+    "estado": [
+      {
+        "3333": ["VI", "Virgin Islands, U.S.", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "Viet Nam",
+    "codigo": "VN",
+    "estado": [
+      {
+        "3334": ["VN", "An Giang", "44 "],
+        "3335": ["VN", "Ba Ria - Vung Tau", "43 "],
+        "3336": ["VN", "Bac Giang", "54 "],
+        "3337": ["VN", "Bac Kan", "53 "],
+        "3338": ["VN", "Bac Lieu", "55 "],
+        "3339": ["VN", "Bac Ninh", "56 "],
+        "3340": ["VN", "Ben Tre", "50 "],
+        "3341": ["VN", "Binh Dinh", "31 "],
+        "3342": ["VN", "Binh Duong", "57 "],
+        "3343": ["VN", "Binh Phuoc", "58 "],
+        "3344": ["VN", "Binh Thuan", "40 "],
+        "3345": ["VN", "Ca Mau", "59 "],
+        "3346": ["VN", "Can Tho", "CT "],
+        "3347": ["VN", "Cao Bang", "04 "],
+        "3348": ["VN", "Da Nang", "DN "],
+        "3349": ["VN", "Dak Lak", "33 "],
+        "3350": ["VN", "Dak Nong", "72 "],
+        "3351": ["VN", "Dien Bien", "71 "],
+        "3352": ["VN", "Dong Nai", "39 "],
+        "3353": ["VN", "Dong Thap", "45 "],
+        "3354": ["VN", "Gia Lai", "30 "],
+        "3355": ["VN", "Ha Giang", "03 "],
+        "3356": ["VN", "Ha Nam", "63 "],
+        "3357": ["VN", "Ha Noi", "HN "],
+        "3358": ["VN", "Ha Tinh", "23 "],
+        "3359": ["VN", "Hai Duong", "61 "],
+        "3360": ["VN", "Hai Phong", "HP "],
+        "3361": ["VN", "Ho Chi Minh", "SG "],
+        "3362": ["VN", "Hoa Binh", "14 "],
+        "3363": ["VN", "Hung Yen", "66 "],
+        "3364": ["VN", "Khanh Hoa", "34 "],
+        "3365": ["VN", "Kien Giang", "47 "],
+        "3366": ["VN", "Kon Tum", "28 "],
+        "3367": ["VN", "Lai Chau", "01 "],
+        "3368": ["VN", "Lam Dong", "35 "],
+        "3369": ["VN", "Lang Son", "09 "],
+        "3370": ["VN", "Lao Cai", "02 "],
+        "3371": ["VN", "Long An", "41 "],
+        "3372": ["VN", "Nam Dinh", "67 "],
+        "3373": ["VN", "Nghe An", "22 "],
+        "3374": ["VN", "Ninh Binh", "18 "],
+        "3375": ["VN", "Ninh Thuan", "36 "],
+        "3376": ["VN", "Phu Tho", "68 "],
+        "3377": ["VN", "Phu Yen", "32 "],
+        "3378": ["VN", "Quang Binh", "24 "],
+        "3379": ["VN", "Quang Nam", "27 "],
+        "3380": ["VN", "Quang Ngai", "29 "],
+        "3381": ["VN", "Quang Ninh", "13 "],
+        "3382": ["VN", "Quang Tri", "25 "],
+        "3383": ["VN", "Soc Trang", "52 "],
+        "3384": ["VN", "Son La", "05 "],
+        "3385": ["VN", "Tay Ninh", "37 "],
+        "3386": ["VN", "Thai Binh", "20 "],
+        "3387": ["VN", "Thai Nguyen", "69 "],
+        "3388": ["VN", "Thanh Hoa", "21 "],
+        "3389": ["VN", "Thua Thien-Hue", "26 "],
+        "3390": ["VN", "Tien Giang", "46 "],
+        "3391": ["VN", "Tra Vinh", "51 "],
+        "3392": ["VN", "Tuyen Quang", "07 "],
+        "3393": ["VN", "Vinh Long", "49 "],
+        "3394": ["VN", "Vinh Phuc", "70 "],
+        "3395": ["VN", "Yen Bai", "06 "]
+      }
+    ]
+  },
+  {
+    "pais": "Vanuatu",
+    "codigo": "VU",
+    "estado": [
+      {
+        "3396": ["VU", "Shefa", "SEE"],
+        "3397": ["VU", "Tafea", "TAE"],
+        "3398": ["VU", "Torba", "TOB"]
+      }
+    ]
+  },
+  {
+    "pais": "Wallis and Futuna",
+    "codigo": "WF",
+    "estado": [
+      {
+        "3399": ["WF", "Sigave", "SG "],
+        "3400": ["WF", "Uvea", "UV "]
+      }
+    ]
+  },
+  {
+    "pais": "Samoa",
+    "codigo": "WS",
+    "estado": [
+      {
+        "3401": ["WS", "Atua", "AT "],
+        "3402": ["WS", "Fa'asaleleaga", "FA "],
+        "3403": ["WS", "Tuamasaga", "TU "]
+      }
+    ]
+  },
+  {
+    "pais": "Yemen",
+    "codigo": "YE",
+    "estado": [
+      {
+        "3404": ["YE", "'Adan", "AD "],
+        "3405": ["YE", "'Amran", "AM "],
+        "3406": ["YE", "Abyan", "AB "],
+        "3407": ["YE", "Ad Dali'", "DA "],
+        "3408": ["YE", "Al Bayda'", "BA "],
+        "3409": ["YE", "Al Hudaydah", "HU "],
+        "3410": ["YE", "Al Jawf", "JA "],
+        "3411": ["YE", "Al Mahwit", "MW "],
+        "3412": ["YE", "Amanat al 'Asimah", "SA "],
+        "3413": ["YE", "Dhamar", "DH "],
+        "3414": ["YE", "Hadramawt", "HD "],
+        "3415": ["YE", "Ibb", "IB "],
+        "3416": ["YE", "Lahij", "LA "],
+        "3417": ["YE", "Ma'rib", "MA "],
+        "3418": ["YE", "Sa'dah", "SD "],
+        "3419": ["YE", "San'a'", "SN "],
+        "3420": ["YE", "Shabwah", "SH "],
+        "3421": ["YE", "Ta'izz", "TA "]
+      }
+    ]
+  },
+  {
+    "pais": "Mayotte",
+    "codigo": "YT",
+    "estado": [
+      {
+        "3422": ["YT", "Mamoudzou", "   "],
+        "3423": ["YT", "Mtsamboro", "   "],
+        "3424": ["YT", "Ouangani", "   "],
+        "3425": ["YT", "Pamandzi", "   "],
+        "3426": ["YT", "Sada", "   "]
+      }
+    ]
+  },
+  {
+    "pais": "South Africa",
+    "codigo": "ZA",
+    "estado": [
+      {
+        "3427": ["ZA", "Eastern Cape", "EC "],
+        "3428": ["ZA", "Free State", "FS "],
+        "3429": ["ZA", "Gauteng", "GP "],
+        "3430": ["ZA", "Kwazulu-Natal", "KZN"],
+        "3431": ["ZA", "Limpopo", "LP "],
+        "3432": ["ZA", "Mpumalanga", "MP "],
+        "3433": ["ZA", "North-West", "NW "],
+        "3434": ["ZA", "Northern Cape", "NC "],
+        "3435": ["ZA", "Western Cape", "WC "]
+      }
+    ]
+  },
+  {
+    "pais": "Zambia",
+    "codigo": "ZM",
+    "estado": [
+      {
+        "3436": ["ZM", "Central", "02 "],
+        "3437": ["ZM", "Copperbelt", "08 "],
+        "3438": ["ZM", "Eastern", "03 "],
+        "3439": ["ZM", "Luapula", "04 "],
+        "3440": ["ZM", "Lusaka", "09 "],
+        "3441": ["ZM", "North-Western", "06 "],
+        "3442": ["ZM", "Northern", "05 "],
+        "3443": ["ZM", "Southern", "07 "],
+        "3444": ["ZM", "Western", "01 "]
+      }
+    ]
+  },
+  {
+    "pais": "Zimbabwe",
+    "codigo": "ZW",
+    "estado": [
+      {
+        "3445": ["ZW", "Bulawayo", "BU "],
+        "3446": ["ZW", "Harare", "HA "],
+        "3447": ["ZW", "Manicaland", "MA "],
+        "3448": ["ZW", "Mashonaland Central", "MC "],
+        "3449": ["ZW", "Mashonaland East", "ME "],
+        "3450": ["ZW", "Mashonaland West", "MW "],
+        "3451": ["ZW", "Masvingo", "MV "],
+        "3452": ["ZW", "Matabeleland North", "MN "],
+        "3453": ["ZW", "Matabeleland South", "MS "],
+        "3454": ["ZW", "Midlands", "MI "]
+      }
+    ]
+  }
+]

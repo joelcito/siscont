@@ -19,6 +19,7 @@ use App\Models\Sucursal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use SimpleXMLElement;
 
 class FacturaController extends Controller
@@ -903,7 +904,7 @@ class FacturaController extends Controller
     public function  emitirFacturaTasaCero(Request $request){
         if($request->ajax()){
 
-            // dd($request->all());
+            dd($request->all());
 
             // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************
             $usuario        = Auth::user();
@@ -2001,7 +2002,7 @@ class FacturaController extends Controller
         $codigoSucursal               = null;
         $direccion                    = null;
         $codigoPuntoVenta             = null;
-        $fechaEmision                 = "2024-07-03T17:50:30.244";
+        $fechaEmision                 = "2024-07-10T19:45:27.882";
         $nombreRazonSocial            = "FLORES";
         $codigoTipoDocumentoIdentidad = "5";
         $numeroDocumento              = "8401524016";
@@ -2035,10 +2036,18 @@ class FacturaController extends Controller
         // $numeroImei         = null;
 
         $clienteId = "7";
-        $pagos     = ["905"];
+        $pagos     = ["915"];
 
         $usoCafc                = "Si";
         $codigoCafcContingencia = "10122205E166E";
+
+        // ********* SIN CAFC *********
+        // $numero_cafc = null;
+        // $uso_cafc = "No";
+
+        // ********* CON CAFC *********
+        $numero_cafc = 1;
+        $uso_cafc = "Si";
 
         $modalidad = "offline";
 
@@ -2108,8 +2117,8 @@ class FacturaController extends Controller
             "datosCliente" => [
                 "cliente_id"  => $clienteId,
                 "pagos"       => $pagos,
-                "numero_cafc" => null,
-                "uso_cafc"    => "No"
+                "numero_cafc" => $numero_cafc,
+                "uso_cafc"    => $uso_cafc
             ],
             "modalidad" => $modalidad,
         ];
@@ -2482,6 +2491,93 @@ class FacturaController extends Controller
                 }
             }
         }
+    }
+
+
+    public function armaJson(Request $request) {
+        $ciudades = storage_path('app/public/paises.xlsx'); // Ruta local de tu archivo Excel
+
+        // Verificar si el archivo existe
+        if (!file_exists($ciudades)) {
+            return 'El archivo no existe.';
+        }
+
+        // Leer el archivo Excel y obtener los datos como una matriz
+        $data = Excel::toArray([], $ciudades);
+
+        // Procesar los datos del archivo Excel
+        foreach ($data[0] as $key => $row) {
+            // dd($row);
+            if($row[1] != 'country_code' && $row[3] != 'State_Code'){
+                // Manejar cada fila del archivo Excel
+                // Por ejemplo, imprimir el contenido de cada columna
+                // echo 'Columna 1: ' . $row[1] . ', Columna 2: ' . $row[2] . ', Columna 3: ' . $row[3] . '<br>';
+
+                $ciudadesA[$key][0] = $row[1];
+                $ciudadesA[$key][1] = $row[2];
+                $ciudadesA[$key][2] = $row[3];
+
+            }
+        }
+
+        echo "######################################";
+        // Procesar los datos de la segunda hoja del archivo Excel
+        if (isset($data[1])) {
+            foreach ($data[1] as $key => $row) {
+                if ($row[0] != 'Pais' && $row[1] != 'Codigo') {
+                    // Manejar cada fila del archivo Excel de la segunda hoja
+                    // echo 'Segunda hoja - Columna 1: ' . $row[0] . ', Columna 2: ' . $row[1] . '<br>';
+                    $paises[$key][0] = $row[0];
+                    $paises[$key][1] = $row[1];
+                }
+            }
+        } else {
+            echo "La segunda hoja no existe en el archivo Excel.";
+        }
+
+
+        echo "------------------------------- RECORREMOS -------------------------------";
+
+        // dd($paises, $ciudadesA);
+        $jsonCiudades = [];
+        // Recorrer el array $paises
+        foreach ($paises as $key => $pais) {
+
+            $filtroCodigo = $paises[$key][1];
+
+            // Usando array_filter() con una función callback
+            $paisesFiltrados = array_filter($ciudadesA, function($ciudadesA1) use ($filtroCodigo) {
+                return $ciudadesA1[0] === $filtroCodigo;
+            });
+
+            // dd($paisesFiltrados);
+
+            // for($ciudadesA as $i => $ciudad){
+
+            // }
+
+            $paies = [
+                // 'pais'   => $paises[$key+1][0],
+                // 'codigo' => $paises[$key+1][1]
+                
+                'pais'   => $paises[$key][0],
+                'codigo' => $paises[$key][1],
+                'estado' => [$paisesFiltrados]
+            ];
+
+            
+
+            $jsonCiudades[] = $paies;
+            // dd($pais);
+            echo 'Pais ' . ($key + 1) . ': ' . $pais[0] . ', Codigo: ' . $pais[1] . '<br>';
+        }
+
+        // dd($jsonCiudades);
+        dd(json_encode($jsonCiudades));
+
+
+
+        return 'Archivo importado exitosamente desde local.';
     }
 
 }
