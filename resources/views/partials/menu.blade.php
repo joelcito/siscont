@@ -6,7 +6,7 @@
             <!--begin::Menu-->
             <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                {{-- <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -259,7 +259,7 @@
                         </div>
                     </div>
                     <!--end:Menu sub-->
-                </div>
+                </div> --}}
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
                 <div class="menu-item pt-5">
@@ -571,7 +571,7 @@
                 </div>
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -3679,7 +3679,7 @@
                         <span class="menu-title">Changelog v8.2.3</span>
                     </a>
                     <!--end:Menu link-->
-                </div>
+                </div> --}}
                 <!--end:Menu item-->
             </div>
             <!--end::Menu-->

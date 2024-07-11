@@ -67,6 +67,7 @@
 							<!--begin::Menu wrapper-->
 							<div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
 								<!--begin::Menu-->
+								{{-- 
 								<div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
 									<!--begin:Menu item-->
 									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
@@ -3112,10 +3113,12 @@
 									<!--end:Menu item-->
 								</div>
 								<!--end::Menu-->
+								 --}}
 							</div>
 							<!--end::Menu wrapper-->
 							<!--begin::Navbar-->
 							<div class="app-navbar flex-shrink-0">
+								{{--  
 								<!--begin::Search-->
 								<div class="app-navbar-item align-items-stretch ms-1 ms-md-4">
 									<!--begin::Search-->
@@ -3177,6 +3180,7 @@
 													<!--end::Toolbar-->
 												</form>
 												<!--end::Form-->
+
 												<!--begin::Separator-->
 												<div class="separator border-gray-200 mb-6"></div>
 												<!--end::Separator-->
@@ -4336,6 +4340,7 @@
 									<!--end::Menu wrapper-->
 								</div>
 								<!--end::Chat-->
+
 								<!--begin::My apps links-->
 								<div class="app-navbar-item ms-1 ms-md-4">
 									<!--begin::Menu wrapper-->
@@ -4602,6 +4607,8 @@
 									<!--end::Menu wrapper-->
 								</div>
 								<!--end::My apps links-->
+								--}}
+
 								<!--begin::Theme mode-->
 								<div class="app-navbar-item ms-1 ms-md-4">
 									<!--begin::Menu toggle-->
@@ -4679,11 +4686,15 @@
 									<!--end::Menu-->
 								</div>
 								<!--end::Theme mode-->
+								
 								<!--begin::User menu-->
 								<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 									<!--begin::Menu wrapper-->
 									<div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+										{{--
 										<img src="{{asset('assets/media/avatars/300-3.jpg')}}" class="rounded-3" alt="user" />
+										--}}
+										<i class="fa fa-user" style="font-size: 30px;"></i>
 									</div>
 									<!--begin::User account menu-->
 									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -4692,23 +4703,28 @@
 											<div class="menu-content d-flex align-items-center px-3">
 												<!--begin::Avatar-->
 												<div class="symbol symbol-50px me-5">
-													<img alt="Logo" src="{{asset('assets/media/avatars/300-3.jpg')}}" />
+													{{-- 
+												 	<img alt="Logo" src="{{asset('assets/media/avatars/300-3.jpg')}}" />
+													 --}}
+													<i class="fa fa-user" style="font-size: 30px;"></i>
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Username-->
 												<div class="d-flex flex-column">
-													<div class="fw-bold d-flex align-items-center fs-5">Robert Fox
+													<div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->nombres." ".Auth::user()->ap_paterno." ".Auth::user()->ap_materno }}
 													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">robert@kt.com</a>
+													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
 												</div>
 												<!--end::Username-->
 											</div>
 										</div>
 										<!--end::Menu item-->
+										{{-- 
 										<!--begin::Menu separator-->
 										<div class="separator my-2"></div>
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
+									
 										<div class="menu-item px-5">
 											<a href="account/overview.html" class="menu-link px-5">My Profile</a>
 										</div>
@@ -4779,6 +4795,7 @@
 										<div class="menu-item px-5">
 											<a href="account/statements.html" class="menu-link px-5">My Statements</a>
 										</div>
+										
 										<!--end::Menu item-->
 										<!--begin::Menu separator-->
 										<div class="separator my-2"></div>
@@ -4919,6 +4936,7 @@
 											<a href="account/settings.html" class="menu-link px-5">Account Settings</a>
 										</div>
 										<!--end::Menu item-->
+										--}}
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
                                             <form method="POST" action="{{ route('logout') }}">
