@@ -14,20 +14,22 @@
     </thead>
     <tbody class="text-gray-600 fw-semibold">
         @forelse ( $eventosSignificativos as $es)
-            <tr>
-                <td>{{ $es->siat_evento->descripcion }}</td>
-                <td >{{ $es->cufd_activo->fecha_vigencia." | ".$es->cufd_activo->codigo_control }}</td>
-                <td >{{ $es->cufd_antiguo->fecha_vigencia." | ".$es->cufd_antiguo->codigo_control }}</td>
-                <td >{{ $es->descripcion }}</td>
-                <td>{{ $es->fecha_ini_evento }}</td>
-                <td>{{ $es->fecha_fin_evento }}</td>
-                <td>{{ $es->codigoRecepcionEventoSignificativo }}</td>
-                <td>
-                    {{-- <button class="btn btn-icon btn-sm btn-warning"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-icon btn-sm btn-danger"><i class="fa fa-trash"></i></button> --}}
-                    {{-- <a class="btn btn-sm btn-info btn-icon" title="Configuraciones de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a> --}}
-                </td>
-            </tr>
+            @if ($es->cufd_activo)
+                <tr>
+                    <td>{{ $es->siat_evento->descripcion }}</td>
+                    <td >{{ $es->cufd_activo->fecha_vigencia." | ".$es->cufd_activo->codigo_control }}</td>
+                    <td >{{ $es->cufd_antiguo->fecha_vigencia." | ".$es->cufd_antiguo->codigo_control }}</td>
+                    <td >{{ $es->descripcion }}</td>
+                    <td>{{ $es->fecha_ini_evento }}</td>
+                    <td>{{ $es->fecha_fin_evento }}</td>
+                    <td>{{ $es->codigoRecepcionEventoSignificativo }}</td>
+                    <td>
+                        {{-- <button class="btn btn-icon btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-icon btn-sm btn-danger"><i class="fa fa-trash"></i></button> --}}
+                        {{-- <a class="btn btn-sm btn-info btn-icon" title="Configuraciones de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a> --}}
+                    </td>
+                </tr>
+            @endif
         @empty
             <h4 class="text-danger">No hay datos</h4>
         @endforelse

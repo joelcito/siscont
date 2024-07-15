@@ -273,9 +273,19 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-5">
                             <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion del Servico</label>
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Serie</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="numero_serie" id="numero_serie" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Codigo IMEI</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="codigo_imei" id="codigo_imei" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion del Servicio</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="descrpcion_new_servicio" id="descrpcion_new_servicio" required>
                             </div>
                             <div class="col-md-6">
@@ -725,7 +735,7 @@
                                                 <button class="btn-sm btn-circle btn-success btn btn-icon" type="button"><i class="fa fa-check"></i></button>
                                                 <a href="{{ asset($empresa->archivop12) }}" download="">Descargar</a>
                                             @endif
-                                            
+
                                         </div>
                                     </div>
 

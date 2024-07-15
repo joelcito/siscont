@@ -904,7 +904,7 @@ class FacturaController extends Controller
     public function  emitirFacturaTasaCero(Request $request){
         if($request->ajax()){
 
-            dd($request->all());
+            // dd($request->all());
 
             // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************
             $usuario        = Auth::user();
@@ -2559,13 +2559,13 @@ class FacturaController extends Controller
             $paies = [
                 // 'pais'   => $paises[$key+1][0],
                 // 'codigo' => $paises[$key+1][1]
-                
+
                 'pais'   => $paises[$key][0],
                 'codigo' => $paises[$key][1],
                 'estado' => [$paisesFiltrados]
             ];
 
-            
+
 
             $jsonCiudades[] = $paies;
             // dd($pais);

@@ -171,6 +171,20 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="col-md-8">
+                                        <label class="required fw-semibold fs-6 mb-2">Descripcion Adicional</label>
+                                        <input type="text" class="form-control" id="descripcion_adicional" name="descripcion_adicional" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="required fw-semibold fs-6 mb-2">Numero Serie</label>
+                                        <input type="number" readonly class="form-control" id="numero_serie" name="numero_serie" value="0" min="1" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="required fw-semibold fs-6 mb-2">Codigo Imei</label>
+                                        <input type="number" readonly class="form-control" id="codigo_imei" name="codigo_imei" value="0" min="1" required>
+                                    </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Precio</label>
                                         <input type="number" readonly class="form-control" id="precio_venta" name="precio_venta" value="0" min="1" required>
@@ -179,11 +193,11 @@
                                         <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
                                         <input type="number" class="form-control" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <label class="required fw-semibold fs-6 mb-2">Total</label>
                                         <input type="number" class="form-control" id="total_venta" name="total_venta" value="0" min="1" required>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <button class="btn btn-success btn-sm w-100 mt-9" type="button" onclick="agregarProducto()"><i class="fa fa-plus"></i> Agregar</button>
                                     </div>
                                 </div>
