@@ -33,6 +33,8 @@ return new class extends Migration
             $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->unsignedBigInteger('servicio_id')->nullable();
+            $table->text('descripcion_adicional')->nullable();
+
 
             $table->decimal('precio',12,2)->nullable();
             $table->decimal('cantidad',12,2)->nullable();

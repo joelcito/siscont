@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('codigo_ambiente')->nullable();
             $table->string('numero_serie')->nullable();
             $table->string('codigo_imei')->nullable();
-            $table->text('descripcion_adicional')->nullable();
 
             $table->string('codigo_actividad')->nullable();
             $table->string('codigo_producto')->nullable();

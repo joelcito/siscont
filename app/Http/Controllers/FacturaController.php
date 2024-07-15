@@ -132,28 +132,30 @@ class FacturaController extends Controller
 
             // dd($request->all());
 
-            $servicio            = json_decode($request->input('serivicio_id_venta'));
-            $precio_venta        = $request->input('precio_venta');
-            $cantidad_venta      = $request->input('cantidad_venta');
-            $total_venta         = $request->input('total_venta');
-            $cliente_id_escogido = $request->input('cliente_id_escogido');
-
+            $servicio              = json_decode($request->input('serivicio_id_venta'));
+            $precio_venta          = $request->input('precio_venta');
+            $cantidad_venta        = $request->input('cantidad_venta');
+            $total_venta           = $request->input('total_venta');
+            $cliente_id_escogido   = $request->input('cliente_id_escogido');
+            $descripcion_adicional = $request->input('descripcion_adicional');
+            
             // dd(Auth::user());
 
-            $detalle                     = new Detalle();
-            $detalle->usuario_creador_id = Auth::user()->id;
-            $detalle->empresa_id         = Auth::user()->empresa_id;
-            $detalle->sucursal_id        = Auth::user()->sucursal_id;
-            $detalle->punto_venta_id     = Auth::user()->punto_venta_id;
-            $detalle->cliente_id         = $cliente_id_escogido;
-            $detalle->servicio_id        = $servicio->id;
-            $detalle->precio             = $precio_venta;
-            $detalle->cantidad           = $cantidad_venta;
-            $detalle->total              = $total_venta;
-            $detalle->descuento          = 0;
-            $detalle->importe            = ($cantidad_venta*$precio_venta);
-            $detalle->fecha              = date('Y-m-d');
-            $detalle->estado             = "Parapagar";
+            $detalle                        = new Detalle();
+            $detalle->usuario_creador_id    = Auth::user()->id;
+            $detalle->empresa_id            = Auth::user()->empresa_id;
+            $detalle->sucursal_id           = Auth::user()->sucursal_id;
+            $detalle->punto_venta_id        = Auth::user()->punto_venta_id;
+            $detalle->cliente_id            = $cliente_id_escogido;
+            $detalle->servicio_id           = $servicio->id;
+            $detalle->descripcion_adicional = $descripcion_adicional;
+            $detalle->precio                = $precio_venta;
+            $detalle->cantidad              = $cantidad_venta;
+            $detalle->total                 = $total_venta;
+            $detalle->descuento             = 0;
+            $detalle->importe               = ($cantidad_venta*$precio_venta);
+            $detalle->fecha                 = date('Y-m-d');
+            $detalle->estado                = "Parapagar";
             $detalle->save();
 
             // dd($servicio->id, $request->all());
@@ -187,6 +189,7 @@ class FacturaController extends Controller
                                 ->where('sucursal_id', $sucursal_id)
                                 ->where('punto_venta_id', $punto_venta_id)
                                 ->where('estado','Parapagar')
+                                ->orderBy('id','desc')
                                 ->get();
 
             // TIP DE DOCUMENTO

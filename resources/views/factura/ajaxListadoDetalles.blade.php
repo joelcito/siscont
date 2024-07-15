@@ -24,7 +24,7 @@
             @endphp
             <tr>
                 <td>{{ ($key+1) }}</td>
-                <td>{{ $det->servicio->descripcion }}</td>
+                <td>{{ $det->servicio->descripcion." ".$det->descripcion_adicional }}</td>
                 <td>{{ $det->precio }}</td>
                 <td>{{ $det->cantidad }}</td>
                 <td>{{ $det->total }}</td>

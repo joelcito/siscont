@@ -132,23 +132,23 @@
                                     </div>
                                     <div class="col-md-8">
                                         <label class="required fw-semibold fs-6 mb-2">Descripcion Adicional</label>
-                                        <input type="text" readonly class="form-control" id="descripcion_adicional" name="descripcion_adicional" value="0" min="1" required>
+                                        <input type="text" class="form-control" id="descripcion_adicional" name="descripcion_adicional" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Precio</label>
                                         <input type="number" readonly class="form-control" id="precio_venta" name="precio_venta" value="0" min="1" required>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
                                         <input type="number" class="form-control" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Total</label>
                                         <input type="number" class="form-control" id="total_venta" name="total_venta" value="0" min="1" required>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <button class="btn btn-success btn-sm w-100 mt-9" type="button" onclick="agregarProducto()"><i class="fa fa-plus"></i> Agregar</button>
                                     </div>
                                 </div>
@@ -471,6 +471,9 @@
                     if(data.estado === 'success'){
                         arrayPagos     = data.detalles;
                         arrayProductos = JSON.parse(data.lista)
+
+                        console.log(data.lista)
+
                         $('#bloqueDatosFactura').show('toogle')
                     }
                 }
@@ -521,7 +524,7 @@
                                         actividadEconomica  :   prod.codigo_caeb,
                                         codigoProductoSin   :   prod.codigo_producto,
                                         codigoProducto      :   prod.servicio_id,
-                                        descripcion         :   prod.descripcion,
+                                        descripcion         :   prod.descripcion+" "+prod.descripcion_adicional,
                                         cantidad            :   prod.cantidad,
                                         unidadMedida        :   prod.codigo_clasificador,
                                         precioUnitario      :   prod.precio,
