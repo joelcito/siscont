@@ -552,11 +552,11 @@
 
 
                                 // Obtén el botón y el icono de carga
-                                // var boton = $("#boton_enviar_factura");
-                                // var iconoCarga = boton.find("i");
-                                // // Deshabilita el botón y muestra el icono de carga
-                                // boton.attr("disabled", true);
-                                // iconoCarga.show();
+                                var boton = $("#boton_enviar_factura");
+                                var iconoCarga = boton.find("i");
+                                // Deshabilita el botón y muestra el icono de carga
+                                boton.attr("disabled", true);
+                                iconoCarga.show();
 
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];
@@ -702,7 +702,7 @@
                                                 text : 'LA FACTURA FUE VALIDADA',
                                                 timer: 3000
                                             })
-                                            {{--  window.location.href = "{{ url('factura/listado')}}"  --}}
+                                            window.location.href = "{{ url('factura/listado')}}"
                                             {{--  location.reload();  --}}
                                         }else if(data.estado === "error_email"){
                                             Swal.fire({
