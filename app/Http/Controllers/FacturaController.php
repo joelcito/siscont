@@ -138,7 +138,7 @@ class FacturaController extends Controller
             $total_venta           = $request->input('total_venta');
             $cliente_id_escogido   = $request->input('cliente_id_escogido');
             $descripcion_adicional = $request->input('descripcion_adicional');
-            
+
             // dd(Auth::user());
 
             $detalle                        = new Detalle();
@@ -421,8 +421,14 @@ class FacturaController extends Controller
 
             $nitEmisorEmpresa     = $empresa_objeto->nit;
             $sucursalEmpresa      = $sucursal_objeto->codigo_sucursal;
-            $numeroFacturaEmpresa = $this->numeroFactura($empresa_objeto->id, $sucursal_objeto->id, $punto_venta_objeto->id);
-            $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : ($numeroFacturaEmpresa+1));
+
+            $datosRecepcion = $datosCliente;
+            if($datosRecepcion['uso_cafc'] === "Si"){
+                $numeroFacturaEmpresa = $datosRecepcion['numero_cafc'];
+            }else{
+                $numeroFacturaEmpresa = $this->numeroFactura($empresa_objeto->id, $sucursal_objeto->id, $punto_venta_objeto->id);
+                $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : ($numeroFacturaEmpresa+1));
+            }
 
             $nitEmisor          = str_pad($nitEmisorEmpresa,13,"0",STR_PAD_LEFT);
             $fechaEmision       = str_replace(".","",str_replace(":","",str_replace("-","",str_replace("T", "",$valoresCabecera['fechaEmision']))));
@@ -435,16 +441,15 @@ class FacturaController extends Controller
                 $tipoEmision        = 1;
             }
             else{
-                // $datosRecepcion       = $request->input('datosRecepcion');
-                $datosRecepcion       = $datosCliente;
                 if($datosRecepcion['uso_cafc'] === "Si"){
-                    $datos['factura'][0]['cabecera']['cafc'] = $datosRecepcion['codigo_cafc_contingencia'];
+                    $datos['factura'][0]['cabecera']['cafc']          = $empresa_objeto->cafc;
+                    $datos['factura'][0]['cabecera']['numeroFactura'] = $datosRecepcion['numero_cafc'];
                 }
-                $tipoEmision        = 2;
+                $tipoEmision = 2;
             }
 
-            $tipoFactura        = 1;
-            $tipoFacturaSector  = str_pad(1,2,"0",STR_PAD_LEFT);;
+            $tipoFactura        = ($empresa_objeto->codigo_documento_sector == 8)? 2 : 1; // Factura sin Derecho a Crédito Fiscal
+            $tipoFacturaSector  = str_pad($valoresCabecera['codigoDocumentoSector'],2,"0",STR_PAD_LEFT);;
             $puntoVenta         = str_pad($puntoVenta,4,"0",STR_PAD_LEFT);
 
             $cadena = $nitEmisor.$fechaEmision.$sucursal.$modalidad.$tipoEmision.$tipoFactura.$tipoFacturaSector.$numeroFactura.$puntoVenta;
@@ -562,7 +567,9 @@ class FacturaController extends Controller
             $xml_temporal = new SimpleXMLElement($dar);
             $this->formato_xml($temporal, $xml_temporal);
 
-            $xml_temporal->asXML("assets/docs/facturaxml.xml");
+            $nombreArchivo = $cufPro."_".$numeroFacturaEmpresa."_".$nitEmisorEmpresa;
+
+            $xml_temporal->asXML("assets/docs/facturaxml_$nombreArchivo.xml");
 
 
             //  =========================   DE AQUI COMENZAMOS EL FIRMADO CHEEEEE ==============================\
@@ -570,28 +577,20 @@ class FacturaController extends Controller
                 // $firmador = new FirmadorBoliviaSingle('assets/certificate/softoken.p12', "5427648Scz");
                 // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
                 $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                $xmlFirmado = $firmador->firmarRuta('assets/docs/facturaxml.xml');
-                file_put_contents('assets/docs/facturaxml.xml', $xmlFirmado);
+                $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxml_$nombreArchivo.xml");
+                file_put_contents("assets/docs/facturaxml_$nombreArchivo.xml", $xmlFirmado);
             }
-
-            // if($empresa_objeto->codigo_modalidad == "1"){
-            //     // $firmador = new FirmadorBoliviaSingle('assets/certificate/softoken.p12', "5427648Scz");
-            //     // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-            //     $firmador = new FirmadorBoliviaSinglePemCrt('assets/docs/certificate/Llusco_Quelali_maguiber_Omar_crt.pem', 'assets/docs/certificate/Llusco_Quelali_maguiber_Omar_clv.pem','Joelcito123$.');
-            //     $xmlFirmado = $firmador->firmarRuta('assets/docs/facturaxml.xml');
-            //     file_put_contents('assets/docs/facturaxml.xml', $xmlFirmado);
-            // }
             // ========================== FINAL DE AQUI COMENZAMOS EL FIRMADO CHEEEEE  ==========================
 
             // COMPRIMIMOS EL ARCHIVO A ZIP
-            $gzdato = gzencode(file_get_contents('assets/docs/facturaxml.xml',9));
-            $fiape = fopen('assets/docs/facturaxml.xml.zip',"w");
+            $gzdato = gzencode(file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml",9));
+            $fiape = fopen("assets/docs/facturaxml_$nombreArchivo.xml.zip","w");
             fwrite($fiape,$gzdato);
             fclose($fiape);
 
             //  hashArchivo EL ARCHIVO
             $archivoZip = $gzdato;
-            $hashArchivo = hash("sha256", file_get_contents('assets/docs/facturaxml.xml'));
+            $hashArchivo = hash("sha256", file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml"));
 
 
 
@@ -785,30 +784,34 @@ class FacturaController extends Controller
                 // $data['estado'] = $codigo_descripcion;
             }else{
 
+                // ESTO ES PARA LA FACTURA LA CREACION
+                $facturaVerdad                          = new Factura();
+                $facturaVerdad->usuario_creador_id      = Auth::user()->id;
+                $facturaVerdad->cliente_id              = $cliente->id;
+                $facturaVerdad->empresa_id              = $empresa_objeto->id;
+                $facturaVerdad->sucursal_id             = $sucursal_objeto->id;
+                $facturaVerdad->punto_venta_id          = $punto_venta_objeto->id;
+                $facturaVerdad->cufd_id                 = $datosCufdOffLine['scufd_id'];
+                $facturaVerdad->fecha                   = $datos['factura'][0]['cabecera']['fechaEmision'];
+                $facturaVerdad->nit                     = $empresa_objeto->nit;
+                $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
 
-                 // ESTO ES PARA LA FACTURA LA CREACION
-                 $facturaVerdad                          = new Factura();
-                 $facturaVerdad->usuario_creador_id      = Auth::user()->id;
-                 $facturaVerdad->cliente_id              = $cliente->id;
-                 $facturaVerdad->empresa_id              = $empresa_objeto->id;
-                 $facturaVerdad->sucursal_id             = $sucursal_objeto->id;
-                 $facturaVerdad->punto_venta_id          = $punto_venta_objeto->id;
-                 $facturaVerdad->cufd_id                 = $datosCufdOffLine['scufd_id'];
-                 $facturaVerdad->fecha                   = $datos['factura'][0]['cabecera']['fechaEmision'];
-                 $facturaVerdad->nit                     = $empresa_objeto->nit;
-                 $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
-                 $facturaVerdad->numero_factura          = $numeroFacturaEmpresa;
-                 $facturaVerdad->facturado               = "Si";
-                 $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
-                 $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
-                 $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                 $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxml.xml');
-                 $facturaVerdad->codigo_descripcion      = NULL;
-                 $facturaVerdad->codigo_recepcion        = NULL;
-                 $facturaVerdad->codigo_transaccion      = NULL;
-                 $facturaVerdad->descripcion             = NULL;
-                 $facturaVerdad->uso_cafc                = "No";
-                 $facturaVerdad->tipo_factura            = "offline";
+                if($datosRecepcion['uso_cafc'] === "Si")
+                    $facturaVerdad->numero_cafc          = $numeroFacturaEmpresa;
+                else
+                    $facturaVerdad->numero_factura       = $numeroFacturaEmpresa;
+
+                $facturaVerdad->facturado               = "Si";
+                $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
+                $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
+                $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
+                $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml");
+                $facturaVerdad->codigo_descripcion      = NULL;
+                $facturaVerdad->codigo_recepcion        = NULL;
+                $facturaVerdad->codigo_transaccion      = NULL;
+                $facturaVerdad->descripcion             = NULL;
+                $facturaVerdad->uso_cafc                = ($datosRecepcion['uso_cafc'] === "Si")? "Si" : "No";
+                $facturaVerdad->tipo_factura            = "offline";
 
                  $facturaVerdad->save();
 
@@ -1089,27 +1092,29 @@ class FacturaController extends Controller
             $xml_temporal = new SimpleXMLElement($dar);
             $this->formato_xml($temporal, $xml_temporal);
 
-            $xml_temporal->asXML("assets/docs/facturaxmlTasaCero.xml");
+            $nombreArchivo = $cufPro."_".$numeroFacturaEmpresa."_".$nitEmisorEmpresa;
+
+            $xml_temporal->asXML("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
 
 
             //  =========================   DE AQUI COMENZAMOS EL FIRMADO CHEEEEE ==============================\
             if($empresa_objeto->codigo_modalidad == "1"){
                 // $firmador = new FirmadorBoliviaSingle('assets/certificate/softoken.p12', "5427648Scz");
                 $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                $xmlFirmado = $firmador->firmarRuta('assets/docs/facturaxmlTasaCero.xml');
-                file_put_contents('assets/docs/facturaxmlTasaCero.xml', $xmlFirmado);
+                $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
+                file_put_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml", $xmlFirmado);
             }
             // ========================== FINAL DE AQUI COMENZAMOS EL FIRMADO CHEEEEE  ==========================
 
             // COMPRIMIMOS EL ARCHIVO A ZIP
-            $gzdato = gzencode(file_get_contents('assets/docs/facturaxmlTasaCero.xml',9));
-            $fiape = fopen('assets/docs/facturaxml.xml.zip',"w");
+            $gzdato = gzencode(file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml",9));
+            $fiape = fopen("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml.zip","w");
             fwrite($fiape,$gzdato);
             fclose($fiape);
 
             //  hashArchivo EL ARCHIVO
             $archivoZip = $gzdato;
-            $hashArchivo = hash("sha256", file_get_contents('assets/docs/facturaxmlTasaCero.xml'));
+            $hashArchivo = hash("sha256", file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml"));
 
 
 
@@ -1325,7 +1330,7 @@ class FacturaController extends Controller
                 $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                 $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                 $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxmlTasaCero.xml');
+                $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
                 $facturaVerdad->codigo_descripcion      = NULL;
                 $facturaVerdad->codigo_recepcion        = NULL;
                 $facturaVerdad->codigo_transaccion      = NULL;
@@ -1994,7 +1999,56 @@ class FacturaController extends Controller
     public function emiteFacturaMasa(Request $request){
 
 
-        // Crear las variables con los valores correspondientes
+        // Crear las variables con los valores correspondientes TASA CERO
+        // $nitEmisor                    = null;
+        // $razonSocialEmisor            = null;
+        // $municipio                    = null;
+        // $telefono                     = null;
+        // $numeroFactura                = null;
+        // $cuf                          = null;
+        // $cufd                         = null;
+        // $codigoSucursal               = null;
+        // $direccion                    = null;
+        // $codigoPuntoVenta             = null;
+        // $fechaEmision                 = "2024-07-10T19:45:27.882";
+        // $nombreRazonSocial            = "FLORES";
+        // $codigoTipoDocumentoIdentidad = "5";
+        // $numeroDocumento              = "8401524016";
+        // $complemento                  = null;
+        // $codigoCliente                = "8401524016";
+        // $codigoMetodoPago             = "1";
+        // $numeroTarjeta                = null;
+        // $montoTotal                   = "500";
+        // $montoTotalSujetoIva          = "0";
+        // $codigoMoneda                 = "1";
+        // $tipoCambio                   = "1";
+        // $montoTotalMoneda             = "500";
+        // $montoGiftCard                = null;
+        // $descuentoAdicional           = "0";
+        // $codigoExcepcion              = "0";
+        // $cafc                         = null;
+        // $leyenda                      = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
+        // $usuario                      = "ROCIO TORRICO MARTINES";
+        // $codigoDocumentoSector        = "8";
+
+        // $actividadEconomica = "474110";
+        // $codigoProductoSin  = "38581";
+        // $codigoProducto     = "7";
+        // $descripcionItem    = "CAJA CHE";
+        // $cantidad           = "1.00";
+        // $unidadMedida       = "58";
+        // $precioUnitario     = "500.00";
+        // $montoDescuento     = "0.00";
+        // $subTotal           = "500";
+        // // $numeroSerie        = null;
+        // // $numeroImei         = null;
+
+        // $clienteId = "7";
+        // $pagos     = ["915"];
+
+
+
+        // Crear las variables con los valores correspondientes COMPRA Y VENTA
         $nitEmisor                    = null;
         $razonSocialEmisor            = null;
         $municipio                    = null;
@@ -2005,7 +2059,7 @@ class FacturaController extends Controller
         $codigoSucursal               = null;
         $direccion                    = null;
         $codigoPuntoVenta             = null;
-        $fechaEmision                 = "2024-07-10T19:45:27.882";
+        $fechaEmision                 = "2024-07-21T12:50:28.336";
         $nombreRazonSocial            = "FLORES";
         $codigoTipoDocumentoIdentidad = "5";
         $numeroDocumento              = "8401524016";
@@ -2013,44 +2067,43 @@ class FacturaController extends Controller
         $codigoCliente                = "8401524016";
         $codigoMetodoPago             = "1";
         $numeroTarjeta                = null;
-        $montoTotal                   = "500";
-        $montoTotalSujetoIva          = "0";
+        $montoTotal                   = "1500";
+        $montoTotalSujetoIva          = "1500";
         $codigoMoneda                 = "1";
         $tipoCambio                   = "1";
-        $montoTotalMoneda             = "500";
+        $montoTotalMoneda             = "1500";
         $montoGiftCard                = null;
         $descuentoAdicional           = "0";
         $codigoExcepcion              = "0";
         $cafc                         = null;
         $leyenda                      = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
-        $usuario                      = "ROCIO TORRICO MARTINES";
-        $codigoDocumentoSector        = "8";
+        $usuario                      = "JHOSELIN RAMIREZ MAMANI";
+        $codigoDocumentoSector        = "1";
 
-        $actividadEconomica = "474110";
-        $codigoProductoSin  = "38581";
-        $codigoProducto     = "7";
-        $descripcionItem    = "CAJA CHE";
+        $actividadEconomica = "620100";
+        $codigoProductoSin  = "83141";
+        $codigoProducto     = "1";
+        $descripcionItem    = "DESARROLLO DE SISTEMA";
         $cantidad           = "1.00";
         $unidadMedida       = "58";
-        $precioUnitario     = "500.00";
+        $precioUnitario     = "1500.00";
         $montoDescuento     = "0.00";
-        $subTotal           = "500";
-        // $numeroSerie        = null;
-        // $numeroImei         = null;
+        $subTotal           = "1500";
+        $numeroSerie        = null;
+        $numeroImei         = null;
 
-        $clienteId = "7";
-        $pagos     = ["915"];
+        $clienteId = "2";
+        $pagos     = ["998"];
 
-        $usoCafc                = "Si";
-        $codigoCafcContingencia = "10122205E166E";
+
 
         // ********* SIN CAFC *********
-        // $numero_cafc = null;
-        // $uso_cafc = "No";
+        $numero_cafc = null;
+        $uso_cafc = "No";
 
         // ********* CON CAFC *********
-        $numero_cafc = 1;
-        $uso_cafc = "Si";
+        // $numero_cafc = 1;
+        // $uso_cafc = "Si";
 
         $modalidad = "offline";
 
@@ -2111,8 +2164,8 @@ class FacturaController extends Controller
                             "precioUnitario"            => $precioUnitario,
                             "montoDescuento"            => $montoDescuento,
                             "subTotal"                  => $subTotal,
-                            // "numeroSerie"               => $numeroSerie,
-                            // "numeroImei"                => $numeroImei,
+                            "numeroSerie"               => $numeroSerie,
+                            "numeroImei"                => $numeroImei,
                         ]
                     ]
                 ]
@@ -2269,15 +2322,34 @@ class FacturaController extends Controller
 
             $temporal = $datos['factura'];
 
-            if($empresa_objeto->codigo_modalidad == "1"){
-                $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-                        <facturaElectronicaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaElectronicaTasaCero.xsd">
-                        </facturaElectronicaTasaCero>';
+            if($empresa_objeto->codigo_documento_sector == 8){
+                if($empresa_objeto->codigo_modalidad == "1"){
+                    $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                            <facturaElectronicaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaElectronicaTasaCero.xsd">
+                            </facturaElectronicaTasaCero>';
+                }else{
+                    $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                            <facturaComputarizadaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaComputarizadaTasaCero.xsd">
+                            </facturaComputarizadaTasaCero>';
+                }
+
+                // $xml_temporal = new SimpleXMLElement($dar);
+                // $this->formato_xml($temporal, $xml_temporal);
+
+                // $xml_temporal->asXML("assets/docs/facturaxmlTasaCero.xml");
             }else{
-                $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-                        <facturaComputarizadaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaComputarizadaTasaCero.xsd">
-                        </facturaComputarizadaTasaCero>';
+                if($empresa_objeto->codigo_modalidad == "1"){
+                    $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                            <facturaElectronicaCompraVenta xsi:noNamespaceSchemaLocation="facturaElectronicaCompraVenta.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            </facturaElectronicaCompraVenta>';
+                }else{
+                    $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                            <facturaComputarizadaCompraVenta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaComputarizadaCompraVenta.xsd">
+                            </facturaComputarizadaCompraVenta>';
+                }
+
             }
+
 
             $xml_temporal = new SimpleXMLElement($dar);
             $this->formato_xml($temporal, $xml_temporal);
@@ -2295,14 +2367,14 @@ class FacturaController extends Controller
             // ========================== FINAL DE AQUI COMENZAMOS EL FIRMADO CHEEEEE  ==========================
 
             // COMPRIMIMOS EL ARCHIVO A ZIP
-            $gzdato = gzencode(file_get_contents('assets/docs/facturaxml.xml',9));
-            $fiape = fopen('assets/docs/facturaxml.xml.zip',"w");
+            $gzdato = gzencode(file_get_contents('assets/docs/facturaxmlTasaCero.xml',9));
+            $fiape = fopen('assets/docs/facturaxmlTasaCero.xml.zip',"w");
             fwrite($fiape,$gzdato);
             fclose($fiape);
 
             //  hashArchivo EL ARCHIVO
             $archivoZip = $gzdato;
-            $hashArchivo = hash("sha256", file_get_contents('assets/docs/facturaxml.xml'));
+            $hashArchivo = hash("sha256", file_get_contents('assets/docs/facturaxmlTasaCero.xml'));
 
             // ESTO ES PARA LA FACTURA LA CREACION
             $facturaVerdad                          = new Factura();

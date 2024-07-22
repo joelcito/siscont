@@ -673,7 +673,7 @@
                                     'pagos'     : arrayPagos,
                                     // 'empresa'   : "{{ $empresa->id }}"
                                     // 'realizo_pago': $("#realizo_pago").prop("checked"),
-                                    // 'caja'        : $('#caja_id').val()
+                                    'numero_cafc': $('#numero_factura_cafc').val(),
                                     'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
                                 };
                                 var datosRecepcion = {
@@ -745,6 +745,14 @@
                 }
             });
 
+        }
+
+        function bloqueCAFC(){
+            if($('#tipo_facturacion').val() === "offline"){
+                $('#bloque_cafc').show('toggle')
+            }else{
+                $('#bloque_cafc').hide('toggle')
+            }
         }
 
    </script>
