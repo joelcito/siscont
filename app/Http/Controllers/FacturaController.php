@@ -62,7 +62,7 @@ class FacturaController extends Controller
 
 
         // SACAMOS EL CUFD VIGENTE
-        // dd($empresa_id, $sucursal_id, $cuis, $punto_venta, $empresa->codigo_ambiente);
+        // dd($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
         $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
         $servicios = Servicio::where('empresa_id', $empresa_id)
@@ -2000,55 +2000,6 @@ class FacturaController extends Controller
 
 
         // Crear las variables con los valores correspondientes TASA CERO
-        // $nitEmisor                    = null;
-        // $razonSocialEmisor            = null;
-        // $municipio                    = null;
-        // $telefono                     = null;
-        // $numeroFactura                = null;
-        // $cuf                          = null;
-        // $cufd                         = null;
-        // $codigoSucursal               = null;
-        // $direccion                    = null;
-        // $codigoPuntoVenta             = null;
-        // $fechaEmision                 = "2024-07-10T19:45:27.882";
-        // $nombreRazonSocial            = "FLORES";
-        // $codigoTipoDocumentoIdentidad = "5";
-        // $numeroDocumento              = "8401524016";
-        // $complemento                  = null;
-        // $codigoCliente                = "8401524016";
-        // $codigoMetodoPago             = "1";
-        // $numeroTarjeta                = null;
-        // $montoTotal                   = "500";
-        // $montoTotalSujetoIva          = "0";
-        // $codigoMoneda                 = "1";
-        // $tipoCambio                   = "1";
-        // $montoTotalMoneda             = "500";
-        // $montoGiftCard                = null;
-        // $descuentoAdicional           = "0";
-        // $codigoExcepcion              = "0";
-        // $cafc                         = null;
-        // $leyenda                      = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
-        // $usuario                      = "ROCIO TORRICO MARTINES";
-        // $codigoDocumentoSector        = "8";
-
-        // $actividadEconomica = "474110";
-        // $codigoProductoSin  = "38581";
-        // $codigoProducto     = "7";
-        // $descripcionItem    = "CAJA CHE";
-        // $cantidad           = "1.00";
-        // $unidadMedida       = "58";
-        // $precioUnitario     = "500.00";
-        // $montoDescuento     = "0.00";
-        // $subTotal           = "500";
-        // // $numeroSerie        = null;
-        // // $numeroImei         = null;
-
-        // $clienteId = "7";
-        // $pagos     = ["915"];
-
-
-
-        // Crear las variables con los valores correspondientes COMPRA Y VENTA
         $nitEmisor                    = null;
         $razonSocialEmisor            = null;
         $municipio                    = null;
@@ -2059,7 +2010,7 @@ class FacturaController extends Controller
         $codigoSucursal               = null;
         $direccion                    = null;
         $codigoPuntoVenta             = null;
-        $fechaEmision                 = "2024-07-21T12:50:28.336";
+        $fechaEmision                 = "2024-07-10T19:45:27.882";
         $nombreRazonSocial            = "FLORES";
         $codigoTipoDocumentoIdentidad = "5";
         $numeroDocumento              = "8401524016";
@@ -2067,33 +2018,82 @@ class FacturaController extends Controller
         $codigoCliente                = "8401524016";
         $codigoMetodoPago             = "1";
         $numeroTarjeta                = null;
-        $montoTotal                   = "1500";
-        $montoTotalSujetoIva          = "1500";
+        $montoTotal                   = "500";
+        $montoTotalSujetoIva          = "0";
         $codigoMoneda                 = "1";
         $tipoCambio                   = "1";
-        $montoTotalMoneda             = "1500";
+        $montoTotalMoneda             = "500";
         $montoGiftCard                = null;
         $descuentoAdicional           = "0";
         $codigoExcepcion              = "0";
         $cafc                         = null;
         $leyenda                      = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
-        $usuario                      = "JHOSELIN RAMIREZ MAMANI";
-        $codigoDocumentoSector        = "1";
+        $usuario                      = "ROCIO TORRICO MARTINES";
+        $codigoDocumentoSector        = "8";
 
-        $actividadEconomica = "620100";
-        $codigoProductoSin  = "83141";
-        $codigoProducto     = "1";
-        $descripcionItem    = "DESARROLLO DE SISTEMA";
+        $actividadEconomica = "474110";
+        $codigoProductoSin  = "38581";
+        $codigoProducto     = "7";
+        $descripcionItem    = "CAJA CHE";
         $cantidad           = "1.00";
         $unidadMedida       = "58";
-        $precioUnitario     = "1500.00";
+        $precioUnitario     = "500.00";
         $montoDescuento     = "0.00";
-        $subTotal           = "1500";
-        $numeroSerie        = null;
-        $numeroImei         = null;
+        $subTotal           = "500";
+        // $numeroSerie        = null;
+        // $numeroImei         = null;
 
-        $clienteId = "2";
-        $pagos     = ["998"];
+        $clienteId = "7";
+        $pagos     = ["915"];
+
+
+
+        // Crear las variables con los valores correspondientes COMPRA Y VENTA
+        // $nitEmisor                    = null;
+        // $razonSocialEmisor            = null;
+        // $municipio                    = null;
+        // $telefono                     = null;
+        // $numeroFactura                = null;
+        // $cuf                          = null;
+        // $cufd                         = null;
+        // $codigoSucursal               = null;
+        // $direccion                    = null;
+        // $codigoPuntoVenta             = null;
+        // $fechaEmision                 = "2024-07-21T12:50:28.336";
+        // $nombreRazonSocial            = "FLORES";
+        // $codigoTipoDocumentoIdentidad = "5";
+        // $numeroDocumento              = "8401524016";
+        // $complemento                  = null;
+        // $codigoCliente                = "8401524016";
+        // $codigoMetodoPago             = "1";
+        // $numeroTarjeta                = null;
+        // $montoTotal                   = "1500";
+        // $montoTotalSujetoIva          = "1500";
+        // $codigoMoneda                 = "1";
+        // $tipoCambio                   = "1";
+        // $montoTotalMoneda             = "1500";
+        // $montoGiftCard                = null;
+        // $descuentoAdicional           = "0";
+        // $codigoExcepcion              = "0";
+        // $cafc                         = null;
+        // $leyenda                      = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
+        // $usuario                      = "JHOSELIN RAMIREZ MAMANI";
+        // $codigoDocumentoSector        = "1";
+
+        // $actividadEconomica = "620100";
+        // $codigoProductoSin  = "83141";
+        // $codigoProducto     = "1";
+        // $descripcionItem    = "DESARROLLO DE SISTEMA";
+        // $cantidad           = "1.00";
+        // $unidadMedida       = "58";
+        // $precioUnitario     = "1500.00";
+        // $montoDescuento     = "0.00";
+        // $subTotal           = "1500";
+        // $numeroSerie        = null;
+        // $numeroImei         = null;
+
+        // $clienteId = "2";
+        // $pagos     = ["998"];
 
 
 
@@ -2164,8 +2164,8 @@ class FacturaController extends Controller
                             "precioUnitario"            => $precioUnitario,
                             "montoDescuento"            => $montoDescuento,
                             "subTotal"                  => $subTotal,
-                            "numeroSerie"               => $numeroSerie,
-                            "numeroImei"                => $numeroImei,
+                            // "numeroSerie"               => $numeroSerie,
+                            // "numeroImei"                => $numeroImei,
                         ]
                     ]
                 ]

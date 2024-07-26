@@ -1701,6 +1701,18 @@ class SiatController extends Controller
             // dd($fechaVigencia < date('Y-m-d H:i'));
             if($fechaVigencia < date('Y-m-d H:i')){
 
+                // dd(
+                //     "header => ".$header,
+                //     "url1 => ".$url1,
+                //     "codigoAmbiente => ".$codigoAmbiente,
+                //     "codigoModalidad => ".$codigoModalidad,
+                //     "codigoPuntoVenta => ".$codigoPuntoVenta,
+                //     "codigoSistema => ".$codigoSistema,
+                //     "codigoSucursal => ".$codigoSucursal,
+                //     "scuis => ".$scuis,
+                //     "nit => ".$nit
+                // );
+
                 $cufd = json_decode($this->cufd(
                     $header,
                     $url1,
@@ -1712,6 +1724,8 @@ class SiatController extends Controller
                     $scuis,
                     $nit
                 ));
+
+                // dd($cufd);
 
                 if($cufd->estado == "success"){
                     if($cufd->resultado->RespuestaCufd->transaccion){
@@ -1730,8 +1744,10 @@ class SiatController extends Controller
                         $cufdNew->save();
                         $cufdRescatadoUtilizar =  $cufdNew;
                     }else{
+                        $cufdRescatadoUtilizar = null;
                     }
                 }else{
+                    $cufdRescatadoUtilizar = null;
                 }
                 // dd('$fechaVigencia < date("Y-m-d H:i")', "NO", $fechaVigencia, date("Y-m-d H:i"), $fechaVigencia < date("Y-m-d H:i"));
             }else{
@@ -1769,10 +1785,10 @@ class SiatController extends Controller
                     $cufdRescatadoUtilizar =  $cufdNew;
 
                 }else{
-
+                    $cufdRescatadoUtilizar = null;
                 }
             }else{
-
+                $cufdRescatadoUtilizar = null;
             }
         }
         return $cufdRescatadoUtilizar;
