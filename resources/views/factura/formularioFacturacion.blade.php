@@ -123,7 +123,7 @@
                                                 {{-- CUFD: {{ $cufd->codigo_control." ".str_replace("T", " ",substr(session('sfechaVigenciaCufd'), 0 , 16)) }} --}}
                                                 CUFD: {{ $cufd->codigo_control." ".$cufd->fecha_vigencia }}
                                             @else
-
+                                                <span class="badge badge-danger">NO existe un Cufd Vigente para este Usuario</span>
                                             @endif
                                         </div>
                                     </div>
