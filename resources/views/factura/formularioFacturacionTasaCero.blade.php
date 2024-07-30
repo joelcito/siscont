@@ -509,12 +509,12 @@
                             if($("#formularioGeneraFactura")[0].checkValidity()){
 
 
-                                // Obtén el botón y el icono de carga
-                                var boton = $("#boton_enviar_factura");
-                                var iconoCarga = boton.find("i");
-                                // Deshabilita el botón y muestra el icono de carga
-                                boton.attr("disabled", true);
-                                iconoCarga.show();
+                                // // Obtén el botón y el icono de carga
+                                // var boton = $("#boton_enviar_factura");
+                                // var iconoCarga = boton.find("i");
+                                // // Deshabilita el botón y muestra el icono de carga
+                                // boton.attr("disabled", true);
+                                // iconoCarga.show();
 
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];
@@ -675,7 +675,11 @@
                                                 text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
                                                 timer: 2000
                                             })
-                                            window.location.href = "{{ url('factura/listado')}}"
+
+                                            
+                                            // window.location.href = "{{ url('factura/listado')}}"
+
+
                                             // window.location.href = "{{ url('pago/listado')}}"
                                             // location.reload();
                                         }else{

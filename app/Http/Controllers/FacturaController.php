@@ -977,6 +977,8 @@ class FacturaController extends Controller
             $tipoFacturaSector  = str_pad($valoresCabecera['codigoDocumentoSector'],2,"0",STR_PAD_LEFT);;
             $puntoVenta         = str_pad($puntoVenta,4,"0",STR_PAD_LEFT);
 
+            // dd($nitEmisor, $fechaEmision.$sucursal, $modalidad, $tipoEmision, $tipoFactura, $tipoFacturaSector, $numeroFactura ,$puntoVenta);
+
             $cadena = $nitEmisor.$fechaEmision.$sucursal.$modalidad.$tipoEmision.$tipoFactura.$tipoFacturaSector.$numeroFactura.$puntoVenta;
 
             // VERIFICAMOS SI EXISTE LOS DATOS SUFICINTES APRA EL MANDAO DEL CORREO
