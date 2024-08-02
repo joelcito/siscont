@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('url_facturacionSincronizacion')->nullable();
             $table->string('url_servicio_facturacion_compra_venta')->nullable();
             $table->string('url_facturacion_operaciones')->nullable();
+            $table->string('url_recepcion_compras')->nullable();
             $table->string('url_verifica')->nullable();
             $table->string('cafc')->nullable();
             $table->string('archivop12')->nullable();

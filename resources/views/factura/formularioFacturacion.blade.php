@@ -7,48 +7,6 @@
 @endsection
 @section('content')
 
-
-    <!--end::Modal - New Card-->
-    {{-- <div class="modal fade" id="modal_new_rol" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-500px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Rol</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_new_rol">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre" id="nombre" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="descripcion" id="descripcion" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="agregarRol()">Generar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div> --}}
-    <!--end::Modal - New Card-->
-
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -551,12 +509,12 @@
                             if($("#formularioGeneraFactura")[0].checkValidity()){
 
 
-                                // Obtén el botón y el icono de carga
-                                var boton = $("#boton_enviar_factura");
-                                var iconoCarga = boton.find("i");
-                                // Deshabilita el botón y muestra el icono de carga
-                                boton.attr("disabled", true);
-                                iconoCarga.show();
+                                // // Obtén el botón y el icono de carga
+                                // var boton = $("#boton_enviar_factura");
+                                // var iconoCarga = boton.find("i");
+                                // // Deshabilita el botón y muestra el icono de carga
+                                // boton.attr("disabled", true);
+                                // iconoCarga.show();
 
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];
@@ -703,7 +661,6 @@
                                                 timer: 3000
                                             })
                                             window.location.href = "{{ url('factura/listado')}}"
-                                            {{--  location.reload();  --}}
                                         }else if(data.estado === "error_email"){
                                             Swal.fire({
                                                 icon : 'error',
@@ -720,9 +677,7 @@
                                                 text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
                                                 timer: 2000
                                             })
-                                            window.location.href = "{{ url('factura/listado')}}"
-                                            // window.location.href = "{{ url('pago/listado')}}"
-                                            // location.reload();
+                                            // window.location.href = "{{ url('factura/listado')}}"
                                         }else{
                                             Swal.fire({
                                                 icon : 'error',

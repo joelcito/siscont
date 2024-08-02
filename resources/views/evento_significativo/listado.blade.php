@@ -61,7 +61,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label class="fs-6 fw-semibold form-label mb-2 required">Fecha Fin</label>
-                                        <input type="date" class="form-control" required name="fecha_fin" id="fecha_fin">
+                                        <input type="date" class="form-control" required name="fecha_fin" id="fecha_fin" value="{{ date('d-m-Y') }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="fs-6 fw-semibold form-label mb-2 required">Hora (HH:MM:SS):</label>
@@ -234,10 +234,20 @@
         function modalRol() {
             $('#descripcion').val('')
             $('#codigo_tipo_evento').val(null).trigger('change');
-            $('#fecha_inicio').val('')
-            $('#hora_inicio').val('')
-            $('#fecha_fin').val('')
-            $('#hora_fin').val('')
+
+            var today = new Date().toISOString().split('T')[0];
+
+            var now = new Date();
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var seconds = String(now.getSeconds()).padStart(2, '0');
+            var currentTime = hours + ':' + minutes + ':' + seconds;
+
+            $('#fecha_inicio').val(today)
+            $('#hora_inicio').val(currentTime)
+            $('#fecha_fin').val(today)
+            $('#hora_fin').val(currentTime)
+
             $('#bloque_bloque_cufds').html('<select name="cufd_id" id="cufd_id" class="form-control" required><option value="">Seleccionar</option></select>');
             $('#modal_evento_significativo').modal('show')
         }

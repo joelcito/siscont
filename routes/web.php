@@ -142,6 +142,7 @@ Route::middleware('auth')->group(function(){
 
         // PARA LAS SINCRONIZACIONES MASA
         Route::get('/pruebas', [FacturaController::class, 'pruebas']);
+        Route::get('/pruebaCompraVenta', [FacturaController::class, 'pruebaCompraVenta']);
         // PARA LAS SINCRONIZACIONES MASA
 
         // PARA CREACION DE FACTURAS MASA

@@ -2495,6 +2495,50 @@ class FacturaController extends Controller
     }
     // ********************  CREACION MASIVA FACTURAACION   *****************************
 
+    public function pruebaCompraVenta(Request $request){
+
+        $usuario        = Auth::user();
+        $empresa_id     = $usuario->empresa_id;
+        $punto_venta_id = $usuario->punto_venta_id;
+        $sucursal_id    = $usuario->sucursal_id;
+
+        $empresa_objeto     = Empresa::find($empresa_id);
+        $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
+        $sucursal_objeto    = Sucursal::find($sucursal_id);
+
+        $cuis_objeto       = Cuis::where('punto_venta_id', $punto_venta_objeto->id)
+                            ->where('sucursal_id', $sucursal_objeto->id)
+                            ->where('codigo_ambiente', $empresa_objeto->codigo_ambiente)
+                            ->first();
+
+
+        dd(
+            $usuario,
+            $empresa_id,
+            $punto_venta_id,
+            $sucursal_id,
+            $empresa_objeto,
+            $punto_venta_objeto,
+            $sucursal_objeto,
+            $cuis_objeto
+        );
+
+
+        $siat = app(SiatController::class);
+
+
+        $cufdVigente = json_decode(
+            $siat->confirmacionCompras(
+
+            ));
+
+
+
+
+        dd($request->all());
+        
+    }
+
 
     // ===================  FUNCIOENES PROTEGIDAS  ========================
     protected function calculaDigitoMod11($cadena, $numDig, $limMult, $x10){
@@ -2569,7 +2613,6 @@ class FacturaController extends Controller
             }
         }
     }
-
 
     public function armaJson(Request $request) {
         $ciudades = storage_path('app/public/paises.xlsx'); // Ruta local de tu archivo Excel
@@ -2656,5 +2699,6 @@ class FacturaController extends Controller
 
         return 'Archivo importado exitosamente desde local.';
     }
+    // ===================  FUNCIOENES PROTEGIDAS  ========================
 
 }
