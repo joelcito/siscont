@@ -2512,31 +2512,59 @@ class FacturaController extends Controller
                             ->first();
 
 
-        dd(
-            $usuario,
-            $empresa_id,
-            $punto_venta_id,
-            $sucursal_id,
-            $empresa_objeto,
-            $punto_venta_objeto,
-            $sucursal_objeto,
-            $cuis_objeto
-        );
+        // dd(
+        //     $usuario,
+        //     $empresa_id,
+        //     $punto_venta_id,
+        //     $sucursal_id,
+        //     $empresa_objeto,
+        //     $punto_venta_objeto,
+        //     $sucursal_objeto,
+        //     $cuis_objeto
+        // );
 
 
         $siat = app(SiatController::class);
 
-
         $cufdVigente = json_decode(
-            $siat->confirmacionCompras(
+            $siat->verificarConeccion(
+                $empresa_objeto->id,
+                $sucursal_objeto->id,
+                $cuis_objeto->id,
+                $punto_venta_objeto->id,
+                $empresa_objeto->codigo_ambiente
+            ));
+
+        $url5             = $empresa_objeto->url_recepcion_compras;
+        $header           = $empresa_objeto->api_token;
+        $codigoAmbiente   = $empresa_objeto->codigo_ambiente;
+        $codigoPuntoVenta = $punto_venta_objeto->codigoPuntoVenta;
+        $codigoSistema    = $empresa_objeto->codigo_sistema;
+        $codigoSucursal   = $sucursal_objeto->codigo_sucursal;
+        $cufd             = $cufdVigente->codigo;
+        $cuis             = $cuis_objeto->codigo;
+        $nit              = $empresa_objeto->nit;
+        $fecha            = date('Y-m-d\TH:i:s.v');
+
+
+        $consultaCompras = json_decode(
+            $siat->consultaCompras(
+                $url5,
+                $header,
+
+                $codigoAmbiente,
+                $codigoPuntoVenta,
+                $codigoSistema,
+                $codigoSucursal,
+                $cufd,
+                $cuis,
+                $nit,
+                $fecha
 
             ));
 
+        dd($consultaCompras);
 
-
-
-        dd($request->all());
-        
     }
 
 

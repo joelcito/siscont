@@ -2073,7 +2073,7 @@ class SiatController extends Controller
         // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
 
         $wsdl                   = $url4;
-        
+
         $codigoAmbiente   = $codigoAmbiente;
         $codigoPuntoVenta = $codigoPuntoVenta;
         $codigoSistema    = $codigoSistema;
@@ -2131,6 +2131,77 @@ class SiatController extends Controller
             $data['estado'] = 'error';
             $data['resultado'] = $resultado;
             $data['msg'] = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function consultaCompras(
+        $url5,
+        $header,
+
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $cufd,
+        $cuis,
+        $nit,
+        $fecha
+    ){
+         // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url5;
+
+        $codigoAmbiente   = $codigoAmbiente;
+        $codigoPuntoVenta = $codigoPuntoVenta;
+        $codigoSistema    = $codigoSistema;
+        $codigoSucursal   = $codigoSucursal;
+        $cufd             = $cufd;
+        $cuis             = $cuis;
+        $nit              = $nit;
+        $fecha            = $fecha;
+
+        $parametros         =  array(
+            'SolicitudConsultaCompras' => array(
+                'codigoAmbiente'   => $codigoAmbiente,
+                'codigoPuntoVenta' => $codigoPuntoVenta,
+                'codigoSistema'    => $codigoSistema,
+                'codigoSucursal'   => $codigoSucursal,
+                'cufd'             => $cufd,
+                'cuis'             => $cuis,
+                'nit'              => $nit,
+                'fecha'            => $fecha
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->consultaCompras($parametros);
+
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
