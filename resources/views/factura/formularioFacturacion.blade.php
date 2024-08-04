@@ -137,11 +137,11 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Numero Serie</label>
-                                        <input type="number" readonly class="form-control" id="numero_serie" name="numero_serie" value="0" min="1" required>
+                                        <input type="number" class="form-control" id="numero_serie" name="numero_serie" min="1">
                                     </div>
                                     <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Codigo Imei</label>
-                                        <input type="number" readonly class="form-control" id="codigo_imei" name="codigo_imei" value="0" min="1" required>
+                                        <input type="number" class="form-control" id="codigo_imei" name="codigo_imei" min="1">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Precio</label>
@@ -233,44 +233,10 @@
             $('#precio_venta').val(json.precio)
             $('#cantidad_venta').val(1)
             $('#total_venta').val((1*json.precio))
-            // if(json.estado == 'servicio'){
-            //     $('.servi').show('toggle');
-            //     $('.serviPro').show('toggle');
-            //     $("#lavador_id").prop("required", true);
-            //     $('#cantidad').removeAttr('max');
-            //     $('.serviAlma').hide('toggle');
-            // }else{
-            //     $.ajax({
-            //         url: "{{ url('servicio/cantidadAlmacen') }}",
-            //         type: 'POST',
-            //         data:{servicio:json.id},
-            //         dataType: 'json',
-            //         success: function(data) {
-            //             if(data.estado === 'success'){
-            //                 $('#cantidad_almacen').val(data.cantidaAlacen)
-            //                 $('#cantidad').attr('max', data.cantidaAlacen)
-            //                 $('.servi').hide('toggle');
-            //                 $('.serviPro').show('toggle');
-            //                 $("#lavador_id").prop("required", false);
-            //                 $('.serviAlma').show('toggle');
-
-            //                 if(json.id == 213 || json.id == 214 || json.id == 215)
-            //                     $('#precio').prop('readonly', false);
-            //                 else
-            //                     $('#precio').prop('readonly', true);
-
-            //                 if(data.cantidaAlacen <= 0)
-            //                     $('#btnAgregarProductoChe').prop('disabled', true);
-            //                 else
-            //                     $('#btnAgregarProductoChe').prop('disabled', false);
-            //             }
-            //         }
-            //     });
-
-            // }
+            $('#numero_serie').val(json.numero_serie)
+            $('#codigo_imei').val(json.codigo_imei)
 
         }
-
 
         function multiplicarPrecioAlTolta(){
             let precio   = $('#precio_venta').val();
@@ -280,49 +246,24 @@
         }
 
         function agregarProducto(){
-            // let datos = $('#formulario_venta').serializeArray();
-            // let datosClie = $('#formulario_cliente_escogido').serializeArray();
-
             if($("#formulario_venta")[0].checkValidity()){
                 let datoscombi = $('#formulario_venta, #formulario_cliente_escogido').serializeArray();
                 $.ajax({
                     url: "{{ url('factura/agregarProducto') }}",
                     type    : 'POST',
-                    // data    : datos,
                     data    : datoscombi,
                     dataType: 'json',
                     success: function(data) {
                         if(data.estado === 'success'){
-
                             let cliente = $('#cliente_id_escogido').val();
                             ajaxListadoDetalles(cliente);
-
                             $('#tabla_detalles').show('toogle')
-
-                            // $('#cantidad_almacen').val(data.cantidaAlacen)
-                            // $('#cantidad').attr('max', data.cantidaAlacen)
-                            // $('.servi').hide('toggle');
-                            // $('.serviPro').show('toggle');
-                            // $("#lavador_id").prop("required", false);
-                            // $('.serviAlma').show('toggle');
-
-                            // if(json.id == 213 || json.id == 214 || json.id == 215)
-                            //     $('#precio').prop('readonly', false);
-                            // else
-                            //     $('#precio').prop('readonly', true);
-
-                            // if(data.cantidaAlacen <= 0)
-                            //     $('#btnAgregarProductoChe').prop('disabled', true);
-                            // else
-                            //     $('#btnAgregarProductoChe').prop('disabled', false);
                         }
                     }
                 });
             }else{
                 $("#formulario_venta")[0].reportValidity();
             }
-
-
         }
 
         function ajaxListadoDetalles(cliente){
@@ -338,15 +279,6 @@
                             $('#tabla_detalles').show('toogle')
 
                         $('#tabla_detalles').html(data.listado)
-
-                        // Swal.fire({
-                        //     icon             : 'success',
-                        //     title            : data.msg,
-                        //     showConfirmButton: false,       // No mostrar botón de confirmación
-                        //     timer            : 2000,        // 5 segundos
-                        //     timerProgressBar : true
-                        // });
-                        // ajaxListadoTipoDocumentoSector();
 
                     }else{
 
@@ -519,6 +451,13 @@
                                 //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
                                 detalle = [];
 
+                                // console.log($('#numero_serie').val());
+                                // console.log($('#codigo_imei').val());
+
+                                // console.log("----------------------");
+                                // console.log(arrayProductos,arrayProductos[0].numero_serie == null , arrayProductos[0].codigo_imei == null);
+                                // console.log("----------------------");
+
                                 arrayProductos.forEach(function (prod){
                                     detalle.push({
                                         actividadEconomica  :   prod.codigo_caeb,
@@ -530,8 +469,8 @@
                                         precioUnitario      :   prod.precio,
                                         montoDescuento      :   prod.descuento,
                                         subTotal            :   ((prod.cantidad*prod.precio)-prod.descuento),
-                                        numeroSerie         :   null,
-                                        numeroImei          :   null
+                                        numeroSerie         :   (prod.numero_serie == null)? null : prod.numero_serie,
+                                        numeroImei          :   (prod.codigo_imei == null)? null : prod.codigo_imei
                                     })
                                 })
 
@@ -707,6 +646,43 @@
                 $('#bloque_cafc').show('toggle')
             }else{
                 $('#bloque_cafc').hide('toggle')
+            }
+        }
+
+        function verificaNit(){
+            if($('#tipo_documento').val()  === "5"){
+                let nit = $('#nit_factura').val();
+                $.ajax({
+                    url: "{{ url('factura/verificarNit') }}",
+                    data: {
+                        nit: nit
+                    },
+                    type: 'POST',
+                    dataType:'json',
+                    success: function(data) {
+                        if(data.estado == "success"){
+                            if(data.estadoSiat){
+                                $('#execpcion').prop('checked', false);
+                                $('#nitsiexiste').show('toggle')
+                                $('#nitnoexiste').hide('toggle')
+                                // $('#bloque_exepcion').hide('toggle');
+                            }else{
+                                $('#nitnoexiste').show('toggle')
+                                $('#nitsiexiste').hide('toggle')
+                                $('#execpcion').prop('checked', true);
+                                // $('#bloque_exepcion').show('toggle');
+                            }
+                        }else{
+                            $('#errorValidar').show('toggle')
+                        }
+                    }
+                });
+            }else{
+                $('#nitnoexiste').hide('toggle')
+                $('#nitsiexiste').hide('toggle')
+                $('#errorValidar').hide('toggle')
+                $('#execpcion').prop('checked', false);
+                // $('#bloque_exepcion').hide('toggle');
             }
         }
 

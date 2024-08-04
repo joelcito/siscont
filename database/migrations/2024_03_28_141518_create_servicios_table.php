@@ -31,6 +31,8 @@ return new class extends Migration
 
             $table->string('descripcion')->nullable();
             $table->decimal('precio',12,2)->nullable();
+            $table->string('numero_serie')->nullable();
+            $table->string('codigo_imei')->nullable();
 
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();

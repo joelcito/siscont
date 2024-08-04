@@ -1560,8 +1560,6 @@ class SiatController extends Controller
         return $data;
     }
 
-
-
     public function recepcionFactura(
         $header,
         $url3,
@@ -1662,8 +1660,6 @@ class SiatController extends Controller
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
-
-
 
     public function verificarConeccion($empresa_id, $sucursal_id, $cuis_id, $punto_venta_id, $codigoAmbiente ){
 
@@ -2043,6 +2039,69 @@ class SiatController extends Controller
             $data['estado'] = 'error';
             $data['resultado'] = $resultado;
             $data['msg'] = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function verificarNit(
+        $url1,
+        $header,
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $scuis,
+        $nit,
+
+        $nitVeri
+        ){
+        // $this->verificarConeccion();
+        $wsdl                   = $url1;
+        $codigoAmbiente         = $codigoAmbiente;
+        $codigoModalidad        = $codigoPuntoVenta;
+        $codigoSistema          = $codigoSistema;
+        $codigoSucursal         = $codigoSucursal;
+        $cuis                   = $scuis;
+        $nit                    = $nit;
+        $nitParaVerificacion    = $nitVeri;
+
+        $parametros         =  array(
+            'SolicitudVerificarNit' => array(
+                'codigoAmbiente'        => $codigoAmbiente,
+                'codigoModalidad'       => $codigoModalidad,
+                'codigoSistema'         => $codigoSistema,
+                'codigoSucursal'        => $codigoSucursal,
+                'cuis'                  => $cuis,
+                'nit'                   => $nit,
+                'nitParaVerificacion'   => $nitParaVerificacion
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context'    => $context,
+                'cache_wsdl'        => WSDL_CACHE_NONE,
+                'compression'       => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->verificarNit($parametros);
+
+            $data['estado'] = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['mensaje']   = $fault->getMessage();
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }

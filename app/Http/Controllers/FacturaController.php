@@ -139,6 +139,11 @@ class FacturaController extends Controller
             $cliente_id_escogido   = $request->input('cliente_id_escogido');
             $descripcion_adicional = $request->input('descripcion_adicional');
 
+            $servicioBuscado = Servicio::find($servicio->id);
+            $servicioBuscado->numero_serie = $request->input('numero_serie');
+            $servicioBuscado->codigo_imei = $request->input('codigo_imei');
+            $servicioBuscado->save();
+
             // dd(Auth::user());
 
             $detalle                        = new Detalle();
@@ -351,7 +356,15 @@ class FacturaController extends Controller
             //     "punto_venta_id ".$punto_venta_id
             // );
 
-            $datelles = Detalle::select('detalles.*', 'siat_unidad_medidas.codigo_clasificador', 'siat_producto_servicios.codigo_producto', 'siat_depende_actividades.codigo_caeb', 'servicios.descripcion')
+            $datelles = Detalle::select(
+                                    'detalles.*', 
+                                    'siat_unidad_medidas.codigo_clasificador', 
+                                    'siat_producto_servicios.codigo_producto', 
+                                    'siat_depende_actividades.codigo_caeb', 
+                                    'servicios.descripcion',
+                                    'servicios.numero_serie',
+                                    'servicios.codigo_imei'
+                                    )
                                 ->join('servicios', 'detalles.servicio_id', '=', 'servicios.id')
                                 ->join('siat_depende_actividades', 'servicios.siat_depende_actividades_id', '=', 'siat_depende_actividades.id')
                                 ->join('siat_producto_servicios', 'servicios.siat_producto_servicios_id', '=', 'siat_producto_servicios.id')
@@ -385,6 +398,7 @@ class FacturaController extends Controller
     }
 
     public function  emitirFactura(Request $request){
+        // dd($request->all());
         if($request->ajax()){
 
             // dd($request->all());
@@ -1722,6 +1736,55 @@ class FacturaController extends Controller
             $data['estado'] = 'error';
         }
 
+        return $data;
+    }
+
+    public function verificarNit(Request $request){
+        if($request->ajax()){
+
+            $nitVerificar = $request->input('nit');
+
+            $usuario        = Auth::user();
+            $empresa_id     = $usuario->empresa_id;
+            $punto_venta_id = $usuario->punto_venta_id;
+            $sucursal_id    = $usuario->sucursal_id;
+
+            $empresa_objeto     = Empresa::find($empresa_id);
+            $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
+            $sucursal_objeto    = Sucursal::find($sucursal_id);
+
+            $cuis_objeto       = Cuis::where('punto_venta_id', $punto_venta_objeto->id)
+                              ->where('sucursal_id', $sucursal_objeto->id)
+                              ->where('codigo_ambiente', $empresa_objeto->codigo_ambiente)
+                              ->first();
+
+            $siat = app(SiatController::class);
+
+            $verificarNit = json_decode($siat->verificarNit(
+                $empresa_objeto->url_facturacionCodigos,
+                $empresa_objeto->api_token,
+                $empresa_objeto->codigo_ambiente,
+                $punto_venta_objeto->nombrePuntoVenta,
+                $empresa_objeto->codigo_sistema,
+                $sucursal_objeto->codigo_sucursal,
+                $cuis_objeto->codigo,
+                $empresa_objeto->nit,
+
+                $nitVerificar
+            ));
+
+            if($verificarNit->estado == "success"){
+                $data['msg']        = $verificarNit->resultado->RespuestaVerificarNit->mensajesList;
+                $data['estado']     = 'success';
+                $data['estadoSiat'] = $verificarNit->resultado->RespuestaVerificarNit->transaccion;
+            }else{
+                $data['msg']    = $verificarNit->resultado->RespuestaVerificarNit->mensajesList;
+                $data['estado'] = 'success';
+            }
+        }else{
+            $data['msg']   = 'No existe';
+            $data['estado'] = 'error';
+        }
         return $data;
     }
 

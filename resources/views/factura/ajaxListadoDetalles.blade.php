@@ -85,7 +85,8 @@
                 <select name="tipo_documento" id="tipo_documento" class="form-control" onchange="verificaNit()" required>
                     <option value="">SELECCIONE</option>
                     @foreach ($tipoDocumento as $te)
-                        <option value="{{ $te->tipo_clasificador }}" {{ ($te->tipo_clasificador == 5)? 'selected' : '' }} >{{ $te->descripcion }}</option>
+                        {{-- <option value="{{ $te->tipo_clasificador }}" {{ ($te->tipo_clasificador == 5)? 'selected' : '' }} >{{ $te->descripcion }}</option> --}}
+                        <option value="{{ $te->tipo_clasificador }}">{{ $te->descripcion }}</option>
                     @endforeach
                 </select>
             </div>
@@ -95,8 +96,9 @@
             <div class="col-md-3">
                 <label for="">Nit/Cedula</label>
                 <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off" required value="{{ $nit }}">
-                <small style="display: none;" class="text-danger" id="nitnoexiste">NIT INVALIDO</small>
-                <small style="display: none;" class="text-success" id="nitsiexiste">NIT VALIDO</small>
+                <small style="display: none;" class="text-danger" id="nitnoexiste">** NIT INVALIDO **</small>
+                <small style="display: none;" class="text-success" id="nitsiexiste">** NIT VALIDO **</small>
+                <small style="display: none;" class="text-danger" id="errorValidar">ERROR LA VALIDAR</small>
             </div>
             <div class="col-md-3">
                 <label for="">Razon Social</label>
@@ -129,7 +131,8 @@
         </div>
         {{-- <h3 class="text-center text-info">PAGO</h3> --}}
         <div class="row" style="display: none" id="bloque_exepcion">
-            <div class="col-md-2">
+        {{-- <div class="row" id="bloque_exepcion"> --}}
+            <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label">Enviar con execpcion?</label>
                     <input type="checkbox" name="execpcion" id="execpcion" required readonly>
