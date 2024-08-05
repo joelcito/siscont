@@ -2265,6 +2265,94 @@ class SiatController extends Controller
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
+    public function recepcionPaqueteCompras(
+        $url5,
+        $header,
+
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $cufd,
+        $cuis,
+        $nit,
+        $archivo,
+        $cantidadFacturas,
+        $fechaEnvio,
+        $gestion,
+        $hashArchivo,
+        $periodo
+    ){
+         // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url5;
+
+        $codigoAmbiente   = $codigoAmbiente;
+        $codigoPuntoVenta = $codigoPuntoVenta;
+        $codigoSistema    = $codigoSistema;
+        $codigoSucursal   = $codigoSucursal;
+        $cufd             = $cufd;
+        $cuis             = $cuis;
+        $nit              = $nit;
+        $archivo          = $archivo;
+        $cantidadFacturas = $cantidadFacturas;
+        $fechaEnvio       = $fechaEnvio;
+        $gestion          = $gestion;
+        $hashArchivo      = $hashArchivo;
+        $periodo          = $periodo;
+
+        $parametros         =  array(
+            'SolicitudRecepcionCompras' => array(
+                'codigoAmbiente'   => $codigoAmbiente,
+                'codigoPuntoVenta' => $codigoPuntoVenta,
+                'codigoSistema'    => $codigoSistema,
+                'codigoSucursal'   => $codigoSucursal,
+                'cufd'             => $cufd,
+                'cuis'             => $cuis,
+                'nit'              => $nit,
+                'archivo'          => $archivo,
+                'cantidadFacturas' => $cantidadFacturas,
+                'fechaEnvio'       => $fechaEnvio,
+                'gestion'          => $gestion,
+                'hashArchivo'      => $hashArchivo,
+                'periodo'          => $periodo
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->recepcionPaqueteCompras($parametros);
+
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
+
 
     // ****************** RECEPCION DE COMPRAS ******************
 

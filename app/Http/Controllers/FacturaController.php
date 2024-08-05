@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use PharData;
 use SimpleXMLElement;
 
 class FacturaController extends Controller
@@ -357,10 +358,10 @@ class FacturaController extends Controller
             // );
 
             $datelles = Detalle::select(
-                                    'detalles.*', 
-                                    'siat_unidad_medidas.codigo_clasificador', 
-                                    'siat_producto_servicios.codigo_producto', 
-                                    'siat_depende_actividades.codigo_caeb', 
+                                    'detalles.*',
+                                    'siat_unidad_medidas.codigo_clasificador',
+                                    'siat_producto_servicios.codigo_producto',
+                                    'siat_depende_actividades.codigo_caeb',
                                     'servicios.descripcion',
                                     'servicios.numero_serie',
                                     'servicios.codigo_imei'
@@ -688,6 +689,7 @@ class FacturaController extends Controller
                         $facturaVerdad->codigo_transaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
                         $facturaVerdad->descripcion             = NULL;
                         $facturaVerdad->uso_cafc                = "No";
+                        $facturaVerdad->registro_compra         = 'No';
                         $facturaVerdad->tipo_factura            = "online";
 
                         $facturaVerdad->save();
@@ -826,6 +828,8 @@ class FacturaController extends Controller
                 $facturaVerdad->descripcion             = NULL;
                 $facturaVerdad->uso_cafc                = ($datosRecepcion['uso_cafc'] === "Si")? "Si" : "No";
                 $facturaVerdad->tipo_factura            = "offline";
+                $facturaVerdad->registro_compra         = 'No';
+
 
                  $facturaVerdad->save();
 
@@ -1215,6 +1219,7 @@ class FacturaController extends Controller
                         $facturaVerdad->descripcion             = NULL;
                         $facturaVerdad->uso_cafc                = "No";
                         $facturaVerdad->tipo_factura            = "online";
+                        $facturaVerdad->registro_compra         = 'No';
 
                         $facturaVerdad->save();
 
@@ -1353,6 +1358,8 @@ class FacturaController extends Controller
                 $facturaVerdad->descripcion             = NULL;
                 $facturaVerdad->uso_cafc                = ($datosRecepcion['uso_cafc'] === "Si")? "Si" : "No";
                 $facturaVerdad->tipo_factura            = "offline";
+                $facturaVerdad->registro_compra         = 'No';
+
 
                 $facturaVerdad->save();
 
@@ -2470,6 +2477,7 @@ class FacturaController extends Controller
             $facturaVerdad->descripcion             = NULL;
             $facturaVerdad->uso_cafc                = ($datosRecepcion['uso_cafc'] === "Si")? "Si" : "No";
             $facturaVerdad->tipo_factura            = "offline";
+            $facturaVerdad->registro_compra         = 'No';
 
             $facturaVerdad->save();
 
@@ -2610,11 +2618,140 @@ class FacturaController extends Controller
         $fecha            = date('Y-m-d\TH:i:s.v');
 
 
+
+
+
+
+
+
+
+        // $datos = $request->all();
+        // $checkboxes = collect($datos)->filter(function ($value, $key) {
+        //     return Str::startsWith($key, 'check_');
+        // })->toArray();
+
+        // dd($checkboxes, $datos, Auth::user());
+
+        // $evento_significativo_id = $request->input('evento_significativo_id');
+        // $empresa_id              = Auth::user()->empresa_id;
+        // $sucursal_id             = Auth::user()->sucursal_id;
+        // $punto_venta_id          = Auth::user()->punto_venta_id;
+
+        // $evento_significativo = EventoSignificativo::find($evento_significativo_id);
+        // $empresa              = Empresa::find($empresa_id);
+        // $sucursal             = Sucursal::find($sucursal_id);
+        // $punto_venta          = PuntoVenta::find($punto_venta_id);
+        // $cuis                 = $empresa->cuisVigente($sucursal_id,$punto_venta_id, $empresa->codigo_ambiente);
+
+        // $codigo_evento_significativo    = $evento_significativo->codigoRecepcionEventoSignificativo;
+        // $siat                           = app(SiatController::class);
+        // $codigo_cafc_contingencia       = NULL;
+        // $codigo_cafc_contingencia       = $empresa->cafc;
+
+        $fechaActual                    = date('Y-m-d\TH:i:s.v');
+        $fechaEmicion                   = $fechaActual;
+
+        $cantidadFacturas = 0;
+
+        // $rutaCarpeta = "assets/docs/paqueteCompras";
+        // // Verificar si la carpeta existe
+        // if (!file_exists($rutaCarpeta))
+        //     mkdir($rutaCarpeta, 0755, true);
+
+        // // Obtener lista de archivos en la carpeta
+        // $archivos = glob($rutaCarpeta . '/*');
+        // // Eliminar cada archivo
+        // foreach ($archivos as $archivo) {
+        //     if (is_file($archivo))
+        //         unlink($archivo);
+        // }
+        // $file = public_path('assets/docs/paqueteCompras.tar.gz');
+        // if (file_exists($file))
+        //     unlink($file);
+
+        // $file = public_path('assets/docs/paqueteCompras.tar');
+        // if (file_exists($file))
+        //     unlink($file);
+
+        $idsToUpdate = [];
+
+
+
+        // $ar = explode("_",$key);
+        // $factura = Factura::find($ar[1]);
+
+        // $idsToUpdate[] = (int)$ar[1];
+
+        // $xml                            = $factura->productos_xml;
+        $rita  = public_path('assets/docs/paqueteCompras/facturaCompraxml.xml');
+        $xml                            = file_get_contents($rita);
+        // $uso_cafc                       = $request->input("uso_cafc");
+        $archivoXML                     = new SimpleXMLElement($xml);
+
+        // GUARDAMOS EN LA CARPETA EL XML
+        $archivoXML->asXML("assets/docs/paquete/paqueteComprasNew.xml");
+        $cantidadFacturas++;
+
+
+
+        // foreach($checkboxes as $key => $chek){
+        //     $ar = explode("_",$key);
+        //     $factura = Factura::find($ar[1]);
+
+        //     $idsToUpdate[] = (int)$ar[1];
+
+        //     $xml                            = $factura->productos_xml;
+        //     // $uso_cafc                       = $request->input("uso_cafc");
+        //     $archivoXML                     = new SimpleXMLElement($xml);
+
+        //     // GUARDAMOS EN LA CARPETA EL XML
+        //     $archivoXML->asXML("assets/docs/paquete/facturaxmlCompras$ar[1].xml");
+        //     $contado++;
+        // }
+
+        // Ruta de la carpeta que deseas comprimir
+        $rutaCarpeta = "assets/docs/paqueteCompras";
+
+        // Nombre y ruta del archivo TAR resultante
+        $archivoTar = "assets/docs/paqueteCompras.tar";
+
+        // Crear el archivo TAR utilizando la biblioteca PharData
+        $tar = new PharData($archivoTar);
+        $tar->buildFromDirectory($rutaCarpeta);
+
+        // Ruta y nombre del archivo comprimido en formato Gzip
+        $archivoGzip = "assets/docs/paqueteCompras.tar.gz";
+
+        // Comprimir el archivo TAR en formato Gzip
+        // $comandoGzip = "gzip -c $archivoTar > $archivoGzip";
+        // exec($comandoGzip);
+
+        // ESTE ES OTRO CHEEE
+        // Abre el archivo .gz en modo de escritura
+        $gz = gzopen($archivoGzip, 'wb');
+        // Abre el archivo .tar en modo de lectura
+        $archivo = fopen($archivoTar, 'rb');
+        // Lee el contenido del archivo .tar y escribe en el archivo .gz
+        while (!feof($archivo)) {
+            gzwrite($gz, fread($archivo, 8192));
+        }
+        // Cierra los archivos
+        fclose($archivo);
+        gzclose($gz);
+
+        // Leer el contenido del archivo comprimido
+        $contenidoArchivo = file_get_contents($archivoGzip);
+
+        // Calcular el HASH (SHA256) del contenido del archivo
+        $hashArchivo = hash('sha256', $contenidoArchivo);
+
+        $gestion = 2024;
+        $periodo = 8;
+
         $consultaCompras = json_decode(
-            $siat->consultaCompras(
+            $siat->recepcionPaqueteCompras(
                 $url5,
                 $header,
-
                 $codigoAmbiente,
                 $codigoPuntoVenta,
                 $codigoSistema,
@@ -2622,8 +2759,13 @@ class FacturaController extends Controller
                 $cufd,
                 $cuis,
                 $nit,
-                $fecha
 
+                $contenidoArchivo,
+                $cantidadFacturas,
+                $fechaEmicion,
+                $gestion,
+                $hashArchivo,
+                $periodo
             ));
 
         dd($consultaCompras);

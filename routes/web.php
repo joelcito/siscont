@@ -4,8 +4,10 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EventoSignificativoController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegistroCompraController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SincronizacionSiatController;
+use App\Models\RegistroCompra;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -159,6 +161,14 @@ Route::middleware('auth')->group(function(){
 
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
+    });
+
+    Route::prefix('/registrocompras')->group(function(){
+        Route::get('/listado', [RegistroCompraController::class, 'listado']);
+
+        Route::post('/ajaxListado', [RegistroCompraController::class, 'ajaxListado']);
+        Route::post('/agregarRegistroCompra', [RegistroCompraController::class, 'agregarRegistroCompra']);
+
     });
 
     Route::prefix('/eventosignificativo')->group(function(){

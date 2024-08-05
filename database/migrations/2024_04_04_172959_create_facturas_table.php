@@ -30,7 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('punto_venta_id')->nullable();
             $table->foreign('cufd_id')->references('id')->on('cufds');
             $table->unsignedBigInteger('cufd_id')->nullable();
-            
+
             $table->dateTime('fecha')->nullable();
             $table->string('nit')->nullable();
             $table->string('razon_social')->nullable();
@@ -48,6 +48,7 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->text('tipo_factura')->nullable();
             $table->text('uso_cafc')->nullable();
+            $table->string('registro_compra',2)->nullable();
 
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();

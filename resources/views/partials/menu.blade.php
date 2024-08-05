@@ -344,11 +344,11 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="pages/user-profile/followers.html">
+                            <a class="menu-link" href="{{ url('registrocompras/listado') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Followers</span>
+                                <span class="menu-title">Registro de Compras</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
@@ -505,7 +505,7 @@
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
-                        
+
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
