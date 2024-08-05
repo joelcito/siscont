@@ -182,7 +182,6 @@ Route::middleware('auth')->group(function(){
         Route::post('/muestraTableFacturaPaquete', [EventoSignificativoController::class, 'muestraTableFacturaPaquete']);
         Route::post('/mandarFacturasPaquete', [EventoSignificativoController::class, 'mandarFacturasPaquete']);
 
-
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
 
     });
