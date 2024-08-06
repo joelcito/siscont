@@ -168,7 +168,9 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/ajaxListado', [RegistroCompraController::class, 'ajaxListado']);
         Route::post('/agregarRegistroCompra', [RegistroCompraController::class, 'agregarRegistroCompra']);
-
+        Route::post('/ajaxListadoRecepcion', [RegistroCompraController::class, 'ajaxListadoRecepcion']);
+        Route::post('/envioPaquetesFacturasCompra', [RegistroCompraController::class, 'envioPaquetesFacturasCompra']);
+        
     });
 
     Route::prefix('/eventosignificativo')->group(function(){

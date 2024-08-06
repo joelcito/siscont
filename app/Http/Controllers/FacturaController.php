@@ -1843,7 +1843,7 @@ class FacturaController extends Controller
         //     "nit => ".$empresa->nit
         // );
 
-        for ($i = 1; $i <= 50 ; $i++) {
+        for ($i = 1; $i <= 1 ; $i++) {
 
             $sincronizarActividades                         = json_decode($siat->sincronizarActividades(
                 $empresa->api_token,
@@ -2710,17 +2710,20 @@ class FacturaController extends Controller
         // }
 
         // Ruta de la carpeta que deseas comprimir
-        $rutaCarpeta = "assets/docs/paqueteCompras";
+        // $rutaCarpeta = "assets/docs/paqueteCompras"; //funciona!!
+        $rutaCarpeta = "assets/docs/paquete";
 
         // Nombre y ruta del archivo TAR resultante
-        $archivoTar = "assets/docs/paqueteCompras.tar";
+        // $archivoTar = "assets/docs/paqueteCompras.tar"; //funciona!!!
+        $archivoTar = "assets/docs/paquete.tar";
 
         // Crear el archivo TAR utilizando la biblioteca PharData
         $tar = new PharData($archivoTar);
         $tar->buildFromDirectory($rutaCarpeta);
 
         // Ruta y nombre del archivo comprimido en formato Gzip
-        $archivoGzip = "assets/docs/paqueteCompras.tar.gz";
+        // $archivoGzip = "assets/docs/paqueteCompras.tar.gz";//funciona!!!
+        $archivoGzip = "assets/docs/paquete.tar.gz";
 
         // Comprimir el archivo TAR en formato Gzip
         // $comandoGzip = "gzip -c $archivoTar > $archivoGzip";
@@ -2747,6 +2750,25 @@ class FacturaController extends Controller
 
         $gestion = 2024;
         $periodo = 8;
+
+        // dd(
+        //     $url5,
+        //     $header,
+        //     $codigoAmbiente,
+        //     $codigoPuntoVenta,
+        //     $codigoSistema,
+        //     $codigoSucursal,
+        //     $cufd,
+        //     $cuis,
+        //     $nit,
+
+        //     $contenidoArchivo,
+        //     $cantidadFacturas,
+        //     $fechaEmicion,
+        //     $gestion,
+        //     $hashArchivo,
+        //     $periodo
+        // );
 
         $consultaCompras = json_decode(
             $siat->recepcionPaqueteCompras(

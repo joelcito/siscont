@@ -9,6 +9,62 @@
 
 
     <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_recepcioncompra" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Recepcion de Compras</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-6 fw-semibold form-label mb-2 required">Periodo:</label>
+                            <select name="periodo" id="periodo">
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="fs-6 fw-semibold form-label mb-2 required">Gestion</label>
+                            <input type="number" class="form-control fw-bold form-control-solid" name="gestion" id="gestion" required>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-success btn-sm w-100 mt-10" onclick="buscarFacturasRecepcion()"><i class="fa fa-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="tabla_facaturas_enviar">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
+    <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_new_registrocompra" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-1000px">
             <div class="modal-content">
@@ -178,7 +234,8 @@
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <button class="btn btn-sm fw-bold btn-primary" onclick="modalRol()">Nuevo Rol</button>
+                    <button class="btn btn-sm fw-bold btn-info" onclick="modalRececpcionCompras()">Recepcion de registro de Compras</button>
+                    <button class="btn btn-sm fw-bold btn-primary" onclick="modalRol()">Nuevo registro de Compras</button>
                 </div>
                 <!--end::Actions-->
             </div>
@@ -315,6 +372,63 @@
             }else{
                 $("#formulario_new_registrocompra")[0].reportValidity();
             }
+        }
+
+        function modalRececpcionCompras(){
+
+            $('#modal_new_recepcioncompra').modal('show')
+
+            // let datos = {}
+            // $.ajax({
+            //     url: "{{ url('registrocompras/ajaxListadoRecepcion') }}",
+            //     method: "POST",
+            //     data: datos,
+            //     success: function (data) {
+
+
+
+            //         // if(data.estado === 'success'){
+            //         //     $('#tabla_roles').html(data.listado)
+            //         // }else{
+
+            //         // }
+            //     }
+            // })
+        }
+
+        function buscarFacturasRecepcion(){
+             let datos = {
+                periodo:$('#periodo').val(),
+                gestion:$('#gestion').val()
+             }
+            $.ajax({
+                url: "{{ url('registrocompras/ajaxListadoRecepcion') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_facaturas_enviar').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function envioPaquetesFacturasCompra(){
+            let datos = $('#formulario_facturo_compra_a_enviar').serializeArray()
+            $.ajax({
+                url: "{{ url('registrocompras/envioPaquetesFacturasCompra') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_facaturas_enviar').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
         }
 
         // function ajaxListadoTipoPuntoVenta(){
