@@ -250,7 +250,7 @@
                 <div class="card">
                     <div class="card-body py-4">
 
-                        <div id="tabla_roles">
+                        <div id="tabla_roles_tablas">
 
                         </div>
 
@@ -292,7 +292,7 @@
                 data: datos,
                 success: function (data) {
                     if(data.estado === 'success'){
-                        $('#tabla_roles').html(data.listado)
+                        $('#tabla_roles_tablas').html(data.listado)
                     }else{
 
                     }
@@ -353,10 +353,7 @@
                                 text:  "SE REGISTRO CON EXITO",
                             })
                             ajaxListado();
-                            $('#modal_new_registrocompra').modal('hide');
-                            // $('#modal_puntos_ventas').modal('show');
-                            // $('#tabla_puntos_ventas').html(data.listado)
-                            // location.reload();
+                            {{--  $('#modal_new_registrocompra').modal('hide');  --}}
                         }else{
                             // console.log(data, data.detalle.mensajesList)
                             // Swal.fire({

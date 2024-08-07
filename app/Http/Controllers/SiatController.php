@@ -2108,163 +2108,6 @@ class SiatController extends Controller
 
     // ****************** RECEPCION DE COMPRAS ******************
 
-    public function confirmacionCompras(
-        $url4,
-        $header,
-
-        $codigoAmbiente,
-        $codigoPuntoVenta,
-        $codigoSistema,
-        $codigoSucursal,
-        $cufd,
-        $cuis,
-        $nit,
-        $archivo,
-        $cantidadFacturas,
-        $fechaEnvio,
-        $gestion,
-        $hashArchivo,
-        $periodo
-    ){
-         // $this->verificarConeccion();
-        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
-        // $this->verificarConeccion();
-        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
-
-        $wsdl                   = $url4;
-
-        $codigoAmbiente   = $codigoAmbiente;
-        $codigoPuntoVenta = $codigoPuntoVenta;
-        $codigoSistema    = $codigoSistema;
-        $codigoSucursal   = $codigoSucursal;
-        $cufd             = $cufd;
-        $cuis             = $cuis;
-        $nit              = $nit;
-        $archivo          = $archivo;
-        $cantidadFacturas = $cantidadFacturas;
-        $fechaEnvio       = $fechaEnvio;
-        $gestion          = $gestion;
-        $hashArchivo      = $hashArchivo;
-        $periodo          = $periodo;
-
-        $parametros         =  array(
-            'SolicitudConfirmacionCompras' => array(
-                'codigoAmbiente'   => $codigoAmbiente,
-                'codigoPuntoVenta' => $codigoPuntoVenta,
-                'codigoSistema'    => $codigoSistema,
-                'codigoSucursal'   => $codigoSucursal,
-                'cufd'             => $cufd,
-                'cuis'             => $cuis,
-                'nit'              => $nit,
-                'archivo'          => $archivo,
-                'cantidadFacturas' => $cantidadFacturas,
-                'fechaEnvio'       => $fechaEnvio,
-                'gestion'          => $gestion,
-                'hashArchivo'      => $hashArchivo,
-                'periodo'          => $periodo
-            )
-        );
-
-        $aoptions = array(
-            'http' => array(
-                'header' => $header,
-                'timeout' => $this->timeout
-            ),
-        );
-
-        $context = stream_context_create($aoptions);
-
-        try {
-            $client = new \SoapClient($wsdl,[
-                'stream_context' => $context,
-                'cache_wsdl' => WSDL_CACHE_NONE,
-                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
-            ]);
-
-            $resultado = $client->registroEventoSignificativo($parametros);
-
-            $data['estado'] = 'success';
-            $data['resultado'] = $resultado;
-        } catch (SoapFault $fault) {
-            $resultado = false;
-            $data['estado'] = 'error';
-            $data['resultado'] = $resultado;
-            $data['msg'] = $fault;
-        }
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
-    }
-
-    public function consultaCompras(
-        $url5,
-        $header,
-
-        $codigoAmbiente,
-        $codigoPuntoVenta,
-        $codigoSistema,
-        $codigoSucursal,
-        $cufd,
-        $cuis,
-        $nit,
-        $fecha
-    ){
-         // $this->verificarConeccion();
-        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
-        // $this->verificarConeccion();
-        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
-
-        $wsdl                   = $url5;
-
-        $codigoAmbiente   = $codigoAmbiente;
-        $codigoPuntoVenta = $codigoPuntoVenta;
-        $codigoSistema    = $codigoSistema;
-        $codigoSucursal   = $codigoSucursal;
-        $cufd             = $cufd;
-        $cuis             = $cuis;
-        $nit              = $nit;
-        $fecha            = $fecha;
-
-        $parametros         =  array(
-            'SolicitudConsultaCompras' => array(
-                'codigoAmbiente'   => $codigoAmbiente,
-                'codigoPuntoVenta' => $codigoPuntoVenta,
-                'codigoSistema'    => $codigoSistema,
-                'codigoSucursal'   => $codigoSucursal,
-                'cufd'             => $cufd,
-                'cuis'             => $cuis,
-                'nit'              => $nit,
-                'fecha'            => $fecha
-            )
-        );
-
-        $aoptions = array(
-            'http' => array(
-                'header' => $header,
-                'timeout' => $this->timeout
-            ),
-        );
-
-        $context = stream_context_create($aoptions);
-
-        try {
-            $client = new \SoapClient($wsdl,[
-                'stream_context' => $context,
-                'cache_wsdl' => WSDL_CACHE_NONE,
-                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
-            ]);
-
-            $resultado = $client->consultaCompras($parametros);
-
-            $data['estado']    = 'success';
-            $data['resultado'] = $resultado;
-        } catch (SoapFault $fault) {
-            $resultado         = false;
-            $data['estado']    = 'error';
-            $data['resultado'] = $resultado;
-            $data['msg']       = $fault;
-        }
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
-    }
-
     public function recepcionPaqueteCompras(
         $url5,
         $header,
@@ -2339,6 +2182,315 @@ class SiatController extends Controller
             ]);
 
             $resultado = $client->recepcionPaqueteCompras($parametros);
+
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function validacionRecepcionPaqueteCompras(
+        $url5,
+        $header,
+
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $cufd,
+        $cuis,
+        $nit,
+        $codigoRecepcion
+
+    ){
+         // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url5;
+
+        $codigoAmbiente   = $codigoAmbiente;
+        $codigoPuntoVenta = $codigoPuntoVenta;
+        $codigoSistema    = $codigoSistema;
+        $codigoSucursal   = $codigoSucursal;
+        $cufd             = $cufd;
+        $cuis             = $cuis;
+        $nit              = $nit;
+        $codigoRecepcion  = $codigoRecepcion;
+
+        $parametros         =  array(
+            'SolicitudValidacionRecepcionCompras' => array(
+                'codigoAmbiente'   => $codigoAmbiente,
+                'codigoPuntoVenta' => $codigoPuntoVenta,
+                'codigoSistema'    => $codigoSistema,
+                'codigoSucursal'   => $codigoSucursal,
+                'cufd'             => $cufd,
+                'cuis'             => $cuis,
+                'nit'              => $nit,
+                'codigoRecepcion'  => $codigoRecepcion
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->validacionRecepcionPaqueteCompras($parametros);
+
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function anulacionCompra(
+        $url5,
+        $header,
+
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $cufd,
+        $cuis,
+        $nit,
+        $codAutorizacion,
+        $nitProveedor,
+        $nroDuiDim,
+        $nroFactura
+    ){
+         // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url5;
+
+        $codigoAmbiente   = $codigoAmbiente;
+        $codigoPuntoVenta = $codigoPuntoVenta;
+        $codigoSistema    = $codigoSistema;
+        $codigoSucursal   = $codigoSucursal;
+        $cufd             = $cufd;
+        $cuis             = $cuis;
+        $nit              = $nit;
+        $codAutorizacion  = $codAutorizacion;
+        $nitProveedor     = $nitProveedor;
+        $nroDuiDim        = $nroDuiDim;
+        $nroFactura       = $nroFactura;
+
+        $parametros         =  array(
+            'SolicitudAnulacionCompra' => array(
+                'codigoAmbiente'   => $codigoAmbiente,
+                'codigoPuntoVenta' => $codigoPuntoVenta,
+                'codigoSistema'    => $codigoSistema,
+                'codigoSucursal'   => $codigoSucursal,
+                'cufd'             => $cufd,
+                'cuis'             => $cuis,
+                'nit'              => $nit,
+                'codAutorizacion'  => $codAutorizacion,
+                'nitProveedor'     => $nitProveedor,
+                'nroDuiDim'        => $nroDuiDim,
+                'nroFactura'       => $nroFactura
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->anulacionCompra($parametros);
+
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function confirmacionCompras(
+        $url5,
+        $header,
+
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $cufd,
+        $cuis,
+        $nit,
+        $archivo,
+        $cantidadFacturas,
+        $fechaEnvio,
+        $gestion,
+        $hashArchivo,
+        $periodo
+    ){
+         // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url5;
+
+        $codigoAmbiente   = $codigoAmbiente;
+        $codigoPuntoVenta = $codigoPuntoVenta;
+        $codigoSistema    = $codigoSistema;
+        $codigoSucursal   = $codigoSucursal;
+        $cufd             = $cufd;
+        $cuis             = $cuis;
+        $nit              = $nit;
+        $archivo          = $archivo;
+        $cantidadFacturas = $cantidadFacturas;
+        $fechaEnvio       = $fechaEnvio;
+        $gestion          = $gestion;
+        $hashArchivo      = $hashArchivo;
+        $periodo          = $periodo;
+
+        $parametros         =  array(
+            'SolicitudConfirmacionCompras' => array(
+                'codigoAmbiente'   => $codigoAmbiente,
+                'codigoPuntoVenta' => $codigoPuntoVenta,
+                'codigoSistema'    => $codigoSistema,
+                'codigoSucursal'   => $codigoSucursal,
+                'cufd'             => $cufd,
+                'cuis'             => $cuis,
+                'nit'              => $nit,
+                'archivo'          => $archivo,
+                'cantidadFacturas' => $cantidadFacturas,
+                'fechaEnvio'       => $fechaEnvio,
+                'gestion'          => $gestion,
+                'hashArchivo'      => $hashArchivo,
+                'periodo'          => $periodo
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->confirmacionCompras($parametros);
+
+            $data['estado']    = 'success';
+            $data['resultado'] = $resultado;
+        } catch (SoapFault $fault) {
+            $resultado         = false;
+            $data['estado']    = 'error';
+            $data['resultado'] = $resultado;
+            $data['msg']       = $fault;
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function consultaCompras(
+        $url5,
+        $header,
+
+        $codigoAmbiente,
+        $codigoPuntoVenta,
+        $codigoSistema,
+        $codigoSucursal,
+        $cufd,
+        $cuis,
+        $nit,
+        $fecha,
+    ){
+         // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+        // $this->verificarConeccion();
+        // ESO VERIFICAR !!!!!!!!!!!!! OJOOOO !!!!!!!!!!! PIOJO!!!!!!!!!
+
+        $wsdl                   = $url5;
+
+        $codigoAmbiente   = $codigoAmbiente;
+        $codigoPuntoVenta = $codigoPuntoVenta;
+        $codigoSistema    = $codigoSistema;
+        $codigoSucursal   = $codigoSucursal;
+        $cufd             = $cufd;
+        $cuis             = $cuis;
+        $nit              = $nit;
+        $fecha            = $fecha;
+
+        $parametros         =  array(
+            'SolicitudConsultaCompras' => array(
+                'codigoAmbiente'   => $codigoAmbiente,
+                'codigoPuntoVenta' => $codigoPuntoVenta,
+                'codigoSistema'    => $codigoSistema,
+                'codigoSucursal'   => $codigoSucursal,
+                'cufd'             => $cufd,
+                'cuis'             => $cuis,
+                'nit'              => $nit,
+                'fecha'            => $fecha
+            )
+        );
+
+        $aoptions = array(
+            'http' => array(
+                'header' => $header,
+                'timeout' => $this->timeout
+            ),
+        );
+
+        $context = stream_context_create($aoptions);
+
+        try {
+            $client = new \SoapClient($wsdl,[
+                'stream_context' => $context,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE
+            ]);
+
+            $resultado = $client->consultaCompras($parametros);
 
             $data['estado']    = 'success';
             $data['resultado'] = $resultado;

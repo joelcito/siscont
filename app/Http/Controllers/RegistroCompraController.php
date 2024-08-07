@@ -9,6 +9,7 @@ use App\Models\PuntoVenta;
 use App\Models\RegistroCompra;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use PharData;
 use SimpleXMLElement;
@@ -108,22 +109,61 @@ class RegistroCompraController extends Controller
     public function agregarRegistroCompra(Request $request){
         if($request->ajax()){
 
-            $datos = $request->all();
-
+            $datos          = $request->all();
             $usuario        = Auth::user();
             $empresa_id     = $usuario->empresa_id;
             $punto_venta_id = $usuario->punto_venta_id;
             $sucursal_id    = $usuario->sucursal_id;
+            $empresa        = Empresa::find($empresa_id);
 
-            $empresa     = Empresa::find($empresa_id);
-            // $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
-            // $sucursal_objeto    = Sucursal::find($sucursal_id);
+            // $array = array();
 
-            $numeroFacturaEmpresa = $this->numeroFactura($empresa_id, $sucursal_id, $punto_venta_id);
-            $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : ($numeroFacturaEmpresa+1));
+            // $array = collect($datos)->filter(function ($value, $key) {
+            //     return Str::startsWith($key, 'factura_');
+            // })->toArray();
 
-            $datos['nro']               = $numeroFacturaEmpresa;
+            // dd($array, $datos);
+
+            // SACAMOS EL CUIS VIGENTE
+            $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
+
+            $siat = app(SiatController::class);
+
+            $cufdVigente = json_decode(
+                        $siat->verificarConeccion(
+                            $empresa_id,
+                            $sucursal_id,
+                            $cuis->id,
+                            $punto_venta_id,
+                            $empresa->codigo_ambiente
+                        ));
+
+            $datos['nro']               = 0;
             $datos['razonSocialEmisor'] = 'VIRUSNOT SYSTEM S.R.L.';
+
+            $factura                          = new Factura();
+            $factura->usuario_creador_id      = $usuario->id;
+            $factura->empresa_id              = $empresa_id;
+            $factura->sucursal_id             = $sucursal_id;
+            $factura->punto_venta_id          = $punto_venta_id;
+            $factura->cufd_id                 = $cufdVigente->id;
+            $factura->registro_compra         = 'Si';
+            $factura->nit                     = $request->input('nitEmisor');
+            $factura->razon_social            = $request->input('razonSocialEmisor');
+            $factura->numero_factura          = $request->input('numeroFactura');
+            $factura->fecha                   = $request->input('fechaEmision');
+            $factura->total                   = $request->input('montoTotalCompra');
+            $factura->descuento_adicional     = $request->input('descuento');
+            $factura->monto_total_subjeto_iva = $request->input('montoTotalSujetoIva');
+            // $factura->productos_xml           = file_get_contents('assets/docs/paqueteCompras/registroCompra.xml');
+            $factura->productos_xml           = json_encode($datos);
+            $factura->save();
+
+            $numeroFacturaEmpresa = $factura->id;
+            // $numeroFacturaEmpresa = ($numeroFacturaEmpresa == null? 1 : ($numeroFacturaEmpresa+1));
+
+
+            /*
 
             $xml = new \SimpleXMLElement('<registroCompra/>');
 
@@ -150,39 +190,11 @@ class RegistroCompraController extends Controller
             $filePath = public_path('assets/docs/paqueteCompras/registroCompra.xml');
             file_put_contents($filePath, $xmlString);
 
-            
-            // SACAMOS EL CUIS VIGENTE
-            $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
-
-            $siat = app(SiatController::class);
-
-            $cufdVigente = json_decode(
-                        $siat->verificarConeccion(
-                            $empresa_id,
-                            $sucursal_id,
-                            $cuis->id,
-                            $punto_venta_id,
-                            $empresa->codigo_ambiente
-                        ));
-
-
-            $factura                          = new Factura();
-            $factura->usuario_creador_id      = $usuario->id;
-            $factura->empresa_id              = $empresa_id;
-            $factura->sucursal_id             = $sucursal_id;
-            $factura->punto_venta_id          = $punto_venta_id;
-            $factura->cufd_id                 = $cufdVigente->id;
-            $factura->registro_compra         = 'Si';
-            $factura->nit                     = $request->input('nitEmisor');
-            $factura->razon_social            = $request->input('razonSocialEmisor');
-            $factura->numero_factura          = $request->input('numeroFactura');
-            $factura->fecha                   = $request->input('fechaEmision');
-            $factura->total                   = $request->input('montoTotalCompra');
-            $factura->descuento_adicional     = $request->input('descuento');
-            $factura->monto_total_subjeto_iva = $request->input('montoTotalSujetoIva');
             $factura->productos_xml           = file_get_contents('assets/docs/paqueteCompras/registroCompra.xml');
             $factura->save();
 
+
+            */
             $data['text']   = 'Se registro con exito';
             $data['estado'] = 'success';
 
@@ -279,7 +291,6 @@ class RegistroCompraController extends Controller
             $fechaEmicion                   = $fechaActual;
 
             //  ESTE ESTA BIEN
-            // $rutaCarpeta = "assets/docs/paqueteCompras/envioPaqueteCompras";
             $rutaCarpeta = "assets/docs/paqueteCompras/paquete";
             // Verificar si la carpeta existe
             if (!file_exists($rutaCarpeta))
@@ -292,12 +303,10 @@ class RegistroCompraController extends Controller
                 if (is_file($archivo))
                     unlink($archivo);
             }
-            // $file = public_path('assets/docs/paqueteCompras/envioPaqueteCompras.tar.gz');
             $file = public_path('assets/docs/paqueteCompras/paquete.tar.gz');
             if (file_exists($file))
                 unlink($file);
 
-            // $file = public_path('assets/docs/paqueteCompras/envioPaqueteCompras.tar');
             $file = public_path('assets/docs/paqueteCompras/paquete.tar');
             if (file_exists($file))
                 unlink($file);
@@ -315,94 +324,46 @@ class RegistroCompraController extends Controller
             $idsToUpdate = [];
             foreach($checkboxes as $key => $chek){
 
-                // $ar = explode("_", $key);
-                // $factura = Factura::find($ar[1]);
-                // if (!$factura) {
-                //     dd('Error: Factura no encontrada para ID ' . $ar[1]);
-                // }
-
-                // $idsToUpdate[] = (int)$ar[1];
-                // $xml = $factura->productos_xml;
-
-                // // Verificar si el XML es válido
-                // libxml_use_internal_errors(true);
-                // $archivoXML = new SimpleXMLElement($xml);
-                // if ($archivoXML === false) {
-                //     $errors = libxml_get_errors();
-                //     foreach ($errors as $error) {
-                //         echo "Error de XML: " . $error->message;
-                //     }
-                //     libxml_clear_errors();
-                //     dd('Error: XML mal formado para la factura ' . $ar[1]);
-                // }
-
-                // // Guardar el archivo XML
-                // $rutaArchivo = "assets/docs/paqueteCompras/envioPaqueteCompras/facturaxmlCompras_$ar[1].xml";
-                // $archivoXML->asXML($rutaArchivo);
-
-                // // Verificar que el archivo se haya guardado correctamente
-                // if (!file_exists($rutaArchivo)) {
-                //     dd('Error: No se pudo guardar el archivo XML para la factura ' . $ar[1]);
-                // }
-
-                // $cantidadFacturas++;
-
-
-
-                $ar = explode("_",$key);
-                $factura = Factura::find($ar[1]);
-
-                $idsToUpdate[] = (int)$ar[1];
-
-                $xml                            = $factura->productos_xml;
-                // $uso_cafc                       = $request->input("uso_cafc");
-                $archivoXML                     = new SimpleXMLElement($xml);
-
-                // GUARDAMOS EN LA CARPETA EL XML
-                // $archivoXML->asXML("assets/docs/paqueteCompras/envioPaqueteCompras/facturaxmlCompras_$ar[1].xml");
-                $archivoXML->asXML("assets/docs/paqueteCompras/paquete/facturaxmlCompras_$ar[1].xml");
                 $cantidadFacturas++;
+
+                $ar            = explode("_",$key);
+                $factura       = Factura::find($ar[1]);
+                $idsToUpdate[] = (int)$ar[1];
+                $xml           = $factura->productos_xml;
+
+                // Decode the JSON string into a PHP associative array
+                $array = json_decode($xml, true);
+                $array['nro'] = $cantidadFacturas;
+
+
+                $xml = new \SimpleXMLElement('<registroCompra/>');
+
+                // Añadir los elementos al XML de manera iterativa
+                foreach ($array as $key => $value)
+                    $xml->addChild($key, $value);
+
+                // Convertir el objeto SimpleXMLElement a una cadena XML
+                $xmlString = $xml->asXML();
+
+                // Reemplazar la declaración XML por la deseada
+                $xmlString = str_replace('<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>', $xmlString);
+
+                $rutaCarpeta = "assets/docs/paqueteCompras/paquete";
+                // Verificar si la carpeta existe
+                if (!file_exists($rutaCarpeta))
+                    mkdir($rutaCarpeta, 0755, true);
+
+                // Guardar el contenido XML en un archivo
+                $filePath = public_path("assets/docs/paqueteCompras/paquete/facturaxmlCompras_$ar[1].xml");
+                file_put_contents($filePath, $xmlString);
+
             }
 
             // Ruta de la carpeta que deseas comprimir
-            // $rutaCarpeta = "assets/docs/paqueteCompras/envioPaqueteCompras";
             $rutaCarpeta = "assets/docs/paqueteCompras/paquete";
 
             // Nombre y ruta del archivo TAR resultante
-            // $archivoTar = "assets/docs/paqueteCompras/envioPaqueteCompras.tar";
             $archivoTar = "assets/docs/paqueteCompras/paquete.tar";
-
-
-
-            // // Crear el archivo TAR utilizando la biblioteca PharData
-            // $tar = new PharData($archivoTar);
-            // $tar->buildFromDirectory($rutaCarpeta);
-
-            // // Ruta y nombre del archivo comprimido en formato Gzip
-            // $archivoGzip = "assets/docs/paqueteCompras/envioPaqueteCompras.tar.gz";
-
-            // // Abre el archivo .gz en modo de escritura
-            // $gz = gzopen($archivoGzip, 'wb');
-            // // Abre el archivo .tar en modo de lectura
-            // $archivo = fopen($archivoTar, 'rb');
-            // if ($archivo === false) {
-            //     dd('Error: No se puede abrir el archivo TAR para lectura');
-            // }
-
-            // // Lee el contenido del archivo .tar y escribe en el archivo .gz
-            // while (!feof($archivo)) {
-            //     gzwrite($gz, fread($archivo, 8192));
-            // }
-
-            // // Cierra los archivos
-            // fclose($archivo);
-            // gzclose($gz);
-
-            // // Verificar que el archivo gzip se haya creado correctamente
-            // if (!file_exists($archivoGzip)) {
-            //     dd('Error: No se pudo crear el archivo Gzip');
-            // }
-
 
             // ******************* ESTE SIRVE *******************
             // Crear el archivo TAR utilizando la biblioteca PharData
@@ -410,7 +371,6 @@ class RegistroCompraController extends Controller
             $tar->buildFromDirectory($rutaCarpeta);
 
             // Ruta y nombre del archivo comprimido en formato Gzip
-            // $archivoGzip = "assets/docs/paqueteCompras/envioPaqueteCompras.tar.gz";
             $archivoGzip = "assets/docs/paqueteCompras/paquete.tar.gz";
 
             // ESTE ES OTRO CHEEE
@@ -432,42 +392,13 @@ class RegistroCompraController extends Controller
             // // ******************* ESTE SIRVE *******************
             // Leer el contenido del archivo comprimido
             $contenidoArchivo = file_get_contents($archivoGzip);
-
             // Calcular el HASH (SHA256) del contenido del archivo
             $hashArchivo = hash('sha256', $contenidoArchivo);
-
             // // ******************* ESTE SIRVE *******************
 
 
-            // // Leer el contenido del archivo comprimido
-            // $contenidoArchivo = file_get_contents($archivoGzip);
-            // if ($contenidoArchivo === false) {
-            //     dd('Error: No se pudo leer el contenido del archivo Gzip');
-            // }
-
-            // // Calcular el HASH (SHA256) del contenido del archivo
-            // $hashArchivo = hash('sha256', $contenidoArchivo);
-
             $gestion = 2024;
             $periodo = 8;
-
-            // dd(
-            //     "url5 =< ".$url5,
-            //     "header =< ".$header,
-            //     "codigoAmbiente =< ".$codigoAmbiente,
-            //     "codigoPuntoVenta =< ".$codigoPuntoVenta,
-            //     "codigoSistema =< ".$codigoSistema,
-            //     "codigoSucursal =< ".$codigoSucursal,
-            //     "cufd =< ".$cufd,
-            //     "cuis =< ".$cuis,
-            //     "nit =< ".$nit,
-            //     "contenidoArchivo =< ".$contenidoArchivo,
-            //     "cantidadFacturas =< ".$cantidadFacturas,
-            //     "fechaEmicion =< ".$fechaEmicion,
-            //     "gestion =< ".$gestion,
-            //     "hashArchivo =< ".$hashArchivo,
-            //     "periodo =< ".$periodo
-            // );
 
             $consultaCompras = json_decode(
                 $siat->recepcionPaqueteCompras(
@@ -480,7 +411,7 @@ class RegistroCompraController extends Controller
                     $cufd,
                     $cuis,
                     $nit,
-    
+
                     $contenidoArchivo,
                     $cantidadFacturas,
                     $fechaEmicion,
@@ -488,117 +419,110 @@ class RegistroCompraController extends Controller
                     $hashArchivo,
                     $periodo
                 ));
-                
-            dd($resultados, $consultaCompras);
 
 
-            
-            // //  ESTE ESTA BIEN
-            // $rutaCarpeta = "assets/docs/paqueteCompras/envioPaqueteCompras";
-            // // Verificar si la carpeta existe
-            // if (!file_exists($rutaCarpeta))
-            //     mkdir($rutaCarpeta, 0755, true);
+            if($consultaCompras->estado == 'success'){
 
-            // // Obtener lista de archivos en la carpeta
-            // $archivos = glob($rutaCarpeta . '/*');
-            // // Eliminar cada archivo
-            // foreach ($archivos as $archivo) {
-            //     if (is_file($archivo))
-            //         unlink($archivo);
-            // }
-            // $file = public_path('assets/docs/paqueteCompras/envioPaqueteCompras.tar.gz');
-            // if (file_exists($file))
-            //     unlink($file);
+                // dd($consultaCompras->resultado->RespuestaServicioFacturacion->transaccion);
+                if($consultaCompras->resultado->RespuestaServicioFacturacion->transaccion){
+                    // Realizar la actualización utilizando Eloquent
 
-            // $file = public_path('assets/docs/paqueteCompras/envioPaqueteCompras.tar');
-            // if (file_exists($file))
-            //     unlink($file);
+                    Factura::whereIn('id', $idsToUpdate)->update([
+                        'codigo_descripcion'    => $consultaCompras->resultado->RespuestaServicioFacturacion->codigoDescripcion,
+                        'codigo_recepcion'      => $consultaCompras->resultado->RespuestaServicioFacturacion->codigoRecepcion
+                    ]);
 
-            // $idsToUpdate      = [];
-            // $resultados       = [];
-            // $cantidadFacturas = 0;
+                    $validacionRecepcionPaqueteCompras = json_decode(
+                        $siat->validacionRecepcionPaqueteCompras(
+                            $url5,
+                            $header,
+                            $codigoAmbiente,
+                            $codigoPuntoVenta,
+                            $codigoSistema,
+                            $codigoSucursal,
+                            $cufd,
+                            $cuis,
+                            $nit,
+                            $consultaCompras->resultado->RespuestaServicioFacturacion->codigoRecepcion
+                        ));
 
-            // $filtered_array = array_filter($datos, function($value, $key) use (&$resultados, &$cantidadFacturas) {
-            //     if (strpos($key, 'factura_') === 0 && $value === 'on') {
-            //         // Realizar otras operaciones
-            //         $numero = str_replace('factura_', '', $key);
-            //         $resultados[] = (int) $numero;
+                    // $confirmacionCompras = json_decode(
+                    //     $siat->confirmacionCompras(
+                    //         $url5,
+                    //         $header,
+                    //         $codigoAmbiente,
+                    //         $codigoPuntoVenta,
+                    //         $codigoSistema,
+                    //         $codigoSucursal,
+                    //         $cufd,
+                    //         $cuis,
+                    //         $nit,
 
-            //         $factura = Factura::find($numero);
-                    
-            //         $xml                            = $factura->productos_xml;
-            //         $archivoXML                     = new SimpleXMLElement($xml);
+                    //         $contenidoArchivo,
+                    //         $cantidadFacturas,
+                    //         $fechaEmicion,
+                    //         $gestion,
+                    //         $hashArchivo,
+                    //         $periodo
+                    //     ));
 
-            //         // GUARDAMOS EN LA CARPETA EL XML
-            //         $archivoXML->asXML("assets/docs/paqueteCompras/envioPaqueteCompras/facturaxmlCompras_$numero.xml");
-            //         $cantidadFacturas++;
+                    $fecha           = '2024-08-06';
+                    $codAutorizacion = 0;
+                      // $nitProveedor    = '1111111010';
+                    $nitProveedor = '527898027';
+                    $nroDuiDim    = 0;
+                    $nroFactura   = 3;
 
-            //         // Retornar true para mantener este elemento en el array filtrado
-            //         return true;
-            //     }
-            //     // Retornar false para excluir este elemento del array filtrado
-            //     return false;
-            // }, ARRAY_FILTER_USE_BOTH);
-
-            // // Ruta de la carpeta que deseas comprimir
-            // $rutaCarpeta = "assets/docs/paqueteCompras/envioPaqueteCompras";
-
-            // // Nombre y ruta del archivo TAR resultante
-            // $archivoTar = "assets/docs/paqueteCompras/envioPaqueteCompras.tar";
-
-            // // Crear el archivo TAR utilizando la biblioteca PharData
-            // $tar = new PharData($archivoTar);
-            // $tar->buildFromDirectory($rutaCarpeta);
-
-            // // Ruta y nombre del archivo comprimido en formato Gzip
-            // $archivoGzip = "assets/docs/paqueteCompras/envioPaqueteCompras.tar.gz";
-
-            // // ESTE ES OTRO CHEEE
-            // // Abre el archivo .gz en modo de escritura
-            // $gz = gzopen($archivoGzip, 'wb');
-            // // Abre el archivo .tar en modo de lectura
-            // $archivo = fopen($archivoTar, 'rb');
-            // // Lee el contenido del archivo .tar y escribe en el archivo .gz
-            // while (!feof($archivo)) {
-            //     gzwrite($gz, fread($archivo, 8192));
-            // }
-            // // Cierra los archivos
-            // fclose($archivo);
-            // gzclose($gz);
-
-            // // Leer el contenido del archivo comprimido
-            // $contenidoArchivo = file_get_contents($archivoGzip);
-
-            // // Calcular el HASH (SHA256) del contenido del archivo
-            // $hashArchivo = hash('sha256', $contenidoArchivo);
-
-            // $gestion = 2024;
-            // $periodo = 8;
-
-            // $consultaCompras = json_decode(
-            //     $siat->recepcionPaqueteCompras(
-            //         $url5,
-            //         $header,
-            //         $codigoAmbiente,
-            //         $codigoPuntoVenta,
-            //         $codigoSistema,
-            //         $codigoSucursal,
-            //         $cufd,
-            //         $cuis,
-            //         $nit,
-    
-            //         $contenidoArchivo,
-            //         $cantidadFacturas,
-            //         $fechaEmicion,
-            //         $gestion,
-            //         $hashArchivo,
-            //         $periodo
-            //     ));
-                
-            // dd($resultados, $filtered_array, $consultaCompras);
+                    $consultaCompras1 = json_decode(
+                        $siat->consultaCompras(
+                            $url5,
+                            $header,
+                            $codigoAmbiente,
+                            $codigoPuntoVenta,
+                            $codigoSistema,
+                            $codigoSucursal,
+                            $cufd,
+                            $cuis,
+                            $nit,
+                            $fecha
+                        ));
 
 
-            
+
+                    // $anulacionCompra = json_decode(
+                    //     $siat->anulacionCompra(
+                    //         $url5,
+                    //         $header,
+                    //         $codigoAmbiente,
+                    //         $codigoPuntoVenta,
+                    //         $codigoSistema,
+                    //         $codigoSucursal,
+                    //         $cufd,
+                    //         $cuis,
+                    //         $nit,
+
+                    //         $codAutorizacion,
+                    //         $nitProveedor,
+                    //         $nroDuiDim,
+                    //         $nroFactura
+                    //     ));
+
+                    dd(
+                        $consultaCompras,
+                        $validacionRecepcionPaqueteCompras,
+                        // $confirmacionCompras,
+                        $consultaCompras1
+                    );
+
+                }else{
+
+                }
+            }else{
+
+            }
+
+            $data['text']   = 'Se registro con exito';
+            $data['estado'] = 'success';
 
         }else{
             $data['text']   = 'No existe';

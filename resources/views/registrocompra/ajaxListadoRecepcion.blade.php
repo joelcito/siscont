@@ -3,12 +3,13 @@
     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
         <thead>
             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                <th class="min-w-125px">Id</th>
-                <th class="min-w-125px">Nit</th>
-                <th class="min-w-125px">Razon Social</th>
-                <th class="min-w-125px">Monto</th>
-                <th class="min-w-125px">Fecha</th>
-                <th class="">Envio</th>
+                <th >Id</th>
+                <th >Nit</th>
+                <th>Numero</th>
+                <th >Razon Social</th>
+                <th >Monto</th>
+                <th >Fecha</th>
+                <th >Envio</th>
             </tr>
         </thead>
         <tbody class="text-gray-600 fw-semibold">
@@ -16,6 +17,7 @@
                 <tr>
                     <td>{{ $r->id }}</td>
                     <td>{{ $r->nit }}</td>
+                    <td>{{ $r->numero_factura }}</td>
                     <td>{{ $r->razon_social }}</td>
                     <td>{{ $r->total }}</td>
                     <td>{{ $r->fecha }}</td>

@@ -2,19 +2,27 @@
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-            <th class="min-w-125px">Nombre</th>
-            <th class="min-w-125px">Descripcion</th>
-            <th class="text-end min-w-100px">Actions</th>
+            <th>ID</th>
+            <th>Nit</th>
+            <th>Razon Social</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Estado SIAT</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
         @forelse ( $registroCompra as $r)
             <tr>
-                <td>{{ $r->nombres }}</td>
-                <td>{{ $r->descripcion }}</td>
+                <td>{{ $r->id }}</td>
+                <td>{{ $r->nit }}</td>
+                <td>{{ $r->razon_social }}</td>
+                <td>{{ $r->fecha }}</td>
+                <td>{{ $r->total }}</td>
+                <td>{{ $r->codigo_descripcion }}</td>
                 <td>
-                    <button class="btn btn-icon btn-sm btn-warning"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-icon btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                    {{--  <button class="btn btn-icon btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-icon btn-sm btn-danger"><i class="fa fa-trash"></i></button>  --}}
                     {{-- <a class="btn btn-sm btn-info btn-icon" title="Configuraciones de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a> --}}
                 </td>
             </tr>
