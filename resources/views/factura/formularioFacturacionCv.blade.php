@@ -178,7 +178,6 @@
                                         <!-- Aquí se agregarán las filas del carrito -->
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
