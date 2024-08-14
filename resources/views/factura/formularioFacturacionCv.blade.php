@@ -248,7 +248,6 @@
 
         function agregarProducto(){
 
-
             /*
 
             if($("#formulario_venta")[0].checkValidity()){
