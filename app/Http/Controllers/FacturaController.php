@@ -840,7 +840,6 @@ class FacturaController extends Controller
                      'factura_id' => $facturaVerdad->id
                  ]);
 
-
                 // // ESTO ES PARA LA FACTURA LA CREACION
                 // $facturaVerdad                          = new Factura();
                 // $facturaVerdad->creador_id              = Auth::user()->id;
