@@ -44,7 +44,7 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/projects.html">
                                 <span class="menu-bullet">
@@ -53,7 +53,7 @@
                                 <span class="menu-title">Usuarios</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
                         <div class="menu-item">
@@ -68,7 +68,7 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/documents.html">
                                 <span class="menu-bullet">
@@ -77,7 +77,7 @@
                                 <span class="menu-title">Documents</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
                         <div class="menu-item">
@@ -92,7 +92,7 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/activity.html">
                                 <span class="menu-bullet">
@@ -101,7 +101,7 @@
                                 <span class="menu-title">Activity</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                     </div>
                     <!--end:Menu sub-->
@@ -136,7 +136,7 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/projects.html">
                                 <span class="menu-bullet">
@@ -145,10 +145,10 @@
                                 <span class="menu-title">Usuarios</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/campaigns.html">
                                 <span class="menu-bullet">
@@ -157,10 +157,10 @@
                                 <span class="menu-title">Campaigns</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/documents.html">
                                 <span class="menu-bullet">
@@ -169,10 +169,10 @@
                                 <span class="menu-title">Documents</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/followers.html">
                                 <span class="menu-bullet">
@@ -181,10 +181,10 @@
                                 <span class="menu-title">Followers</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/activity.html">
                                 <span class="menu-bullet">
@@ -193,7 +193,7 @@
                                 <span class="menu-title">Activity</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                     </div>
                     <!--end:Menu sub-->
@@ -220,7 +220,7 @@
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/overview.html">
                                 <span class="menu-bullet">
@@ -229,7 +229,7 @@
                                 <span class="menu-title">Empresa</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
                         <div class="menu-item">
@@ -287,13 +287,13 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Facturacion</span>
+                                <span class="menu-title">FacturacionNewDesarrollo</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="pages/user-profile/activity.html">
                                 <span class="menu-bullet">
@@ -302,7 +302,7 @@
                                 <span class="menu-title">Activity</span>
                             </a>
                             <!--end:Menu link-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                     </div>
                     <!--end:Menu sub-->
