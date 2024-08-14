@@ -63,7 +63,6 @@ class FacturaController extends Controller
 
 
         // SACAMOS EL CUFD VIGENTE
-        // dd($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
         $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
         $servicios = Servicio::where('empresa_id', $empresa_id)
@@ -1795,7 +1794,61 @@ class FacturaController extends Controller
     }
 
 
+    public function formularioFacturacionCv(Request $request) {
 
+        $usuario = Auth::user();
+
+        $empresa_id     = $usuario->empresa_id;
+        $punto_venta_id = $usuario->punto_venta_id;
+        $sucursal_id    = $usuario->sucursal_id;
+
+        $empresa     = Empresa::find($empresa_id);
+        $punto_venta = PuntoVenta::find($punto_venta_id);
+        $sucursal    = Sucursal::find($sucursal_id);
+
+        $url1   = $empresa->url_facturacionCodigos;
+        $header = $empresa->api_token;
+
+        // para el siat LA CONECCION
+        $siat = app(SiatController::class);
+        $verificacionSiat = json_decode($siat->verificarComunicacion(
+            $url1,
+            $header
+        ));
+
+        // SACAMOS EL CUIS VIGENTE
+        $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
+
+        // SACAMOS EL CUFD VIGENTE
+        $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
+
+        $servicios = Servicio::where('empresa_id', $empresa_id)
+                            ->get();
+
+        return view('factura.formularioFacturacionCv')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
+    }
+
+    public function ajaxListadoServicios(Request $request){
+
+        if($request->ajax()){
+
+            $usuario = Auth::user();
+            $empresa_id = $usuario->empresa_id;
+
+            $servicios = Servicio::where('empresa_id', $empresa_id)
+                                ->get();
+
+            $data['listado'] = view('factura.ajaxListadoServicios')->with(compact('servicios'))->render();
+            $data['estado'] = 'success';
+
+        }else{
+
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
+    }
 
 
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
