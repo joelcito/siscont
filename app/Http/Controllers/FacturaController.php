@@ -683,7 +683,7 @@ class FacturaController extends Controller
                         $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                         $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                        $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxml.xml');
+                        $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml");
                         $facturaVerdad->codigo_descripcion      = $codigo_descripcion;
                         $facturaVerdad->codigo_recepcion        = $for->resultado->RespuestaServicioFacturacion->codigoRecepcion;
                         $facturaVerdad->codigo_transaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
