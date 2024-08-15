@@ -164,13 +164,16 @@
                             </form>
                             {{--  <div id="tabla_detalles" style="display: none">  --}}
                             <div id="tabla_detalles">
-                                <h3>AQUI OTRO</h3>
-
-                                <table id="carrito" border="1">
+                                <h2>Carrito de Compras</h2>
+                                <table id="carrito" class="display">
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
+                                            <th>Servicio / Producto</th>
                                             <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Total</th>
+                                            <th>Descuento</th>
+                                            <th>Sub Total</th>
                                             <th>Acción</th>
                                         </tr>
                                     </thead>
@@ -203,6 +206,7 @@
 
         var arrayProductos          = [];
         var arrayPagos              = [];
+        var table;
 
         $(document).ready(function() {
 
@@ -211,6 +215,26 @@
             //ajaxListadoServicios();
 
             $("#serivicio_id_venta").select2();
+
+            // Inicializa el DataTable
+            table = $('#carrito').DataTable({
+                lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
+                dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
+                language: {
+                paginate: {
+                    first : 'Primero',
+                    last : 'Último',
+                    next : 'Siguiente',
+                    previous: 'Anterior'
+                },
+                search : 'Buscar:',
+                lengthMenu: 'Mostrar _MENU_ registros por página',
+                info : 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+                emptyTable: 'No hay datos disponibles'
+                },
+                order:[],
+                responsive: true
+            });
 
         });
 
@@ -247,6 +271,64 @@
         }
 
         function agregarProducto(){
+            var servicioDatos = JSON.parse($("#serivicio_id_venta").val())
+            let servicio = {
+                servicio_id : servicioDatos.id,
+                descripcion : servicioDatos.descripcion,
+                precio      : servicioDatos.precio,
+                numero_serie: $("#numero_serie").val(),
+                numero_imei : $("#codigo_imei").val(),
+                empresa_id  : servicioDatos.empresa_id,
+                cantidad    : $('#cantidad_venta').val()
+            }
+
+            let id            = servicioDatos.id;
+            var filaExistente = table.row("#producto-" + id);
+            var precio        = servicioDatos.precio;
+            var cantidad      = $('#cantidad_venta').val();
+            var total         = precio*cantidad;
+
+            if (filaExistente.node()) {
+
+                // Si el producto ya está en el carrito, aumenta la cantidad en 2
+                var cantidadCell   = $(filaExistente.node()).find('.cantidad');
+                var cantidadActual = parseInt(cantidadCell.text());
+                var nuevaCantidad  = cantidadActual + parseInt(cantidad);
+                cantidadCell.text(nuevaCantidad);
+
+                // Actualiza el total
+                nuevoTotal = nuevaCantidad * precio
+                var totalCell = $(filaExistente.node()).find('.total');
+                totalCell.text((nuevoTotal).toFixed(2));
+
+                var subTotalCell = $(filaExistente.node()).find('.subTotal');
+                var valorSubTotal = parseFloat(subTotalCell.text())
+
+                console.log(valorSubTotal, nuevoTotal, $('#descuento_'+id).val())
+
+                subTotalCell.text((nuevoTotal - parseFloat($('#descuento_'+id).val())).toFixed(2));
+
+
+            } else {
+                var subTotal      = precio*cantidad;
+
+                table.row.add([
+                    servicioDatos.descripcion,
+                    precio,
+                    "<span class='cantidad'>"+cantidad+"</span>",
+                    "<span class='total'>"+total+"</span>",
+                    '<input class="form-control" type="text" name="descuento_'+id+'" id="descuento_'+id+'" value="0" onchange="ejecutarDescuento(this)">',
+                    "<span class='subTotal'>"+subTotal+"</span>",
+                    "<button class='eliminar btn btn-icon btn-danger btn-circle btn-sm'><i class='fa fa-trash'></button>"
+                ]).node().id = 'producto-' + id;
+                table.draw(false);
+            }
+
+
+
+
+
+
             /*
 
             if($("#formulario_venta")[0].checkValidity()){
@@ -269,6 +351,37 @@
             }
             */
 
+        }
+
+        function ejecutarDescuento(valor){
+
+            let valorDescuento = valor.value;
+            let valorId        = valor.id;
+            let id             = valorId.split("_")[1]
+            var filaExistente  = table.row("#producto-" + id);
+            if (filaExistente.node()) {
+                var totalCell = $(filaExistente.node()).find('.total');
+                var valorTotal = parseFloat(totalCell.text());
+                var subTotalCell = $(filaExistente.node()).find('.subTotal');
+                if(valorDescuento < valorTotal){
+                    subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
+                }else{
+                    Swal.fire({
+                        icon:'error',
+                        title: "ERROR!",
+                        text:  "El valor de descuento no debe ser mayor al valor Total",
+                        timer: 4000
+                    })
+                    $('#descuento_'+id).val(valorTotal-parseFloat(subTotalCell.text()))
+                }
+            } else {
+                Swal.fire({
+                    icon:'error',
+                    title: "ERROR!",
+                    text:  "Servicion no encontrado",
+                    timer: 4000
+                })
+            }
         }
 
         /*
