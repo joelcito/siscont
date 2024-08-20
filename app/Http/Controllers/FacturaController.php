@@ -1824,7 +1824,16 @@ class FacturaController extends Controller
         $servicios = Servicio::where('empresa_id', $empresa_id)
                             ->get();
 
-        return view('factura.formularioFacturacionCv')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
+        // TIP DE DOCUMENTO
+        $tipoDocumento = SiatTipoDocumentoIdentidad::all();
+
+        // TIP METO DE PAGO
+        $tipoMetodoPago = SiatTipoMetodoPagos::all();
+
+        // TIPO MONEDA
+        $tipoMonedas = SiatTipoMoneda::all();
+
+        return view('factura.formularioFacturacionCv')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'));
     }
 
     public function ajaxListadoServicios(Request $request){
@@ -1887,7 +1896,12 @@ class FacturaController extends Controller
                 $clientes = $query->orderBy('id', 'desc')->limit(10)->get();
             }
 
-            dd($request->all(), $clientes);
+            // dd($clientes, $request->all());
+
+            // $data['text']   = 'No existe';
+            $data['estado'] = 'success';
+            $data['cantidad'] = count($clientes);
+            $data['listado'] = view('factura.ajaxListadoClientesBusqueda')->with(compact('clientes'))->render();
 
         }else{
             $data['text']   = 'No existe';
