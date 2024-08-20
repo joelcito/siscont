@@ -98,33 +98,11 @@
                         <hr>
                         {{--  <div id="tabla_ventas" style="display: none">  --}}
                         <div id="tabla_ventas">
-                            <h4 class="text-info text-center">CLIENTE SELECCIONADO</h4>
-                            <form id="formulario_cliente_escogido">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Nombre</label>
-                                        <input type="text" class="form-control fw-bold form-control-solid" name="nombre_escogido" id="nombre_escogido">
-                                        <input type="hidden" name="cliente_id_escogido" id="cliente_id_escogido">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Ap Paterno</label>
-                                        <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_escogido" id="ap_paterno_escogido">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Ap Materno</label>
-                                        <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_escogido" id="ap_materno_escogido">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Cedula</label>
-                                        <input type="text" class="form-control fw-bold form-control-solid" name="cedula_escogido" id="cedula_escogido">
-                                    </div>
-                                </div>
-                            </form>
                             <form id="formulario_venta">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label class="required fw-semibold fs-6 mb-2">Servicio / Producto</label>
-                                        <select name="serivicio_id_venta" id="serivicio_id_venta" class="form-control" onchange="identificaSericio(this)" required>
+                                        <select name="serivicio_id_venta" id="serivicio_id_venta" class="form-control form-control-sm" onchange="identificaSericio(this)" required>
                                             <option value="">SELECCIONE</option>
                                             @foreach ($servicios as $s)
                                             <option value="{{ $s }}">{{ $s->descripcion }}</option>
@@ -133,35 +111,36 @@
                                     </div>
                                     <div class="col-md-8">
                                         <label class="required fw-semibold fs-6 mb-2">Descripcion Adicional</label>
-                                        <input type="text" class="form-control" id="descripcion_adicional" name="descripcion_adicional" required>
+                                        <input type="text" class="form-control form-control-sm" id="descripcion_adicional" name="descripcion_adicional" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Numero Serie</label>
-                                        <input type="number" class="form-control" id="numero_serie" name="numero_serie" min="1">
+                                        <input type="number" class="form-control form-control-sm" id="numero_serie" name="numero_serie" min="1">
                                     </div>
                                     <div class="col-md-3">
                                         <label class="required fw-semibold fs-6 mb-2">Codigo Imei</label>
-                                        <input type="number" class="form-control" id="codigo_imei" name="codigo_imei" min="1">
+                                        <input type="number" class="form-control form-control-sm" id="codigo_imei" name="codigo_imei" min="1">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Precio</label>
-                                        <input type="number" readonly class="form-control" id="precio_venta" name="precio_venta" value="0" min="1" required>
+                                        <input type="number" readonly class="form-control form-control-sm" id="precio_venta" name="precio_venta" value="0" min="1" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
-                                        <input type="number" class="form-control" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
+                                        <input type="number" class="form-control form-control-sm" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
                                     </div>
                                     <div class="col-md-1">
                                         <label class="required fw-semibold fs-6 mb-2">Total</label>
-                                        <input type="number" class="form-control" id="total_venta" name="total_venta" value="0" min="1" required>
+                                        <input type="number" class="form-control form-control-sm" id="total_venta" name="total_venta" value="0" min="1" required>
                                     </div>
                                     <div class="col-md-1">
-                                        <button class="btn btn-success btn-sm w-100 mt-9" type="button" onclick="agregarProducto()"><i class="fa fa-plus"></i> Agregar</button>
+                                        <button class="btn btn-success btn-circle btn-sm btn-icon mt-9" type="button" onclick="agregarProducto()" title="Agregar al Carro de compras"><i class="fa fa-shopping-cart"></i> +</button>
                                     </div>
                                 </div>
                             </form>
+                            <hr>
                             {{--  <div id="tabla_detalles" style="display: none">  --}}
                             <div id="tabla_detalles">
                                 <h2>Carrito de Compras</h2>
@@ -180,8 +159,46 @@
                                     <tbody>
                                         <!-- Aquí se agregarán las filas del carrito -->
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="5">DESCUENTO ADICIONAL</th>
+                                            <th colspan="2">MONTO TOTAL</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <input class="form-control form-control-sm" name="" id="" type="number" value="0">
+                                            </td>
+                                            <td colspan="2">
+                                                <input class="form-control form-control-sm" name="" id="" type="number" readonly>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
+                            <hr>
+                            <h4 class="text-info text-center">CLIENTE SELECCIONADO</h4>
+                            <form id="formulario_cliente_escogido">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Cedula</label>
+                                        <input type="text" class="form-control form-control-sm buscar-persona" name="cedula_escogido" id="cedula_escogido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Nombre</label>
+                                        <input type="text" class="form-control form-control-sm buscar-persona" name="nombre_escogido" id="nombre_escogido">
+                                        <input type="text" name="cliente_id_escogido" id="cliente_id_escogido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Ap Paterno</label>
+                                        <input type="text" class="form-control form-control-sm buscar-persona" name="ap_paterno_escogido" id="ap_paterno_escogido">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="fs-6 fw-semibold form-label mb-2">Ap Materno</label>
+                                        <input type="text" class="form-control form-control-sm buscar-persona" name="ap_materno_escogido" id="ap_materno_escogido">
+                                    </div>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                     <!--end::Card body-->
@@ -219,7 +236,8 @@
             // Inicializa el DataTable
             table = $('#carrito').DataTable({
                 lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
-                dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
+                // dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
+                dom: '<"dt-head row"><"clear">t', // Use dom for basic layout
                 language: {
                 paginate: {
                     first : 'Primero',
@@ -234,6 +252,16 @@
                 },
                 order:[],
                 responsive: true
+            });
+
+
+            $('.buscar-persona').on('keyup', function() {
+
+                ajaxListadoClientes();
+
+                // var valor = $(this).val();
+                // var nombreInput = $(this).attr('name');
+                // console.log('Valor:', valor, 'Nombre del input:', nombreInput);
             });
 
         });
@@ -252,10 +280,6 @@
                     }
                 }
             })
-        }
-
-        function agregarCarrito(){
-
         }
 
         function identificaSericio(selected){
@@ -317,7 +341,7 @@
                     precio,
                     "<span class='cantidad'>"+cantidad+"</span>",
                     "<span class='total'>"+total+"</span>",
-                    '<input class="form-control" type="text" name="descuento_'+id+'" id="descuento_'+id+'" value="0" onchange="ejecutarDescuento(this)">',
+                    '<input class="form-control form-control-sm" type="text" name="descuento_'+id+'" id="descuento_'+id+'" value="0" onchange="ejecutarDescuento(this)">',
                     "<span class='subTotal'>"+subTotal+"</span>",
                     "<button class='eliminar btn btn-icon btn-danger btn-circle btn-sm'><i class='fa fa-trash'></button>"
                 ]).node().id = 'producto-' + id;
@@ -382,6 +406,27 @@
                     timer: 4000
                 })
             }
+        }
+
+        function ajaxListadoClientes(){
+            let datos = $('#formulario_cliente_escogido').serializeArray();
+            $.ajax({
+                url   : "{{ url('factura/ajaxListadoClientesBusqueda') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+
+                        if(data.cantidad > 0)
+                            $('#tabla_detalles').show('toogle')
+
+                        $('#tabla_detalles').html(data.listado)
+
+                    }else{
+
+                    }
+                }
+            })
         }
 
         /*

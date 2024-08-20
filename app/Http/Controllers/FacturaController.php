@@ -1793,7 +1793,6 @@ class FacturaController extends Controller
         return $data;
     }
 
-
     public function formularioFacturacionCv(Request $request) {
 
         $usuario = Auth::user();
@@ -1850,6 +1849,53 @@ class FacturaController extends Controller
         return $data;
     }
 
+    public function ajaxListadoClientesBusqueda(Request $request){
+        if($request->ajax()){
+
+            $query = Cliente::select('*');
+
+            if(!is_null($request->input('cedula_escogido'))){
+                $cedula = $request->input('cedula_escogido');
+                $query->where('cedula', $cedula);
+            }
+
+            if(!is_null($request->input('nombre_escogido'))){
+                $nombre = $request->input('cedula_escogido');
+                $query->where('nombres', 'LIKE', "%$nombre%");
+            }
+
+            if(!is_null($request->input('ap_paterno_escogido'))){
+                $paterno = $request->input('ap_paterno_escogido');
+                $query->where('ap_paterno', 'LIKE', "%$paterno%");
+            }
+
+            if(!is_null($request->input('ap_materno_escogido'))){
+                $materno = $request->input('ap_materno_escogido');
+                $query->where('ap_materno', 'LIKE', "%$materno%");
+            }
+
+            if(
+                !is_null($request->input('cedula_escogido')) &&
+                !is_null($request->input('nombre_escogido')) &&
+                !is_null($request->input('ap_paterno_escogido')) &&
+                !is_null($request->input('ap_materno_escogido'))
+            ){
+
+                $clientes = $query->limit(5)->get();
+
+            }else{
+                $clientes = $query->orderBy('id', 'desc')->limit(10)->get();
+            }
+
+            dd($request->all(), $clientes);
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
 
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
     public function pruebas(){
@@ -1895,7 +1941,8 @@ class FacturaController extends Controller
         //     "nit => ".$empresa->nit
         // );
 
-        for ($i = 1; $i <= 1 ; $i++) {
+        // for ($i = 1; $i <= 1 ; $i++) {
+        for ($i = 1; $i <= 50 ; $i++) {
 
             $sincronizarActividades                         = json_decode($siat->sincronizarActividades(
                 $empresa->api_token,
