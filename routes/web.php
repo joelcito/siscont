@@ -157,6 +157,8 @@ Route::middleware('auth')->group(function(){
         Route::get('/formularioFacturacionCv', [FacturaController::class, 'formularioFacturacionCv']);
         Route::post('/ajaxListadoServicios', [FacturaController::class, 'ajaxListadoServicios']);
         Route::post('/ajaxListadoClientesBusqueda', [FacturaController::class, 'ajaxListadoClientesBusqueda']);
+        Route::post('/emitirFacturaCv', [FacturaController::class, 'emitirFacturaCv']);
+
 
 
 

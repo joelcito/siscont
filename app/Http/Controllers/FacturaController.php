@@ -401,7 +401,7 @@ class FacturaController extends Controller
         // dd($request->all());
         if($request->ajax()){
 
-            // dd($request->all());
+            dd($request->all());
 
             // ********************************* ESTO ES PARA GENERAR LA FACTURA *********************************
             $usuario        = Auth::user();
@@ -1908,6 +1908,73 @@ class FacturaController extends Controller
             $data['estado'] = 'error';
         }
         return $data;
+    }
+
+    public function emitirFacturaCv(Request $request) {
+
+        if($request->ajax()){
+
+            $usuario        = Auth::user();
+            $empresa_id     = $usuario->empresa_id;
+            $punto_venta_id = $usuario->punto_venta_id;
+            $sucursal_id    = $usuario->sucursal_id;
+
+            // $empresa_objeto     = Empresa::find($empresa_id);
+            // $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
+            // $sucursal_objeto    = Sucursal::find($sucursal_id);
+
+            $carroVentas = $request->input('carrito');
+            $cliente_id = $request->input('cliente_id');
+
+            // ----------------- AGREGAMOS EN L ATABLA DETALLES -----------------
+            // foreach($carroVentas as $key => $item){
+            //     $detalle                        = new Detalle();
+            //     $detalle->usuario_creador_id    = $usuario->id;
+            //     $detalle->empresa_id            = $empresa_id;
+            //     $detalle->sucursal_id           = $sucursal_id;
+            //     $detalle->punto_venta_id        = $punto_venta_id;
+            //     $detalle->cliente_id            = $cliente_id;
+            //     $detalle->servicio_id           = $item['servicio_id'];
+            //     $detalle->descripcion_adicional = $item['descripcion_adicional'];
+            //     $detalle->numero_serie          = $item['numero_serie'];
+            //     $detalle->numero_imei           = $item['numero_imei'];
+            //     $detalle->precio                = $item['precio'];
+            //     $detalle->cantidad              = $item['cantidad'];
+            //     $detalle->total                 = $item['total'];
+            //     $detalle->descuento             = $item['descuento'];
+            //     $detalle->importe               = $item['subTotal'];
+            //     $detalle->fecha                 = date('Y-m-d H:i:s');
+            //     $detalle->estado                = 'Parapagar';
+            //     $detalle->save();
+            // }
+
+
+            // ARMAMOS EL ARRAY
+            $datosFcv     = array();
+            $factruaFcv   = array();
+            $contenidoFcv = [];
+
+
+            $datosGlobales['datos'] = 123;
+            array_push($contenidoFcv, );
+            // $contenidoFcv.push();
+
+            // $factruaFcv
+
+
+            dd($datosGlobales);
+
+
+
+            // dd($request->all());
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
+
     }
 
 

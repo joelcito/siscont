@@ -24,7 +24,7 @@
                 <td>{{ $cli->cedula }}</td>
                 <td>{{ $cli->correo }}</td>
                 <td>
-                    <button class="btn btn-sm btn-success btn-icon" onclick="escogerCliente('{{ $cli->id }}', '{{ $cli->nombres }}', '{{ $cli->ap_paterno }}', '{{ $cli->ap_materno }}', '{{ $cli->cedula }}')"><i class="fa fa-dollar"></i></button>
+                    <button class="btn btn-sm btn-success btn-icon" onclick="escogerCliente('{{ $cli->id }}', '{{ $cli->nombres }}', '{{ $cli->ap_paterno }}', '{{ $cli->ap_materno }}', '{{ $cli->cedula }}', '{{ $cli->nit }}', '{{ $cli->razon_social }}')"><i class="fa fa-dollar"></i></button>
                 </td>
             </tr>
         @empty

@@ -122,7 +122,7 @@
                                         <input type="number" class="form-control form-control-sm" id="total_venta" name="total_venta" value="0" min="1" required>
                                     </div>
                                     <div class="col-md-1">
-                                        <button class="btn btn-primary btn-circle btn-sm btn-icon mt-9" type="button" onclick="mostraBloqueMasDatosProdcuto()" title="Agregar al Carro de compras"><i class="fa fa-note-sticky"></i> +</button>
+                                        <button class="btn btn-primary btn-circle btn-sm btn-icon mt-9" type="button" onclick="mostraBloqueMasDatosProdcuto()" title="Mostrar mas opcion"><i class="fa fa-note-sticky"></i> +</button>
                                         <button class="btn btn-success btn-circle btn-sm btn-icon mt-9" type="button" onclick="agregarProducto()" title="Agregar al Carro de compras"><i class="fa fa-shopping-cart"></i> +</button>
                                     </div>
 
@@ -339,8 +339,8 @@
                                     </div>
                                 </div>
                                 {{-- <h3 class="text-center text-info">PAGO</h3> --}}
-                                <div class="row" style="display: none" id="bloque_exepcion">
-                                {{-- <div class="row" id="bloque_exepcion"> --}}
+                                {{-- <div class="row" style="display: none" id="bloque_exepcion"> --}}
+                                <div class="row" id="bloque_exepcion">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Enviar con execpcion?</label>
@@ -378,9 +378,10 @@
             }
         })
 
-        var arrayProductos          = [];
-        var arrayPagos              = [];
+        var arrayProductos = [];
+        var arrayPagos     = [];
         var table;
+        var arrayProductoCar = [];
 
         $(document).ready(function() {
 
@@ -453,21 +454,28 @@
 
         function agregarProducto(){
             var servicioDatos = JSON.parse($("#serivicio_id_venta").val())
-            let servicio = {
-                servicio_id : servicioDatos.id,
-                descripcion : servicioDatos.descripcion,
-                precio      : servicioDatos.precio,
-                numero_serie: $("#numero_serie").val(),
-                numero_imei : $("#codigo_imei").val(),
-                empresa_id  : servicioDatos.empresa_id,
-                cantidad    : $('#cantidad_venta').val()
-            }
 
             let id            = servicioDatos.id;
             var filaExistente = table.row("#producto-" + id);
             var precio        = servicioDatos.precio;
             var cantidad      = $('#cantidad_venta').val();
             var total         = precio*cantidad;
+            var subTotal      = (precio*cantidad)-0;
+
+            let servicio = {
+                servicio_id          : servicioDatos.id,
+                descripcion          : servicioDatos.descripcion,
+                precio               : parseFloat(servicioDatos.precio).toFixed(2),
+                numero_serie         : $("#numero_serie").val(),
+                numero_imei          : $("#codigo_imei").val(),
+                empresa_id           : servicioDatos.empresa_id,
+                cantidad             : parseInt($('#cantidad_venta').val()),
+                total                : parseFloat(total).toFixed(2),
+                descuento            : parseFloat(0).toFixed(2),
+                subTotal             : parseFloat(subTotal.toFixed(2)),
+                descripcion_adicional: $('#descripcion_adicional').val()
+            }
+
 
             if (filaExistente.node()) {
 
@@ -482,13 +490,27 @@
                 var totalCell = $(filaExistente.node()).find('.total');
                 totalCell.text((nuevoTotal).toFixed(2));
 
-                var subTotalCell = $(filaExistente.node()).find('.subTotal');
+                var subTotalCell  = $(filaExistente.node()).find('.subTotal');
                 var valorSubTotal = parseFloat(subTotalCell.text())
+                var nuevoSubTotal = nuevoTotal - parseFloat($('#descuento_'+id).val())
+                subTotalCell.text((nuevoSubTotal).toFixed(2));
 
-                console.log(valorSubTotal, nuevoTotal, $('#descuento_'+id).val())
+                let servicio = arrayProductoCar.find(s => s.servicio_id === servicioDatos.id);
+                if (servicio) {
 
-                subTotalCell.text((nuevoTotal - parseFloat($('#descuento_'+id).val())).toFixed(2));
+                    servicio.cantidad              = parseFloat(servicio.cantidad) + parseFloat(cantidad);
+                    servicio.total                 = parseFloat(nuevoTotal);
+                    servicio.subTotal              = parseFloat(nuevoSubTotal);
+                    servicio.descripcion_adicional = $('#descripcion_adicional').val();
 
+                } else {
+                    Swal.fire({
+                        icon:'error',
+                        title: "ERROR!",
+                        text:  "Error al actualizar el descuento.",
+                        timer: 4000
+                    })
+                }
 
             } else {
                 var subTotal      = precio*cantidad;
@@ -503,6 +525,11 @@
                     "<button class='eliminar btn btn-icon btn-danger btn-circle btn-sm'><i class='fa fa-trash'></button>"
                 ]).node().id = 'producto-' + id;
                 table.draw(false);
+
+
+                // AGREGAMOS AL CARRO LOS PRODUSTOS
+                arrayProductoCar.push(servicio);
+                // AGREGAMOS AL CARRO LOS PRODUSTOS
             }
 
 
@@ -540,12 +567,31 @@
             let valorId        = valor.id;
             let id             = valorId.split("_")[1]
             var filaExistente  = table.row("#producto-" + id);
+
             if (filaExistente.node()) {
-                var totalCell = $(filaExistente.node()).find('.total');
-                var valorTotal = parseFloat(totalCell.text());
+                var totalCell    = $(filaExistente.node()).find('.total');
+                var valorTotal   = parseFloat(totalCell.text());
                 var subTotalCell = $(filaExistente.node()).find('.subTotal');
+
                 if(valorDescuento < valorTotal){
+
                     subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
+
+                    let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
+                    if (servicio) {
+                        // servicio.cantidad = parseInt(servicio.cantidad) + parseInt(cantidad);
+                        // servicio.descuento = parseFloat(servicio.descuento) + parseFloat(valorDescuento);
+                        servicio.descuento = parseFloat(valorDescuento);
+                        servicio.subTotal  = parseFloat(servicio.subTotal) - parseFloat(valorDescuento);
+                    } else {
+                        Swal.fire({
+                            icon:'error',
+                            title: "ERROR!",
+                            text:  "Error al actualizar el descuento",
+                            timer: 4000
+                        })
+                    }
+
                 }else{
                     Swal.fire({
                         icon:'error',
@@ -555,6 +601,7 @@
                     })
                     $('#descuento_'+id).val(valorTotal-parseFloat(subTotalCell.text()))
                 }
+
             } else {
                 Swal.fire({
                     icon:'error',
@@ -609,19 +656,23 @@
         }
 
         function mostraBloqueMasDatosProdcuto(){
+
             $('#bloque_mas_datos_productos').toggle('show')
         }
 
 
 
 
-        function escogerCliente(cliente,nombres, ap_paterno, ap_materno, cedula){
+        function escogerCliente(cliente,nombres, ap_paterno, ap_materno, cedula, nit, razon_social){
 
             $('#cliente_id_escogido').val(cliente);
             $('#nombre_escogido').val(nombres);
             $('#ap_paterno_escogido').val(ap_paterno);
             $('#ap_materno_escogido ').val(ap_materno);
             $('#cedula_escogido').val(cedula);
+
+            $('#nit_factura').val(nit);
+            $('#razon_factura').val(razon_social);
 
             /*
             $('#cliente_id_escogido').attr('readonly', true);
@@ -690,6 +741,328 @@
             });
             */
         }
+
+
+        function verificaNit(){
+            if($('#tipo_documento').val()  === "5"){
+                let nit = $('#nit_factura').val();
+                $.ajax({
+                    url: "{{ url('factura/verificarNit') }}",
+                    data: {
+                        nit: nit
+                    },
+                    type: 'POST',
+                    dataType:'json',
+                    success: function(data) {
+                        if(data.estado == "success"){
+                            if(data.estadoSiat){
+                                $('#execpcion').prop('checked', false);
+                                $('#nitsiexiste').show('toggle')
+                                $('#nitnoexiste').hide('toggle')
+                                // $('#bloque_exepcion').hide('toggle');
+                            }else{
+                                $('#nitnoexiste').show('toggle')
+                                $('#nitsiexiste').hide('toggle')
+                                $('#execpcion').prop('checked', true);
+                                // $('#bloque_exepcion').show('toggle');
+                            }
+                        }else{
+                            $('#errorValidar').show('toggle')
+                        }
+                    }
+                });
+            }else{
+                $('#nitnoexiste').hide('toggle')
+                $('#nitsiexiste').hide('toggle')
+                $('#errorValidar').hide('toggle')
+                $('#execpcion').prop('checked', false);
+                // $('#bloque_exepcion').hide('toggle');
+            }
+        }
+
+
+
+        function emitirFactura(){
+
+            // let cliente = $('#cliente_id_escogido').val()
+
+            $.ajax({
+                url   : "{{ url('factura/emitirFacturaCv') }}",
+                method: "POST",
+                data  : {
+                    cliente_id: $('#cliente_id_escogido').val(),
+                    carrito   : arrayProductoCar
+                },
+                success: function (data) {
+                    // if(data.estado === 'success'){
+                    //     if(data.cantidad > 0)
+                    //         $('#tabla-clientes-buscados').show('toogle')
+
+                    //     $('#tabla-clientes-buscados').html(data.listado)
+                    // }else{
+
+                    // }
+                },
+                error: function(error){
+                    if (error.status === 419) {
+                        alert('Tu sesión ha expirado. Por favor, vuelve a cargar la página.');
+                        // Opcional: Recargar la página
+                        location.reload();
+                    } else {
+                        // Manejar otros errores
+                    }
+                }
+            })
+
+
+            // console.log(cliente, arrayProductoCar);
+
+
+            // $.ajax({
+            //     url: "{{ url('factura/verificaItemsGeneracion') }}",
+            //     data: {
+            //         cliente: cliente
+            //     },
+            //     type: 'POST',
+            //     dataType:'json',
+            //     success: function(data) {
+
+            //         // console.log(data)
+
+            //         if(data.estado === "success"){
+            //             if(data.cantidad == 0){
+            //                 Swal.fire({
+            //                     icon:   'error',
+            //                     title:  'Error!',
+            //                     text:   "DEBE AL MENOS AGREGAR UN SERVICIO/PRODUCTO",
+            //                     timer: 5000
+            //                 })
+            //             }else{
+
+            //                 // if($("#formularioGeneraFactura")[0].checkValidity() && $("#formulario_tipo_pagos")[0].checkValidity()){
+            //                 if($("#formularioGeneraFactura")[0].checkValidity()){
+
+
+            //                     // // Obtén el botón y el icono de carga
+            //                     // var boton = $("#boton_enviar_factura");
+            //                     // var iconoCarga = boton.find("i");
+            //                     // // Deshabilita el botón y muestra el icono de carga
+            //                     // boton.attr("disabled", true);
+            //                     // iconoCarga.show();
+
+            //                     //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
+            //                     detalle = [];
+
+            //                     // console.log($('#numero_serie').val());
+            //                     // console.log($('#codigo_imei').val());
+
+            //                     // console.log("----------------------");
+            //                     // console.log(arrayProductos,arrayProductos[0].numero_serie == null , arrayProductos[0].codigo_imei == null);
+            //                     // console.log("----------------------");
+
+            //                     arrayProductos.forEach(function (prod){
+            //                         detalle.push({
+            //                             actividadEconomica  :   prod.codigo_caeb,
+            //                             codigoProductoSin   :   prod.codigo_producto,
+            //                             codigoProducto      :   prod.servicio_id,
+            //                             descripcion         :   prod.descripcion,
+            //                             cantidad            :   prod.cantidad,
+            //                             unidadMedida        :   prod.codigo_clasificador,
+            //                             precioUnitario      :   prod.precio,
+            //                             montoDescuento      :   prod.descuento,
+            //                             subTotal            :   ((prod.cantidad*prod.precio)-prod.descuento),
+            //                             numeroSerie         :   (prod.numero_serie == null)? null : prod.numero_serie,
+            //                             numeroImei          :   (prod.codigo_imei == null)? null : prod.codigo_imei
+            //                         })
+            //                     })
+
+            //                     console.log(detalle, arrayProductos, arrayPagos)
+
+
+            //                     // let numero_factura                  = $('#numero_factura').val();
+            //                     let numero_factura                  = null;
+            //                     // let cuf                             = "123456789";//cambiar
+            //                     // let cufd                            = "{{ session('scufd') }}";  //solo despues de que aga
+            //                     // let direccion                       = "{{ session('sdireccion') }}";//solo despues de que aga
+            //                     let cuf                             = null;//cambiar
+            //                     let cufd                            = null;  //solo despues de que aga
+            //                     let direccion                       = null;//solo despues de que aga
+            //                     var tzoffset                        = ((new Date()).getTimezoneOffset()*60000);
+            //                     let fechaEmision                    = ((new Date(Date.now()-tzoffset)).toISOString()).slice(0,-1);
+            //                     let nombreRazonSocial               = $('#razon_factura').val();
+            //                     let codigoTipoDocumentoIdentidad    = $('#tipo_documento').val()
+            //                     let numeroDocumento                 = $('#nit_factura').val();
+
+            //                     let complemento;
+            //                     // var complementoValue = $("#complemento").val();
+            //                     // if (complementoValue === null || complementoValue.trim() === ""){
+            //                     //     complemento                     = null;
+            //                     // }else{
+            //                     //     if($('#tipo_documento').val()==5){
+            //                     //         complemento                     = null;
+            //                     //     }else{
+            //                     //         complemento                     = $('#complemento').val();
+            //                     //     }
+            //                     // }
+
+            //                     let montoTotal                      = $('#total_a_pagar_importe').val();
+            //                     let descuentoAdicional              = $('#descuento_adicional_global').val();
+            //                     let leyenda                         = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
+            //                     let usuario                         = "{{ Auth::user()->name }}";
+
+            //                     let codigoExcepcion;
+            //                     if ($('#execpcion').is(':checked'))
+            //                         codigoExcepcion                 = 1;
+            //                     else
+            //                         codigoExcepcion                 = 0;
+
+
+            //                     var factura = [];
+            //                     factura.push({
+            //                         cabecera: {
+            //                             // nitEmisor                       :"{{ $empresa->nit }}",
+            //                             // razonSocialEmisor               :'{{ $empresa->razon_social }}',
+            //                             // municipio                       :"Santa Cruz",
+            //                             // telefono                        :"73130500",
+
+            //                             nitEmisor                       :null,
+            //                             razonSocialEmisor               :null,
+            //                             municipio                       :null,
+            //                             telefono                        :null,
+            //                             numeroFactura                   :numero_factura,
+            //                             cuf                             :cuf,
+            //                             cufd                            :cufd,
+            //                             codigoSucursal                  :null,
+            //                             direccion                       :direccion ,
+            //                             codigoPuntoVenta                :null,
+            //                             fechaEmision                    :fechaEmision,
+            //                             nombreRazonSocial               :nombreRazonSocial,
+            //                             codigoTipoDocumentoIdentidad    :codigoTipoDocumentoIdentidad,
+            //                             numeroDocumento                 :numeroDocumento,
+            //                             complemento                     :null,
+            //                             // complemento                     :complemento,
+            //                             codigoCliente                   :numeroDocumento,
+            //                             codigoMetodoPago                :$('#facturacion_datos_tipo_metodo_pago').val(),
+            //                             numeroTarjeta                   :null,
+            //                             montoTotal                      :montoTotal,
+            //                             montoTotalSujetoIva             :montoTotal,
+
+            //                             codigoMoneda                    :$('#facturacion_datos_tipo_metodo_pago').val(),
+            //                             tipoCambio                      :1,
+            //                             montoTotalMoneda                :montoTotal,
+
+            //                             montoGiftCard                   :null,
+            //                             descuentoAdicional              :descuentoAdicional,//ver llenado
+            //                             codigoExcepcion                 :codigoExcepcion,
+            //                             cafc                            :null,
+            //                             leyenda                         :leyenda,
+            //                             usuario                         :usuario,
+            //                             codigoDocumentoSector           :1
+            //                         }
+            //                     })
+
+            //                     detalle.forEach(function (prod1){
+            //                         factura.push({
+            //                             detalle:prod1
+            //                         })
+            //                     })
+            //                     var datos = {factura};
+            //                     var datosCliente = {
+            //                         'cliente_id': $('#cliente_id_escogido').val(),
+            //                         'pagos'     : arrayPagos,
+            //                         // 'empresa'   : "{{ $empresa->id }}"
+            //                         // 'realizo_pago': $("#realizo_pago").prop("checked"),
+            //                         'numero_cafc': $('#numero_factura_cafc').val(),
+            //                         'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
+            //                     };
+            //                     var datosRecepcion = {
+            //                         // 'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
+            //                         // 'codigo_cafc_contingencia': $('#codigo_cafc_contingencia').val()
+            //                     };
+            //                     $.ajax({
+            //                         url : "{{ url('factura/emitirFactura') }}",
+            //                         data: {
+            //                             datos         : datos,
+            //                             datosCliente  : datosCliente,
+            //                             // datosRecepcion: datosRecepcion,
+            //                             modalidad     : $('#tipo_facturacion').val(),
+            //                             tipo_pago     : $('#tipo_pago').val(),
+            //                             monto_pagado  : $('#miInput').val(),
+            //                             cambio        : $('#cambio').val()
+            //                         },
+            //                         type: 'POST',
+            //                         dataType:'json',
+            //                         success: function(data) {
+
+            //                             if(data.estado === "VALIDADA"){
+            //                                 Swal.fire({
+            //                                     icon : 'success',
+            //                                     title: 'Excelente!',
+            //                                     text : 'LA FACTURA FUE VALIDADA',
+            //                                     timer: 3000
+            //                                 })
+            //                                 window.location.href = "{{ url('factura/listado')}}"
+            //                             }else if(data.estado === "error_email"){
+            //                                 Swal.fire({
+            //                                     icon : 'error',
+            //                                     title: 'Error!',
+            //                                     text : data.msg,
+            //                                 })
+            //                                 // Habilita el botón y oculta el icono de carga después de completar
+            //                                 boton.attr("disabled", false);
+            //                                 iconoCarga.hide();
+            //                             }else if(data.estado === "OFFLINE"){
+            //                                 Swal.fire({
+            //                                     icon : 'warning',
+            //                                     title: 'Exito!',
+            //                                     text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
+            //                                     timer: 2000
+            //                                 })
+            //                                 // window.location.href = "{{ url('factura/listado')}}"
+            //                             }else{
+            //                                 Swal.fire({
+            //                                     icon : 'error',
+            //                                     title: data.msg,
+            //                                     text : 'LA FACTURA FUE RECHAZADA',
+            //                                 })
+            //                                 // Habilita el botón y oculta el icono de carga después de completar
+            //                                 boton.attr("disabled", false);
+            //                                 iconoCarga.hide();
+            //                             }
+            //                         }
+            //                     });
+
+            //                 }else{
+            //                     $("#formularioGeneraFactura")[0].reportValidity();
+            //                     // $("#formulario_tipo_pagos")[0].reportValidity()
+            //                 }
+            //             }
+            //         }
+            //     }
+            // });
+        }
+
+        // function buscarServicioPorId(id_servicio){
+        //     let dato = false;
+        //     let servicio = arrayProductoCar.find(s => s.servicio_id === id_servicio);
+        //     if (servicio) {
+        //         servicio.cantidad = parseInt(servicio.cantidad) + parseInt(cantidad);
+        //         dato = true;
+        //     } else {
+        //         dato = false;
+        //     }
+
+        //     console.log("DATO");
+        //     console.log(dato);
+        //     console.log("SERVCIO_ID");
+        //     console.log(id_servicio);
+        //     console.log("CANTIDAD");
+        //     console.log(cantidad);
+        //     console.log("SERVICIO");
+        //     console.log(servicio);
+
+        //     return dato;
+        // }
 
         /*
 
@@ -826,234 +1199,7 @@
 
 
 
-        function emitirFactura(){
 
-            let cliente = $('#cliente_id_escogido').val()
-
-            $.ajax({
-                url: "{{ url('factura/verificaItemsGeneracion') }}",
-                data: {
-                    cliente: cliente
-                },
-                type: 'POST',
-                dataType:'json',
-                success: function(data) {
-
-                    // console.log(data)
-
-                    if(data.estado === "success"){
-                        if(data.cantidad == 0){
-                            Swal.fire({
-                                icon:   'error',
-                                title:  'Error!',
-                                text:   "DEBE AL MENOS AGREGAR UN SERVICIO/PRODUCTO",
-                                timer: 5000
-                            })
-                        }else{
-
-                            // if($("#formularioGeneraFactura")[0].checkValidity() && $("#formulario_tipo_pagos")[0].checkValidity()){
-                            if($("#formularioGeneraFactura")[0].checkValidity()){
-
-
-                                // // Obtén el botón y el icono de carga
-                                // var boton = $("#boton_enviar_factura");
-                                // var iconoCarga = boton.find("i");
-                                // // Deshabilita el botón y muestra el icono de carga
-                                // boton.attr("disabled", true);
-                                // iconoCarga.show();
-
-                                //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
-                                detalle = [];
-
-                                // console.log($('#numero_serie').val());
-                                // console.log($('#codigo_imei').val());
-
-                                // console.log("----------------------");
-                                // console.log(arrayProductos,arrayProductos[0].numero_serie == null , arrayProductos[0].codigo_imei == null);
-                                // console.log("----------------------");
-
-                                arrayProductos.forEach(function (prod){
-                                    detalle.push({
-                                        actividadEconomica  :   prod.codigo_caeb,
-                                        codigoProductoSin   :   prod.codigo_producto,
-                                        codigoProducto      :   prod.servicio_id,
-                                        descripcion         :   prod.descripcion,
-                                        cantidad            :   prod.cantidad,
-                                        unidadMedida        :   prod.codigo_clasificador,
-                                        precioUnitario      :   prod.precio,
-                                        montoDescuento      :   prod.descuento,
-                                        subTotal            :   ((prod.cantidad*prod.precio)-prod.descuento),
-                                        numeroSerie         :   (prod.numero_serie == null)? null : prod.numero_serie,
-                                        numeroImei          :   (prod.codigo_imei == null)? null : prod.codigo_imei
-                                    })
-                                })
-
-                                console.log(detalle, arrayProductos, arrayPagos)
-
-
-                                // let numero_factura                  = $('#numero_factura').val();
-                                let numero_factura                  = null;
-                                // let cuf                             = "123456789";//cambiar
-                                // let cufd                            = "{{ session('scufd') }}";  //solo despues de que aga
-                                // let direccion                       = "{{ session('sdireccion') }}";//solo despues de que aga
-                                let cuf                             = null;//cambiar
-                                let cufd                            = null;  //solo despues de que aga
-                                let direccion                       = null;//solo despues de que aga
-                                var tzoffset                        = ((new Date()).getTimezoneOffset()*60000);
-                                let fechaEmision                    = ((new Date(Date.now()-tzoffset)).toISOString()).slice(0,-1);
-                                let nombreRazonSocial               = $('#razon_factura').val();
-                                let codigoTipoDocumentoIdentidad    = $('#tipo_documento').val()
-                                let numeroDocumento                 = $('#nit_factura').val();
-
-                                let complemento;
-                                // var complementoValue = $("#complemento").val();
-                                // if (complementoValue === null || complementoValue.trim() === ""){
-                                //     complemento                     = null;
-                                // }else{
-                                //     if($('#tipo_documento').val()==5){
-                                //         complemento                     = null;
-                                //     }else{
-                                //         complemento                     = $('#complemento').val();
-                                //     }
-                                // }
-
-                                let montoTotal                      = $('#total_a_pagar_importe').val();
-                                let descuentoAdicional              = $('#descuento_adicional_global').val();
-                                let leyenda                         = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
-                                let usuario                         = "{{ Auth::user()->name }}";
-
-                                let codigoExcepcion;
-                                if ($('#execpcion').is(':checked'))
-                                    codigoExcepcion                 = 1;
-                                else
-                                    codigoExcepcion                 = 0;
-
-
-                                var factura = [];
-                                factura.push({
-                                    cabecera: {
-                                        // nitEmisor                       :"{{ $empresa->nit }}",
-                                        // razonSocialEmisor               :'{{ $empresa->razon_social }}',
-                                        // municipio                       :"Santa Cruz",
-                                        // telefono                        :"73130500",
-
-                                        nitEmisor                       :null,
-                                        razonSocialEmisor               :null,
-                                        municipio                       :null,
-                                        telefono                        :null,
-                                        numeroFactura                   :numero_factura,
-                                        cuf                             :cuf,
-                                        cufd                            :cufd,
-                                        codigoSucursal                  :null,
-                                        direccion                       :direccion ,
-                                        codigoPuntoVenta                :null,
-                                        fechaEmision                    :fechaEmision,
-                                        nombreRazonSocial               :nombreRazonSocial,
-                                        codigoTipoDocumentoIdentidad    :codigoTipoDocumentoIdentidad,
-                                        numeroDocumento                 :numeroDocumento,
-                                        complemento                     :null,
-                                        // complemento                     :complemento,
-                                        codigoCliente                   :numeroDocumento,
-                                        codigoMetodoPago                :$('#facturacion_datos_tipo_metodo_pago').val(),
-                                        numeroTarjeta                   :null,
-                                        montoTotal                      :montoTotal,
-                                        montoTotalSujetoIva             :montoTotal,
-
-                                        codigoMoneda                    :$('#facturacion_datos_tipo_metodo_pago').val(),
-                                        tipoCambio                      :1,
-                                        montoTotalMoneda                :montoTotal,
-
-                                        montoGiftCard                   :null,
-                                        descuentoAdicional              :descuentoAdicional,//ver llenado
-                                        codigoExcepcion                 :codigoExcepcion,
-                                        cafc                            :null,
-                                        leyenda                         :leyenda,
-                                        usuario                         :usuario,
-                                        codigoDocumentoSector           :1
-                                    }
-                                })
-
-                                detalle.forEach(function (prod1){
-                                    factura.push({
-                                        detalle:prod1
-                                    })
-                                })
-                                var datos = {factura};
-                                var datosCliente = {
-                                    'cliente_id': $('#cliente_id_escogido').val(),
-                                    'pagos'     : arrayPagos,
-                                    // 'empresa'   : "{{ $empresa->id }}"
-                                    // 'realizo_pago': $("#realizo_pago").prop("checked"),
-                                    'numero_cafc': $('#numero_factura_cafc').val(),
-                                    'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
-                                };
-                                var datosRecepcion = {
-                                    // 'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
-                                    // 'codigo_cafc_contingencia': $('#codigo_cafc_contingencia').val()
-                                };
-                                $.ajax({
-                                    url : "{{ url('factura/emitirFactura') }}",
-                                    data: {
-                                        datos         : datos,
-                                        datosCliente  : datosCliente,
-                                        // datosRecepcion: datosRecepcion,
-                                        modalidad     : $('#tipo_facturacion').val(),
-                                        tipo_pago     : $('#tipo_pago').val(),
-                                        monto_pagado  : $('#miInput').val(),
-                                        cambio        : $('#cambio').val()
-                                    },
-                                    type: 'POST',
-                                    dataType:'json',
-                                    success: function(data) {
-
-                                        if(data.estado === "VALIDADA"){
-                                            Swal.fire({
-                                                icon : 'success',
-                                                title: 'Excelente!',
-                                                text : 'LA FACTURA FUE VALIDADA',
-                                                timer: 3000
-                                            })
-                                            window.location.href = "{{ url('factura/listado')}}"
-                                        }else if(data.estado === "error_email"){
-                                            Swal.fire({
-                                                icon : 'error',
-                                                title: 'Error!',
-                                                text : data.msg,
-                                            })
-                                            // Habilita el botón y oculta el icono de carga después de completar
-                                            boton.attr("disabled", false);
-                                            iconoCarga.hide();
-                                        }else if(data.estado === "OFFLINE"){
-                                            Swal.fire({
-                                                icon : 'warning',
-                                                title: 'Exito!',
-                                                text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
-                                                timer: 2000
-                                            })
-                                            // window.location.href = "{{ url('factura/listado')}}"
-                                        }else{
-                                            Swal.fire({
-                                                icon : 'error',
-                                                title: data.msg,
-                                                text : 'LA FACTURA FUE RECHAZADA',
-                                            })
-                                            // Habilita el botón y oculta el icono de carga después de completar
-                                            boton.attr("disabled", false);
-                                            iconoCarga.hide();
-                                        }
-                                    }
-                                });
-
-                            }else{
-                                $("#formularioGeneraFactura")[0].reportValidity();
-                                // $("#formulario_tipo_pagos")[0].reportValidity()
-                            }
-                        }
-                    }
-                }
-            });
-
-        }
 
         function bloqueCAFC(){
             if($('#tipo_facturacion').val() === "offline"){
@@ -1063,42 +1209,7 @@
             }
         }
 
-        function verificaNit(){
-            if($('#tipo_documento').val()  === "5"){
-                let nit = $('#nit_factura').val();
-                $.ajax({
-                    url: "{{ url('factura/verificarNit') }}",
-                    data: {
-                        nit: nit
-                    },
-                    type: 'POST',
-                    dataType:'json',
-                    success: function(data) {
-                        if(data.estado == "success"){
-                            if(data.estadoSiat){
-                                $('#execpcion').prop('checked', false);
-                                $('#nitsiexiste').show('toggle')
-                                $('#nitnoexiste').hide('toggle')
-                                // $('#bloque_exepcion').hide('toggle');
-                            }else{
-                                $('#nitnoexiste').show('toggle')
-                                $('#nitsiexiste').hide('toggle')
-                                $('#execpcion').prop('checked', true);
-                                // $('#bloque_exepcion').show('toggle');
-                            }
-                        }else{
-                            $('#errorValidar').show('toggle')
-                        }
-                    }
-                });
-            }else{
-                $('#nitnoexiste').hide('toggle')
-                $('#nitsiexiste').hide('toggle')
-                $('#errorValidar').hide('toggle')
-                $('#execpcion').prop('checked', false);
-                // $('#bloque_exepcion').hide('toggle');
-            }
-        }
+
         */
 
    </script>
