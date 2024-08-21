@@ -184,15 +184,15 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="5">DESCUENTO ADICIONAL</th>
-                                            <th colspan="2">MONTO TOTAL</th>
+                                            <th colspan="5">Descuento Adicional</th>
+                                            <th colspan="2">Monto Total</th>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
-                                                <input class="form-control form-control-sm" name="" id="" type="number" value="0">
+                                                <input class="form-control form-control-sm" name="descuento_adicional" id="descuento_adicional" type="number" value="0" onchange="ejecutarDescuentoAdicional()">
                                             </td>
                                             <td colspan="2">
-                                                <input class="form-control form-control-sm" name="" id="" type="number" readonly>
+                                                <input class="form-control form-control-sm" name="monto_total" id="monto_total" type="number" readonly value="0">
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -274,7 +274,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="">M. Pago</label>
-                                        <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control" required>
+                                        <select name="facturacion_datos_tipo_metodo_pago" id="facturacion_datos_tipo_metodo_pago" class="form-control form-control-sm" required>
                                             @foreach($tipoMetodoPago as $key => $value)
                                             <option value="{{ $value->tipo_clasificador }}" {{ ($value->tipo_clasificador == "1")? 'selected' :'' }}>{{ $value->descripcion }}</option>
                                             @endforeach
@@ -282,7 +282,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="">Tipo Moneda</label>
-                                        <select name="facturacion_datos_tipo_moneda" id="facturacion_datos_tipo_moneda" class="form-control" required>
+                                        <select name="facturacion_datos_tipo_moneda" id="facturacion_datos_tipo_moneda" class="form-control form-control-sm" required>
                                             @foreach($tipoMonedas as $key => $value)
                                             <option value="{{ $value->tipo_clasificador }}" {{ ($value->tipo_clasificador == "1")? 'selected' :'' }}>{{ $value->descripcion }}</option>
                                             @endforeach
@@ -290,7 +290,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="">Tipo Documento</label>
-                                        <select name="tipo_documento" id="tipo_documento" class="form-control" onchange="verificaNit()" required>
+                                        <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="verificaNit()" required>
                                             <option value="">SELECCIONE</option>
                                             @foreach ($tipoDocumento as $te)
                                                 <option value="{{ $te->tipo_clasificador }}">{{ $te->descripcion }}</option>
@@ -300,22 +300,26 @@
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <label for="">Nit/Cedula</label>
-                                        {{--  <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off" required value="{{ $nit }}">  --}}
-                                        <input type="number" class="form-control" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off" required>
+                                        <input type="number" class="form-control form-control-sm" id="nit_factura" name="nit_factura" onchange="verificaNit()" autocomplete="off" required>
                                         <small style="display: none;" class="text-danger" id="nitnoexiste">** NIT INVALIDO **</small>
                                         <small style="display: none;" class="text-success" id="nitsiexiste">** NIT VALIDO **</small>
                                         <small style="display: none;" class="text-danger" id="errorValidar">ERROR LA VALIDAR</small>
                                     </div>
+                                    <div class="col-md-1" style="display: none" id="bloque_complemento">
+                                        <label for="">Compl.</label>
+                                        <input type="text" class="form-control form-control-sm" name="complemento" id="complemento" >
+                                    </div>
+
                                     <div class="col-md-3">
                                         <label for="">Razon Social</label>
                                         {{--  <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off" required value="{{ $razon_social }}">  --}}
-                                        <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off" required>
+                                        <input type="text" class="form-control form-control-sm" id="razon_factura" name="razon_factura" autocomplete="off" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label for="">Tipo Factura</label>
-                                        <select name="tipo_facturacion" id="tipo_facturacion" class="form-control" onchange="bloqueCAFC()">
+                                        <select name="tipo_facturacion" id="tipo_facturacion" class="form-control form-control-sm" onchange="bloqueCAFC()">
                                             <option value="online">En Linea</option>
                                             <option value="offline">Fuera de Linea</option>
                                         </select>
@@ -335,7 +339,7 @@
                                     </div>
                                     <div class="col-md-2" id="numero_fac_cafc" style="display: none;">
                                         <label for="">Numero de CAFC:</label>
-                                        <input type="number" class="form-control" id="numero_factura_cafc" name="numero_factura_cafc">
+                                        <input type="number" class="form-control form-control-sm" id="numero_factura_cafc" name="numero_factura_cafc">
                                     </div>
                                 </div>
                                 {{-- <h3 class="text-center text-info">PAGO</h3> --}}
@@ -344,7 +348,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Enviar con execpcion?</label>
-                                            <input type="checkbox" name="execpcion" id="execpcion" required readonly>
+                                            <input type="checkbox" name="execpcion" id="execpcion" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -476,7 +480,6 @@
                 descripcion_adicional: $('#descripcion_adicional').val()
             }
 
-
             if (filaExistente.node()) {
 
                 // Si el producto ya está en el carrito, aumenta la cantidad en 2
@@ -503,6 +506,12 @@
                     servicio.subTotal              = parseFloat(nuevoSubTotal);
                     servicio.descripcion_adicional = $('#descripcion_adicional').val();
 
+
+                    let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                    let descuentoAdicional = $('#descuento_adicional').val()
+
+                    $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
+
                 } else {
                     Swal.fire({
                         icon:'error',
@@ -526,10 +535,11 @@
                 ]).node().id = 'producto-' + id;
                 table.draw(false);
 
-
                 // AGREGAMOS AL CARRO LOS PRODUSTOS
                 arrayProductoCar.push(servicio);
                 // AGREGAMOS AL CARRO LOS PRODUSTOS
+
+                $('#monto_total').val(parseFloat($('#monto_total').val())+parseFloat(servicio.subTotal))
             }
 
 
@@ -574,15 +584,18 @@
                 var subTotalCell = $(filaExistente.node()).find('.subTotal');
 
                 if(valorDescuento < valorTotal){
-
                     subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
-
                     let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
                     if (servicio) {
                         // servicio.cantidad = parseInt(servicio.cantidad) + parseInt(cantidad);
                         // servicio.descuento = parseFloat(servicio.descuento) + parseFloat(valorDescuento);
                         servicio.descuento = parseFloat(valorDescuento);
-                        servicio.subTotal  = parseFloat(servicio.subTotal) - parseFloat(valorDescuento);
+                        servicio.subTotal  = parseFloat(servicio.total) - parseFloat(valorDescuento);
+
+                        // EJECUTAMOS EL DESCUENTO
+                        let sumaTotal          = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                        let descuentoAdicional = $('#descuento_adicional').val()
+                        $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
                     } else {
                         Swal.fire({
                             icon:'error',
@@ -771,12 +784,25 @@
                         }
                     }
                 });
+
+                $('#bloque_complemento').hide('toggle')
+
+            }else if($('#tipo_documento').val()  === "1"){
+
+                $('#bloque_complemento').show('toggle')
+                $('#nitnoexiste').hide('toggle')
+                $('#nitsiexiste').hide('toggle')
+                $('#errorValidar').hide('toggle')
+                $('#execpcion').prop('checked', false);
+
             }else{
                 $('#nitnoexiste').hide('toggle')
                 $('#nitsiexiste').hide('toggle')
                 $('#errorValidar').hide('toggle')
                 $('#execpcion').prop('checked', false);
-                // $('#bloque_exepcion').hide('toggle');
+
+                $('#bloque_complemento').hide('toggle')
+
             }
         }
 
@@ -790,8 +816,20 @@
                 url   : "{{ url('factura/emitirFacturaCv') }}",
                 method: "POST",
                 data  : {
-                    cliente_id: $('#cliente_id_escogido').val(),
-                    carrito   : arrayProductoCar
+                    cliente_id                        : $('#cliente_id_escogido').val(),
+                    carrito                           : arrayProductoCar,
+                    facturacion_datos_tipo_metodo_pago: $('#facturacion_datos_tipo_metodo_pago').val(),
+                    facturacion_datos_tipo_moneda     : $('#facturacion_datos_tipo_moneda').val(),
+                    tipo_documento                    : $('#tipo_documento').val(),
+                    nit_factura                       : $('#nit_factura').val(),
+                    razon_factura                     : $('#razon_factura').val(),
+                    tipo_facturacion                  : $('#tipo_facturacion').val(),
+                    uso_cafc                          : $('#uso_cafc').val(),
+                    numero_factura_cafc               : $('#numero_factura_cafc').val(),
+                    execpcion                         : $('#execpcion').is(':checked'),
+                    complemento                       : $('#complemento').val(),
+                    descuento_adicional               : $('#descuento_adicional').val(),
+                    monto_total                       : $('#monto_total').val(),
                 },
                 success: function (data) {
                     // if(data.estado === 'success'){
@@ -1040,6 +1078,12 @@
             //         }
             //     }
             // });
+        }
+
+        function ejecutarDescuentoAdicional(){
+            let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+            let descuentoAdicional = $('#descuento_adicional').val();
+            $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
         }
 
         // function buscarServicioPorId(id_servicio){

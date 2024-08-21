@@ -1919,12 +1919,24 @@ class FacturaController extends Controller
             $punto_venta_id = $usuario->punto_venta_id;
             $sucursal_id    = $usuario->sucursal_id;
 
-            // $empresa_objeto     = Empresa::find($empresa_id);
-            // $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
-            // $sucursal_objeto    = Sucursal::find($sucursal_id);
+            $empresa_objeto     = Empresa::find($empresa_id);
+            $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
+            $sucursal_objeto    = Sucursal::find($sucursal_id);
 
-            $carroVentas = $request->input('carrito');
-            $cliente_id = $request->input('cliente_id');
+            $carroVentas                        = $request->input('carrito');
+            $cliente_id                         = $request->input('cliente_id');
+            $facturacion_datos_tipo_metodo_pago = $request->input('facturacion_datos_tipo_metodo_pago');
+            $facturacion_datos_tipo_moneda      = $request->input('facturacion_datos_tipo_moneda');
+            $tipo_documento                     = $request->input('tipo_documento');
+            $nit_factura                        = $request->input('nit_factura');
+            $razon_factura                      = $request->input('razon_factura');
+            $tipo_facturacion                   = $request->input('tipo_facturacion');
+            $numero_factura_cafc                = $request->input('numero_factura_cafc');
+            $execpcion                          = $request->input('execpcion');
+            $complemento                        = $request->input('complemento');
+            $descuento_adicional                = $request->input('descuento_adicional');
+            $monto_total                        = $request->input('monto_total');
+            $leyenda                            = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
 
             // ----------------- AGREGAMOS EN L ATABLA DETALLES -----------------
             // foreach($carroVentas as $key => $item){
@@ -1950,19 +1962,82 @@ class FacturaController extends Controller
 
 
             // ARMAMOS EL ARRAY
-            $datosFcv     = array();
-            $factruaFcv   = array();
-            $contenidoFcv = [];
+            $datosFcv            = array();
+            $factruaFcv          = array();
+            $contenidoFcv        = [];
+
+            $contenidoabeceraFcv = array();
+            $cabeceraFcv         = array();
+
+            $contenidoFacturaFcv = array();
+
+            $contenidoDetalleFcv = array();
+            $DetalleFcv         = array();
 
 
             $datosGlobales['datos'] = 123;
-            array_push($contenidoFcv, );
+            // array_push($contenidoFcv, );
             // $contenidoFcv.push();
+
+            $contenidoabeceraFcv['nitEmisor']                    = null;
+            $contenidoabeceraFcv['razonSocialEmisor']            = null;
+            $contenidoabeceraFcv['municipio']                    = null;
+            $contenidoabeceraFcv['telefono']                     = null;
+            $contenidoabeceraFcv['numeroFactura']                = null;
+            $contenidoabeceraFcv['cuf']                          = null;
+            $contenidoabeceraFcv['cufd']                         = null;
+            $contenidoabeceraFcv['codigoSucursal']               = null;
+            $contenidoabeceraFcv['direccion']                    = null;
+            $contenidoabeceraFcv['codigoPuntoVenta']             = null;
+
+            // PARA LA HORA
+            $microtime                                                = microtime(true);
+            $seconds                                                  = floor($microtime);
+            $milliseconds                                             = round(($microtime - $seconds) * 1000);
+            $formattedDateTime                                        = date("Y-m-d\TH:i:s.") . str_pad($milliseconds, 3, '0', STR_PAD_LEFT);
+
+            $contenidoabeceraFcv['fechaEmision']                 = $formattedDateTime;
+            $contenidoabeceraFcv['nombreRazonSocial']            = $razon_factura;
+            $contenidoabeceraFcv['codigoTipoDocumentoIdentidad'] = $tipo_documento;
+
+            // if($complemento != null && $complemento != ''){
+            //     $datoComplemento = $complemento;
+            // }else{
+            //     $datoComplemento = null;
+            // }
+
+            $contenidoabeceraFcv['numeroDocumento']              = $nit_factura;
+            // $cabeceraFcv['complemento']                  = $datoComplemento;
+            $contenidoabeceraFcv['complemento']                  = ($complemento != null && $complemento != '')? $complemento : null;
+            $contenidoabeceraFcv['codigoCliente']                = $cliente_id;
+            $contenidoabeceraFcv['codigoMetodoPago']             = $facturacion_datos_tipo_metodo_pago;
+            $contenidoabeceraFcv['numeroTarjeta']                = null;
+            $contenidoabeceraFcv['montoTotal']                   = $monto_total;
+            $contenidoabeceraFcv['montoTotalSujetoIva']          = $monto_total;
+            $contenidoabeceraFcv['codigoMoneda']                 = $facturacion_datos_tipo_moneda;
+            $contenidoabeceraFcv['tipoCambio']                   = 1;
+            $contenidoabeceraFcv['montoTotalMoneda']             = $monto_total;
+            $contenidoabeceraFcv['montoGiftCard']                = null;
+            $contenidoabeceraFcv['descuentoAdicional']           = $descuento_adicional;
+            $contenidoabeceraFcv['codigoExcepcion']              = ($execpcion === "true")? 1 : 0;
+            $contenidoabeceraFcv['cafc']                         = null;
+            $contenidoabeceraFcv['leyenda']                      = $leyenda;
+            $contenidoabeceraFcv['usuario']                      = $usuario->email;
+            $contenidoabeceraFcv['codigoDocumentoSector']        = 1;
 
             // $factruaFcv
 
+            $cabeceraFcv['cabecera'] = $contenidoabeceraFcv;
 
-            dd($datosGlobales);
+            array_push($contenidoFacturaFcv, $cabeceraFcv);
+
+            dd(
+                // $datosGlobales,
+                // $request->all(),
+                $contenidoabeceraFcv,
+                $cabeceraFcv,
+                $contenidoFacturaFcv
+            );
 
 
 
