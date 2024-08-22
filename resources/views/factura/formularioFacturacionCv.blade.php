@@ -426,6 +426,11 @@
                 // console.log('Valor:', valor, 'Nombre del input:', nombreInput);
             });
 
+
+            $('input[name="uso_cafc"]').on('change', function() {
+                verificarRadioSeleccionado();
+            });
+
         });
 
         function ajaxListadoServicios(){
@@ -1086,6 +1091,64 @@
             $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
         }
 
+
+        function bloqueCAFC(){
+            if($('#tipo_facturacion').val() === "offline"){
+                $('#bloque_cafc').show('toggle')
+            }else{
+                $('#bloque_cafc').hide('toggle')
+            }
+        }
+
+        function verificarRadioSeleccionado() {
+        var valorSeleccionado = $('input[name="uso_cafc"]:checked').val();
+        if (valorSeleccionado === 'No') {
+
+            $('#numero_fac_cafc').hide('toggle');
+            $('#numero_factura_cafc').val(0)
+
+
+
+            /*
+            $.ajax({
+                url: "{{ url('factura/sacaNumeroFactura') }}",
+                method: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.estado === "success"){
+                        $("#numero_factura").val(data.numero);
+                        $("#codigo_cafc_contingencia").val("");
+                    }else{
+                        Swal.fire({
+                            icon:   'error',
+                            title:  'Error!',
+                            text:   "Algo fallo"
+                        })
+                    }
+                }
+            })
+            */
+        } else if (valorSeleccionado === 'Si') {
+            $.ajax({
+                url: "{{ url('factura/sacaNumeroCafcUltimo') }}",
+                method: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.estado === "success"){
+                        $("#numero_factura_cafc").val(data.numero);
+                        $('#numero_fac_cafc').show('toggle');
+                    }else{
+                        Swal.fire({
+                            icon:   'error',
+                            title:  'Error!',
+                            text:   "Algo fallo"
+                        })
+                    }
+                }
+            })
+        }
+    }
+
         // function buscarServicioPorId(id_servicio){
         //     let dato = false;
         //     let servicio = arrayProductoCar.find(s => s.servicio_id === id_servicio);
@@ -1239,18 +1302,6 @@
                     }
                 }
             })
-        }
-
-
-
-
-
-        function bloqueCAFC(){
-            if($('#tipo_facturacion').val() === "offline"){
-                $('#bloque_cafc').show('toggle')
-            }else{
-                $('#bloque_cafc').hide('toggle')
-            }
         }
 
 

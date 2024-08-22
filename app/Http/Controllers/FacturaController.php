@@ -1938,34 +1938,6 @@ class FacturaController extends Controller
             $monto_total                        = $request->input('monto_total');
             $leyenda                            = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
 
-            // ----------------- AGREGAMOS EN L ATABLA DETALLES -----------------
-            // foreach($carroVentas as $key => $item){
-            //     $detalle                        = new Detalle();
-            //     $detalle->usuario_creador_id    = $usuario->id;
-            //     $detalle->empresa_id            = $empresa_id;
-            //     $detalle->sucursal_id           = $sucursal_id;
-            //     $detalle->punto_venta_id        = $punto_venta_id;
-            //     $detalle->cliente_id            = $cliente_id;
-            //     $detalle->servicio_id           = $item['servicio_id'];
-            //     $detalle->descripcion_adicional = $item['descripcion_adicional'];
-            //     $detalle->numero_serie          = $item['numero_serie'];
-            //     $detalle->numero_imei           = $item['numero_imei'];
-            //     $detalle->precio                = $item['precio'];
-            //     $detalle->cantidad              = $item['cantidad'];
-            //     $detalle->total                 = $item['total'];
-            //     $detalle->descuento             = $item['descuento'];
-            //     $detalle->importe               = $item['subTotal'];
-            //     $detalle->fecha                 = date('Y-m-d H:i:s');
-            //     $detalle->estado                = 'Parapagar';
-            //     $detalle->save();
-            // }
-
-
-            // ARMAMOS EL ARRAY
-            $datosFcv            = array();
-            $factruaFcv          = array();
-            $contenidoFcv        = [];
-
             $contenidoabeceraFcv = array();
             $cabeceraFcv         = array();
 
@@ -1974,10 +1946,7 @@ class FacturaController extends Controller
             $contenidoDetalleFcv = array();
             $DetalleFcv         = array();
 
-
-            $datosGlobales['datos'] = 123;
-            // array_push($contenidoFcv, );
-            // $contenidoFcv.push();
+            $contenidoFacturaPadreFcv = array();
 
             $contenidoabeceraFcv['nitEmisor']                    = null;
             $contenidoabeceraFcv['razonSocialEmisor']            = null;
@@ -2000,14 +1969,7 @@ class FacturaController extends Controller
             $contenidoabeceraFcv['nombreRazonSocial']            = $razon_factura;
             $contenidoabeceraFcv['codigoTipoDocumentoIdentidad'] = $tipo_documento;
 
-            // if($complemento != null && $complemento != ''){
-            //     $datoComplemento = $complemento;
-            // }else{
-            //     $datoComplemento = null;
-            // }
-
             $contenidoabeceraFcv['numeroDocumento']              = $nit_factura;
-            // $cabeceraFcv['complemento']                  = $datoComplemento;
             $contenidoabeceraFcv['complemento']                  = ($complemento != null && $complemento != '')? $complemento : null;
             $contenidoabeceraFcv['codigoCliente']                = $cliente_id;
             $contenidoabeceraFcv['codigoMetodoPago']             = $facturacion_datos_tipo_metodo_pago;
@@ -2025,18 +1987,71 @@ class FacturaController extends Controller
             $contenidoabeceraFcv['usuario']                      = $usuario->email;
             $contenidoabeceraFcv['codigoDocumentoSector']        = 1;
 
-            // $factruaFcv
-
             $cabeceraFcv['cabecera'] = $contenidoabeceraFcv;
 
             array_push($contenidoFacturaFcv, $cabeceraFcv);
 
+            // ----------------- AGREGAMOS EN L ATABLA DETALLES -----------------
+            foreach($carroVentas as $key => $item){
+
+                $detalle                        = new Detalle();
+                $detalle->usuario_creador_id    = $usuario->id;
+                $detalle->empresa_id            = $empresa_id;
+                $detalle->sucursal_id           = $sucursal_id;
+                $detalle->punto_venta_id        = $punto_venta_id;
+                $detalle->cliente_id            = $cliente_id;
+                $detalle->servicio_id           = $item['servicio_id'];
+                $detalle->descripcion_adicional = $item['descripcion_adicional'];
+                $detalle->numero_serie          = $item['numero_serie'];
+                $detalle->numero_imei           = $item['numero_imei'];
+                $detalle->precio                = $item['precio'];
+                $detalle->cantidad              = $item['cantidad'];
+                $detalle->total                 = $item['total'];
+                $detalle->descuento             = $item['descuento'];
+                $detalle->importe               = $item['subTotal'];
+                $detalle->fecha                 = date('Y-m-d H:i:s');
+                $detalle->estado                = 'Parapagar';
+                $detalle->save();
+
+                $servicio = Servicio::find($item['servicio_id']);
+
+                // ARMAMOS EL CONTENIDO DEL DETALLE
+                $contenidoDetalleFcv['actividadEconomica'] = $servicio->siatDependeActividad->codigo_caeb;
+                $contenidoDetalleFcv['codigoProductoSin']  = $servicio->siatProductoServicio->codigo_producto;
+                $contenidoDetalleFcv['codigoProducto']     = $servicio->id;
+                $contenidoDetalleFcv['descripcion']        = $servicio->descripcion." ".$item['descripcion_adicional'];
+                $contenidoDetalleFcv['cantidad']           = $item['cantidad'];
+                $contenidoDetalleFcv['unidadMedida']       = $servicio->siatUnidadMedida->codigo_clasificador;
+                $contenidoDetalleFcv['precioUnitario']     = $item['precio'];
+                $contenidoDetalleFcv['montoDescuento']     = $item['descuento'];
+                $contenidoDetalleFcv['subTotal']           = $item['subTotal'];
+                $contenidoDetalleFcv['numeroSerie']        = $item['numero_serie'];
+                $contenidoDetalleFcv['numeroImei']         = $item['numero_imei'];
+
+                $DetalleFcv['detalle'] = $contenidoDetalleFcv;
+
+                array_push($contenidoFacturaFcv, $DetalleFcv);
+
+            }
+
+            $contenidoFacturaPadreFcv['factura'] = $contenidoFacturaFcv;
+
+            $datos           = $contenidoFacturaPadreFcv;
+            $valoresCabecera = $datos['factura'][0]['cabecera'];
+            // $puntoVenta      = $punto_venta_objeto->codigoPuntoVenta;
+            // $tipo_factura    = $request->input('modalidad');
+            $swFacturaEnvio  = true;
+
+
+
+
             dd(
                 // $datosGlobales,
-                // $request->all(),
+                $request->all(),
                 $contenidoabeceraFcv,
                 $cabeceraFcv,
-                $contenidoFacturaFcv
+                $contenidoFacturaFcv,
+                $contenidoFacturaPadreFcv
             );
 
 
