@@ -44,11 +44,6 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
-                <!--begin::Actions-->
-                {{-- <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <button class="btn btn-sm fw-bold btn-primary" onclick="modalRol()">Nuevo Rol</button>
-                </div> --}}
-                <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -74,11 +69,9 @@
                                             @else
                                                 <span class="badge badge-danger">NO existe un Cuis Vigente para este Usuario</span>
                                             @endif
-                                            {{-- CUIS: {{ (session()->has('scuis'))?  session('scuis') : '<span class="text-danger">NO existe la Cuis Vigente</span>'}} --}}
                                         </div>
                                         <div class="col-md-3">
                                             @if ($cufd)
-                                                {{-- CUFD: {{ $cufd->codigo_control." ".str_replace("T", " ",substr(session('sfechaVigenciaCufd'), 0 , 16)) }} --}}
                                                 CUFD: {{ $cufd->codigo_control." ".$cufd->fecha_vigencia }}
                                             @else
                                                 <span class="badge badge-danger">NO existe un Cufd Vigente para este Usuario</span>
@@ -90,13 +83,9 @@
                                 @endif
                             </div>
                         </div>
-
                         <div id="tabla_clientes">
-
                         </div>
-
                         <hr>
-                        {{--  <div id="tabla_ventas" style="display: none">  --}}
                         <div id="tabla_ventas">
                             <form id="formulario_venta">
                                 <div class="row">
@@ -111,62 +100,39 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Precio</label>
-                                        <input type="number" readonly class="form-control form-control-sm" id="precio_venta" name="precio_venta" value="0" min="1" required>
+                                        <input type="number" class="form-control form-control-sm" id="precio_venta" name="precio_venta" value="0" min="1" required onchange="calcularPrecioTotal()">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
-                                        <input type="number" class="form-control form-control-sm" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
+                                        <input type="number" class="form-control form-control-sm" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="calcularPrecioTotal()">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Total</label>
-                                        <input type="number" class="form-control form-control-sm" id="total_venta" name="total_venta" value="0" min="1" required>
+                                        <input type="number" class="form-control form-control-sm" id="total_venta" name="total_venta" value="0" min="1" required readonly>
                                     </div>
                                     <div class="col-md-1">
                                         <button class="btn btn-primary btn-circle btn-sm btn-icon mt-9" type="button" onclick="mostraBloqueMasDatosProdcuto()" title="Mostrar mas opcion"><i class="fa fa-note-sticky"></i> +</button>
                                         <button class="btn btn-success btn-circle btn-sm btn-icon mt-9" type="button" onclick="agregarProducto()" title="Agregar al Carro de compras"><i class="fa fa-shopping-cart"></i> +</button>
                                     </div>
-
-                                    {{--  <div class="col-md-8">
-                                        <label class="required fw-semibold fs-6 mb-2">Descripcion Adicional</label>
-                                        <input type="text" class="form-control form-control-sm" id="descripcion_adicional" name="descripcion_adicional" required>
-                                    </div>  --}}
                                 </div>
                                 <div class="row" style="display: none;" id="bloque_mas_datos_productos">
                                     <div class="col-md-6">
-                                        <label class="required fw-semibold fs-6 mb-2">Descripcion Adicional</label>
-                                        <input type="text" class="form-control form-control-sm" id="descripcion_adicional" name="descripcion_adicional" required>
+                                        <label class="fw-semibold fs-6 mb-2">Descripcion Adicional</label>
+                                        <input type="text" class="form-control form-control-sm" id="descripcion_adicional" name="descripcion_adicional">
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="required fw-semibold fs-6 mb-2">Numero Serie</label>
+                                        <label class=" fw-semibold fs-6 mb-2">Numero Serie</label>
                                         <input type="number" class="form-control form-control-sm" id="numero_serie" name="numero_serie" min="1">
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="required fw-semibold fs-6 mb-2">Codigo Imei</label>
+                                        <label class=" fw-semibold fs-6 mb-2">Codigo Imei</label>
                                         <input type="number" class="form-control form-control-sm" id="codigo_imei" name="codigo_imei" min="1">
                                     </div>
-                                    {{--  <div class="col-md-2">
-                                        <label class="required fw-semibold fs-6 mb-2">Precio</label>
-                                        <input type="number" readonly class="form-control form-control-sm" id="precio_venta" name="precio_venta" value="0" min="1" required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
-                                        <input type="number" class="form-control form-control-sm" id="cantidad_venta" name="cantidad_venta" value="0" min="1" required onkeyup="multiplicarPrecioAlTolta()">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <label class="required fw-semibold fs-6 mb-2">Total</label>
-                                        <input type="number" class="form-control form-control-sm" id="total_venta" name="total_venta" value="0" min="1" required>
-                                    </div>
-
-                                    <div class="col-md-1">
-                                        <button class="btn btn-primary btn-circle btn-sm btn-icon mt-9" type="button" onclick="" title="Agregar al Carro de compras"><i class="fa fa-note-sticky"></i> +</button>
-                                        <button class="btn btn-success btn-circle btn-sm btn-icon mt-9" type="button" onclick="agregarProducto()" title="Agregar al Carro de compras"><i class="fa fa-shopping-cart"></i> +</button>
-                                    </div>  --}}
                                 </div>
                             </form>
                             <hr>
-                            {{--  <div id="tabla_detalles" style="display: none">  --}}
-                            <div id="tabla_detalles">
-                                <h2>Carrito de Compras</h2>
+                            <div id="tabla_detalles" style="display: none">
+                                <h2 class="text-center">CARRITO DE COMPRAS</h2>
                                 <table id="carrito" class="table align-middle table-row-dashed fs-6 gy-5">
                                     <thead>
                                         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -199,22 +165,20 @@
                                 </table>
                             </div>
                             <hr>
-                            <div class="row">
-                                {{--  <div class="col-md-8">  --}}
-                                <div class="col-md-12">
-                                    <button class="btn btn-info btn-sm w-100" onclick="mostrarFormularioClientes()">Seleccionar Cliente <i class="fa fa-user-alt"></i></button>
-                                    {{--  <h4 class="text-info text-center">SELECCIONAR CLIENTE</h4>  --}}
+                            <div class="row" id="bloque_seleccionar_cliente" style="display: none">
+                                <div class="col-md-11">
+                                    <button class="btn btn-info btn-sm w-100" onclick="mostrarFormularioClientes()"><span id="nombre_cliente"></span> <i class="fa fa-user-alt"></i></button>
                                 </div>
-                                {{--  <div class="col-md-4">
-                                    <button class="btn btn-dark btn-sm btn-icon btn-circle"><i class="fa fa-user-alt"></i></button>
-                                </div>  --}}
+                                <div class="col-md-1">
+                                    <button class="btn btn-dark btn-sm btn-circle btn-icon" onclick="mostrarCarritoVentas()"><span id="nombre_cliente"></span> <i class="fa fa-shopping-basket"></i></button>
+                                </div>
                             </div>
                             <form id="formulario_cliente_escogido" style="display: none">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="fs-6 fw-semibold form-label mb-2">Cedula</label>
                                         <input type="text" class="form-control form-control-sm buscar-persona" name="cedula_escogido" id="cedula_escogido">
-                                        <input type="text" name="cliente_id_escogido" id="cliente_id_escogido">
+                                        <input type="hidden" name="cliente_id_escogido" id="cliente_id_escogido">
                                     </div>
                                     <div class="col-md-3">
                                         <label class="fs-6 fw-semibold form-label mb-2">Nombre</label>
@@ -233,43 +197,14 @@
                             <div id="tabla-clientes-buscados">
 
                             </div>
-
-                            {{--  <div id="bloque_cliente_escogido" style="display:none">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Cedula</label>
-                                        <input type="text" name="cedula_seleccionado" id="cedula_seleccionado" class="form-control form-control-sm" readonly>
-                                        <input type="text" name="cliente_id_seleccionado" id="cliente_id_seleccionado">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Nombres</label>
-                                        <input type="text" name="nombre_seleccionado" id="nombre_seleccionado" class="form-control form-control-sm" readonly>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Ap. Paterno</label>
-                                        <input type="text" name="ap_paterno_seleccionado" id="ap_paterno_seleccionado" class="form-control form-control-sm" readonly>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="fs-6 fw-semibold form-label mb-2">Ap. Mateerno</label>
-                                        <input type="text" name="ap_materno_seleccionado" id="ap_materno_seleccionado" class="form-control form-control-sm" readonly>
-                                    </div>
-                                </div>
-                            </div>  --}}
-
                         </div>
-
                         <hr>
-
                         <div class="row" id="bloque_facturacion" style="display: none;">
                             <div class="col-md-12">
-                                <button class="btn btn-sm w-100 btn-dark" onclick="muestraDatosFactura()">FACTURAR</button>
+                                <h2 class="text-center">DATOS DE LA FACTURA</h2>
                             </div>
                         </div>
-
-                        <hr>
-
                         <div id="bloqueDatosFactura" style="display: none">
-                            <h3>DATOS PARA FACTURA</h3>
                             <form id="formularioGeneraFactura">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -314,7 +249,6 @@
 
                                     <div class="col-md-3">
                                         <label for="">Razon Social</label>
-                                        {{--  <input type="text" class="form-control" id="razon_factura" name="razon_factura" autocomplete="off" required value="{{ $razon_social }}">  --}}
                                         <input type="text" class="form-control form-control-sm" id="razon_factura" name="razon_factura" autocomplete="off" required>
                                     </div>
                                     <div class="col-md-2">
@@ -342,9 +276,7 @@
                                         <input type="number" class="form-control form-control-sm" id="numero_factura_cafc" name="numero_factura_cafc">
                                     </div>
                                 </div>
-                                {{-- <h3 class="text-center text-info">PAGO</h3> --}}
-                                {{-- <div class="row" style="display: none" id="bloque_exepcion"> --}}
-                                <div class="row" id="bloque_exepcion">
+                                <div class="row" id="bloque_exepcion" style="display: none">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Enviar con execpcion?</label>
@@ -357,7 +289,6 @@
                             <div class="row mt-2">
                                 <div class="col-md-12">
                                     <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin" style="display:none;"></i>Enviar</button>
-                                    {{-- <button class="btn btn-sm w-100 btn-success" onclick="emitirFactura()" id="boton_enviar_factura"> <i class="fa fa-spinner fa-spin"></i>Enviar</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -370,7 +301,6 @@
         </div>
         <!--end::Content-->
     </div>
-    <!--end::Content wrapper-->
 @stop()
 
 @section('js')
@@ -388,10 +318,6 @@
         var arrayProductoCar = [];
 
         $(document).ready(function() {
-
-            // ajaxListadoTipoDocumentoSector();
-            // ajaxListadoClientes();
-            //ajaxListadoServicios();
 
             $("#serivicio_id_venta").select2();
 
@@ -420,16 +346,14 @@
             $('.buscar-persona').on('keyup', function() {
 
                 ajaxListadoClientes();
-
-                // var valor = $(this).val();
-                // var nombreInput = $(this).attr('name');
-                // console.log('Valor:', valor, 'Nombre del input:', nombreInput);
             });
 
 
             $('input[name="uso_cafc"]').on('change', function() {
                 verificarRadioSeleccionado();
             });
+
+            $('#nombre_cliente').text('SELECCIONAR CLIENTE')
 
         });
 
@@ -451,128 +375,122 @@
 
         function identificaSericio(selected){
 
-            var json = JSON.parse(selected.value);
-
-            $('#precio_venta').val(json.precio)
-            $('#cantidad_venta').val(1)
-            $('#total_venta').val((1*json.precio))
-            $('#numero_serie').val(json.numero_serie)
-            $('#codigo_imei').val(json.codigo_imei)
+            if(selected.value != ''){
+                var json = JSON.parse(selected.value);
+                $('#precio_venta').val(json.precio)
+                $('#cantidad_venta').val(1)
+                $('#total_venta').val((1*json.precio))
+                $('#numero_serie').val(json.numero_serie)
+                $('#codigo_imei').val(json.codigo_imei)
+            }else{
+                $('#precio_venta').val(0)
+                $('#cantidad_venta').val(0)
+                $('#total_venta').val(0)
+                $('#numero_serie').val(null)
+                $('#codigo_imei').val(null)
+                $('#descripcion_adicional').val(null)
+            }
 
         }
 
         function agregarProducto(){
-            var servicioDatos = JSON.parse($("#serivicio_id_venta").val())
-
-            let id            = servicioDatos.id;
-            var filaExistente = table.row("#producto-" + id);
-            var precio        = servicioDatos.precio;
-            var cantidad      = $('#cantidad_venta').val();
-            var total         = precio*cantidad;
-            var subTotal      = (precio*cantidad)-0;
-
-            let servicio = {
-                servicio_id          : servicioDatos.id,
-                descripcion          : servicioDatos.descripcion,
-                precio               : parseFloat(servicioDatos.precio).toFixed(2),
-                numero_serie         : $("#numero_serie").val(),
-                numero_imei          : $("#codigo_imei").val(),
-                empresa_id           : servicioDatos.empresa_id,
-                cantidad             : parseInt($('#cantidad_venta').val()),
-                total                : parseFloat(total).toFixed(2),
-                descuento            : parseFloat(0).toFixed(2),
-                subTotal             : parseFloat(subTotal.toFixed(2)),
-                descripcion_adicional: $('#descripcion_adicional').val()
-            }
-
-            if (filaExistente.node()) {
-
-                // Si el producto ya está en el carrito, aumenta la cantidad en 2
-                var cantidadCell   = $(filaExistente.node()).find('.cantidad');
-                var cantidadActual = parseInt(cantidadCell.text());
-                var nuevaCantidad  = cantidadActual + parseInt(cantidad);
-                cantidadCell.text(nuevaCantidad);
-
-                // Actualiza el total
-                nuevoTotal = nuevaCantidad * precio
-                var totalCell = $(filaExistente.node()).find('.total');
-                totalCell.text((nuevoTotal).toFixed(2));
-
-                var subTotalCell  = $(filaExistente.node()).find('.subTotal');
-                var valorSubTotal = parseFloat(subTotalCell.text())
-                var nuevoSubTotal = nuevoTotal - parseFloat($('#descuento_'+id).val())
-                subTotalCell.text((nuevoSubTotal).toFixed(2));
-
-                let servicio = arrayProductoCar.find(s => s.servicio_id === servicioDatos.id);
-                if (servicio) {
-
-                    servicio.cantidad              = parseFloat(servicio.cantidad) + parseFloat(cantidad);
-                    servicio.total                 = parseFloat(nuevoTotal);
-                    servicio.subTotal              = parseFloat(nuevoSubTotal);
-                    servicio.descripcion_adicional = $('#descripcion_adicional').val();
-
-
-                    let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
-                    let descuentoAdicional = $('#descuento_adicional').val()
-
-                    $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
-
-                } else {
-                    Swal.fire({
-                        icon:'error',
-                        title: "ERROR!",
-                        text:  "Error al actualizar el descuento.",
-                        timer: 4000
-                    })
-                }
-
-            } else {
-                var subTotal      = precio*cantidad;
-
-                table.row.add([
-                    servicioDatos.descripcion,
-                    precio,
-                    "<span class='cantidad'>"+cantidad+"</span>",
-                    "<span class='total'>"+total+"</span>",
-                    '<input class="form-control form-control-sm" type="text" name="descuento_'+id+'" id="descuento_'+id+'" value="0" onchange="ejecutarDescuento(this)">',
-                    "<span class='subTotal'>"+subTotal+"</span>",
-                    "<button class='eliminar btn btn-icon btn-danger btn-circle btn-sm'><i class='fa fa-trash'></button>"
-                ]).node().id = 'producto-' + id;
-                table.draw(false);
-
-                // AGREGAMOS AL CARRO LOS PRODUSTOS
-                arrayProductoCar.push(servicio);
-                // AGREGAMOS AL CARRO LOS PRODUSTOS
-
-                $('#monto_total').val(parseFloat($('#monto_total').val())+parseFloat(servicio.subTotal))
-            }
-
-
-
-
-
-
-            /*
 
             if($("#formulario_venta")[0].checkValidity()){
-                let datoscombi = $('#formulario_venta, #formulario_cliente_escogido').serializeArray();
-                $.ajax({
-                    url: "{{ url('factura/agregarProducto') }}",
-                    type    : 'POST',
-                    data    : datoscombi,
-                    dataType: 'json',
-                    success: function(data) {
-                        if(data.estado === 'success'){
-                            let cliente = $('#cliente_id_escogido').val();
-                            ajaxListadoDetalles(cliente);
-                            $('#tabla_detalles').show('toogle')
-                        }
+
+                var servicioDatos = JSON.parse($("#serivicio_id_venta").val())
+
+                let id            = servicioDatos.id;
+                var filaExistente = table.row("#producto-" + id);
+                // var precio        = servicioDatos.precio;
+                var precio        = $('#precio_venta').val();
+                var cantidad      = $('#cantidad_venta').val();
+                var total         = precio*cantidad;
+                var subTotal      = (precio*cantidad)-0;
+
+                let servicio = {
+                    servicio_id          : servicioDatos.id,
+                    descripcion          : servicioDatos.descripcion,
+                    precio               : parseFloat(precio).toFixed(2),
+                    numero_serie         : $("#numero_serie").val(),
+                    numero_imei          : $("#codigo_imei").val(),
+                    empresa_id           : servicioDatos.empresa_id,
+                    cantidad             : parseInt($('#cantidad_venta').val()),
+                    total                : parseFloat(total).toFixed(2),
+                    descuento            : parseFloat(0).toFixed(2),
+                    subTotal             : parseFloat(subTotal.toFixed(2)),
+                    descripcion_adicional: $('#descripcion_adicional').val()
+                }
+
+                if (filaExistente.node()) {
+
+                    // Si el producto ya está en el carrito, aumenta la cantidad en 2
+                    var cantidadCell   = $(filaExistente.node()).find('.cantidad');
+                    var cantidadActual = parseInt(cantidadCell.text());
+                    var nuevaCantidad  = cantidadActual + parseInt(cantidad);
+                    cantidadCell.text(nuevaCantidad);
+
+                    // Actualiza el total
+                    nuevoTotal = nuevaCantidad * precio
+                    var totalCell = $(filaExistente.node()).find('.total');
+                    totalCell.text((nuevoTotal).toFixed(2));
+
+                    var subTotalCell  = $(filaExistente.node()).find('.subTotal');
+                    var valorSubTotal = parseFloat(subTotalCell.text())
+                    var nuevoSubTotal = nuevoTotal - parseFloat($('#descuento_'+id).val())
+                    subTotalCell.text((nuevoSubTotal).toFixed(2));
+
+                    let servicio = arrayProductoCar.find(s => s.servicio_id === servicioDatos.id);
+                    if (servicio) {
+
+                        servicio.cantidad              = parseFloat(servicio.cantidad) + parseFloat(cantidad);
+                        servicio.total                 = parseFloat(nuevoTotal);
+                        servicio.subTotal              = parseFloat(nuevoSubTotal);
+                        servicio.descripcion_adicional = $('#descripcion_adicional').val();
+
+
+                        let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                        let descuentoAdicional = $('#descuento_adicional').val()
+
+                        $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
+
+                    } else {
+                        Swal.fire({
+                            icon:'error',
+                            title: "ERROR!",
+                            text:  "Error al actualizar el descuento.",
+                            timer: 4000
+                        })
                     }
-                });
+
+                } else {
+                    var subTotal      = precio*cantidad;
+
+                    table.row.add([
+                        servicioDatos.descripcion+" "+$('#descripcion_adicional').val(),
+                        precio,
+                        "<span class='cantidad'>"+cantidad+"</span>",
+                        "<span class='total'>"+total+"</span>",
+                        '<input class="form-control form-control-sm" type="text" name="descuento_'+id+'" id="descuento_'+id+'" value="0" onchange="ejecutarDescuento(this)">',
+                        "<span class='subTotal'>"+subTotal+"</span>",
+                        "<button class='eliminar btn btn-icon btn-danger btn-circle btn-sm' onclick='eliminarItem("+id+")' ><i class='fa fa-trash'></button>"
+                    ]).node().id = 'producto-' + id;
+                    table.draw(false);
+
+                    // AGREGAMOS AL CARRO LOS PRODUSTOS
+                    arrayProductoCar.push(servicio);
+                    // AGREGAMOS AL CARRO LOS PRODUSTOS
+
+                    $('#monto_total').val(parseFloat($('#monto_total').val())+parseFloat(servicio.subTotal))
+                }
+
+                // BORRAMOS LOS ITEM QUE AGREGAMOS
+                $('#serivicio_id_venta').val(null).trigger('change');
+                $('#tabla_detalles').show('toggle')
+                $('#bloque_seleccionar_cliente').show('toggle')
+
             }else{
                 $("#formulario_venta")[0].reportValidity();
             }
-            */
 
         }
 
@@ -592,8 +510,6 @@
                     subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
                     let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
                     if (servicio) {
-                        // servicio.cantidad = parseInt(servicio.cantidad) + parseInt(cantidad);
-                        // servicio.descuento = parseFloat(servicio.descuento) + parseFloat(valorDescuento);
                         servicio.descuento = parseFloat(valorDescuento);
                         servicio.subTotal  = parseFloat(servicio.total) - parseFloat(valorDescuento);
 
@@ -638,22 +554,6 @@
                 $('#ap_paterno_escogido').val().length > 3 ||
                 $('#ap_materno_escogido').val().length > 3
             ){
-
-                /*
-                console.log(
-                    $('#cedula_escogido').val().length,
-                    $('#nombre_escogido').val().length,
-                    $('#ap_paterno_escogido').val().length,
-                    $('#ap_materno_escogido').val().length,
-                    (
-                        $('#cedula_escogido').val().length > 3 ||
-                        $('#nombre_escogido').val().length > 3 ||
-                        $('#ap_paterno_escogido').val().length > 3 ||
-                        $('#ap_materno_escogido').val().length > 3
-                    )
-                )
-                */
-
                 let datos = $('#formulario_cliente_escogido').serializeArray();
                 $.ajax({
                     url   : "{{ url('factura/ajaxListadoClientesBusqueda') }}",
@@ -684,82 +584,36 @@
         function escogerCliente(cliente,nombres, ap_paterno, ap_materno, cedula, nit, razon_social){
 
             $('#cliente_id_escogido').val(cliente);
-            $('#nombre_escogido').val(nombres);
-            $('#ap_paterno_escogido').val(ap_paterno);
-            $('#ap_materno_escogido ').val(ap_materno);
-            $('#cedula_escogido').val(cedula);
+
+            $('#nombre_escogido').val('');
+            $('#ap_paterno_escogido').val('');
+            $('#ap_materno_escogido ').val('');
+            $('#cedula_escogido').val('');
 
             $('#nit_factura').val(nit);
             $('#razon_factura').val(razon_social);
 
-            /*
-            $('#cliente_id_escogido').attr('readonly', true);
-            $('#nombre_escogido').attr('readonly', true);
-            $('#ap_paterno_escogido').attr('readonly', true);
-            $('#ap_materno_escogido ').attr('readonly', true);
-            $('#cedula_escogido').attr('readonly', true);
-            */
-
-            //$('#formulario_cliente_escogido').hide('toogle')
             $('#tabla-clientes-buscados').hide('toggle')
-            $('#bloque_facturacion').toggle('show')
+            $('#bloque_facturacion').show('toggle')
 
-            //$('#bloque_cliente_escogido').show('toogle')
+            let nombreusuario = cedula+" | "+nombres+" | "+ap_paterno+" | "+ap_materno;
 
-            /*
+            $('#nombre_cliente').text(nombreusuario)
 
-            $('#cliente_id_seleccionado').val(cliente);
-            $('#nombre_seleccionado').val(nombres);
-            $('#ap_paterno_seleccionado').val(ap_paterno);
-            $('#ap_materno_seleccionado ').val(ap_materno);
-            $('#cedula_seleccionado').val(cedula);
-
-            $('#formulario_cliente_escogido').hide('toogle')
-            $('#tabla-clientes-buscados').hide('toogle')
-            $('#bloque_cliente_escogido').show('toogle')
-            */
-
-            /*
-            $('#tabla_clientes').hide('toogle')
-            $('#tabla_ventas').show('toogle')
-
-            ajaxListadoDetalles(cliente);
-            */
+            $('#bloqueDatosFactura').show('toggle');
+            $('#formulario_cliente_escogido').toggle('hide');
         }
 
         function mostrarFormularioClientes(){
             $('#formulario_cliente_escogido').toggle('show');
-            $('#tabla_detalles').toggle('hide');
+            $('#tabla_detalles').hide('toggle');
         }
 
         function muestraDatosFactura(){
 
             $('#bloqueDatosFactura').show('toogle')
 
-            // $('#bloqueDatosFactura').show('toggle')
-            // $('#bloque_tipos_pagos').show('toggle')
-            // $('#boton_enviar_factura').show('toggle')
-            // $('#boton_enviar_recivo').hide('toggle')
-
-            /*
-            $.ajax({
-                url: "{{ url('factura/arrayCuotasPagar') }}",
-                data:{
-                    cliente : $('#cliente_id_escogido').val()
-                },
-                type: 'POST',
-                dataType: 'json',
-                success: function(data) {
-                    if(data.estado === 'success'){
-                        arrayPagos     = data.detalles;
-                        arrayProductos = JSON.parse(data.lista)
-                        $('#bloqueDatosFactura').show('toogle')
-                    }
-                }
-            });
-            */
         }
-
 
         function verificaNit(){
             if($('#tipo_documento').val()  === "5"){
@@ -777,12 +631,10 @@
                                 $('#execpcion').prop('checked', false);
                                 $('#nitsiexiste').show('toggle')
                                 $('#nitnoexiste').hide('toggle')
-                                // $('#bloque_exepcion').hide('toggle');
                             }else{
                                 $('#nitnoexiste').show('toggle')
                                 $('#nitsiexiste').hide('toggle')
                                 $('#execpcion').prop('checked', true);
-                                // $('#bloque_exepcion').show('toggle');
                             }
                         }else{
                             $('#errorValidar').show('toggle')
@@ -816,302 +668,77 @@
 
         function emitirFactura(){
 
-            // let cliente = $('#cliente_id_escogido').val()
-
-            $.ajax({
-                url   : "{{ url('factura/emitirFacturaCv') }}",
-                method: "POST",
-                data  : {
-                    cliente_id                        : $('#cliente_id_escogido').val(),
-                    carrito                           : arrayProductoCar,
-                    facturacion_datos_tipo_metodo_pago: $('#facturacion_datos_tipo_metodo_pago').val(),
-                    facturacion_datos_tipo_moneda     : $('#facturacion_datos_tipo_moneda').val(),
-                    tipo_documento                    : $('#tipo_documento').val(),
-                    nit_factura                       : $('#nit_factura').val(),
-                    razon_factura                     : $('#razon_factura').val(),
-                    tipo_facturacion                  : $('#tipo_facturacion').val(),
-                    uso_cafc                          : $('input[name="uso_cafc"]:checked').val(),
-                    numero_factura_cafc               : $('#numero_factura_cafc').val(),
-                    execpcion                         : $('#execpcion').is(':checked'),
-                    complemento                       : $('#complemento').val(),
-                    descuento_adicional               : $('#descuento_adicional').val(),
-                    monto_total                       : $('#monto_total').val(),
-                    monto_total                       : $('#monto_total').val(),
-                },
-                success: function (data) {
-                    if(data.estado === "VALIDADA"){
-                        Swal.fire({
-                            icon : 'success',
-                            title: 'Excelente!',
-                            text : 'LA FACTURA FUE VALIDADA',
-                            timer: 3000
-                        })
-                        window.location.href = "{{ url('factura/listado')}}"
-                    }else if(data.estado === "error_email"){
-                        Swal.fire({
-                            icon : 'error',
-                            title: 'Error!',
-                            text : data.msg,
-                        })
-                        // Habilita el botón y oculta el icono de carga después de completar
-                        boton.attr("disabled", false);
-                        iconoCarga.hide();
-                    }else if(data.estado === "OFFLINE"){
-                        Swal.fire({
-                            icon : 'warning',
-                            title: 'Exito!',
-                            text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
-                            timer: 2000
-                        })
-                        window.location.href = "{{ url('factura/listado')}}"
-                    }else{
-                        Swal.fire({
-                            icon : 'error',
-                            title: data.msg,
-                            text : 'LA FACTURA FUE RECHAZADA',
-                        })
-                        // Habilita el botón y oculta el icono de carga después de completar
-                        boton.attr("disabled", false);
-                        iconoCarga.hide();
+            if($("#formularioGeneraFactura")[0].checkValidity()){
+                $.ajax({
+                    url   : "{{ url('factura/emitirFacturaCv') }}",
+                    method: "POST",
+                    data  : {
+                        cliente_id                        : $('#cliente_id_escogido').val(),
+                        carrito                           : arrayProductoCar,
+                        facturacion_datos_tipo_metodo_pago: $('#facturacion_datos_tipo_metodo_pago').val(),
+                        facturacion_datos_tipo_moneda     : $('#facturacion_datos_tipo_moneda').val(),
+                        tipo_documento                    : $('#tipo_documento').val(),
+                        nit_factura                       : $('#nit_factura').val(),
+                        razon_factura                     : $('#razon_factura').val(),
+                        tipo_facturacion                  : $('#tipo_facturacion').val(),
+                        uso_cafc                          : $('input[name="uso_cafc"]:checked').val(),
+                        numero_factura_cafc               : $('#numero_factura_cafc').val(),
+                        execpcion                         : $('#execpcion').is(':checked'),
+                        complemento                       : $('#complemento').val(),
+                        descuento_adicional               : $('#descuento_adicional').val(),
+                        monto_total                       : $('#monto_total').val(),
+                        monto_total                       : $('#monto_total').val(),
+                    },
+                    success: function (data) {
+                        if(data.estado === "VALIDADA"){
+                            Swal.fire({
+                                icon : 'success',
+                                title: 'Excelente!',
+                                text : 'LA FACTURA FUE VALIDADA',
+                                timer: 3000
+                            })
+                            window.location.href = "{{ url('factura/listado')}}"
+                        }else if(data.estado === "error_email"){
+                            Swal.fire({
+                                icon : 'error',
+                                title: 'Error!',
+                                text : data.msg,
+                            })
+                            // Habilita el botón y oculta el icono de carga después de completar
+                            boton.attr("disabled", false);
+                            iconoCarga.hide();
+                        }else if(data.estado === "OFFLINE"){
+                            Swal.fire({
+                                icon : 'warning',
+                                title: 'Exito!',
+                                text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
+                                timer: 2000
+                            })
+                            window.location.href = "{{ url('factura/listado')}}"
+                        }else{
+                            Swal.fire({
+                                icon : 'error',
+                                title: data.msg,
+                                text : 'LA FACTURA FUE RECHAZADA',
+                            })
+                            // Habilita el botón y oculta el icono de carga después de completar
+                            boton.attr("disabled", false);
+                            iconoCarga.hide();
+                        }
+                    },
+                    error: function(error){
+                        if (error.status === 419) {
+                            alert('Tu sesión ha expirado. Por favor, vuelve a cargar la página.');
+                            // Opcional: Recargar la página
+                            location.reload();
+                        } else {
+                            // Manejar otros errores
+                        }
                     }
-                },
-                error: function(error){
-                    if (error.status === 419) {
-                        alert('Tu sesión ha expirado. Por favor, vuelve a cargar la página.');
-                        // Opcional: Recargar la página
-                        location.reload();
-                    } else {
-                        // Manejar otros errores
-                    }
-                }
-            })
-
-
-            // console.log(cliente, arrayProductoCar);
-
-
-            // $.ajax({
-            //     url: "{{ url('factura/verificaItemsGeneracion') }}",
-            //     data: {
-            //         cliente: cliente
-            //     },
-            //     type: 'POST',
-            //     dataType:'json',
-            //     success: function(data) {
-
-            //         // console.log(data)
-
-            //         if(data.estado === "success"){
-            //             if(data.cantidad == 0){
-            //                 Swal.fire({
-            //                     icon:   'error',
-            //                     title:  'Error!',
-            //                     text:   "DEBE AL MENOS AGREGAR UN SERVICIO/PRODUCTO",
-            //                     timer: 5000
-            //                 })
-            //             }else{
-
-            //                 // if($("#formularioGeneraFactura")[0].checkValidity() && $("#formulario_tipo_pagos")[0].checkValidity()){
-            //                 if($("#formularioGeneraFactura")[0].checkValidity()){
-
-
-            //                     // // Obtén el botón y el icono de carga
-            //                     // var boton = $("#boton_enviar_factura");
-            //                     // var iconoCarga = boton.find("i");
-            //                     // // Deshabilita el botón y muestra el icono de carga
-            //                     // boton.attr("disabled", true);
-            //                     // iconoCarga.show();
-
-            //                     //PONEMOS TODO AL MODELO DEL SIAT EL DETALLE
-            //                     detalle = [];
-
-            //                     // console.log($('#numero_serie').val());
-            //                     // console.log($('#codigo_imei').val());
-
-            //                     // console.log("----------------------");
-            //                     // console.log(arrayProductos,arrayProductos[0].numero_serie == null , arrayProductos[0].codigo_imei == null);
-            //                     // console.log("----------------------");
-
-            //                     arrayProductos.forEach(function (prod){
-            //                         detalle.push({
-            //                             actividadEconomica  :   prod.codigo_caeb,
-            //                             codigoProductoSin   :   prod.codigo_producto,
-            //                             codigoProducto      :   prod.servicio_id,
-            //                             descripcion         :   prod.descripcion,
-            //                             cantidad            :   prod.cantidad,
-            //                             unidadMedida        :   prod.codigo_clasificador,
-            //                             precioUnitario      :   prod.precio,
-            //                             montoDescuento      :   prod.descuento,
-            //                             subTotal            :   ((prod.cantidad*prod.precio)-prod.descuento),
-            //                             numeroSerie         :   (prod.numero_serie == null)? null : prod.numero_serie,
-            //                             numeroImei          :   (prod.codigo_imei == null)? null : prod.codigo_imei
-            //                         })
-            //                     })
-
-            //                     console.log(detalle, arrayProductos, arrayPagos)
-
-
-            //                     // let numero_factura                  = $('#numero_factura').val();
-            //                     let numero_factura                  = null;
-            //                     // let cuf                             = "123456789";//cambiar
-            //                     // let cufd                            = "{{ session('scufd') }}";  //solo despues de que aga
-            //                     // let direccion                       = "{{ session('sdireccion') }}";//solo despues de que aga
-            //                     let cuf                             = null;//cambiar
-            //                     let cufd                            = null;  //solo despues de que aga
-            //                     let direccion                       = null;//solo despues de que aga
-            //                     var tzoffset                        = ((new Date()).getTimezoneOffset()*60000);
-            //                     let fechaEmision                    = ((new Date(Date.now()-tzoffset)).toISOString()).slice(0,-1);
-            //                     let nombreRazonSocial               = $('#razon_factura').val();
-            //                     let codigoTipoDocumentoIdentidad    = $('#tipo_documento').val()
-            //                     let numeroDocumento                 = $('#nit_factura').val();
-
-            //                     let complemento;
-            //                     // var complementoValue = $("#complemento").val();
-            //                     // if (complementoValue === null || complementoValue.trim() === ""){
-            //                     //     complemento                     = null;
-            //                     // }else{
-            //                     //     if($('#tipo_documento').val()==5){
-            //                     //         complemento                     = null;
-            //                     //     }else{
-            //                     //         complemento                     = $('#complemento').val();
-            //                     //     }
-            //                     // }
-
-            //                     let montoTotal                      = $('#total_a_pagar_importe').val();
-            //                     let descuentoAdicional              = $('#descuento_adicional_global').val();
-            //                     let leyenda                         = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
-            //                     let usuario                         = "{{ Auth::user()->name }}";
-
-            //                     let codigoExcepcion;
-            //                     if ($('#execpcion').is(':checked'))
-            //                         codigoExcepcion                 = 1;
-            //                     else
-            //                         codigoExcepcion                 = 0;
-
-
-            //                     var factura = [];
-            //                     factura.push({
-            //                         cabecera: {
-            //                             // nitEmisor                       :"{{ $empresa->nit }}",
-            //                             // razonSocialEmisor               :'{{ $empresa->razon_social }}',
-            //                             // municipio                       :"Santa Cruz",
-            //                             // telefono                        :"73130500",
-
-            //                             nitEmisor                       :null,
-            //                             razonSocialEmisor               :null,
-            //                             municipio                       :null,
-            //                             telefono                        :null,
-            //                             numeroFactura                   :numero_factura,
-            //                             cuf                             :cuf,
-            //                             cufd                            :cufd,
-            //                             codigoSucursal                  :null,
-            //                             direccion                       :direccion ,
-            //                             codigoPuntoVenta                :null,
-            //                             fechaEmision                    :fechaEmision,
-            //                             nombreRazonSocial               :nombreRazonSocial,
-            //                             codigoTipoDocumentoIdentidad    :codigoTipoDocumentoIdentidad,
-            //                             numeroDocumento                 :numeroDocumento,
-            //                             complemento                     :null,
-            //                             // complemento                     :complemento,
-            //                             codigoCliente                   :numeroDocumento,
-            //                             codigoMetodoPago                :$('#facturacion_datos_tipo_metodo_pago').val(),
-            //                             numeroTarjeta                   :null,
-            //                             montoTotal                      :montoTotal,
-            //                             montoTotalSujetoIva             :montoTotal,
-
-            //                             codigoMoneda                    :$('#facturacion_datos_tipo_metodo_pago').val(),
-            //                             tipoCambio                      :1,
-            //                             montoTotalMoneda                :montoTotal,
-
-            //                             montoGiftCard                   :null,
-            //                             descuentoAdicional              :descuentoAdicional,//ver llenado
-            //                             codigoExcepcion                 :codigoExcepcion,
-            //                             cafc                            :null,
-            //                             leyenda                         :leyenda,
-            //                             usuario                         :usuario,
-            //                             codigoDocumentoSector           :1
-            //                         }
-            //                     })
-
-            //                     detalle.forEach(function (prod1){
-            //                         factura.push({
-            //                             detalle:prod1
-            //                         })
-            //                     })
-            //                     var datos = {factura};
-            //                     var datosCliente = {
-            //                         'cliente_id': $('#cliente_id_escogido').val(),
-            //                         'pagos'     : arrayPagos,
-            //                         // 'empresa'   : "{{ $empresa->id }}"
-            //                         // 'realizo_pago': $("#realizo_pago").prop("checked"),
-            //                         'numero_cafc': $('#numero_factura_cafc').val(),
-            //                         'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
-            //                     };
-            //                     var datosRecepcion = {
-            //                         // 'uso_cafc'                : $('input[name="uso_cafc"]:checked').val(),
-            //                         // 'codigo_cafc_contingencia': $('#codigo_cafc_contingencia').val()
-            //                     };
-            //                     $.ajax({
-            //                         url : "{{ url('factura/emitirFactura') }}",
-            //                         data: {
-            //                             datos         : datos,
-            //                             datosCliente  : datosCliente,
-            //                             // datosRecepcion: datosRecepcion,
-            //                             modalidad     : $('#tipo_facturacion').val(),
-            //                             tipo_pago     : $('#tipo_pago').val(),
-            //                             monto_pagado  : $('#miInput').val(),
-            //                             cambio        : $('#cambio').val()
-            //                         },
-            //                         type: 'POST',
-            //                         dataType:'json',
-            //                         success: function(data) {
-
-            //                             if(data.estado === "VALIDADA"){
-            //                                 Swal.fire({
-            //                                     icon : 'success',
-            //                                     title: 'Excelente!',
-            //                                     text : 'LA FACTURA FUE VALIDADA',
-            //                                     timer: 3000
-            //                                 })
-            //                                 window.location.href = "{{ url('factura/listado')}}"
-            //                             }else if(data.estado === "error_email"){
-            //                                 Swal.fire({
-            //                                     icon : 'error',
-            //                                     title: 'Error!',
-            //                                     text : data.msg,
-            //                                 })
-            //                                 // Habilita el botón y oculta el icono de carga después de completar
-            //                                 boton.attr("disabled", false);
-            //                                 iconoCarga.hide();
-            //                             }else if(data.estado === "OFFLINE"){
-            //                                 Swal.fire({
-            //                                     icon : 'warning',
-            //                                     title: 'Exito!',
-            //                                     text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
-            //                                     timer: 2000
-            //                                 })
-            //                                 // window.location.href = "{{ url('factura/listado')}}"
-            //                             }else{
-            //                                 Swal.fire({
-            //                                     icon : 'error',
-            //                                     title: data.msg,
-            //                                     text : 'LA FACTURA FUE RECHAZADA',
-            //                                 })
-            //                                 // Habilita el botón y oculta el icono de carga después de completar
-            //                                 boton.attr("disabled", false);
-            //                                 iconoCarga.hide();
-            //                             }
-            //                         }
-            //                     });
-
-            //                 }else{
-            //                     $("#formularioGeneraFactura")[0].reportValidity();
-            //                     // $("#formulario_tipo_pagos")[0].reportValidity()
-            //                 }
-            //             }
-            //         }
-            //     }
-            // });
+                })
+            }else{
+                $("#formularioGeneraFactura")[0].reportValidity();
+            }
         }
 
         function ejecutarDescuentoAdicional(){
@@ -1136,27 +763,6 @@
             $('#numero_fac_cafc').hide('toggle');
             $('#numero_factura_cafc').val(0)
 
-
-
-            /*
-            $.ajax({
-                url: "{{ url('factura/sacaNumeroFactura') }}",
-                method: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    if(data.estado === "success"){
-                        $("#numero_factura").val(data.numero);
-                        $("#codigo_cafc_contingencia").val("");
-                    }else{
-                        Swal.fire({
-                            icon:   'error',
-                            title:  'Error!',
-                            text:   "Algo fallo"
-                        })
-                    }
-                }
-            })
-            */
         } else if (valorSeleccionado === 'Si') {
             $.ajax({
                 url: "{{ url('factura/sacaNumeroCafcUltimo') }}",
@@ -1178,163 +784,59 @@
         }
     }
 
-        // function buscarServicioPorId(id_servicio){
-        //     let dato = false;
-        //     let servicio = arrayProductoCar.find(s => s.servicio_id === id_servicio);
-        //     if (servicio) {
-        //         servicio.cantidad = parseInt(servicio.cantidad) + parseInt(cantidad);
-        //         dato = true;
-        //     } else {
-        //         dato = false;
-        //     }
+    function eliminarItem(id){
 
-        //     console.log("DATO");
-        //     console.log(dato);
-        //     console.log("SERVCIO_ID");
-        //     console.log(id_servicio);
-        //     console.log("CANTIDAD");
-        //     console.log(cantidad);
-        //     console.log("SERVICIO");
-        //     console.log(servicio);
+        var fila = table.row("#producto-" + id);
+        var cantidadCell = $(fila.node()).find('.cantidad');
+        var cantidadActual = parseInt(cantidadCell.text());
 
-        //     return dato;
-        // }
+        // Reducir la cantidad en 1
+        var nuevaCantidad = cantidadActual - 1;
+        cantidadCell.text(nuevaCantidad);
 
-        /*
+        if (nuevaCantidad <= 0) {
+            // Si la cantidad es 0 o menos, elimina la fila de la tabla
+            table.row(fila).remove().draw(false);
 
-        function multiplicarPrecioAlTolta(){
-            let precio   = $('#precio_venta').val();
-            let cantidad = $('#cantidad_venta').val();
-            $('#total_venta').val((precio*cantidad));
-            // console.log(precio, cantidad, (precio*cantidad))
-        }
+            // Elimina el producto del array
+            arrayProductoCar = arrayProductoCar.filter(s => s.servicio_id !== id);
+        } else {
+            // Si la cantidad sigue siendo mayor que 0, actualiza el total y el subTotal
+            var precio = parseFloat($(fila.node()).find('.total').text()) / cantidadActual;
+            var nuevoTotal = nuevaCantidad * precio;
+            $(fila.node()).find('.total').text(nuevoTotal.toFixed(2));
 
-        function ajaxListadoDetalles(cliente){
-            let datos = {cliente : cliente}
-            $.ajax({
-                url   : "{{ url('factura/ajaxListadoDetalles') }}",
-                method: "POST",
-                data  : datos,
-                success: function (data) {
-                    if(data.estado === 'success'){
+            var subTotalCell = $(fila.node()).find('.subTotal');
+            var descuento = parseFloat($('#descuento_' + id).val());
+            var nuevoSubTotal = nuevoTotal - descuento;
+            subTotalCell.text(nuevoSubTotal.toFixed(2));
 
-                        if(data.cantidad > 0)
-                            $('#tabla_detalles').show('toogle')
-
-                        $('#tabla_detalles').html(data.listado)
-
-                    }else{
-
-                    }
-                }
-            })
-        }
-
-        function descuentoPorItem(detalle, element, total, cliente){
-
-            let ope = total - element.value
-
-            if(ope > 0){
-                $.ajax({
-                    url   : "{{ url('factura/descuentoPorItem') }}",
-                    method: "POST",
-                    data  : {
-                        detalle : detalle,
-                        descunto: element.value
-                    },
-                    success: function (data) {
-                        if(data.estado === 'success'){
-
-                            ajaxListadoDetalles(cliente)
-                            $('#bloqueDatosFactura').hide('toogle')
-
-                            // $('#tabla_detalles').html(data.listado)
-
-                            // Swal.fire({
-                            //     icon             : 'success',
-                            //     title            : data.msg,
-                            //     showConfirmButton: false,       // No mostrar botón de confirmación
-                            //     timer            : 2000,        // 5 segundos
-                            //     timerProgressBar : true
-                            // });
-                            // ajaxListadoTipoDocumentoSector();
-
-                        }else{
-
-                        }
-                    }
-                })
-            }else{
-                Swal.fire({
-                    icon             : 'error',
-                    title            : 'El descuento no puede exeder al precio del Item',
-                    showConfirmButton: false,       // No mostrar botón de confirmación
-                    timer            : 2000,        // 5 segundos
-                    timerProgressBar : true
-                });
-
-                ajaxListadoDetalles(cliente)
-
+            // Actualiza los valores en el array
+            let servicio = arrayProductoCar.find(s => s.servicio_id === id);
+            if (servicio) {
+                servicio.cantidad = nuevaCantidad;
+                servicio.total = nuevoTotal;
+                servicio.subTotal = nuevoSubTotal;
             }
-
         }
 
-        function eliminarDetalle(detalle, cliente){
-            $.ajax({
-                url   : "{{ url('factura/eliminarDetalle') }}",
-                method: "POST",
-                data  : {
-                    detalle: detalle,
-                },
-                success: function (data) {
-                    if(data.estado === 'success'){
+        // Actualizar el monto total
+        let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+        let descuentoAdicional = $('#descuento_adicional').val();
+        $('#monto_total').val(parseFloat(sumaTotal) - parseFloat(descuentoAdicional));
 
-                        ajaxListadoDetalles(cliente)
-                        $('#bloqueDatosFactura').hide('toogle')
+    }
 
-                    }else{
+    function mostrarCarritoVentas(){
+        $('#tabla_detalles').toggle('show')
+    }
 
-                    }
-                }
-            })
-        }
-
-        function descuentoAdicionalGlobal(){
-            $.ajax({
-                url   : "{{ url('factura/descuentoAdicionalGlobal') }}",
-                method: "POST",
-                data  : {
-                    cliente: $('#cliente_id_escogido').val(),
-                },
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        let desAdi = $('#descuento_adicional_global').val();
-                        let total  = data.valor;
-                        let dat = (total) - desAdi
-                        if(dat > 0){
-                            $('#total_a_pagar_importe').val(dat.toFixed(2))
-                            $('#bloqueDatosFactura').hide('toogle')
-                        }else{
-                            Swal.fire({
-                                icon             : 'error',
-                                title            : 'El descuento no puede exeder al precio Total',
-                                showConfirmButton: false,       // No mostrar botón de confirmación
-                                timer            : 2000,        // 5 segundos
-                                timerProgressBar : true
-                            });
-
-                            $('#descuento_adicional_global').val(0);
-                        }
-
-                    }else{
-
-                    }
-                }
-            })
-        }
-
-
-        */
+    function calcularPrecioTotal(){
+        let precio = $('#precio_venta').val();
+        let cantidad = $('#cantidad_venta').val();
+        let total = parseFloat(precio) * parseFloat(cantidad);
+        $('#total_venta').val(total)
+    }
 
    </script>
 @endsection
