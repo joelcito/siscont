@@ -790,6 +790,7 @@
                     }
                 });
 
+                $('#complemento').val(null)
                 $('#bloque_complemento').hide('toggle')
 
             }else if($('#tipo_documento').val()  === "1"){
@@ -829,22 +830,50 @@
                     nit_factura                       : $('#nit_factura').val(),
                     razon_factura                     : $('#razon_factura').val(),
                     tipo_facturacion                  : $('#tipo_facturacion').val(),
-                    uso_cafc                          : $('#uso_cafc').val(),
+                    uso_cafc                          : $('input[name="uso_cafc"]:checked').val(),
                     numero_factura_cafc               : $('#numero_factura_cafc').val(),
                     execpcion                         : $('#execpcion').is(':checked'),
                     complemento                       : $('#complemento').val(),
                     descuento_adicional               : $('#descuento_adicional').val(),
                     monto_total                       : $('#monto_total').val(),
+                    monto_total                       : $('#monto_total').val(),
                 },
                 success: function (data) {
-                    // if(data.estado === 'success'){
-                    //     if(data.cantidad > 0)
-                    //         $('#tabla-clientes-buscados').show('toogle')
-
-                    //     $('#tabla-clientes-buscados').html(data.listado)
-                    // }else{
-
-                    // }
+                    if(data.estado === "VALIDADA"){
+                        Swal.fire({
+                            icon : 'success',
+                            title: 'Excelente!',
+                            text : 'LA FACTURA FUE VALIDADA',
+                            timer: 3000
+                        })
+                        window.location.href = "{{ url('factura/listado')}}"
+                    }else if(data.estado === "error_email"){
+                        Swal.fire({
+                            icon : 'error',
+                            title: 'Error!',
+                            text : data.msg,
+                        })
+                        // Habilita el botón y oculta el icono de carga después de completar
+                        boton.attr("disabled", false);
+                        iconoCarga.hide();
+                    }else if(data.estado === "OFFLINE"){
+                        Swal.fire({
+                            icon : 'warning',
+                            title: 'Exito!',
+                            text : 'LA FACTURA FUERA DE LINEA FUE REGISTRADA',
+                            timer: 2000
+                        })
+                        window.location.href = "{{ url('factura/listado')}}"
+                    }else{
+                        Swal.fire({
+                            icon : 'error',
+                            title: data.msg,
+                            text : 'LA FACTURA FUE RECHAZADA',
+                        })
+                        // Habilita el botón y oculta el icono de carga después de completar
+                        boton.attr("disabled", false);
+                        iconoCarga.hide();
+                    }
                 },
                 error: function(error){
                     if (error.status === 419) {
