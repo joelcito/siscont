@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -45,5 +46,31 @@ class User extends Authenticatable
 
     public function rol(){
         return $this->belongsTo('App\Models\Rol', 'rol_id');
+    }
+
+    public function empresa(){
+        return $this->belongsTo('App\Models\Empresa', 'empresa_id');
+    }
+
+    public function  isAdmin(){
+        return $this->rol_id == 1 ? true : false;
+    }
+
+    public function  isCajero(){
+        return $this->rol_id == 3 ? true : false;
+    }
+
+    public function  isJefeEmpresa(){
+        return $this->rol_id == 2 ? true : false;
+    }
+
+    public function isFacturacionCompraVenta(){
+        $empresa = $this->empresa;
+        return $empresa->codigo_documento_sector == '1' ? true : false;
+    }
+
+    public function isFacturacionTasaCero(){
+        $empresa = $this->empresa;
+        return $empresa->codigo_documento_sector == '8' ? true : false;
     }
 }

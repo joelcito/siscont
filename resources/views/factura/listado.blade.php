@@ -130,8 +130,14 @@
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacion') }}"><i class="fa fa-plus"></i>Nueva Venta CV</a>
-                    <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionTasaCero') }}"><i class="fa fa-plus"></i>Nueva Venta T0</a>
+                    @if (Auth::user()->isFacturacionCompraVenta())
+                        {{-- <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacion') }}"><i class="fa fa-plus"></i>Nueva Venta</a> --}}
+                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionCv') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
+                    @endif
+
+                    @if (Auth::user()->isFacturacionTasaCero())
+                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionTasaCero') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
+                    @endif
                 </div>
                 <!--end::Actions-->
             </div>

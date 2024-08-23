@@ -2,31 +2,29 @@
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-            <th class="min-w-125px">Logo</th>
-            <th class="min-w-125px">Nombre</th>
-            <th class="min-w-125px">Nit</th>
-            <th class="min-w-125px">Razon Social</th>
-            <th class="min-w-125px">Ambiente</th>
-            <th class="text-end min-w-100px">Actions</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Tipo Plan</th>
+            <th>Cantidad de Factura</th>
+            <th>Cantidad de Sucursal</th>
+            <th>Cantidad Punto Venta</th>
+            <th>Cantidad Usuario</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
-        @forelse ( $empresas as $e)
+        @forelse ( $planes as $plan)
             <tr>
-                <td>{{ $e->logo }}</td>
-                <td>{{ $e->nombre }}</td>
-                <td>{{ $e->nit }}</td>
-                <td>{{ $e->razon_social }}</td>
+                <td>{{ $plan->nombre }}</td>
+                <td>{{ $plan->precio }}</td>
+                <td>{{ $plan->tipo_plan }}</td>
+                <td>{{ $plan->cantidad_factura }}</td>
+                <td>{{ $plan->cantidad_sucursal }}</td>
+                <td>{{ $plan->cantidad_punto_venta }}</td>
+                <td>{{ $plan->cantidad_usuario }}</td>
                 <td>
-                    @if ($e->codigo_ambiente === "2")
-                        <span class="badge badge-warning">DESARROLLO</span>
-                    @else
-                        <span class="badge badge-success">PRODUCCION</span>
-                    @endif
-                </td>
-                <td>
-                    <a class="btn btn-sm btn-info btn-icon" title="Detalles de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-sm btn-info btn-icon" title="Permisos de la Empresa" href="#"><i class="fa fa-server"></i></a>
+                    {{-- <button class="btn btn-icon btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-icon btn-sm btn-danger"><i class="fa fa-trash"></i></button> --}}
                 </td>
             </tr>
         @empty
@@ -37,7 +35,6 @@
 <!--end::Table-->
 
 <script>
-
     $(document).ready(function() {
             $('#kt_table_users').DataTable({
                 lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Cuis;
 use App\Models\Empresa;
+use App\Models\Plan;
 use App\Models\PuntoVenta;
 use App\Models\Rol;
 use App\Models\Servicio;
@@ -133,6 +134,8 @@ class EmpresaController extends Controller
         $productoServicio    = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
         $unidadMedida        = SiatUnidadMedida::all();
 
+        $planes = Plan::all();
+
 
 
         // $punto_ventas = PuntoVenta::where('empre')->get();
@@ -146,7 +149,8 @@ class EmpresaController extends Controller
             'sucursales',
             'activiadesEconomica',
             'productoServicio',
-            'unidadMedida'
+            'unidadMedida',
+            'planes'
         ));
     }
 

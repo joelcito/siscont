@@ -37,7 +37,6 @@ return new class extends Migration
             $table->text('numero_serie')->nullable();
             $table->text('numero_imei')->nullable();
 
-
             $table->decimal('precio',12,2)->nullable();
             $table->decimal('cantidad',12,2)->nullable();
             $table->decimal('total',12,2)->nullable();

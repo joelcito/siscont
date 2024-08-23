@@ -19,7 +19,6 @@ class Empresa extends Model
                     ->first();
                     // ->toSql();
 
-
     }
 
 

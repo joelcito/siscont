@@ -7,6 +7,60 @@
 @endsection
 @section('content')
 
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_suscripcion" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Suscripcion</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_plan">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Plan</label>
+                                <select name="plan_id_new_plan" id="plan_id_new_plan" class="form-control">
+                                    @foreach ($planes as $plan)
+                                        <option value="{{ $plan->id }}">{{ $plan->nombre." | ".$plan->tipo_plan }}</option>
+                                    @endforeach
+                                </select>
+
+                                <input type="text" name="empresa_id_new_plan" id="empresa_id_new_plan" value="{{ $empresa->id }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Fecha Inicio</label>
+                                <input type="date" class="form-control fw-bold form-control-solid" name="fecha_inicio_new_plan" id="fecha_inicio_new_plan" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Fecha Fin</label>
+                                <input type="date" class="form-control fw-bold form-control-solid" name="fecha_fin_new_plan" id="fecha_fin_new_plan" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="descripcion_new_plan" id="descripcion_new_plan" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarSuscripcion()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
 
     <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_new_cliente" tabindex="-1" aria-hidden="true">
@@ -74,7 +128,6 @@
     </div>
     <!--end::Modal - New Card-->
 
-
     <!--begin::Modal - Adjust Balance-->
     <div class="modal fade" id="modal_lista_producto_servicios" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-1000px">
@@ -104,7 +157,6 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - New Card-->
-
 
     <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_sincronizar_productos_servicios" tabindex="-1" aria-hidden="true">
@@ -150,7 +202,6 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - New Card-->
-
 
     <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_sincronizar_actividad" tabindex="-1" aria-hidden="true">
@@ -653,7 +704,7 @@
                                         <div class="col-md-4">
                                             <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
                                             <input type="text" class="form-control fw-bold form-control-solid" name="nombre_empresa" id="nombre_empresa" value="{{ $empresa->nombre }}" required>
-                                            <input type="text" name="empresa_id" id="empresa_id" value="{{ $empresa->id }}" required>
+                                            <input type="hidden" name="empresa_id" id="empresa_id" value="{{ $empresa->id }}" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="fs-6 fw-semibold form-label mb-2">Nit Empresa</label>
@@ -753,10 +804,15 @@
                                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-semibold mt-6 mb-8 gap-2">
                                     <!--begin:::Tab item-->
                                     <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4 active" data-bs-toggle="tab" href="#sincro_doc_sector">
+                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4 active" data-bs-toggle="tab" href="#plan_de_empresa_bloque">
+                                        <i class="ki-duotone ki-home fs-4 me-1"></i>Plan de Empresa</a>
+                                    </li>
+                                    <!--end:::Tab item-->
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item">
+                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#sincro_doc_sector">
                                         <i class="ki-duotone ki-home fs-4 me-1"></i>Sucursales</a>
                                     </li>
-
                                     <!--end:::Tab item-->
                                     <!--begin:::Tab item-->
                                     <li class="nav-item">
@@ -769,13 +825,6 @@
                                             <span class="path5"></span>
                                             <span class="path6"></span>
                                         </i>Usuarios</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_siat_productos">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Siat Prodcutos</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_servicios">
@@ -791,62 +840,6 @@
                                             <span class="path2"></span>
                                         </i>Clientes</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Activity</a>
-                                    </li>
                                     <!--end:::Tab item-->
                                 </ul>
                                 <!--end:::Tabs-->
@@ -854,7 +847,19 @@
                                 <div class="tab-content" id="">
 
                                     <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade show active" id="sincro_doc_sector" role="tabpanel">
+                                    <div class="tab-pane fade show active" id="plan_de_empresa_bloque" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="tablas_suscripcion">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end:::Tab pane-->
+
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade" id="sincro_doc_sector" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div id="tabla_sucursales">
@@ -934,6 +939,8 @@
             ajaxListadoUsuarioEmpresa();
             ajaxListadoServicios();
             ajaxListadoClientes();
+            ajaxListadoSuscripcion();
+
             // ajaxListadoSiatProductosServicios();
 
             $("#actividad_economica_siat_id_new_servicio, #producto_servicio_siat_id_new_servicio, #unidad_medida_siat_id_new_servicio, #documento_sectores").select2();
@@ -1527,7 +1534,6 @@
             }
         }
 
-
         function guardarEmpresa(){
             if($("#formulario_empresa")[0].checkValidity()){
                 // let datos = $('#formulario_empresa').serializeArray();
@@ -1556,6 +1562,54 @@
                 // console.log(datos)
             }else{
                 $("#formulario_empresa")[0].reportValidity();
+            }
+        }
+
+        function ajaxListadoSuscripcion(){
+            let datos = {
+                empresa : {{$empresa->id}}
+            }
+            $.ajax({
+                url   : "{{ url('suscripcion/ajaxListadoSuscripcion') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tablas_suscripcion').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function modalNuevoSuscripcion(){
+            $('#modal_new_suscripcion').modal("show")
+        }
+
+        function guardarSuscripcion(){
+            if($("#formulario_new_plan")[0].checkValidity()){
+                let datos = $('#formulario_new_plan').serializeArray();
+                $.ajax({
+                    url   : "{{ url('suscripcion/guardarSuscripcion') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            ajaxListadoSuscripcion();
+                            $('#modal_new_suscripcion').modal('hide');
+                        }else{
+
+                        }
+                    }
+                })
+            }else{
+                $("#formulario_new_plan")[0].reportValidity();
             }
         }
    </script>

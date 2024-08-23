@@ -4,9 +4,11 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EventoSignificativoController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\RegistroCompraController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SincronizacionSiatController;
+use App\Http\Controllers\SuscripcionController;
 use App\Models\RegistroCompra;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -160,14 +162,6 @@ Route::middleware('auth')->group(function(){
         Route::post('/emitirFacturaCv', [FacturaController::class, 'emitirFacturaCv']);
 
 
-
-
-
-
-
-
-
-
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
     });
@@ -179,6 +173,23 @@ Route::middleware('auth')->group(function(){
         Route::post('/agregarRegistroCompra', [RegistroCompraController::class, 'agregarRegistroCompra']);
         Route::post('/ajaxListadoRecepcion', [RegistroCompraController::class, 'ajaxListadoRecepcion']);
         Route::post('/envioPaquetesFacturasCompra', [RegistroCompraController::class, 'envioPaquetesFacturasCompra']);
+
+    });
+
+    Route::prefix('/suscripcion')->group(function(){
+
+        Route::post('/ajaxListadoSuscripcion', [SuscripcionController::class, 'ajaxListadoSuscripcion']);
+        Route::post('/guardarSuscripcion', [SuscripcionController::class, 'guardarSuscripcion']);
+
+
+    });
+
+    Route::prefix('/plan')->group(function(){
+
+        Route::get('/listado', [PlanController::class, 'listado']);
+        Route::post('/agregarPlan', [PlanController::class, 'agregarPlan']);
+        Route::post('/ajaxListado', [PlanController::class, 'ajaxListado']);
+
 
     });
 
