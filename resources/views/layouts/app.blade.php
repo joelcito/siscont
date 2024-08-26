@@ -67,7 +67,7 @@
 							<!--begin::Menu wrapper-->
 							<div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
 								<!--begin::Menu-->
-								{{-- 
+								{{--
 								<div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
 									<!--begin:Menu item-->
 									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
@@ -3118,7 +3118,7 @@
 							<!--end::Menu wrapper-->
 							<!--begin::Navbar-->
 							<div class="app-navbar flex-shrink-0">
-								{{--  
+								{{--
 								<!--begin::Search-->
 								<div class="app-navbar-item align-items-stretch ms-1 ms-md-4">
 									<!--begin::Search-->
@@ -4686,7 +4686,7 @@
 									<!--end::Menu-->
 								</div>
 								<!--end::Theme mode-->
-								
+
 								<!--begin::User menu-->
 								<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 									<!--begin::Menu wrapper-->
@@ -4703,7 +4703,7 @@
 											<div class="menu-content d-flex align-items-center px-3">
 												<!--begin::Avatar-->
 												<div class="symbol symbol-50px me-5">
-													{{-- 
+													{{--
 												 	<img alt="Logo" src="{{asset('assets/media/avatars/300-3.jpg')}}" />
 													 --}}
 													<i class="fa fa-user" style="font-size: 30px;"></i>
@@ -4719,12 +4719,12 @@
 											</div>
 										</div>
 										<!--end::Menu item-->
-										{{-- 
+										{{--
 										<!--begin::Menu separator-->
 										<div class="separator my-2"></div>
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
-									
+
 										<div class="menu-item px-5">
 											<a href="account/overview.html" class="menu-link px-5">My Profile</a>
 										</div>
@@ -4795,7 +4795,7 @@
 										<div class="menu-item px-5">
 											<a href="account/statements.html" class="menu-link px-5">My Statements</a>
 										</div>
-										
+
 										<!--end::Menu item-->
 										<!--begin::Menu separator-->
 										<div class="separator my-2"></div>
@@ -4982,7 +4982,7 @@
 								<div class="row mt-5">
 									<div class="col-md-6">
 										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-70px app-sidebar-logo-default" />
-										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" />										
+										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" />
 									</div>
 									<div class="col-md-6">
 										<h2 class="text-white text-center mr-10">VIRUSNOT SYSTEN</h2>
@@ -9603,6 +9603,8 @@
 		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 		<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 		<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+        <script src="{{ asset('assets/js/ajaxGlobal.js') }}"></script>
+
 		<!--end::Global Javascript Bundle-->
 		<!--begin::Vendors Javascript(used for this page only)-->
 

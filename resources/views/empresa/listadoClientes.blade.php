@@ -7,12 +7,13 @@
 @endsection
 @section('content')
 
+
     <!--end::Modal - New Card-->
-    <div class="modal fade" id="modal_new_plan" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-1000px">
+    <div class="modal fade" id="modal_new_cliente" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-800px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Plan</h2>
+                    <h2 class="fw-bold">Formulario de Cliente</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
@@ -21,49 +22,46 @@
                     </div>
                 </div>
                 <div class="modal-body scroll-y">
-                    <form id="formulario_new_plan">
+                    <form id="formulario_new_cliente_empresa">
                         <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre" id="nombre" required>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombres_cliente_new_usuaio_empresa" id="nombres_cliente_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Precio</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="precio" id="precio" required>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_cliente_new_usuaio_empresa" id="ap_paterno_cliente_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Tipo de Plan</label>
-                                <select name="tipo_plan" id="tipo_plan" class="form-control" required>
-                                    <option value="Anual">Anual</option>
-                                    <option value="Mensual">Mensual</option>
-                                </select>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_cliente_new_usuaio_empresa" id="ap_materno_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_cliente_new_usuaio_empresa" id="num_ceular_cliente_new_usuaio_empresa" required>
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <div class="col-md">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Facturas</label>
-                                <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_factura" id="cantidad_factura" required>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Cedula</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="cedula_cliente_new_usuaio_empresa" id="cedula_cliente_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Sucursales</label>
-                                <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_sucursal" id="cantidad_sucursal" required>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nit</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="nit_cliente_new_usuaio_empresa" id="nit_cliente_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Punto de Venta</label>
-                                <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_punto_venta" id="cantidad_punto_venta" required>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Razon Social</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social_cliente_new_usuaio_empresa" id="razon_social_cliente_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Usuarios</label>
-                                <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_usuario" id="cantidad_usuario" required>
-                            </div>
-                            <div class="col-md">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Producto</label>
-                                <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_producto" id="cantidad_producto" required>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Correo</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="correo_cliente_new_usuaio_empresa" id="correo_cliente_new_usuaio_empresa" required>
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="agregarPlan()">Generar</button>
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarClienteEmpresa()">Generar</button>
                             </div>
                         </div>
                     </form>
@@ -83,7 +81,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Listado de Planes</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Listado de Clientes</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -114,7 +112,7 @@
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <button class="btn btn-sm fw-bold btn-primary" onclick="modalPlan()"><i class="fa fa-plus"></i> Nuevo Plan</button>
+                    <button class="btn btn-sm fw-bold btn-primary" onclick="modalNuevoCliente()"><i class="fa fa-plus"></i> Nuevo Cliente</button>
                 </div>
                 <!--end::Actions-->
             </div>
@@ -129,7 +127,7 @@
                 <div class="card">
                     <div class="card-body py-4">
 
-                        <div id="tabla_planes">
+                        <div id="tabla_clientes">
 
                         </div>
 
@@ -164,12 +162,12 @@
         function ajaxListado(){
             let datos = {}
             $.ajax({
-                url: "{{ url('plan/ajaxListado') }}",
+                url: "{{ url('empresa/ajaxListadoClientesEmpresa') }}",
                 method: "POST",
                 data: datos,
                 success: function (data) {
                     if(data.estado === 'success'){
-                        $('#tabla_planes').html(data.listado)
+                        $('#tabla_clientes').html(data.listado)
                     }else{
 
                     }
@@ -177,24 +175,24 @@
             })
         }
 
-        function modalPlan(){
-            $('#nombre').val("")
-            $('#precio').val("")
-            $('#tipo_plan').val("")
-            $('#cantidad_factura').val("")
-            $('#cantidad_sucursal').val("")
-            $('#cantidad_punto_venta').val("")
-            $('#cantidad_usuario').val("")
-            $('#modal_new_plan').modal('show')
+        function modalNuevoCliente(){
+            $('#nombres_cliente_new_usuaio_empresa').val("")
+            $('#ap_paterno_cliente_new_usuaio_empresa').val("")
+            $('#ap_materno_cliente_new_usuaio_empresa').val("")
+            $('#num_ceular_cliente_new_usuaio_empresa').val("")
+            $('#cedula_cliente_new_usuaio_empresa').val("")
+            $('#nit_cliente_new_usuaio_empresa').val("")
+            $('#razon_social_cliente_new_usuaio_empresa').val("")
+            $('#correo_cliente_new_usuaio_empresa').val("")
+
+            $('#modal_new_cliente').modal('show')
         }
 
-        function agregarPlan(){
-            if($("#formulario_new_plan")[0].checkValidity()){
-
-                let datos = $('#formulario_new_plan').serializeArray();
-
+        function guardarClienteEmpresa(){
+            if($("#formulario_new_cliente_empresa")[0].checkValidity()){
+                let datos = $('#formulario_new_cliente_empresa').serializeArray();
                 $.ajax({
-                    url   : "{{ url('plan/agregarPlan') }}",
+                    url   : "{{ url('empresa/guardarClienteEmpresaEmpresa') }}",
                     method: "POST",
                     data  : datos,
                     success: function (data) {
@@ -205,17 +203,16 @@
                                 text:  "SE REGISTRO CON EXITO",
                             })
                             ajaxListado();
-                            $('#modal_new_plan').modal('hide');
+                            $('#modal_new_cliente').modal('hide');
                         }else{
+
                         }
                     }
                 })
-
             }else{
-                $("#formulario_new_plan")[0].reportValidity();
+                $("#formulario_new_cliente_empresa")[0].reportValidity();
             }
         }
-
    </script>
 @endsection
 

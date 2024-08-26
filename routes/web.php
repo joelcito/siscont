@@ -35,7 +35,9 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::middleware('auth')->group(function(){
+// Route::middleware('auth')->group(function(){
+
+Route::middleware(['auth', 'one.session'])->group(function () {
     // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index']);
@@ -55,10 +57,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxRecupraActividadesSelect', [EmpresaController::class, 'ajaxRecupraActividadesSelect']);
         Route::post('/ajaxBuscarPuntoVentaNewUsuarioSelect', [EmpresaController::class, 'ajaxBuscarPuntoVentaNewUsuarioSelect']);
 
-
         Route::post('/ajaxListadoClientes', [EmpresaController::class, 'ajaxListadoClientes']);
         Route::post('/guardarClienteEmpresa', [EmpresaController::class, 'guardarClienteEmpresa']);
-
 
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
@@ -69,7 +69,6 @@ Route::middleware('auth')->group(function(){
         Route::post('/ajaxListadoServicios', [EmpresaController::class, 'ajaxListadoServicios']);
         Route::post('/guardarNewServioEmpresa', [EmpresaController::class, 'guardarNewServioEmpresa']);
 
-
         Route::post('/sincronizarActividades', [EmpresaController::class, 'sincronizarActividades']);
         Route::post('/sincronizarSiatProductoServicios', [EmpresaController::class, 'sincronizarSiatProductoServicios']);
         Route::post('/sincronizarPuntosVentas', [EmpresaController::class, 'sincronizarPuntosVentas']);
@@ -79,8 +78,12 @@ Route::middleware('auth')->group(function(){
 
         Route::post('/ajaxListadoSiatProductosServicios', [EmpresaController::class, 'ajaxListadoSiatProductosServicios']);
 
-
-
+        Route::get('/listadoClientes', [EmpresaController::class, 'listadoClientes']);
+        Route::post('/ajaxListadoClientesEmpresa', [EmpresaController::class, 'ajaxListadoClientesEmpresa']);
+        Route::post('/guardarClienteEmpresaEmpresa', [EmpresaController::class, 'guardarClienteEmpresaEmpresa']);
+        Route::get('/listadoProductoServicioEmpresa', [EmpresaController::class, 'listadoProductoServicioEmpresa']);
+        Route::post('/ajaxListadoProductoServicioEmpresa', [EmpresaController::class, 'ajaxListadoProductoServicioEmpresa']);
+        Route::post('/guardarProductoServicioEmpresa', [EmpresaController::class, 'guardarProductoServicioEmpresa']);
 
     });
 
@@ -112,12 +115,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/listado', [RolController::class, 'listado']);
         Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         Route::post('/agregarRol', [RolController::class, 'agregarRol']);
-        // Route::post('/ajaxListadoTipoPuntoVenta', [SincronizacionSiatController::class, 'ajaxListadoTipoPuntoVenta']);
-
-        // Route::post('/sincronizarTipoDocumentoSector', [SincronizacionSiatController::class, 'sincronizarTipoDocumentoSector']);
-        // Route::post('/sincronizarParametricaTipoPuntoVenta', [SincronizacionSiatController::class, 'sincronizarParametricaTipoPuntoVenta']);
-
-        // Route::post('/guarda', [EmpresaController::class, 'guarda']);
     });
 
     Route::prefix('/factura')->group(function(){

@@ -11,4 +11,6 @@ class Plan extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'planes';
+
+
 }

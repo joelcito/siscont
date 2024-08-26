@@ -25,7 +25,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Plan</label>
-                                <select name="plan_id_new_plan" id="plan_id_new_plan" class="form-control">
+                                <select    data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_suscripcion" data-hide-search="true" class="form-select form-select-solid fw-bold"     name="plan_id_new_plan" id="plan_id_new_plan" class="form-control">
+                                    <option></option>
                                     @foreach ($planes as $plan)
                                         <option value="{{ $plan->id }}">{{ $plan->nombre." | ".$plan->tipo_plan }}</option>
                                     @endforeach
@@ -43,9 +44,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="descripcion_new_plan" id="descripcion_new_plan" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ampliacion Cantidad Facturas</label>
+                                <input type="number" min="0" class="form-control fw-bold form-control-solid" name="ampliacion_cantidad_facturas_new_plan" id="ampliacion_cantidad_facturas_new_plan" required>
                             </div>
                         </div>
                         <div class="row mt-5">

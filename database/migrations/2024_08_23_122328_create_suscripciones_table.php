@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreign('plan_id')->references('id')->on('planes');
             $table->unsignedBigInteger('plan_id')->nullable();
             $table->datetime('fecha_inicio')->nullable();
+            $table->string('ampliacion_cantidad_facturas')->nullable();
             $table->datetime('fecha_fin')->nullable();
             $table->string('descripcion')->nullable();
 

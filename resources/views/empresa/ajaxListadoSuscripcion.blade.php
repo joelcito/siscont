@@ -22,6 +22,7 @@
             <th >Cant. Fact.</th>
             <th >Fecha Inicio</th>
             <th >Fecha Fin</th>
+            <th >Ampliacion Cantidad Facturas</th>
             <th >Descripcion</th>
             <th >Estado</th>
             <th>Acciones</th>
@@ -37,8 +38,17 @@
                 <td>{{ $sus->plan->cantidad_factura }}</td>
                 <td>{{ $sus->fecha_inicio }}</td>
                 <td>{{ $sus->fecha_fin }}</td>
+                <td>{{ $sus->ampliacion_cantidad_facturas }}</td>
                 <td>{{ $sus->descripcion }}</td>
                 <td>
+                    @php
+                        $fechaActual = date('Y-m-d');
+                        if($fechaActual < $sus->fecha_fin){
+                            echo '<span class="badge badge-success">VIGENTE</span>';
+                        }else{
+                            echo '<span class="badge badge-danger">VENCIDO</span>';
+                        }
+                    @endphp
 
                 </td>
                 <td>

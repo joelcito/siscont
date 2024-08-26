@@ -44,17 +44,15 @@ class SuscripcionController extends Controller
     {
         if($request->all()){
 
-            // dd($request->all());
-
-            $suscripcion                     = new Suscripcion();
-            $suscripcion->usuario_creador_id = Auth::user()->id;
-            $suscripcion->empresa_id         = $request->input('empresa_id_new_plan');
-            $suscripcion->plan_id            = $request->input('plan_id_new_plan');
-            $suscripcion->fecha_inicio       = $request->input('fecha_inicio_new_plan');
-            $suscripcion->fecha_fin          = $request->input('fecha_fin_new_plan');
-            $suscripcion->descripcion        = $request->input('descripcion_new_plan');
+            $suscripcion                               = new Suscripcion();
+            $suscripcion->usuario_creador_id           = Auth::user()->id;
+            $suscripcion->empresa_id                   = $request->input('empresa_id_new_plan');
+            $suscripcion->plan_id                      = $request->input('plan_id_new_plan');
+            $suscripcion->fecha_inicio                 = $request->input('fecha_inicio_new_plan');
+            $suscripcion->fecha_fin                    = $request->input('fecha_fin_new_plan');
+            $suscripcion->descripcion                  = $request->input('descripcion_new_plan');
+            $suscripcion->ampliacion_cantidad_facturas = $request->input('ampliacion_cantidad_facturas_new_plan');
             $suscripcion->save();
-
 
             $data['text']    = 'Se proceso con exito';
             $data['estado']  = 'success';
@@ -70,9 +68,22 @@ class SuscripcionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function obtenerSuscripcionVigenteEmpresa(Empresa $empresa)
     {
-        //
+        $empresa_id = $empresa->id;
+
+        $fecha_actual = date('Y-m-d H:i:s');
+
+        $suscripcion = Suscripcion::where('empresa_id', $empresa_id)
+                                // ->whereBetween($fecha_actual,['fecha_inicio','fecha_fin'])
+                                ->where('fecha_inicio', '<=', $fecha_actual)
+                                ->where('fecha_fin', '>=', $fecha_actual)
+                                ->whereNull('estado')
+                                ->first();
+                                // ->toSql();
+
+        return $suscripcion;
+
     }
 
     /**

@@ -731,13 +731,13 @@
                             }
                         },
                         error: function(error){
-                            if (error.status === 419) {
+                            {{--  if (error.status === 419) {
                                 alert('Tu sesión ha expirado. Por favor, vuelve a cargar la página.');
                                 // Opcional: Recargar la página
                                 location.reload();
                             } else {
                                 // Manejar otros errores
-                            }
+                            }  --}}
                         }
                     })
                 }else{
