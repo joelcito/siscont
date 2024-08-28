@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('cantidad_punto_venta')->nullable();
             $table->string('cantidad_usuario')->nullable();
             $table->string('cantidad_producto')->nullable();
+            $table->string('cantidad_clientes')->nullable();
 
             $table->string('estado')->nullable();
             $table->datetime('deleted_at')->nullable();

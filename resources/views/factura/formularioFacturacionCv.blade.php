@@ -7,6 +7,76 @@
 @endsection
 @section('content')
 
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_cliente" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-900px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Cliente</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_cliente_empresa">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombres_cliente_new_usuaio_empresa" id="nombres_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_cliente_new_usuaio_empresa" id="ap_paterno_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ap Materno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_cliente_new_usuaio_empresa" id="ap_materno_cliente_new_usuaio_empresa">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_cliente_new_usuaio_empresa" id="num_ceular_cliente_new_usuaio_empresa">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Cedula</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="cedula_cliente_new_usuaio_empresa" id="cedula_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2">Complemento</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="complemento_cliente_new_usuaio_empresa" id="complemento_cliente_new_usuaio_empresa">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2">Nit</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="nit_cliente_new_usuaio_empresa" id="nit_cliente_new_usuaio_empresa">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Razon Social</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social_cliente_new_usuaio_empresa" id="razon_social_cliente_new_usuaio_empresa">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Correo</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="correo_cliente_new_usuaio_empresa" id="correo_cliente_new_usuaio_empresa">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarClienteEmpresa()">Agregar Usuario</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -170,7 +240,8 @@
                                     <button class="btn btn-info btn-sm w-100" onclick="mostrarFormularioClientes()"><span id="nombre_cliente"></span> <i class="fa fa-user-alt"></i></button>
                                 </div>
                                 <div class="col-md-1">
-                                    <button class="btn btn-dark btn-sm btn-circle btn-icon" onclick="mostrarCarritoVentas()"><span id="nombre_cliente"></span> <i class="fa fa-shopping-basket"></i></button>
+                                    <button title="Mostrar carro de compras" class="btn btn-dark btn-sm btn-circle btn-icon" onclick="mostrarCarritoVentas()"><i class="fa fa-shopping-basket"></i></button>
+                                    <button title="Agregar cliente" class="btn btn-primary btn-sm btn-circle btn-icon" onclick="modalAgregarCliente()"><i class="fa fa-user-plus"></i></button>
                                 </div>
                             </div>
                             <form id="formulario_cliente_escogido" style="display: none">
@@ -578,9 +649,6 @@
             $('#bloque_mas_datos_productos').toggle('show')
         }
 
-
-
-
         function escogerCliente(cliente,nombres, ap_paterno, ap_materno, cedula, nit, razon_social){
 
             $('#cliente_id_escogido').val(cliente);
@@ -706,7 +774,7 @@
                                 Swal.fire({
                                     icon : 'error',
                                     title: 'Error!',
-                                    text : data.msg,
+                                    text : data.text,
                                 })
                                 // Habilita el botón y oculta el icono de carga después de completar
                                 boton.attr("disabled", false);
@@ -722,7 +790,7 @@
                             }else{
                                 Swal.fire({
                                     icon : 'error',
-                                    title: data.msg,
+                                    title: data.text,
                                     text : 'LA FACTURA FUE RECHAZADA',
                                 })
                                 // Habilita el botón y oculta el icono de carga después de completar
@@ -850,6 +918,58 @@
         let cantidad = $('#cantidad_venta').val();
         let total = parseFloat(precio) * parseFloat(cantidad);
         $('#total_venta').val(total)
+    }
+
+    function modalAgregarCliente(){
+        $('#modal_new_cliente').modal('show');
+    }
+
+    function guardarClienteEmpresa(){
+        if($("#formulario_new_cliente_empresa")[0].checkValidity()){
+            let datos = $('#formulario_new_cliente_empresa').serializeArray();
+            $.ajax({
+                url   : "{{ url('empresa/guardarClienteEmpresaEmpresa') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon:'success',
+                            title: "EXITO!",
+                            text:  "SE REGISTRO CON EXITO",
+                        })
+
+                        $('#cliente_id_escogido').val(data.cliente);
+
+                        let cedula     = $('#cedula_cliente_new_usuaio_empresa').val();
+                        let nombres    = $('#nombres_cliente_new_usuaio_empresa').val();
+                        let ap_paterno = $('#ap_paterno_cliente_new_usuaio_empresa').val();
+                        let ap_materno = $('#ap_materno_cliente_new_usuaio_empresa').val();
+
+                        let nombreusuario = cedula+" | "+nombres+" | "+ap_paterno+" | "+ap_materno;
+                        $('#nombre_cliente').text(nombreusuario)
+
+                        $('#nit_factura').val($('#nit_cliente_new_usuaio_empresa').val());
+                        $('#razon_factura').val($('#razon_social_cliente_new_usuaio_empresa').val());
+
+                        $('#bloqueDatosFactura').show('toggle');
+
+                        //ajaxListado();
+                    }else if(data.estado === 'error'){
+                        Swal.fire({
+                            icon : 'warning',
+                            title: "ALTO!",
+                            text : data.text,
+                        })
+                    }else{
+
+                    }
+                    $('#modal_new_cliente').modal('hide');
+                }
+            })
+        }else{
+            $("#formulario_new_cliente_empresa")[0].reportValidity();
+        }
     }
 
    </script>

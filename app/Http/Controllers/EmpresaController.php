@@ -1104,24 +1104,43 @@ class EmpresaController extends Controller
     public function guardarClienteEmpresaEmpresa(Request $request){
         if($request->ajax()){
 
-            $usuario = Auth::user();
-            $empresa_id = $usuario->empresa_id;
+            $suscripcion = app(SuscripcionController::class);
+            $usuario     = Auth::user();
+            $empresa     = $usuario->empresa;
+            $empresa_id  = $usuario->empresa_id;
 
-            $cliente                     = new Cliente();
-            $cliente->usuario_creador_id = $usuario->id;
-            $cliente->empresa_id         = $empresa_id;
-            $cliente->nombres            = $request->input('nombres_cliente_new_usuaio_empresa');
-            $cliente->ap_paterno         = $request->input('ap_paterno_cliente_new_usuaio_empresa');
-            $cliente->ap_materno         = $request->input('ap_materno_cliente_new_usuaio_empresa');
-            $cliente->cedula             = $request->input('cedula_cliente_new_usuaio_empresa');
-            $cliente->nit                = $request->input('nit_cliente_new_usuaio_empresa');
-            $cliente->razon_social       = $request->input('razon_social_cliente_new_usuaio_empresa');
-            $cliente->correo             = $request->input('correo_cliente_new_usuaio_empresa');
-            $cliente->numero_celular     = $request->input('num_ceular_cliente_new_usuaio_empresa');
-            $cliente->save();
+            $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
 
-            $data['estado'] = 'success';
+            if($obtenerSuscripcionVigenteEmpresa){
 
+                $empresa_id = $usuario->empresa_id;
+                $plan       = $obtenerSuscripcionVigenteEmpresa->plan;
+
+                if($suscripcion->verificarRegistroClienteByPlan($plan, $empresa)){
+                    $cliente                     = new Cliente();
+                    $cliente->usuario_creador_id = $usuario->id;
+                    $cliente->empresa_id         = $empresa_id;
+                    $cliente->nombres            = $request->input('nombres_cliente_new_usuaio_empresa');
+                    $cliente->ap_paterno         = $request->input('ap_paterno_cliente_new_usuaio_empresa');
+                    $cliente->ap_materno         = $request->input('ap_materno_cliente_new_usuaio_empresa');
+                    $cliente->cedula             = $request->input('cedula_cliente_new_usuaio_empresa');
+                    $cliente->complemento        = $request->input('complemento_cliente_new_usuaio_empresa');
+                    $cliente->nit                = $request->input('nit_cliente_new_usuaio_empresa');
+                    $cliente->razon_social       = $request->input('razon_social_cliente_new_usuaio_empresa');
+                    $cliente->correo             = $request->input('correo_cliente_new_usuaio_empresa');
+                    $cliente->numero_celular     = $request->input('num_ceular_cliente_new_usuaio_empresa');
+                    $cliente->save();
+
+                    $data['estado'] = 'success';
+                    $data['cliente']   = $cliente->id;
+                }else{
+                    $data['text']   = 'Alcanzo la cantidad maxima registros de clientes, solicite un plan superior.';
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
+                $data['estado'] = 'error';
+            }
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
@@ -1163,36 +1182,38 @@ class EmpresaController extends Controller
         if($request->ajax()){
 
             $suscripcion = app(SuscripcionController::class);
-
-            $usuario    = Auth::user();
-            $empresa    = $usuario->empresa;
-            $empresa_id = $usuario->empresa_id;
+            $usuario     = Auth::user();
+            $empresa     = $usuario->empresa;
 
             $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
 
             if($obtenerSuscripcionVigenteEmpresa){
+                $empresa_id = $usuario->empresa_id;
+                $plan       = $obtenerSuscripcionVigenteEmpresa->plan;
 
-                $plan = $obtenerSuscripcionVigenteEmpresa->plan;
+                // if($cantidadServicioProducto <= $plan->cantidad_producto){
+                if($suscripcion->verificarRegistroServicioProductoByPlan($plan, $empresa)){
 
-                dd($obtenerSuscripcionVigenteEmpresa, $plan);
+                    $servicio                              = new Servicio();
+                    $servicio->usuario_creador_id          = $usuario->id;
+                    $servicio->empresa_id                  = $empresa_id;
+                    $servicio->siat_depende_actividades_id = $request->input('actividad_economica_siat_id_new_servicio');
+                    $servicio->siat_producto_servicios_id  = $request->input('producto_servicio_siat_id_new_servicio');
+                    $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
+                    $servicio->descripcion                 = $request->input('descrpcion_new_servicio');
+                    $servicio->precio                      = $request->input('precio_new_servicio');
+                    $servicio->save();
+
+                    $data['estado'] = 'success';
+                }else{
+                    $data['text']   = 'Alcanzo la cantidad maxima registros de producto / servicio, solicite un plan superior.';
+                    $data['estado'] = 'error';
+                }
 
             }else{
-                $data['text']   = 'No existe suscripciones activas!';
+                $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
                 $data['estado'] = 'error';
             }
-
-
-            $servicio                              = new Servicio();
-            $servicio->usuario_creador_id          = $usuario->id;
-            $servicio->empresa_id                  = $empresa_id;
-            $servicio->siat_depende_actividades_id = $request->input('actividad_economica_siat_id_new_servicio');
-            $servicio->siat_producto_servicios_id  = $request->input('producto_servicio_siat_id_new_servicio');
-            $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
-            $servicio->descripcion                 = $request->input('descrpcion_new_servicio');
-            $servicio->precio                      = $request->input('precio_new_servicio');
-
-            $servicio->save();
-            $data['estado'] = 'success';
 
         }else{
             $data['text']   = 'No existe';
