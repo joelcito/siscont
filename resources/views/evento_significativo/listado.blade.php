@@ -255,13 +255,12 @@
         function agregarEventoSignificativo() {
             if ($("#formulario_new_evento_significativo")[0].checkValidity()) {
 
-                // Obtén el botón y el icono de carga
-                var boton = $("#boton_enviar");
-                var iconoCarga = boton.find("i");
-                // Deshabilita el botón y muestra el icono de carga
-                boton.attr("disabled", true);
-                iconoCarga.show();
-
+                // // Obtén el botón y el icono de carga
+                // var boton = $("#boton_enviar");
+                // var iconoCarga = boton.find("i");
+                // // Deshabilita el botón y muestra el icono de carga
+                // boton.attr("disabled", true);
+                // iconoCarga.show();
 
                 let datos = $('#formulario_new_evento_significativo').serializeArray();
 

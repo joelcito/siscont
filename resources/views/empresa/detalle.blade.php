@@ -1451,6 +1451,12 @@
                 success: function (data) {
                     if(data.estado === 'success'){
                         $('#tabla_puntos_ventas').html(data.listado)
+                    }else if(data.estado === 'error'){
+                        Swal.fire({
+                            icon : 'error',
+                            title: "Error!",
+                            text : data.text,
+                        })
                     }
                 }
             })

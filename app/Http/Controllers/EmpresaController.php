@@ -926,53 +926,56 @@ class EmpresaController extends Controller
             $codigoSucursal = $sucursal->codigo_sucursal;
 
             $cuis  = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
-            $scuis = $cuis->codigo;
-            $nit   = $empresa->nit;
 
-            $siat = app(SiatController::class);
+            if($cuis){
+                $scuis = $cuis->codigo;
+                $nit   = $empresa->nit;
+                $siat = app(SiatController::class);
+                $consultaPuntoVenta = json_decode($siat->consultaPuntoVenta(
+                    $header,
+                    $url4,
+                    $codigoAmbiente,
+                    $codigoSistema,
+                    $codigoSucursal,
+                    $scuis,
+                    $nit
+                ));
+                if($consultaPuntoVenta->estado === "success"){
+                    if($consultaPuntoVenta->resultado->RespuestaConsultaPuntoVenta->transaccion){
+                        $listaPuntosVentas = $consultaPuntoVenta->resultado->RespuestaConsultaPuntoVenta->listaPuntosVentas;
+                        foreach ($listaPuntosVentas as $key => $value) {
 
-            $consultaPuntoVenta = json_decode($siat->consultaPuntoVenta(
-                $header,
-                $url4,
-                $codigoAmbiente,
-                $codigoSistema,
-                $codigoSucursal,
-                $scuis,
-                $nit
-            ));
+                            $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                    ->where('codigoPuntoVenta', $value->codigoPuntoVenta)
+                                                    ->where('codigo_ambiente', $empresa->codigo_ambiente)
+                                                    ->first();
 
-            if($consultaPuntoVenta->estado === "success"){
-                if($consultaPuntoVenta->resultado->RespuestaConsultaPuntoVenta->transaccion){
-                    $listaPuntosVentas = $consultaPuntoVenta->resultado->RespuestaConsultaPuntoVenta->listaPuntosVentas;
-                    foreach ($listaPuntosVentas as $key => $value) {
-
-                        $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
-                                                ->where('codigoPuntoVenta', $value->codigoPuntoVenta)
-                                                ->where('codigo_ambiente', $empresa->codigo_ambiente)
-                                                ->first();
-
-                        if(is_null($puntoVenta)){
-                            $puntoVenta                     = new PuntoVenta();
-                            $puntoVenta->usuario_creador_id = Auth::user()->id;
-                            $puntoVenta->sucursal_id        = $sucursal->id;
-                            $puntoVenta->codigoPuntoVenta   = $value->codigoPuntoVenta;
-                            $puntoVenta->nombrePuntoVenta   = $value->nombrePuntoVenta;
-                            $puntoVenta->tipoPuntoVenta     = $value->tipoPuntoVenta;
-                            $puntoVenta->codigo_ambiente    = $empresa->codigo_ambiente;
-                            $puntoVenta->save();
+                            if(is_null($puntoVenta)){
+                                $puntoVenta                     = new PuntoVenta();
+                                $puntoVenta->usuario_creador_id = Auth::user()->id;
+                                $puntoVenta->sucursal_id        = $sucursal->id;
+                                $puntoVenta->codigoPuntoVenta   = $value->codigoPuntoVenta;
+                                $puntoVenta->nombrePuntoVenta   = $value->nombrePuntoVenta;
+                                $puntoVenta->tipoPuntoVenta     = $value->tipoPuntoVenta;
+                                $puntoVenta->codigo_ambiente    = $empresa->codigo_ambiente;
+                                $puntoVenta->save();
+                            }
                         }
+                        $data['estado'] = 'success';
+                        $sucursal_id  = $sucursal->id;
+                        $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                    ->get();
+                        $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas', 'sucursal_id'))->render();
+                    }else{
+                        $data['text']    = $consultaPuntoVenta->resultado;
+                        $data['estado'] = 'error';
                     }
-                    $data['estado'] = 'success';
-                    $sucursal_id  = $sucursal->id;
-                    $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
-                                                ->get();
-                    $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas', 'sucursal_id'))->render();
                 }else{
-                    $data['text']    = $consultaPuntoVenta->resultado;
+                    $data['text']   = $consultaPuntoVenta;
                     $data['estado'] = 'error';
                 }
             }else{
-                $data['text']    = $consultaPuntoVenta;
+                $data['text']   = "Cuis no encontrado.";
                 $data['estado'] = 'error';
             }
         }else{
