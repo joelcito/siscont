@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('usuario_modificador_id')->nullable();
             $table->foreign('usuario_eliminador_id')->references('id')->on('users');
             $table->unsignedBigInteger('usuario_eliminador_id')->nullable();
-            
+
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedBigInteger('empresa_id')->nullable();
 
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('ap_paterno')->nullable();
             $table->string('ap_materno')->nullable();
             $table->string('cedula')->nullable();
+            $table->string('complemento',2)->nullable();
             $table->string('nit')->nullable();
             $table->string('razon_social')->nullable();
             $table->string('correo')->nullable();

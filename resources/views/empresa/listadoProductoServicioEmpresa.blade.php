@@ -209,10 +209,14 @@
                                 text:  "SE REGISTRO CON EXITO",
                             })
                             ajaxListado();
-                            $('#modal_new_servicio').modal('hide');
-                        }else{
-
+                        }else if(data.estado === 'error'){
+                            Swal.fire({
+                                icon : 'warning',
+                                title: "ALTO!",
+                                text : data.text,
+                            })
                         }
+                        $('#modal_new_servicio').modal('hide');
                     }
                 })
             }else{

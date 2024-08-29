@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Empresa;
+use App\Models\Factura;
+use App\Models\Plan;
+use App\Models\Servicio;
 use App\Models\Suscripcion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,28 +90,35 @@ class SuscripcionController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Suscripcion $suscripcion)
+    public function verificarRegistroServicioProductoByPlan(Plan $plan, Empresa $empresa)
     {
-        //
+        $cantidadServicioProducto = Servicio::where('empresa_id', $empresa->id)
+                                                    ->count();
+
+        return $cantidadServicioProducto < $plan->cantidad_producto ? true : false;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Suscripcion $suscripcion)
+    public function verificarRegistroClienteByPlan(Plan $plan, Empresa $empresa)
     {
-        //
+        $cantidadCliente = Cliente::where('empresa_id', $empresa->id)->count();
+
+        return $cantidadCliente < $plan->cantidad_clientes ? true : false;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Suscripcion $suscripcion)
+    public function verificarRegistroFacturaByPlan(Plan $plan, Empresa $empresa, Suscripcion $suscripcion)
     {
-        //
+
+        // dd($suscripcion, $empresa, $plan);
+
+        $cantidadFactura = Factura::where('empresa_id', $empresa->id)->count();
+
+        return $cantidadFactura < ($plan->cantidad_factura + $suscripcion->ampliacion_cantidad_facturas) ? true : false;
     }
 
     /**

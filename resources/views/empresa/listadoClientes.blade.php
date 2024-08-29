@@ -33,30 +33,34 @@
                                 <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_cliente_new_usuaio_empresa" id="ap_paterno_cliente_new_usuaio_empresa" required>
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_cliente_new_usuaio_empresa" id="ap_materno_cliente_new_usuaio_empresa" required>
+                                <label class="fs-6 fw-semibold form-label mb-2">Ap Materno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_cliente_new_usuaio_empresa" id="ap_materno_cliente_new_usuaio_empresa">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_cliente_new_usuaio_empresa" id="num_ceular_cliente_new_usuaio_empresa" required>
+                                <label class="fs-6 fw-semibold form-label mb-2">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_cliente_new_usuaio_empresa" id="num_ceular_cliente_new_usuaio_empresa">
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Cedula</label>
                                 <input type="number" class="form-control fw-bold form-control-solid" name="cedula_cliente_new_usuaio_empresa" id="cedula_cliente_new_usuaio_empresa" required>
                             </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Nit</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="nit_cliente_new_usuaio_empresa" id="nit_cliente_new_usuaio_empresa" required>
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Complemento</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="complemento_cliente_new_usuaio_empresa" id="complemento_cliente_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2">Nit</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="nit_cliente_new_usuaio_empresa" id="nit_cliente_new_usuaio_empresa">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Razon Social</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social_cliente_new_usuaio_empresa" id="razon_social_cliente_new_usuaio_empresa" required>
+                                <label class="fs-6 fw-semibold form-label mb-2">Razon Social</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social_cliente_new_usuaio_empresa" id="razon_social_cliente_new_usuaio_empresa">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Correo</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="correo_cliente_new_usuaio_empresa" id="correo_cliente_new_usuaio_empresa" required>
+                                <label class="fs-6 fw-semibold form-label mb-2">Correo</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="correo_cliente_new_usuaio_empresa" id="correo_cliente_new_usuaio_empresa">
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -203,10 +207,16 @@
                                 text:  "SE REGISTRO CON EXITO",
                             })
                             ajaxListado();
-                            $('#modal_new_cliente').modal('hide');
+                        }else if(data.estado === 'error'){
+                            Swal.fire({
+                                icon : 'warning',
+                                title: "ALTO!",
+                                text : data.text,
+                            })
                         }else{
 
                         }
+                        $('#modal_new_cliente').modal('hide');
                     }
                 })
             }else{
