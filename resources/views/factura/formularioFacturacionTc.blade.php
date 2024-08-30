@@ -474,8 +474,6 @@
                     servicio_id          : servicioDatos.id,
                     descripcion          : servicioDatos.descripcion,
                     precio               : parseFloat(precio).toFixed(2),
-                    numero_serie         : $("#numero_serie").val(),
-                    numero_imei          : $("#codigo_imei").val(),
                     empresa_id           : servicioDatos.empresa_id,
                     cantidad             : parseInt($('#cantidad_venta').val()),
                     total                : parseFloat(total).toFixed(2),

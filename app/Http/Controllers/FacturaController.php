@@ -2531,8 +2531,8 @@ class FacturaController extends Controller
                         $detalle->cliente_id            = $cliente_id;
                         $detalle->servicio_id           = $item['servicio_id'];
                         $detalle->descripcion_adicional = $item['descripcion_adicional'];
-                        $detalle->numero_serie          = $item['numero_serie'];
-                        $detalle->numero_imei           = $item['numero_imei'];
+                        // $detalle->numero_serie          = $item['numero_serie'];
+                        // $detalle->numero_imei           = $item['numero_imei'];
                         $detalle->precio                = $item['precio'];
                         $detalle->cantidad              = $item['cantidad'];
                         $detalle->total                 = $item['total'];
@@ -2677,12 +2677,12 @@ class FacturaController extends Controller
 
                     if($empresa_objeto->codigo_modalidad == "1"){
                         $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-                                <facturaElectronicaCompraVenta xsi:noNamespaceSchemaLocation="facturaElectronicaCompraVenta.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                                </facturaElectronicaCompraVenta>';
+                                <facturaElectronicaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaElectronicaTasaCero.xsd">
+                                </facturaElectronicaTasaCero>';
                     }else{
                         $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-                                <facturaComputarizadaCompraVenta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaComputarizadaCompraVenta.xsd">
-                                </facturaComputarizadaCompraVenta>';
+                                <facturaComputarizadaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaComputarizadaTasaCero.xsd">
+                                </facturaComputarizadaTasaCero>';
                     }
 
                     $xml_temporal = new SimpleXMLElement($dar);
@@ -2690,26 +2690,26 @@ class FacturaController extends Controller
 
                     $nombreArchivo = $cufPro."_".$numeroFacturaEmpresa."_".$nitEmisorEmpresa;
 
-                    $xml_temporal->asXML("assets/docs/facturaxml_$nombreArchivo.xml");
+                    $xml_temporal->asXML("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
 
                     //  =========================   DE AQUI COMENZAMOS EL FIRMADO CHEEEEE ==============================\
                     if($empresa_objeto->codigo_modalidad == "1"){
                         // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
                         $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                        $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxml_$nombreArchivo.xml");
-                        file_put_contents("assets/docs/facturaxml_$nombreArchivo.xml", $xmlFirmado);
+                        $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
+                        file_put_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml", $xmlFirmado);
                     }
                     // ========================== FINAL DE AQUI COMENZAMOS EL FIRMADO CHEEEEE  ==========================
 
                     // COMPRIMIMOS EL ARCHIVO A ZIP
-                    $gzdato = gzencode(file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml",9));
-                    $fiape = fopen("assets/docs/facturaxml_$nombreArchivo.xml.zip","w");
+                    $gzdato = gzencode(file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml",9));
+                    $fiape = fopen("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml.zip","w");
                     fwrite($fiape,$gzdato);
                     fclose($fiape);
 
                     //  hashArchivo EL ARCHIVO
                     $archivoZip = $gzdato;
-                    $hashArchivo = hash("sha256", file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml"));
+                    $hashArchivo = hash("sha256", file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml"));
 
                     if($tipo_facturacion === "online"){
 
@@ -2724,7 +2724,7 @@ class FacturaController extends Controller
                         $scufd                  = $cufdVigente->codigo;
                         $scuis                  = $cuis_objeto->codigo;
                         $nit                    = $empresa_objeto->nit;
-                        $tipoFacturaDocumento   = 1;
+                        $tipoFacturaDocumento   = 2;
 
                         $siat = app(SiatController::class);
                         $for  = json_decode($siat->recepcionFactura(
@@ -2768,7 +2768,7 @@ class FacturaController extends Controller
                                 $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                                 $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                                 $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                                $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml");
+                                $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
                                 $facturaVerdad->codigo_descripcion      = $codigo_descripcion;
                                 $facturaVerdad->codigo_recepcion        = $for->resultado->RespuestaServicioFacturacion->codigoRecepcion;
                                 $facturaVerdad->codigo_transaccion      = $for->resultado->RespuestaServicioFacturacion->transaccion;
@@ -2864,7 +2864,6 @@ class FacturaController extends Controller
 
                         $data['estado']     = 'OFFLINE';
                     }
-
                 }else{
                     $data['text']   = 'Alcanzo la cantidad maxima registros de facturas, solicite un plan superior.';
                     $data['estado'] = 'error_sus';
