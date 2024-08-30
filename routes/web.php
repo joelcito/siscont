@@ -158,6 +158,11 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/ajaxListadoClientesBusqueda', [FacturaController::class, 'ajaxListadoClientesBusqueda']);
         Route::post('/emitirFacturaCv', [FacturaController::class, 'emitirFacturaCv']);
 
+        Route::get('/formularioFacturacionTc', [FacturaController::class, 'formularioFacturacionTc']);
+        Route::post('/emitirFacturaTc', [FacturaController::class, 'emitirFacturaTc']);
+
+
+
 
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
         // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
