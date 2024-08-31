@@ -69,7 +69,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-    
+
 
     'timezone' => 'America/La_Paz',
     // 'timezone' => 'UTC',
@@ -172,6 +172,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -188,7 +189,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
 
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Excel'  => Maatwebsite\Excel\Facades\Excel::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PDF'    => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];

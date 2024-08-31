@@ -162,6 +162,9 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/emitirFacturaTc', [FacturaController::class, 'emitirFacturaTc']);
 
 
+        Route::get('/generaPdfFacturaNewCv/{factura_id}', [FacturaController::class, 'generaPdfFacturaNewCv']);
+
+
 
 
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);

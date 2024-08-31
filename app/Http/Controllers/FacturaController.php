@@ -23,6 +23,10 @@ use Maatwebsite\Excel\Facades\Excel;
 use PharData;
 use SimpleXMLElement;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use PDF;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class FacturaController extends Controller
 {
     /**
@@ -1885,7 +1889,7 @@ class FacturaController extends Controller
 
         return view('factura.formularioFacturacionTc')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'));
 
-   }
+    }
 
     public function ajaxListadoServicios(Request $request){
 
@@ -1920,7 +1924,7 @@ class FacturaController extends Controller
             }
 
             if(!is_null($request->input('nombre_escogido'))){
-                $nombre = $request->input('cedula_escogido');
+                $nombre = $request->input('nombre_escogido');
                 $query->where('nombres', 'LIKE', "%$nombre%");
             }
 
@@ -2880,6 +2884,51 @@ class FacturaController extends Controller
 
         return $data;
 
+    }
+
+    public function generaPdfFacturaNewCv(Request $request, $factura_id){
+
+        $usuario = Auth::user();
+
+        $empresa_id     = $usuario->empresa_id;
+        $punto_venta_id = $usuario->punto_venta_id;
+        $sucursal_id    = $usuario->sucursal_id;
+
+        // $empresa     = Empresa::find($empresa_id);
+        // $puntoVenta = PuntoVenta::find($punto_venta_id);
+        // $sucursal    = Sucursal::find($sucursal_id);
+
+        $factura = Factura::find($factura_id);
+
+        if($factura){
+            if($factura->empresa_id == $empresa_id){
+                $xml     = $factura['productos_xml'];
+
+                $archivoXML = new SimpleXMLElement($xml);
+
+                $cabeza = (array) $archivoXML;
+
+                $cuf            = (string)$cabeza['cabecera']->cuf;
+                $numeroFactura  = (string)$cabeza['cabecera']->numeroFactura;
+
+                // Genera el texto para el código QR
+                $textoQR = $factura->empresa->url_verifica."?nit".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=2";
+                // Genera la ruta temporal para guardar la imagen del código QR
+                $rutaImagenQR = storage_path('app/public/qr_code.png');
+                // Genera el código QR y guarda la imagen en la ruta temporal
+                QrCode::generate($textoQR, $rutaImagenQR);
+
+                $pdf = PDF::loadView('factura.pdf.generaPdfFacturaNewCv', compact('factura', 'archivoXML','rutaImagenQR'))->setPaper('letter');
+
+                return $pdf->stream('facturaCv.pdf');
+            }else{
+                dd("nada");
+            }
+        }else{
+            // dd("factura no exisye");
+            throw new NotFoundHttpException();
+            // return redirect()->route('error.404');
+        }
     }
 
 

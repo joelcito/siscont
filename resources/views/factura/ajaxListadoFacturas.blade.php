@@ -86,10 +86,9 @@
                     @else
 
                     @endif
-                    {{-- <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $fac->id }}', '{{ $fac->nombre }}', {{ $fac->codigo_sucursal }})"><i class="fa fa-home"></i></button>
-                    <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button> --}}
-                    {{-- <button class="btn btn-sm btn-success btn-icon" onclick="escogerCliente('{{ $fac->id }}', '{{ $fac->nombres }}', '{{ $fac->ap_paterno }}', '{{ $fac->ap_materno }}', '{{ $fac->cedula }}')"><i class="fa fa-dollar"></i></button> --}}
+
+                    <a  class="btn btn-primary btn-icon btn-sm"href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
+                    <a  class="btn btn-white btn-icon btn-sm"href="{{ url('factura/imprimeFactura', [$fac->factura_id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
                 </td>
             </tr>
         @empty

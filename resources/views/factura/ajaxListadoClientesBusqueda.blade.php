@@ -33,6 +33,7 @@
     </tbody>
 </table>
 <script>
+    /*
     $(document).ready(function() {
             $('#kt_table_clientes').DataTable({
                 lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
@@ -57,4 +58,5 @@
 
 
         });
+        */
 </script>

@@ -414,9 +414,14 @@
             });
 
 
+            let debounceTimer;
             $('.buscar-persona').on('keyup', function() {
 
-                ajaxListadoClientes();
+                //ajaxListadoClientes();
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(function() {
+                    ajaxListadoClientes();
+                }, 300); // Espera 300 ms antes de ejecutar la función
             });
 
 
