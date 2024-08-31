@@ -17,8 +17,10 @@ use App\Models\SiatTipoMetodoPagos;
 use App\Models\SiatTipoMoneda;
 use App\Models\Sucursal;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
 use Maatwebsite\Excel\Facades\Excel;
 use PharData;
 use SimpleXMLElement;
@@ -2922,12 +2924,10 @@ class FacturaController extends Controller
 
                 return $pdf->stream('facturaCv.pdf');
             }else{
-                dd("nada");
+                throw new AuthorizationException();
             }
         }else{
-            // dd("factura no exisye");
             throw new NotFoundHttpException();
-            // return redirect()->route('error.404');
         }
     }
 
