@@ -147,10 +147,37 @@
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
-            <div id="kt_app_content_container" class="app-container container-xxl">
+            <div id="kt_app_content_container" class="app-container container-xxlg">
                 <!--begin::Card-->
                 <div class="card">
                     <div class="card-body py-4">
+                        <form id="formulario-busqueda-factura">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="fw-semibold fs-6 mb-2">No. Factura</label>
+                                    <input type="number" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="fw-semibold fs-6 mb-2">C.I. Persona</label>
+                                    <input type="number" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="fw-semibold fs-6 mb-2">NIT</label>
+                                    <input type="number" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="fw-semibold fs-6 mb-2">Fecha Inicio</label>
+                                    <input type="date" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="fw-semibold fs-6 mb-2">Fecha Fin</label>
+                                    <input type="date" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-success btn-sm w-100 mt-8" onclick="buscarFactura()">BUSCAR</button>
+                                </div>
+                            </div>
+                        </form>
                         <div id="tabla_facturas">
 
                         </div>

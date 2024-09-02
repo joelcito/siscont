@@ -132,12 +132,12 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/descuentoAdicionalGlobal', [FacturaController::class, 'descuentoAdicionalGlobal']);
         Route::post('/verificaItemsGeneracion', [FacturaController::class, 'verificaItemsGeneracion']);
         Route::post('/arrayCuotasPagar', [FacturaController::class, 'arrayCuotasPagar']);
-        Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
+        // Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
         Route::post('/anularFactura', [FacturaController::class, 'anularFactura']);
         Route::post('/desanularFacturaAnulado', [FacturaController::class, 'desanularFacturaAnulado']);
         Route::post('/verificarNit', [FacturaController::class, 'verificarNit']);
 
-        Route::post('/emitirFacturaTasaCero', [FacturaController::class, 'emitirFacturaTasaCero']);
+        // Route::post('/emitirFacturaTasaCero', [FacturaController::class, 'emitirFacturaTasaCero']);
 
         Route::post('/sacaNumeroCafcUltimo', [FacturaController::class, 'sacaNumeroCafcUltimo']);
 
@@ -165,6 +165,7 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/generaPdfFacturaNewCv/{factura_id}', [FacturaController::class, 'generaPdfFacturaNewCv']);
 
 
+        Route::post('/buscarFactura', [FacturaController::class, 'buscarFactura']);
 
 
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);

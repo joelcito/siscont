@@ -962,6 +962,28 @@
         }
     }
 
+    function buscarFactura(){
+        let datos = $('#formulario-busqueda-factura').serializeArray();
+        $.ajax({
+            url     : "{{ url('factura/buscarFactura') }}",
+            method  : "POST",
+            dataType: 'json',
+            data    : datos
+            success: function (data) {
+                // if(data.estado === "success"){
+                //     $("#numero_factura_cafc").val(data.numero);
+                //     $('#numero_fac_cafc').show('toggle');
+                // }else{
+                //     Swal.fire({
+                //         icon:   'error',
+                //         title:  'Error!',
+                //         text:   "Algo fallo"
+                //     })
+                // }
+            }
+        })
+    }
+
    </script>
 @endsection
 

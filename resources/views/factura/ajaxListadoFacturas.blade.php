@@ -74,6 +74,9 @@
                         <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a>
                     @endif
 
+                    <a  class="btn btn-primary btn-icon btn-sm" title="Imprime Factura oficio" href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
+                    <a  class="btn btn-white btn-icon btn-sm" title="Imprime Factura rollo" href="{{ url('factura/imprimeFactura', [$fac->factura_id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
+
                     @if (is_null($fac->estado))
                         @if ($fac->tipo_factura == "offline" && is_null($fac->codigo_descripcion) )
                             <button class="btn btn-info btn-icon btn-sm" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
@@ -86,9 +89,6 @@
                     @else
 
                     @endif
-
-                    <a  class="btn btn-primary btn-icon btn-sm"href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
-                    <a  class="btn btn-white btn-icon btn-sm"href="{{ url('factura/imprimeFactura', [$fac->factura_id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
                 </td>
             </tr>
         @empty
@@ -100,7 +100,8 @@
     $(document).ready(function() {
             $('#kt_table_facturas').DataTable({
                 lengthMenu: [10, 25, 50, 100], // Opciones de longitud de página
-                dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
+                // dom: '<"dt-head row"<"col-md-6"l><"col-md-6"f>><"clear">t<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
+                dom: 't<"dt-footer row"<"col-md-5"i><"col-md-7"p>>', // Use dom for basic layout
                 language: {
                 paginate: {
                     first : 'Primero',

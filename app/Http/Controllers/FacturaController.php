@@ -2931,6 +2931,16 @@ class FacturaController extends Controller
         }
     }
 
+    public function buscarFactura(Request $request) {
+        if($request->ajax()){
+
+        }else{
+
+        }
+
+        return $data;
+    }
+
 
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
     public function pruebas(){
