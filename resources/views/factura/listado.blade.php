@@ -131,12 +131,11 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     @if (Auth::user()->isFacturacionCompraVenta())
-                        {{-- <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacion') }}"><i class="fa fa-plus"></i>Nueva Venta</a> --}}
                         <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionCv') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
                     @endif
 
                     @if (Auth::user()->isFacturacionTasaCero())
-                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionTasaCero') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
+                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionTc') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
                     @endif
                 </div>
                 <!--end::Actions-->

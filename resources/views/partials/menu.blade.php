@@ -206,7 +206,7 @@
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link" href="{{ url('factura/formularioFacturacionTasaCero') }}">
+                                    <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -216,7 +216,7 @@
                                 </div>
                                 <!--end:Menu item-->
 
-                                <!--begin:Menu item-->
+                                {{-- <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
                                     <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
@@ -227,7 +227,7 @@
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
-                                <!--end:Menu item-->
+                                <!--end:Menu item--> --}}
                             @endif
 
 
