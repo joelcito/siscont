@@ -394,8 +394,6 @@ class EventoSignificativoController extends Controller
     public function muestraTableFacturaPaquete(Request $request){
         if($request->ajax()){
 
-            // dd($request->all());
-
             $fecha                   = $request->input('fecha');
             $evento_significativo_id = $request->input('valor');
             $fecha_ini               = $fecha." 00:00:00";
@@ -431,8 +429,6 @@ class EventoSignificativoController extends Controller
             $checkboxes = collect($datos)->filter(function ($value, $key) {
                 return Str::startsWith($key, 'check_');
             })->toArray();
-
-            // dd($checkboxes, $datos, Auth::user());
 
             $evento_significativo_id = $request->input('evento_significativo_id');
             $empresa_id              = Auth::user()->empresa_id;
@@ -482,7 +478,6 @@ class EventoSignificativoController extends Controller
                 $idsToUpdate[] = (int)$ar[1];
 
                 $xml                            = $factura->productos_xml;
-                // $uso_cafc                       = $request->input("uso_cafc");
                 $archivoXML                     = new SimpleXMLElement($xml);
 
                 // GUARDAMOS EN LA CARPETA EL XML
@@ -502,10 +497,6 @@ class EventoSignificativoController extends Controller
 
             // Ruta y nombre del archivo comprimido en formato Gzip
             $archivoGzip = "assets/docs/paquete.tar.gz";
-
-            // Comprimir el archivo TAR en formato Gzip
-            // $comandoGzip = "gzip -c $archivoTar > $archivoGzip";
-            // exec($comandoGzip);
 
             // ESTE ES OTRO CHEEE
             // Abre el archivo .gz en modo de escritura
@@ -554,7 +545,6 @@ class EventoSignificativoController extends Controller
 
                 // Código que puede lanzar el error
                 // Por ejemplo, puedes tener algo como:
-                // $resultado = obtenerResultado();
                 $res = json_decode($siat->recepcionPaqueteFactura(
                     $header,
                     $url3,
@@ -604,14 +594,6 @@ class EventoSignificativoController extends Controller
                         2,$res->resultado->RespuestaServicioFacturacion->codigoRecepcion
                     ));
                     if($validad->resultado->RespuestaServicioFacturacion->transaccion){
-                        // foreach($checkboxes as $key => $chek){
-                        //     $data['estado'] = "success";
-                        //     $ar = explode("_",$key);
-                        //     $factura = Factura::find($ar[1]);
-                        //     $factura->codigo_descripcion = $validad->resultado->RespuestaServicioFacturacion->codigoDescripcion;
-                        //     $factura->codigo_recepcion  = $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion;
-                        //     $factura->save();
-                        // }
 
                         $data['estado'] = "success";
                         $data['msg']    = $validad->resultado;
@@ -622,14 +604,6 @@ class EventoSignificativoController extends Controller
                             'codigo_recepcion'      => $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion
                         ]);
                     }else{
-                        // foreach($checkboxes as $key => $chek){
-                        //     $ar = explode("_",$key);
-                        //     $factura = Factura::find($ar[1]);
-                        //     $factura->codigo_descripcion    = $validad->resultado->RespuestaServicioFacturacion->codigoDescripcion;
-                        //     $factura->codigo_recepcion      = $validad->resultado->RespuestaServicioFacturacion->codigoRecepcion;
-                        //     $factura->descripcion           = $validad->resultado->RespuestaServicioFacturacion->mensajesList;
-                        //     $factura->save();
-                        // }
                         $data['estado'] = "error";
                         $data['msg']    = $validad->resultado;
 
@@ -640,23 +614,12 @@ class EventoSignificativoController extends Controller
                             'descripcion'           => $validad->resultado->RespuestaServicioFacturacion->mensajesList
                         ]);
                     }
-                    // dd($res, $validad, "habert");
                 }else{
                     // dd($res);
                     $data['estado'] = "error";
                     $data['msg']    = $res->resultado;
                 }
-
-                // dd($checkboxes, $idsToUpdate);
-                // Intentar acceder a la propiedad RespuestaServicioFacturacion
-                // $valor = $resultado->RespuestaServicioFacturacion;
-            // } catch (\Throwable $e) {
             } catch (ErrorException $e) {
-                // Capturar y manejar el error
-                // Aquí puedes realizar acciones para tratar el error, como registrar un mensaje de error, mostrar un mensaje al usuario, etc.
-                // Puedes acceder al mensaje de error específico usando $e->getMessage()
-                // También puedes acceder al número de línea y el archivo donde ocurrió el error usando $e->getLine() y $e->getFile()
-                // echo "Error capturado: " . $e->getMessage();
                 $data['estado'] = "error";
                 $data['msg']    = $e->getMessage();
             }
@@ -664,6 +627,7 @@ class EventoSignificativoController extends Controller
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
         }
+        // dd($data);
         return $data;
     }
 }

@@ -3,7 +3,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		<title>Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes</title>
+		<title>VIRUS NOT | FACTURACION</title>
 		<meta charset="utf-8" />
         @yield('metadatos')
 		<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -4978,14 +4978,25 @@
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
 							<a href="{{ url('home') }}">
-								{{-- <img alt="Logo" src="{{asset('assets/media/logos/default-dark.svg')}}" class="h-25px app-sidebar-logo-default" /> --}}
 								<div class="row mt-5">
 									<div class="col-md-6">
-										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-70px app-sidebar-logo-default" />
-										<img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" />
+                                        @if (Auth::user()->isAdmin())
+                                            <img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-70px app-sidebar-logo-default"  width="100%"/>
+                                            <img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" width="100%" />
+                                        @elseif(Auth::user()->empresa->logo != null)
+                                            <img alt="Logo" src="{{ asset('assets/img')."/".Auth::user()->empresa->logo }}" class="h-70px app-sidebar-logo-default"  width="100%"/>
+                                            <img alt="Logo" src="{{ asset('assets/img')."/".Auth::user()->empresa->logo }}" class="h-40px app-sidebar-logo-minimize" width="100%" />
+                                        @else
+                                            <img alt="Logo" src="{{asset('assets/img/default.jpg')}}" class="h-70px app-sidebar-logo-default"  width="100%"/>
+                                            <img alt="Logo" src="{{asset('assets/img/default.jpg')}}" class="h-40px app-sidebar-logo-minimize" width="100%" />
+                                        @endif
 									</div>
 									<div class="col-md-6">
-										<h2 class="text-white text-center mr-10">VIRUSNOT SYSTEN</h2>
+                                        @if (Auth::user()->isAdmin())
+    										<h2 class="text-white text-center mr-10">VIRUSNOT SYSTEN</h2>
+                                        @else
+                                            <h2 class="text-white text-center mr-10">{{ Auth::user()->empresa->nombre }}</h2>
+                                        @endif
 									</div>
 								</div>
 

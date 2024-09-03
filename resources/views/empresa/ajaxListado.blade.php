@@ -2,18 +2,26 @@
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-            <th class="min-w-125px">Logo</th>
-            <th class="min-w-125px">Nombre</th>
-            <th class="min-w-125px">Nit</th>
-            <th class="min-w-125px">Razon Social</th>
-            <th class="min-w-125px">Ambiente</th>
-            <th class="text-end min-w-100px">Actions</th>
+            <th >Logo</th>
+            <th >Nombre</th>
+            <th >Nit</th>
+            <th >Razon Social</th>
+            <th >Ambiente</th>
+            <th >Actions</th>
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
         @forelse ( $empresas as $e)
             <tr>
-                <td>{{ $e->logo }}</td>
+                <td>
+                    <div style="width: 50px; background-color:green" align="center">
+                        @if ($e->logo != null)
+                            <img src="{{ asset('assets/img')."/".$e->logo }}" width="100%" alt="">
+                        @else
+                            <img src="{{ asset('assets/img/default.jpg') }}" width="100%" alt="">
+                        @endif
+                    </div>
+                </td>
                 <td>{{ $e->nombre }}</td>
                 <td>{{ $e->nit }}</td>
                 <td>{{ $e->razon_social }}</td>

@@ -659,7 +659,7 @@
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <!--begin::Toolbar container-->
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+            <div id="kt_app_toolbar_container" class="app-container container-xxlg d-flex flex-stack">
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
@@ -699,99 +699,120 @@
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+            <div id="kt_app_content_container" class="app-container container-xxlg">
                 <div class="card">
                     <div class="card-body py-4">
                         <div class="row">
                             <div class="col-md-12">
                                 <form id="formulario_empresa" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="nombre_empresa" id="nombre_empresa" value="{{ $empresa->nombre }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="nombre_empresa" id="nombre_empresa" value="{{ $empresa->nombre }}" required>
                                             <input type="hidden" name="empresa_id" id="empresa_id" value="{{ $empresa->id }}" required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <label class="fs-6 fw-semibold form-label mb-2">Nit Empresa</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="nit_empresa" id="nit_empresa" value="{{ $empresa->nit }}" required>
+                                            <input type="number" class="form-control fw-bold form-control-solid form-control-sm" name="nit_empresa" id="nit_empresa" value="{{ $empresa->nit }}" required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Razon Social</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="razon_social" id="razon_social" value="{{ $empresa->razon_social }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="razon_social" id="razon_social" value="{{ $empresa->razon_social }}" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="fs-6 fw-semibold form-label mb-2">Municipio</label>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="municipio" id="municipio" value="{{ $empresa->municipio }}" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="fs-6 fw-semibold form-label mb-2">Celular</label>
+                                            <input type="number" class="form-control fw-bold form-control-solid form-control-sm" name="celular" id="celular" value="{{ $empresa->celular }}" required>
                                         </div>
                                     </div>
                                     <div class="row mt-5">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente" required>
+                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold form-control-sm" name="codigo_ambiente" id="codigo_ambiente" required>
                                                 <option></option>
                                                 <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
                                                 <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
-                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad" id="codigo_modalidad" required>
+                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold form-control-sm" name="codigo_modalidad" id="codigo_modalidad" required>
                                                 <option></option>
                                                 <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
                                                 <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en linea</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label class="fs-6 fw-semibold form-label mb-2">Codigo de Sistema</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="codigo_sistema" id="codigo_sistema" value="{{ $empresa->codigo_sistema }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="codigo_sistema" id="codigo_sistema" value="{{ $empresa->codigo_sistema }}" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
-                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="documento_sectores" id="documento_sectores" required>
+                                            <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold form-control-sm" name="documento_sectores" id="documento_sectores" required>
                                                 <option></option>
                                                 @foreach ($documentosSectores as $ds)
                                                     <option value="{{ $ds->codigo_clasificador }}" {{ ($ds->codigo_clasificador == $empresa->codigo_documento_sector)? "selected" : "" }}>{{ $ds->descripcion }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="col-md-3">
+                                            <label class="fs-6 fw-semibold form-label mb-2">Codigo de CAFC</label>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="codigo_cafc" id="codigo_cafc" value="{{ $empresa->cafc }}">
+                                        </div>
                                     </div>
                                     <div class="row mt-5">
                                         <div class="col-md-12">
                                             <label class="fs-6 fw-semibold form-label mb-2">Api Token</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="api_token" id="api_token" value="{{ $empresa->api_token }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="api_token" id="api_token" value="{{ $empresa->api_token }}" required>
                                         </div>
                                     </div>
                                     <div class="row mt-5">
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Url Des. Codigos</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos" id="url_fac_codigos" value="{{ $empresa->url_facturacionCodigos }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="url_fac_codigos" id="url_fac_codigos" value="{{ $empresa->url_facturacionCodigos }}" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Url Des. Sincronizacion</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_sincronizacion" id="url_fac_sincronizacion" value="{{ $empresa->url_facturacionSincronizacion }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="url_fac_sincronizacion" id="url_fac_sincronizacion" value="{{ $empresa->url_facturacionSincronizacion }}" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Url Des. Servicio </label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_servicios" id="url_fac_servicios" value="{{ $empresa->url_servicio_facturacion_compra_venta }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="url_fac_servicios" id="url_fac_servicios" value="{{ $empresa->url_servicio_facturacion_compra_venta }}" required>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Url Des. Operaciones</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones" id="url_fac_operaciones" value="{{ $empresa->url_facturacion_operaciones }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="url_fac_operaciones" id="url_fac_operaciones" value="{{ $empresa->url_facturacion_operaciones }}" required>
                                         </div>
                                     </div>
                                     <div class="row mt-5">
-                                        <div class="col-md-4">
-                                            <label class="fs-6 fw-semibold form-label mb-2">Archivo .p12</label>
-                                            <input type="file" class="form-control fw-bold form-control-solid" name="fila_archivo_p12" id="fila_archivo_p12">
+                                        <div class="col-md-4" align="center">
+                                            <div style="height: 180px; width: 180px;">
+                                                @if (is_null($empresa->logo))
+                                                    <img src="{{ asset('assets/img/default.jpg') }}" alt="" width="100%">
+                                                @else
+                                                    <img src="{{ asset('assets/img')."/".$empresa->logo }}" alt="" width="100%">
+                                                @endif
+                                            </div>
+                                            <br>
+                                            <input type="file" class="form-control fw-bold form-control-solid form-control-sm" name="logo_empresa" id="logo_empresa" accept="image/*">
+                                        </div>
+                                        <div class="col-md-4" align="center">
+                                            <div style="height: 180px; width: 180px;">
+                                                @if (!is_null($empresa->archivop12))
+                                                    <img src="{{ asset('assets/img/857034.png') }}" alt="" width="100%">
+                                                @else
+                                                    <img src="{{ asset('assets/img/857034_nega.png') }}" alt="" width="100%">
+                                                @endif
+                                            </div>
+                                            <br>
+                                            <input type="file" class="form-control fw-bold form-control-solid form-control-sm" name="fila_archivo_p12" id="fila_archivo_p12">
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="fs-6 fw-semibold form-label mb-2">Contraseña</label>
-                                            <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12">
-                                        </div>
-                                        <div class="col-md-4 mt-10 mr-5">
-                                            @if (is_null($empresa->archivop12))
-                                                <button class="btn-sm btn-circle btn-danger btn btn-icon" type="button"><i class="fa fa-close"></i></button>
-                                            @else
-                                                <button class="btn-sm btn-circle btn-success btn btn-icon" type="button"><i class="fa fa-check"></i></button>
-                                                <a href="{{ asset($empresa->archivop12) }}" download="">Descargar</a>
-                                            @endif
-
+                                            <label class="fs-6 fw-semibold form-label mb-2">Contraseña archivo .P12</label>
+                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12">
                                         </div>
                                     </div>
 

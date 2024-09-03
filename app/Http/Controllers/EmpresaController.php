@@ -51,21 +51,21 @@ class EmpresaController extends Controller
                 $empresa->usuario_modificador_id = Auth::user()->id;
             }
 
-            // dd($request->all(), $request->has('fila_archivo_p12'));
-
-            $empresa->nombre                                    = $request->input('nombre_empresa');
-            $empresa->nit                                       = $request->input('nit_empresa');
-            $empresa->razon_social                              = $request->input('razon_social');
-            $empresa->codigo_ambiente                           = $request->input('codigo_ambiente');
-            $empresa->codigo_modalidad                          = $request->input('codigo_modalidad');
-            $empresa->codigo_sistema                            = $request->input('codigo_sistema');
-            $empresa->codigo_documento_sector                   = $request->input('documento_sectores');
-            $empresa->api_token                                 = $request->input('api_token');
-            $empresa->url_facturacionCodigos                    = $request->input('url_fac_codigos');
-            $empresa->url_facturacionSincronizacion             = $request->input('url_fac_sincronizacion');
-            $empresa->url_servicio_facturacion_compra_venta     = $request->input('url_fac_servicios');
-            $empresa->url_facturacion_operaciones               = $request->input('url_fac_operaciones');
-
+            $empresa->nombre                                = $request->input('nombre_empresa');
+            $empresa->nit                                   = $request->input('nit_empresa');
+            $empresa->razon_social                          = $request->input('razon_social');
+            $empresa->codigo_ambiente                       = $request->input('codigo_ambiente');
+            $empresa->codigo_modalidad                      = $request->input('codigo_modalidad');
+            $empresa->codigo_sistema                        = $request->input('codigo_sistema');
+            $empresa->codigo_documento_sector               = $request->input('documento_sectores');
+            $empresa->api_token                             = $request->input('api_token');
+            $empresa->url_facturacionCodigos                = $request->input('url_fac_codigos');
+            $empresa->url_facturacionSincronizacion         = $request->input('url_fac_sincronizacion');
+            $empresa->url_servicio_facturacion_compra_venta = $request->input('url_fac_servicios');
+            $empresa->url_facturacion_operaciones           = $request->input('url_fac_operaciones');
+            $empresa->municipio                             = $request->input('municipio');
+            $empresa->celular                               = $request->input('celular');
+            $empresa->cafc                                  = $request->input('codigo_cafc');
 
             if($request->has('fila_archivo_p12')){
                 // Obtén el archivo de la solicitud
@@ -87,10 +87,26 @@ class EmpresaController extends Controller
                 $empresa->contrasenia = $request->input('contrasenia_archivo_p12');
             }
 
-            // $empresa->url_facturacionCodigos_pro                = $request->input('url_fac_codigos_pro');
-            // $empresa->url_facturacionSincronizacion_pro         = $request->input('url_fac_sincronizacion_pro');
-            // $empresa->url_servicio_facturacion_compra_venta_pro = $request->input('url_fac_servicios_pro');
-            // $empresa->url_facturacion_operaciones_pro           = $request->input('url_fac_operaciones_pro');
+            if($request->has('logo_empresa')){
+                $foto = $request->file('logo_empresa');
+
+                // Define el nombre del archivo y el directorio de almacenamiento
+                $originalName = $foto->getClientOriginalName();
+                $filename     = time() . '_'. str_replace(' ', '_', $originalName);
+                $directory    = 'assets/img';
+
+                // Guarda el archivo en el directorio especificado
+                $foto->move(public_path($directory), $filename);
+
+                // Obtén la ruta completa del archivo
+                // $filePath = $directory . '/' . $filename;
+                $filePath = $filename;
+
+                // Guarda la ruta del archivo en la base de datos
+                $empresa->logo = $filePath;
+                // $empresa->contrasenia = $request->input('contrasenia_archivo_p12');
+
+            }
 
             if($empresa->save()){
                 $data['estado'] = 'success';
