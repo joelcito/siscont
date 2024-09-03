@@ -1505,23 +1505,84 @@ class FacturaController extends Controller
     public function ajaxListadoFacturas(Request $request){
         if($request->ajax()){
 
-            // dd(Auth::user());
-
+            // DE AQUI ESE EL ANTIGUO
             $usuario_id     = Auth::user()->id;
             $empresa_id     = Auth::user()->empresa_id;
             $sucursal_id    = Auth::user()->sucursal_id;
             $punto_venta_id = Auth::user()->punto_venta_id;
 
-            $facturas = Factura::where('empresa_id', $empresa_id)
-                                ->where('sucursal_id', $sucursal_id)
-                                ->where('punto_venta_id', $punto_venta_id)
+            // $facturas = Factura::where('empresa_id', $empresa_id)
+            //                     ->where('sucursal_id', $sucursal_id)
+            //                     ->where('punto_venta_id', $punto_venta_id)
 
-                                // ->whereNull('estado')
-                                // ->where('estado','ANULADO')
+            //                     // ->whereNull('estado')
+            //                     // ->where('estado','ANULADO')
 
-                                ->orderBy('id', 'desc')
-                                ->limit(100)
-                                ->get();
+            //                     ->orderBy('id', 'desc')
+            //                     ->limit(100)
+            //                     ->get();
+
+            // DE AQUI ESE EL ANTIGUO
+
+            // $query = Factura::select('*')
+            $query = Factura::select(
+                            'facturas.numero_cafc',
+                            'facturas.estado',
+                            'facturas.codigo_descripcion',
+                            'facturas.tipo_factura',
+                            'facturas.uso_cafc',
+                            'facturas.nit',
+                            'facturas.cuf',
+                            'facturas.id',
+                            'facturas.numero_factura',
+                            'facturas.empresa_id',
+
+                            'clientes.cedula',
+                            'clientes.nombres',
+                            'clientes.ap_paterno',
+                            'clientes.ap_materno',
+                            )
+                            ->join('clientes', 'clientes.id', '=', 'facturas.cliente_id')
+                            ->where('facturas.empresa_id', $empresa_id)
+                            ->where('facturas.sucursal_id', $sucursal_id)
+                            ->where('facturas.punto_venta_id', $punto_venta_id)
+                            ;
+
+            if(!is_null($request->input('buscar_nro_factura'))){
+                $numero_factura = $request->input('buscar_nro_factura');
+                $query->where('facturas.numero_factura', $numero_factura);
+            }
+
+            if(!is_null($request->input('buscar_nro_cedula'))){
+                $cedula = $request->input('buscar_nro_cedula');
+                $query->where('clientes.cedula', $cedula);
+            }
+
+            if(!is_null($request->input('buscar_nit'))){
+                $nit = $request->input('buscar_nit');
+                $query->where('facturas.nit', $nit);
+            }
+
+            if(!is_null($request->input('buscar_fecha_inicio')) && !is_null($request->input('buscar_fecha_fin'))){
+                $fecha_ini = $request->input('buscar_fecha_inicio');
+                $fecha_fin = $request->input('buscar_fecha_fin');
+                $query->whereBetween('facturas.fecha', [$fecha_ini." 00:00:00", $fecha_fin." 23:59:59"]);
+            }
+
+            if(
+                !is_null($request->input('buscar_nro_factura')) &&
+                !is_null($request->input('buscar_nro_cedula')) &&
+                !is_null($request->input('buscar_fecha_inicio')) &&
+                !is_null($request->input('buscar_fecha_fin'))
+            ){
+                $facturas = $query->limit(500)->with('factura.empresa')->get();
+            }else{
+                $facturas = $query->orderBy('facturas.id', 'desc')->limit(100)->with('empresa')->get();
+                // $facturas = $query->orderBy('facturas.id', 'desc')->limit(100)->toSql();
+                // dd($facturas, $fecha_ini, $fecha_fin);
+            }
+
+            // dd($facturas[0]);
 
             $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas'))->render();
             $data['estado'] = 'success';
@@ -2793,6 +2854,7 @@ class FacturaController extends Controller
                                         ]);
 
                                 $data['estado'] = $codigo_descripcion;
+                                $data['numero'] = $facturaVerdad->id;
 
                                 // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
                                 // if($swFacturaEnvio){
@@ -2895,10 +2957,7 @@ class FacturaController extends Controller
         $empresa_id     = $usuario->empresa_id;
         $punto_venta_id = $usuario->punto_venta_id;
         $sucursal_id    = $usuario->sucursal_id;
-
-        // $empresa     = Empresa::find($empresa_id);
-        // $puntoVenta = PuntoVenta::find($punto_venta_id);
-        // $sucursal    = Sucursal::find($sucursal_id);
+        $empresa        = $usuario->empresa;
 
         $factura = Factura::find($factura_id);
 
@@ -2920,7 +2979,7 @@ class FacturaController extends Controller
                 // Genera el código QR y guarda la imagen en la ruta temporal
                 QrCode::generate($textoQR, $rutaImagenQR);
 
-                $pdf = PDF::loadView('factura.pdf.generaPdfFacturaNewCv', compact('factura', 'archivoXML','rutaImagenQR'))->setPaper('letter');
+                $pdf = PDF::loadView('factura.pdf.generaPdfFacturaNewCv', compact('factura', 'archivoXML','rutaImagenQR', 'empresa'))->setPaper('letter');
 
                 return $pdf->stream('facturaCv.pdf');
             }else{
@@ -2931,16 +2990,45 @@ class FacturaController extends Controller
         }
     }
 
-    public function buscarFactura(Request $request) {
-        if($request->ajax()){
+    public function imprimeFactura(Request $request, $factura_id){
 
+        $usuario = Auth::user();
+
+        $empresa_id     = $usuario->empresa_id;
+        $punto_venta_id = $usuario->punto_venta_id;
+        $sucursal_id    = $usuario->sucursal_id;
+        $empresa        = $usuario->empresa;
+
+        $factura = Factura::find($factura_id);
+
+        if($factura){
+            if($factura->empresa_id == $empresa_id){
+
+                $xml           = $factura['productos_xml'];
+                $archivoXML    = new SimpleXMLElement($xml);
+                $cabeza        = (array) $archivoXML;
+                $cuf           = (string)$cabeza['cabecera']->cuf;
+                $numeroFactura = (string)$cabeza['cabecera']->numeroFactura;
+
+                $textoQR = $factura->empresa->url_verifica."?nit".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=1";
+
+                // Genera la ruta temporal para guardar la imagen del código QR
+                $rutaImagenQR = storage_path('app/public/qr_code.png');
+                $urlImagenQR = asset(str_replace(storage_path('app/public'), 'storage', $rutaImagenQR));
+                // Genera el código QR y guarda la imagen en la ruta temporal
+                QrCode::generate($textoQR, $rutaImagenQR);
+                // QrCode::format('png')->generate($textoQR, $rutaImagenQR);
+
+                return view('factura.pdf.imprimeFactura')->with(compact('factura', 'archivoXML', 'cabeza', 'empresa'));
+
+            }else{
+                throw new AuthorizationException();
+            }
         }else{
-
+            throw new NotFoundHttpException();
         }
 
-        return $data;
     }
-
 
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
     public function pruebas(){

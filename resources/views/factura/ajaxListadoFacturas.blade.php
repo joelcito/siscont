@@ -28,7 +28,8 @@
     <tbody class="text-gray-600 fw-semibold">
         @forelse ( $facturas as $fac)
             <tr>
-                <td>{{ $fac->cliente->nombres." ".$fac->cliente->ap_paterno." ".$fac->cliente->ap_materno }}</td>
+                {{-- <td>{{ $fac->cliente->nombres." ".$fac->cliente->ap_paterno." ".$fac->cliente->ap_materno }}</td> --}}
+                <td>{{ $fac->nombres." ".$fac->ap_paterno." ".$fac->ap_materno }}</td>
                 <td>{{ $fac->fecha }}</td>
                 <td>{{ $fac->total }}</td>
                 <td>
@@ -75,7 +76,7 @@
                     @endif
 
                     <a  class="btn btn-primary btn-icon btn-sm" title="Imprime Factura oficio" href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
-                    <a  class="btn btn-white btn-icon btn-sm" title="Imprime Factura rollo" href="{{ url('factura/imprimeFactura', [$fac->factura_id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
+                    <a  class="btn btn-white btn-icon btn-sm" title="Imprime Factura rollo" href="{{ url('factura/imprimeFactura', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
 
                     @if (is_null($fac->estado))
                         @if ($fac->tipo_factura == "offline" && is_null($fac->codigo_descripcion) )

@@ -161,11 +161,10 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/formularioFacturacionTc', [FacturaController::class, 'formularioFacturacionTc']);
         Route::post('/emitirFacturaTc', [FacturaController::class, 'emitirFacturaTc']);
 
-
         Route::get('/generaPdfFacturaNewCv/{factura_id}', [FacturaController::class, 'generaPdfFacturaNewCv']);
+        Route::get('/imprimeFactura/{factura_id}', [FacturaController::class, 'imprimeFactura']);
 
-
-        Route::post('/buscarFactura', [FacturaController::class, 'buscarFactura']);
+        // Route::post('/buscarFactura', [FacturaController::class, 'buscarFactura']);
 
 
         // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);

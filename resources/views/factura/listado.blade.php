@@ -155,26 +155,26 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <label class="fw-semibold fs-6 mb-2">No. Factura</label>
-                                    <input type="number" class="form-control form-control-sm">
+                                    <input type="number" class="form-control form-control-sm" name="buscar_nro_factura" id="buscar_nro_factura">
                                 </div>
                                 <div class="col-md-2">
                                     <label class="fw-semibold fs-6 mb-2">C.I. Persona</label>
-                                    <input type="number" class="form-control form-control-sm">
+                                    <input type="number" class="form-control form-control-sm" name="buscar_nro_cedula" id="buscar_nro_cedula">
                                 </div>
                                 <div class="col-md-2">
                                     <label class="fw-semibold fs-6 mb-2">NIT</label>
-                                    <input type="number" class="form-control form-control-sm">
+                                    <input type="number" class="form-control form-control-sm" name="buscar_nit" id="buscar_nit">
                                 </div>
                                 <div class="col-md-2">
                                     <label class="fw-semibold fs-6 mb-2">Fecha Inicio</label>
-                                    <input type="date" class="form-control form-control-sm">
+                                    <input type="date" class="form-control form-control-sm" name="buscar_fecha_inicio" id="buscar_fecha_inicio">
                                 </div>
                                 <div class="col-md-2">
                                     <label class="fw-semibold fs-6 mb-2">Fecha Fin</label>
-                                    <input type="date" class="form-control form-control-sm">
+                                    <input type="date" class="form-control form-control-sm" name="buscar_fecha_fin" id="buscar_fecha_fin">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success btn-sm w-100 mt-8" onclick="buscarFactura()">BUSCAR</button>
+                                    <button type="button" class="btn btn-success btn-sm w-100 mt-8" onclick="ajaxListado()">BUSCAR</button>
                                 </div>
                             </div>
                         </form>
@@ -273,7 +273,7 @@
         // }
 
         function ajaxListado(){
-            let datos = {}
+            let datos = $('#formulario-busqueda-factura').serializeArray();
             $.ajax({
                     url: "{{ url('factura/ajaxListadoFacturas') }}",
                     method: "POST",
@@ -474,6 +474,7 @@
 
 
         }
+
    </script>
 @endsection
 

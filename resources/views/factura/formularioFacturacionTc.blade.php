@@ -722,8 +722,6 @@
             }
         }
 
-
-
         function emitirFactura(){
 
             console.log(arrayProductoCar);
@@ -758,8 +756,14 @@
                                     title: 'Excelente!',
                                     text : 'LA FACTURA FUE VALIDADA',
                                     timer: 3000
+                                }).then(() => {
+                                    if(data.numero != null && data.numero != ''){
+                                        window.open("{{ url('factura/generaPdfFacturaNewCv')}}/"+data.numero, "_blank", "width=800,height=600");
+                                        window.location.reload();
+                                    }else{
+                                        window.location.href = "{{ url('factura/listado')}}"
+                                    }
                                 })
-                                window.location.href = "{{ url('factura/listado')}}"
                             }else if(data.estado === "error_email"){
                                 Swal.fire({
                                     icon : 'error',
@@ -829,160 +833,138 @@
         }
 
         function verificarRadioSeleccionado() {
-        var valorSeleccionado = $('input[name="uso_cafc"]:checked').val();
-        if (valorSeleccionado === 'No') {
+            var valorSeleccionado = $('input[name="uso_cafc"]:checked').val();
+            if (valorSeleccionado === 'No') {
 
-            $('#numero_fac_cafc').hide('toggle');
-            $('#numero_factura_cafc').val(0)
+                $('#numero_fac_cafc').hide('toggle');
+                $('#numero_factura_cafc').val(0)
 
-        } else if (valorSeleccionado === 'Si') {
-            $.ajax({
-                url: "{{ url('factura/sacaNumeroCafcUltimo') }}",
-                method: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    if(data.estado === "success"){
-                        $("#numero_factura_cafc").val(data.numero);
-                        $('#numero_fac_cafc').show('toggle');
-                    }else{
-                        Swal.fire({
-                            icon:   'error',
-                            title:  'Error!',
-                            text:   "Algo fallo"
-                        })
+            } else if (valorSeleccionado === 'Si') {
+                $.ajax({
+                    url: "{{ url('factura/sacaNumeroCafcUltimo') }}",
+                    method: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.estado === "success"){
+                            $("#numero_factura_cafc").val(data.numero);
+                            $('#numero_fac_cafc').show('toggle');
+                        }else{
+                            Swal.fire({
+                                icon:   'error',
+                                title:  'Error!',
+                                text:   "Algo fallo"
+                            })
+                        }
                     }
-                }
-            })
-        }
-    }
-
-    function eliminarItem(id){
-
-        var fila = table.row("#producto-" + id);
-        var cantidadCell = $(fila.node()).find('.cantidad');
-        var cantidadActual = parseInt(cantidadCell.text());
-
-        // Reducir la cantidad en 1
-        var nuevaCantidad = cantidadActual - 1;
-        cantidadCell.text(nuevaCantidad);
-
-        if (nuevaCantidad <= 0) {
-            // Si la cantidad es 0 o menos, elimina la fila de la tabla
-            table.row(fila).remove().draw(false);
-
-            // Elimina el producto del array
-            arrayProductoCar = arrayProductoCar.filter(s => s.servicio_id !== id);
-        } else {
-            // Si la cantidad sigue siendo mayor que 0, actualiza el total y el subTotal
-            var precio = parseFloat($(fila.node()).find('.total').text()) / cantidadActual;
-            var nuevoTotal = nuevaCantidad * precio;
-            $(fila.node()).find('.total').text(nuevoTotal.toFixed(2));
-
-            var subTotalCell = $(fila.node()).find('.subTotal');
-            var descuento = parseFloat($('#descuento_' + id).val());
-            var nuevoSubTotal = nuevoTotal - descuento;
-            subTotalCell.text(nuevoSubTotal.toFixed(2));
-
-            // Actualiza los valores en el array
-            let servicio = arrayProductoCar.find(s => s.servicio_id === id);
-            if (servicio) {
-                servicio.cantidad = nuevaCantidad;
-                servicio.total = nuevoTotal;
-                servicio.subTotal = nuevoSubTotal;
+                })
             }
         }
 
-        // Actualizar el monto total
-        let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
-        let descuentoAdicional = $('#descuento_adicional').val();
-        $('#monto_total').val(parseFloat(sumaTotal) - parseFloat(descuentoAdicional));
+        function eliminarItem(id){
 
-    }
+            var fila = table.row("#producto-" + id);
+            var cantidadCell = $(fila.node()).find('.cantidad');
+            var cantidadActual = parseInt(cantidadCell.text());
 
-    function mostrarCarritoVentas(){
-        $('#tabla_detalles').toggle('show')
-    }
+            // Reducir la cantidad en 1
+            var nuevaCantidad = cantidadActual - 1;
+            cantidadCell.text(nuevaCantidad);
 
-    function calcularPrecioTotal(){
-        let precio = $('#precio_venta').val();
-        let cantidad = $('#cantidad_venta').val();
-        let total = parseFloat(precio) * parseFloat(cantidad);
-        $('#total_venta').val(total)
-    }
+            if (nuevaCantidad <= 0) {
+                // Si la cantidad es 0 o menos, elimina la fila de la tabla
+                table.row(fila).remove().draw(false);
 
-    function modalAgregarCliente(){
-        $('#modal_new_cliente').modal('show');
-    }
+                // Elimina el producto del array
+                arrayProductoCar = arrayProductoCar.filter(s => s.servicio_id !== id);
+            } else {
+                // Si la cantidad sigue siendo mayor que 0, actualiza el total y el subTotal
+                var precio = parseFloat($(fila.node()).find('.total').text()) / cantidadActual;
+                var nuevoTotal = nuevaCantidad * precio;
+                $(fila.node()).find('.total').text(nuevoTotal.toFixed(2));
 
-    function guardarClienteEmpresa(){
-        if($("#formulario_new_cliente_empresa")[0].checkValidity()){
-            let datos = $('#formulario_new_cliente_empresa').serializeArray();
-            $.ajax({
-                url   : "{{ url('empresa/guardarClienteEmpresaEmpresa') }}",
-                method: "POST",
-                data  : datos,
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        Swal.fire({
-                            icon:'success',
-                            title: "EXITO!",
-                            text:  "SE REGISTRO CON EXITO",
-                        })
+                var subTotalCell = $(fila.node()).find('.subTotal');
+                var descuento = parseFloat($('#descuento_' + id).val());
+                var nuevoSubTotal = nuevoTotal - descuento;
+                subTotalCell.text(nuevoSubTotal.toFixed(2));
 
-                        $('#cliente_id_escogido').val(data.cliente);
-
-                        let cedula     = $('#cedula_cliente_new_usuaio_empresa').val();
-                        let nombres    = $('#nombres_cliente_new_usuaio_empresa').val();
-                        let ap_paterno = $('#ap_paterno_cliente_new_usuaio_empresa').val();
-                        let ap_materno = $('#ap_materno_cliente_new_usuaio_empresa').val();
-
-                        let nombreusuario = cedula+" | "+nombres+" | "+ap_paterno+" | "+ap_materno;
-                        $('#nombre_cliente').text(nombreusuario)
-
-                        $('#nit_factura').val($('#nit_cliente_new_usuaio_empresa').val());
-                        $('#razon_factura').val($('#razon_social_cliente_new_usuaio_empresa').val());
-
-                        $('#bloqueDatosFactura').show('toggle');
-
-                        //ajaxListado();
-                    }else if(data.estado === 'error'){
-                        Swal.fire({
-                            icon : 'warning',
-                            title: "ALTO!",
-                            text : data.text,
-                        })
-                    }else{
-
-                    }
-                    $('#modal_new_cliente').modal('hide');
+                // Actualiza los valores en el array
+                let servicio = arrayProductoCar.find(s => s.servicio_id === id);
+                if (servicio) {
+                    servicio.cantidad = nuevaCantidad;
+                    servicio.total = nuevoTotal;
+                    servicio.subTotal = nuevoSubTotal;
                 }
-            })
-        }else{
-            $("#formulario_new_cliente_empresa")[0].reportValidity();
-        }
-    }
-
-    function buscarFactura(){
-        let datos = $('#formulario-busqueda-factura').serializeArray();
-        $.ajax({
-            url     : "{{ url('factura/buscarFactura') }}",
-            method  : "POST",
-            dataType: 'json',
-            data    : datos
-            success: function (data) {
-                // if(data.estado === "success"){
-                //     $("#numero_factura_cafc").val(data.numero);
-                //     $('#numero_fac_cafc').show('toggle');
-                // }else{
-                //     Swal.fire({
-                //         icon:   'error',
-                //         title:  'Error!',
-                //         text:   "Algo fallo"
-                //     })
-                // }
             }
-        })
-    }
+
+            // Actualizar el monto total
+            let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+            let descuentoAdicional = $('#descuento_adicional').val();
+            $('#monto_total').val(parseFloat(sumaTotal) - parseFloat(descuentoAdicional));
+
+        }
+
+        function mostrarCarritoVentas(){
+            $('#tabla_detalles').toggle('show')
+        }
+
+        function calcularPrecioTotal(){
+            let precio = $('#precio_venta').val();
+            let cantidad = $('#cantidad_venta').val();
+            let total = parseFloat(precio) * parseFloat(cantidad);
+            $('#total_venta').val(total)
+        }
+
+        function modalAgregarCliente(){
+            $('#modal_new_cliente').modal('show');
+        }
+
+        function guardarClienteEmpresa(){
+            if($("#formulario_new_cliente_empresa")[0].checkValidity()){
+                let datos = $('#formulario_new_cliente_empresa').serializeArray();
+                $.ajax({
+                    url   : "{{ url('empresa/guardarClienteEmpresaEmpresa') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+
+                            $('#cliente_id_escogido').val(data.cliente);
+
+                            let cedula     = $('#cedula_cliente_new_usuaio_empresa').val();
+                            let nombres    = $('#nombres_cliente_new_usuaio_empresa').val();
+                            let ap_paterno = $('#ap_paterno_cliente_new_usuaio_empresa').val();
+                            let ap_materno = $('#ap_materno_cliente_new_usuaio_empresa').val();
+
+                            let nombreusuario = cedula+" | "+nombres+" | "+ap_paterno+" | "+ap_materno;
+                            $('#nombre_cliente').text(nombreusuario)
+
+                            $('#nit_factura').val($('#nit_cliente_new_usuaio_empresa').val());
+                            $('#razon_factura').val($('#razon_social_cliente_new_usuaio_empresa').val());
+
+                            $('#bloqueDatosFactura').show('toggle');
+
+                            //ajaxListado();
+                        }else if(data.estado === 'error'){
+                            Swal.fire({
+                                icon : 'warning',
+                                title: "ALTO!",
+                                text : data.text,
+                            })
+                        }else{
+
+                        }
+                        $('#modal_new_cliente').modal('hide');
+                    }
+                })
+            }else{
+                $("#formulario_new_cliente_empresa")[0].reportValidity();
+            }
+        }
 
    </script>
 @endsection
