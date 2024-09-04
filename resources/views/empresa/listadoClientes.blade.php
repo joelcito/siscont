@@ -47,8 +47,8 @@
                                 <input type="number" class="form-control fw-bold form-control-solid" name="cedula_cliente_new_usuaio_empresa" id="cedula_cliente_new_usuaio_empresa" required>
                             </div>
                             <div class="col-md-2">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Complemento</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="complemento_cliente_new_usuaio_empresa" id="complemento_cliente_new_usuaio_empresa" required>
+                                <label class="fs-6 fw-semibold form-label mb-2">Complemento</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="complemento_cliente_new_usuaio_empresa" id="complemento_cliente_new_usuaio_empresa">
                             </div>
                             <div class="col-md-2">
                                 <label class="fs-6 fw-semibold form-label mb-2">Nit</label>

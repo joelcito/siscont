@@ -62,7 +62,6 @@ Route::middleware(['auth', 'one.session'])->group(function () {
 
         Route::post('/crearCuis', [EmpresaController::class, 'crearCuis']);
 
-        // Route::post('/ajaxListadoUsuarioEmpresa/{empresa_id}', [EmpresaController::class, 'ajaxListadoUsuarioEmpresa']);
         Route::post('/ajaxListadoUsuarioEmpresa', [EmpresaController::class, 'ajaxListadoUsuarioEmpresa']);
         Route::post('/guardarUsuarioEmpresa', [EmpresaController::class, 'guardarUsuarioEmpresa']);
 
@@ -84,6 +83,9 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/listadoProductoServicioEmpresa', [EmpresaController::class, 'listadoProductoServicioEmpresa']);
         Route::post('/ajaxListadoProductoServicioEmpresa', [EmpresaController::class, 'ajaxListadoProductoServicioEmpresa']);
         Route::post('/guardarProductoServicioEmpresa', [EmpresaController::class, 'guardarProductoServicioEmpresa']);
+
+        Route::post('/ajaxListadoAsignacionDocumentosSectores', [EmpresaController::class, 'ajaxListadoAsignacionDocumentosSectores']);
+        Route::post('/guardarAsignacionDocumentoSector', [EmpresaController::class, 'guardarAsignacionDocumentoSector']);
 
     });
 

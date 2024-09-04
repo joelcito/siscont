@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Cuis;
 use App\Models\Empresa;
+use App\Models\EmpresaDocumentoSector;
 use App\Models\Plan;
 use App\Models\PuntoVenta;
 use App\Models\Rol;
@@ -1083,6 +1084,7 @@ class EmpresaController extends Controller
             $cliente->ap_paterno         = $request->input('ap_paterno_cliente_new_usuaio_empresa');
             $cliente->ap_materno         = $request->input('ap_materno_cliente_new_usuaio_empresa');
             $cliente->cedula             = $request->input('cedula_cliente_new_usuaio_empresa');
+            $cliente->complemento        = $request->input('complemento_cliente_new_usuaio_empresa');
             $cliente->nit                = $request->input('nit_cliente_new_usuaio_empresa');
             $cliente->razon_social       = $request->input('razon_social_cliente_new_usuaio_empresa');
             $cliente->correo             = $request->input('correo_cliente_new_usuaio_empresa');
@@ -1234,6 +1236,43 @@ class EmpresaController extends Controller
                 $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
                 $data['estado'] = 'error';
             }
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function ajaxListadoAsignacionDocumentosSectores(Request $request){
+
+        if($request->ajax()){
+
+            $empresa_id = $request->input('empresa');
+
+            $documentos_sectores_asignados = EmpresaDocumentoSector::where('empresa_id', $empresa_id)
+                                                                    ->get();
+
+            $data['listado'] = view('empresa.ajaxListadoAsignacionDocumentosSectores')->with(compact('documentos_sectores_asignados'))->render();
+            $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function guardarAsignacionDocumentoSector(Request $request){
+        if($request->ajax()){
+
+            $empresaDocumentoSEctor                           = new EmpresaDocumentoSector();
+            $empresaDocumentoSEctor->usuario_creador_id       = Auth::user()->id;
+            $empresaDocumentoSEctor->empresa_id               = $request->input('new_asignacion_empresa_id');
+            $empresaDocumentoSEctor->siat_documento_sector_id = $request->input('new_asignacion_documento_sector');
+            $empresaDocumentoSEctor->save();
+
+            $data['estado'] = 'success';
 
         }else{
             $data['text']   = 'No existe';
