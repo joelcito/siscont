@@ -936,7 +936,7 @@
                                     <!--end:::Tab pane-->
 
                                     <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade show active" id="documentos_sectores" role="tabpanel">
+                                    <div class="tab-pane fade show" id="documentos_sectores" role="tabpanel">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div id="tablas_documentos_sectores">

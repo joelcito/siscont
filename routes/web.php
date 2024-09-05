@@ -9,6 +9,7 @@ use App\Http\Controllers\RegistroCompraController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SincronizacionSiatController;
 use App\Http\Controllers\SuscripcionController;
+use App\Http\Controllers\UrlApiServicioSiatController;
 use App\Models\RegistroCompra;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -197,6 +198,14 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/agregarPlan', [PlanController::class, 'agregarPlan']);
         Route::post('/ajaxListado', [PlanController::class, 'ajaxListado']);
 
+
+    });
+
+    Route::prefix('/urlApiServicoSiat')->group(function(){
+
+        Route::get('/listado', [UrlApiServicioSiatController::class, 'listado']);
+        Route::post('/agregarApiServicio', [UrlApiServicioSiatController::class, 'agregarApiServicio']);
+        Route::post('/ajaxListado', [UrlApiServicioSiatController::class, 'ajaxListado']);
 
     });
 

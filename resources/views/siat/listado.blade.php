@@ -129,48 +129,6 @@
                                                     <span class="path2"></span>
                                                 </i>Evento Significativo</a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                                <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>Activity</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                                <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>Activity</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                                <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>Activity</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                                <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>Activity</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                                <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>Activity</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
-                                                <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>Activity</a>
-                                            </li>
                                             <!--end:::Tab item-->
                                         </ul>
                                         <!--end:::Tabs-->

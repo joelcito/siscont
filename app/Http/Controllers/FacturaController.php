@@ -30,7 +30,7 @@ use PDF;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FacturaController extends Controller
-{
+{   
     /**
      * Display a listing of the resource.
      */
