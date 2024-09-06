@@ -30,4 +30,9 @@ class Factura extends Model
         return $this->belongsTo('App\Models\Cufd', 'cufd_id');
     }
 
+    public function siat_tipo_documento_sector(){
+        return $this->belongsTo('App\Models\SiatTipoDocumentoSector', 'siat_documento_sector_id');
+    }
+
+
 }

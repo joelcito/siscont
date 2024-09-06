@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SiatDocumentoSector extends Model
 {
     use HasFactory, SoftDeletes;
+
 }

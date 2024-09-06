@@ -10,7 +10,7 @@
     <!--begin::Modal - Adjust Balance-->
     <div class="modal fade" id="modal_new_empresa" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-850px">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
             <!--begin::Modal content-->
             <div class="modal-content">
                 <!--begin::Modal header-->
@@ -29,54 +29,54 @@
                 </div>
                 <!--end::Modal header-->
                 <!--begin::Modal body-->
-                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <div class="modal-body scroll-y mx-5 mx-xlg-15 my-7">
                     <!--begin::Form-->
-                    <form id="formulario_empresa" class="form" action="#" enctype="multipart/form-data">
+                    <form id="formulario_empresa" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_empresa" id="nombre_empresa">
-                                <input type="hidden" name="empresa_id" id="empresa_id" value="0">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre Empresa</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="nombre_empresa" id="nombre_empresa" required>
+                                <input type="text" name="empresa_id" id="empresa_id" value="0">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nit Empresa</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="nit_empresa" id="nit_empresa" required>
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Nit Empresa</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nit_empresa" id="nit_empresa">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Razon Social</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="razon_social" id="razon_social" required>
                             </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Razon Social</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="razon_social" id="razon_social">
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Municipio</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="municipio" id="municipio" required>
                             </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Tipo Empresa</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
-                                    <option></option>
-                                    <option value="Proveedor">Proveedor</option>
-                                    <option value="Cliente">Cliente</option>
-                                </select>
+                            <div class="col-md-2">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid form-control-sm" name="celular" id="celular" required>
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente" id="codigo_ambiente" required>
                                     <option></option>
                                     <option value="1">Produccion</option>
                                     <option value="2">Desarrollo</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad" id="codigo_modalidad">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Modalidad</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad" id="codigo_modalidad" required>
                                     <option></option>
                                     <option value="1">Electronica en Linea</option>
                                     <option value="2">Computarizada en linea</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Codigo de Sistema</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="codigo_sistema" id="codigo_sistema">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Codigo de Sistema</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="codigo_sistema" id="codigo_sistema" required>
                             </div>
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
                                 <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="documento_sectores" id="documento_sectores">
                                     <option></option>
@@ -84,15 +84,19 @@
                                         <option value="2">{{ $ds->descripcion }}</option>
                                     @endforeach
                                 </select>
+                            </div> --}}
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Codigo de CAFC</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="codigo_cafc" id="codigo_cafc">
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Api Token</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="api_token" id="api_token">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Api Token</label>
+                                <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="api_token" id="api_token" required>
                             </div>
                         </div>
-                        <div class="row mt-5">
+                        {{-- <div class="row mt-5">
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Url Codigos</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_codigos" id="url_fac_codigos">
@@ -109,27 +113,27 @@
                                 <label class="fs-6 fw-semibold form-label mb-2">Url Operaciones</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="url_fac_operaciones" id="url_fac_operaciones">
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mt-5">
                             <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2">Archivo .p12</label>
-                                <input type="file" class="form-control fw-bold form-control-solid" name="fila_archivo_p12" id="fila_archivo_p12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Logo</label>
+                                <input type="file" class="form-control fw-bold form-control-solid form-control-sm" name="logo_empresa" id="logo_empresa" accept="image/*">
                             </div>
                             <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2">Contraseña</label>
-                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Archivo .P12</label>
+                                <input type="file" class="form-control fw-bold form-control-solid form-control-sm" name="fila_archivo_p12" id="fila_archivo_p12">
                             </div>
                             <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2">Archivo</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="existe_archivo_p12" id="existe_archivo_p12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Contraseña archivo .P12</label>
+                                <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12">
                             </div>
                         </div>
                     </form>
                     <!--end::Form-->
                     <div class="row mt-5">
                         <div class="col-md-12">
-                            <button class="btn btn-primary" onclick="guardarEmpresa()">Guardar </button>
+                            <button class="btn btn-primary btn-sm w-100" onclick="guardarEmpresa()">Guardar </button>
                         </div>
                     </div>
                 </div>
@@ -1085,7 +1089,7 @@
                 })
 
             }else{
-                $("#formularioTramsfereciaFactura")[0].reportValidity();
+                $("#formulario_empresa")[0].reportValidity();
             }
         }
 

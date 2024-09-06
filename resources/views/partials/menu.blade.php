@@ -16,6 +16,11 @@
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
 
+                {{-- @dd(Auth::user()->empresa()->empresasDocumentos()) --}}
+                {{-- @dd(Auth::user()->empresa()) --}}
+
+                {{-- @dd(Auth::user()->empresa->empresasDocumentos[1]->siat_tipo_documento_sector->codigo_clasificador); --}}
+
 
                 @if (Auth::user()->isAdmin())
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -189,62 +194,91 @@
                         <!--end:Menu link-->
                         <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            {{-- <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="pages/user-profile/overview.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Empresa</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div> --}}
-                            <!--end:Menu item-->
-                            @if (Auth::user()->isFacturacionCompraVenta())
-                                <!--begin:Menu item-->
+                            {{-- @if (Auth::user()->isFacturacionCompraVenta())
                                 <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    {{-- <a class="menu-link" href="{{ url('factura/formularioFacturacion') }}"> --}}
                                     <a class="menu-link" href="{{ url('factura/formularioFacturacionCv') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Facturacion Compra Venta</span>
                                     </a>
-                                    <!--end:Menu link-->
                                 </div>
-                                <!--end:Menu item-->
                             @endif
 
                             @if (Auth::user()->isFacturacionTasaCero())
-                                <!--begin:Menu item-->
                                 <div class="menu-item">
-                                    <!--begin:Menu link-->
                                     <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Facturacion Tasa Cero</span>
                                     </a>
-                                    <!--end:Menu link-->
                                 </div>
-                                <!--end:Menu item-->
+                            @endif --}}
 
-                                {{-- <!--begin:Menu item-->
+                            @forelse (Auth::user()->empresa->empresasDocumentos as $key => $eds)
+                                @if ($eds->siat_tipo_documento_sector->codigo_clasificador == '1')
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ url('factura/formularioFacturacionCv') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Facturacion Compra Venta</span>
+                                        </a>
+                                    </div>
+                                @elseif($eds->siat_tipo_documento_sector->codigo_clasificador == '8')
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Facturacion Tasa Cero</span>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="#">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Sin asignaciones!</span>
+                                        </a>
+                                    </div>
+                                @endif
+                            @empty
                                 <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
+                                    <a class="menu-link" href="#">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Facturacion Tasa Cero Developen</span>
+                                        <span class="menu-title">Sin documentos !</span>
                                     </a>
-                                    <!--end:Menu link-->
                                 </div>
-                                <!--end:Menu item--> --}}
-                            @endif
+                            @endforelse
 
+                            {{-- @foreach ( Auth::user()->empresa->empresasDocumentos as $key => $eds)
+                                @if ($eds->siat_tipo_documento_sector->codigo_clasificador == '1')
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ url('factura/formularioFacturacionCv') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Facturacion Compra Venta</span>
+                                        </a>
+                                    </div>
+                                @elseif($eds->siat_tipo_documento_sector->codigo_clasificador == '8')
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Facturacion Tasa Cero</span>
+                                        </a>
+                                    </div>
+                                @else
+
+                                @endif
+                            @endforeach --}}
 
                             <!--begin:Menu item-->
                             <div class="menu-item">

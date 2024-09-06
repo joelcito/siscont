@@ -16,4 +16,50 @@ class UrlApiServicioSiat extends Model
         return $this->belongsTo('App\Models\SiatTipoDocumentoSector', 'siat_documento_sector_id');
     }
 
+
+    // public function getUrlFacturaCodigos($ambiente, $modalidad, $documentos_sector){
+
+    //     return $this->where('ambiente', $ambiente)
+    //                 ->where('modalidad', $modalidad)
+    //                 ->where('nombre', 'url_facturacionCodigos')
+    //                 ->where('siat_documento_sector_id', $documentos_sector)
+    //                 ->first();
+
+    // }
+
+    public function getUrlSincronizacion($ambiente, $modalidad){
+        return $this->where('ambiente', $ambiente)
+                    ->where('modalidad', $modalidad)
+                    ->where('nombre', 'url_facturacionSincronizacion')
+                    ->first();
+    }
+
+    public function getUrlCodigos($ambiente, $modalidad){
+        return $this->where('ambiente', $ambiente)
+                    ->where('modalidad', $modalidad)
+                    ->where('nombre', 'url_facturacionCodigos')
+                    ->first();
+    }
+
+    public function getUrlOperaciones($ambiente, $modalidad){
+        return $this->where('ambiente', $ambiente)
+                    ->where('modalidad', $modalidad)
+                    ->where('nombre', 'url_facturacion_operaciones')
+                    ->first();
+    }
+
+    public function getUrlFacturacionCompraVentaElctronica($ambiente, $modalidad){
+        return $this->where('ambiente', $ambiente)
+                    ->where('modalidad', $modalidad)
+                    ->where('nombre', 'url_servicio_facturacion_compra_venta')
+                    ->first();
+    }
+
+    public function getUrlFacturacionTasaCeroElectronica($ambiente, $modalidad){
+        return $this->where('ambiente', $ambiente)
+                    ->where('modalidad', $modalidad)
+                    ->where('nombre', 'url_servicio_facturacion_compra_venta_tasa_cero_electronica')
+                    ->first();
+    }
+
 }

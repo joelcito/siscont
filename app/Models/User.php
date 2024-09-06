@@ -73,4 +73,5 @@ class User extends Authenticatable
         $empresa = $this->empresa;
         return $empresa->codigo_documento_sector == '8' ? true : false;
     }
+
 }

@@ -209,56 +209,11 @@
     <!--end::Modal - New Card-->
 
     <!--end::Modal - New Card-->
-    <div class="modal fade" id="modal_sincronizar_productos_servicios" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-500px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Sincronizar Lista Productos Servicios</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_sincronizar_actividades_economicas">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
-                                    <option></option>
-                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
-                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
-                                </select>
-                                <input type="hidden" name="punto_venta_id_sincronizar_actividad" id="punto_venta_id_sincronizar_actividad">
-                                <input type="hidden" name="sucuarsal_id_sincronizar_actividad" id="sucuarsal_id_sincronizar_actividad">
-                                <input type="hidden" name="empresa_id_sincronizar_actividad" id="empresa_id_sincronizar_actividad" value="{{ $empresa->id }}">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="cancelarSincronizacion()">Cancelar</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="sincronizarActividades()">Sincronizar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
-
-    <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_sincronizar_actividad" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-500px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Sincronizar Actividades Economimcas</h2>
+                    <h2 class="fw-bold">Formulario Sincronizacion Actividades Economicas</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
@@ -445,11 +400,11 @@
                         <div class="row mt-5">
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Usuario / Correo</label>
-                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required>
+                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required autocomplete="username">
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
-                                <input type="password" class="form-control fw-bold form-control-solid" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa" required>
+                                <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa"  autocomplete="current-password" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Rol</label>
@@ -510,7 +465,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" disabled>
                                     <option></option>
                                     <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
                                     <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
@@ -774,7 +729,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-5">
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
                                             <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold form-control-sm" name="codigo_ambiente" id="codigo_ambiente" required>
                                                 <option></option>
@@ -782,7 +737,7 @@
                                                 <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
                                             <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold form-control-sm" name="codigo_modalidad" id="codigo_modalidad" required>
                                                 <option></option>
@@ -790,11 +745,11 @@
                                                 <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en linea</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Codigo de Sistema</label>
                                             <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="codigo_sistema" id="codigo_sistema" value="{{ $empresa->codigo_sistema }}" required>
                                         </div>
-                                        <div class="col-md-3">
+                                        {{-- <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
                                             <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold form-control-sm" name="documento_sectores" id="documento_sectores" required>
                                                 <option></option>
@@ -802,7 +757,7 @@
                                                     <option value="{{ $ds->codigo_clasificador }}" {{ ($ds->codigo_clasificador == $empresa->codigo_documento_sector)? "selected" : "" }}>{{ $ds->descripcion }}</option>
                                                 @endforeach
                                             </select>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Codigo de CAFC</label>
                                             <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="codigo_cafc" id="codigo_cafc" value="{{ $empresa->cafc }}">
@@ -811,10 +766,10 @@
                                     <div class="row mt-5">
                                         <div class="col-md-12">
                                             <label class="fs-6 fw-semibold form-label mb-2">Api Token</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="api_token" id="api_token" value="{{ $empresa->api_token }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="api_token" id="api_token" value="{{ $empresa->api_token }}" required autocomplete="username">
                                         </div>
                                     </div>
-                                    <div class="row mt-5">
+                                    {{-- <div class="row mt-5">
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Url Des. Codigos</label>
                                             <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="url_fac_codigos" id="url_fac_codigos" value="{{ $empresa->url_facturacionCodigos }}" required>
@@ -831,7 +786,7 @@
                                             <label class="fs-6 fw-semibold form-label mb-2">Url Des. Operaciones</label>
                                             <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="url_fac_operaciones" id="url_fac_operaciones" value="{{ $empresa->url_facturacion_operaciones }}" required>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="row mt-5">
                                         <div class="col-md-4" align="center">
                                             <div style="height: 180px; width: 180px;">
@@ -857,7 +812,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="fs-6 fw-semibold form-label mb-2">Contraseña archivo .P12</label>
-                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12">
+                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12" autocomplete="current-password">
                                         </div>
                                     </div>
 
@@ -1253,7 +1208,7 @@
                                         icon : 'error',
                                         title: "SE GENERO UN ERROR!",
                                         text : JSON.stringify(data.msg),
-                                        timer: 10000
+                                        timer: 100000
                                     })
                                 }
                                 $('#modal_genera_cuis').modal('hide')
@@ -1398,14 +1353,12 @@
                             $('#modal_actividades_economicas').modal('show');
                             $('#tabla_activiades_economicas').html(data.listado)
                             // location.reload();
-                        }else{
-                            // console.log(data, data.detalle.mensajesList)
-                            // Swal.fire({
-                            //     icon:'error',
-                            //     title: data.detalle.codigoDescripcion,
-                            //     text:  JSON.stringify(data.detalle.mensajesList),
-                            //     // timer:1500
-                            // })
+                        }else if(data.estado === 'error'){
+                            Swal.fire({
+                                icon:'error',
+                                title: "ERROR!",
+                                text:  JSON.stringify(data.text),
+                            })
                         }
                     }
                 })
@@ -1532,7 +1485,18 @@
                 },
                 success: function (data) {
                     if(data.estado === 'success'){
+                        Swal.fire({
+                            icon : 'success',
+                            title: "Exito!",
+                            text : JSON.stringify(data.text),
+                        })
                         $('#tabla_lista_producto_servicios').html(data.listado)
+                    }else{
+                        Swal.fire({
+                            icon : 'error',
+                            title: "Error!",
+                            text : JSON.stringify(data.text),
+                        })
                     }
                 }
             })
@@ -1558,7 +1522,7 @@
                         Swal.fire({
                             icon : 'error',
                             title: "Error!",
-                            text : data.text,
+                            text : JSON.stringify(data.text),
                         })
                     }
                 }

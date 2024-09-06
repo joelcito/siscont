@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        // dd(Auth::user()->empresa->empresasDocumentos[1]->siat_tipo_documento_sector->codigo_clasificador);
+
+        // dd(Auth::user()->empresa->empresasDocumentos);
+
         return view('home.inicio');
     }
 }

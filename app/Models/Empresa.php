@@ -21,6 +21,15 @@ class Empresa extends Model
 
     }
 
+    public function empresasDocumentos(){
+        return $this->hasMany('App\Models\EmpresaDocumentoSector', 'empresa_id');
+    }
 
+    public function empresasDocumentosTipoSector($documento_sector){
+        return $this->hasMany('App\Models\EmpresaDocumentoSector', 'empresa_id')
+                    ->join('siat_tipo_documento_sectores', 'siat_tipo_documento_sectores.id', '=', 'empresas_documentos_sectores.siat_documento_sector_id')
+                    ->where('siat_tipo_documento_sectores.codigo_clasificador', $documento_sector)
+                    ->first();
+    }
 
 }

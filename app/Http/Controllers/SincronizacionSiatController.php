@@ -14,6 +14,7 @@ use App\Models\SiatTipoMoneda;
 use App\Models\SiatTipoPuntoVenta;
 use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
+use App\Models\UrlApiServicioSiat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -85,10 +86,14 @@ class SincronizacionSiatController extends Controller
                               ->where('codigo_ambiente', $empresa->codigo_ambiente)
                               ->first();
 
+
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizarParametricaTipoDocumentoIdentidad   = json_decode($siat->sincronizarParametricaTipoDocumentoSector(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -142,10 +147,14 @@ class SincronizacionSiatController extends Controller
                               ->where('codigo_ambiente', $empresa->codigo_ambiente)
                               ->first();
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
+
             $siat = app(SiatController::class);
             $sincronizarParametricaTipoDocumentoIdentidad   = json_decode($siat->sincronizarParametricaTipoPuntoVenta(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -208,10 +217,13 @@ class SincronizacionSiatController extends Controller
 
             $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizarUnidadMedida   = json_decode($siat->sincronizarParametricaUnidadMedida(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -275,7 +287,7 @@ class SincronizacionSiatController extends Controller
 
     function sincronizarTipoDocumentoIdentidad(Request $request){
         if($request->ajax()){
-            
+
             $empresa_id = $request->input('empresa_id');
 
             $empresa    = Empresa::find($empresa_id);
@@ -288,10 +300,13 @@ class SincronizacionSiatController extends Controller
 
             $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizacionTipoDocumentoIdentidad   = json_decode($siat->sincronizarParametricaTipoDocumentoIdentidad(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -370,10 +385,13 @@ class SincronizacionSiatController extends Controller
 
             $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizacionTipoMetodoPagos   = json_decode($siat->sincronizarParametricaTipoMetodoPago(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -452,10 +470,13 @@ class SincronizacionSiatController extends Controller
 
             $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizacionTipoMoneda   = json_decode($siat->sincronizarParametricaTipoMoneda(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -534,10 +555,13 @@ class SincronizacionSiatController extends Controller
 
             $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizacionMotivoAnulacion   = json_decode($siat->sincronizarParametricaMotivoAnulacion(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,
@@ -611,10 +635,13 @@ class SincronizacionSiatController extends Controller
 
             $cuis       = $empresa->cuisVigente($sucursal->id, $puntoVenta->id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
             $sincronizacionEventoSignificativo   = json_decode($siat->sincronizarParametricaEventosSignificativos(
                 $empresa->api_token,
-                $empresa->url_facturacionSincronizacion,
+                $UrlSincronizacion->url_servicio,
                 $empresa->codigo_ambiente,
                 $puntoVenta->codigoPuntoVenta,
                 $empresa->codigo_sistema,

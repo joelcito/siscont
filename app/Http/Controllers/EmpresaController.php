@@ -17,6 +17,7 @@ use App\Models\SiatTipoPuntoVenta;
 use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
 use App\Models\Suscripcion;
+use App\Models\UrlApiServicioSiat;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -250,112 +251,123 @@ class EmpresaController extends Controller
             $sucursal    = Sucursal::find($sucursal_id);
             $empresa     = Empresa::find($sucursal->empresa_id);
 
-            $siat = app(SiatController::class);
+             // Obtener la instancia del modelo
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlCodigos         = $urlApiServicioSiat->getUrlCodigos($empresa->codigo_ambiente, $empresa->codigo_modalidad);
 
-            $codigoCuis = json_decode($siat->cuis(
-                $empresa->api_token,
-                $empresa->url_facturacionCodigos,
-                $empresa->codigo_ambiente,
-                $empresa->codigo_modalidad,
-                $punto_venta->codigoPuntoVenta,
-                $empresa->codigo_sistema,
-                $sucursal->codigo_sucursal,
-                $empresa->nit
-            ));
+            if($UrlCodigos){
 
-            // dd(
-            //     // $codigoCuis,
-            //     // $empresa,
-            //     $empresa->api_token,
-            //     $empresa->url_facturacionCodigos,
-            //     $empresa->codigo_ambiente,
-            //     $empresa->codigo_modalidad,
-            //     $punto_venta->codigoPuntoVenta,
-            //     $empresa->codigo_sistema,
-            //     $sucursal->codigo_sucursal,
-            //     $empresa->nit
-            // );
+                $siat = app(SiatController::class);
 
-            if($codigoCuis->estado === "success"){
-                // dd($codigoCuis);
-                // session(['scuis'                => $codigoCuis->resultado->RespuestaCuis->codigo]);
-                // session(['sfechaVigenciaCuis'   => $codigoCuis->resultado->RespuestaCuis->fechaVigencia]);
+                $codigoCuis = json_decode($siat->cuis(
+                    $empresa->api_token,
+                    $UrlCodigos->url_servicio,
+                    $empresa->codigo_ambiente,
+                    $empresa->codigo_modalidad,
+                    $punto_venta->codigoPuntoVenta,
+                    $empresa->codigo_sistema,
+                    $sucursal->codigo_sucursal,
+                    $empresa->nit
+                ));
 
-                if($codigoCuis->resultado->RespuestaCuis->transaccion){
-                    $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
-                    $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
+                // dd(
+                //     // $codigoCuis,
+                //     // $empresa,
+                //     $empresa->api_token,
+                //     $UrlCodigos->url_servicio,
+                //     $empresa->codigo_ambiente,
+                //     $empresa->codigo_modalidad,
+                //     $punto_venta->codigoPuntoVenta,
+                //     $empresa->codigo_sistema,
+                //     $sucursal->codigo_sucursal,
+                //     $empresa->nit
+                // );
 
-                    $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
-                                        ->where('sucursal_id', $sucursal->id)
-                                        ->where('codigo', $codigoCuisGenerado)
-                                        ->first();
+                if($codigoCuis->estado === "success"){
+                    // dd($codigoCuis);
+                    // session(['scuis'                => $codigoCuis->resultado->RespuestaCuis->codigo]);
+                    // session(['sfechaVigenciaCuis'   => $codigoCuis->resultado->RespuestaCuis->fechaVigencia]);
 
-                    if(is_null($cuisSacado)){
-                        $cuis                     = new Cuis();
-                        $cuis->usuario_creador_id = Auth::user()->id;
-                        $cuis->punto_venta_id     = $punto_venta->id;
-                        $cuis->sucursal_id        = $sucursal->id;
-                        $cuis->codigo             = $codigoCuisGenerado;
-                        // $cuis->fechaVigencia      = $fechaVigenciaGenerado;
-                        $cuis->fechaVigencia     = Carbon::parse($fechaVigenciaGenerado)->format('Y-m-d H:i:s');
+                    if($codigoCuis->resultado->RespuestaCuis->transaccion){
+                        $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
+                        $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
 
-                        $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
-                        if($cuis->save()){
-                            $data['text']   = 'Se creo el CUIS con exito';
-                            $data['estado'] = 'success';
+                        $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
+                                            ->where('sucursal_id', $sucursal->id)
+                                            ->where('codigo', $codigoCuisGenerado)
+                                            ->first();
+
+                        if(is_null($cuisSacado)){
+                            $cuis                     = new Cuis();
+                            $cuis->usuario_creador_id = Auth::user()->id;
+                            $cuis->punto_venta_id     = $punto_venta->id;
+                            $cuis->sucursal_id        = $sucursal->id;
+                            $cuis->codigo             = $codigoCuisGenerado;
+                            // $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                            $cuis->fechaVigencia     = Carbon::parse($fechaVigenciaGenerado)->format('Y-m-d H:i:s');
+
+                            $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
+                            if($cuis->save()){
+                                $data['text']   = 'Se creo el CUIS con exito';
+                                $data['estado'] = 'success';
+                            }else{
+                                $data['text']   = 'Error al crear el CUIS';
+                                $data['estado'] = 'error';
+                            }
                         }else{
-                            $data['text']   = 'Error al crear el CUIS';
-                            $data['estado'] = 'error';
+                            $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
+                            $data['estado'] = 'warnig';
                         }
                     }else{
-                        $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
-                        $data['estado'] = 'warnig';
-                    }
-                }else{
-                    if(isset($codigoCuis->resultado->RespuestaCuis->codigo)){
-                        if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980){
-                            $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
-                            $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
+                        if(isset($codigoCuis->resultado->RespuestaCuis->codigo)){
+                            if($codigoCuis->resultado->RespuestaCuis->mensajesList->codigo == 980){
+                                $codigoCuisGenerado    = $codigoCuis->resultado->RespuestaCuis->codigo;
+                                $fechaVigenciaGenerado = $codigoCuis->resultado->RespuestaCuis->fechaVigencia;
 
-                            $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
-                                                ->where('sucursal_id', $sucursal->id)
-                                                ->where('codigo', $codigoCuisGenerado)
-                                                ->first();
+                                $cuisSacado = Cuis::where('punto_venta_id', $punto_venta->id)
+                                                    ->where('sucursal_id', $sucursal->id)
+                                                    ->where('codigo', $codigoCuisGenerado)
+                                                    ->first();
 
-                            if(is_null($cuisSacado)){
-                                $cuis                     = new Cuis();
-                                $cuis->usuario_creador_id = Auth::user()->id;
-                                $cuis->punto_venta_id     = $punto_venta->id;
-                                $cuis->sucursal_id        = $sucursal->id;
-                                $cuis->codigo             = $codigoCuisGenerado;
-                                // $cuis->fechaVigencia      = $fechaVigenciaGenerado;
-                                $cuis->fechaVigencia     = Carbon::parse($fechaVigenciaGenerado)->format('Y-m-d H:i:s');
-                                $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
-                                if($cuis->save()){
-                                    $data['text']   = 'Se creo el CUIS con exito';
-                                    $data['estado'] = 'success';
+                                if(is_null($cuisSacado)){
+                                    $cuis                     = new Cuis();
+                                    $cuis->usuario_creador_id = Auth::user()->id;
+                                    $cuis->punto_venta_id     = $punto_venta->id;
+                                    $cuis->sucursal_id        = $sucursal->id;
+                                    $cuis->codigo             = $codigoCuisGenerado;
+                                    // $cuis->fechaVigencia      = $fechaVigenciaGenerado;
+                                    $cuis->fechaVigencia     = Carbon::parse($fechaVigenciaGenerado)->format('Y-m-d H:i:s');
+                                    $cuis->codigo_ambiente    = $empresa->codigo_ambiente;
+                                    if($cuis->save()){
+                                        $data['text']   = 'Se creo el CUIS con exito';
+                                        $data['estado'] = 'success';
+                                    }else{
+                                        $data['text']   = 'Error al crear el CUIS';
+                                        $data['estado'] = 'error';
+                                    }
                                 }else{
-                                    $data['text']   = 'Error al crear el CUIS';
-                                    $data['estado'] = 'error';
+                                    $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
+                                    $data['estado'] = 'warnig';
                                 }
                             }else{
-                                $data['text']   = 'Ya existe un CUIS del punto de Venta y Sucursal';
-                                $data['estado'] = 'warnig';
+                                $data['text']   = 'Error al crear el CUIS';
+                                $data['msg']    = $codigoCuis->resultado->RespuestaCuis;
+                                $data['estado'] = 'error';
                             }
                         }else{
                             $data['text']   = 'Error al crear el CUIS';
                             $data['msg']    = $codigoCuis->resultado->RespuestaCuis;
                             $data['estado'] = 'error';
                         }
-                    }else{
-                        $data['text']   = 'Error al crear el CUIS';
-                        $data['msg']    = $codigoCuis->resultado->RespuestaCuis;
-                        $data['estado'] = 'error';
                     }
+                }else{
+                    $data['text']   = 'Error en la consulta';
+                    $data['msg']    = $codigoCuis;
+                    $data['estado'] = 'error';
                 }
+
             }else{
-                $data['text']   = 'Error en la consulta';
-                $data['msg']    = $codigoCuis;
+                $data['msg']   = 'No existe el servico para la generacion el CUIS';
                 $data['estado'] = 'error';
             }
 
@@ -560,10 +572,13 @@ class EmpresaController extends Controller
                               ->where('codigo_ambiente', $empresa->codigo_ambiente)
                               ->first();
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $siat = app(SiatController::class);
 
             $header           = $empresa->api_token;
-            $url2             = $empresa->url_facturacionSincronizacion;
+            $url2             = $UrlSincronizacion->url_servicio;
             $codigoAmbiente   = $empresa->codigo_ambiente;
             $codigoPuntoVenta = $puntoVenta->codigoPuntoVenta;
             $codigoSistema    = $empresa->codigo_sistema;
@@ -581,6 +596,18 @@ class EmpresaController extends Controller
                 $scuis,
                 $nit
             ));
+
+            // dd(
+            //     $sincronizarActiviades,
+            //     $header,
+            //     $url2,
+            //     $codigoAmbiente,
+            //     $codigoPuntoVenta,
+            //     $codigoSistema,
+            //     $codigoSucursal,
+            //     $scuis,
+            //     $nit
+            // );
 
             if($sincronizarActiviades->estado === "success"){
                 if($sincronizarActiviades->resultado->RespuestaListaActividades->transaccion){
@@ -799,8 +826,11 @@ class EmpresaController extends Controller
 
             $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlSincronizacion($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $header           = $empresa->api_token;
-            $url2             = $empresa->url_facturacionSincronizacion;
+            $url2             = $UrlSincronizacion->url_servicio;
             $codigoAmbiente   = $empresa->codigo_ambiente;
             $codigoPuntoVenta = $puntoVenta->codigoPuntoVenta;
             $codigoSistema    = $empresa->codigo_sistema;
@@ -891,10 +921,6 @@ class EmpresaController extends Controller
                         $listadoProductoServicio->save();
                     }
 
-                    // $empresa_id  = $request->input('empresa_id');
-                    // $punto_venta = $request->input('punto_venta');
-                    // $sucursal    = $request->input('sucursal');
-
                     $siatProductosServicios = SiatProductoServicio::where('empresa_id', $empresa_id)
                                                                     ->where('punto_venta_id',$punto_venta_id)
                                                                     ->where('sucursal_id', $sucursal_id)
@@ -903,8 +929,9 @@ class EmpresaController extends Controller
                     $punto_venta = $punto_venta_id;
                     $sucursal    = $sucursal_id;
 
-                    $data['listado']   = view('empresa.ajaxListadoSiatProductosServicios')->with(compact('siatProductosServicios', 'punto_venta', 'sucursal'))->render();
-                    $data['estado'] = 'success';
+                    $data['listado'] = view('empresa.ajaxListadoSiatProductosServicios')->with(compact('siatProductosServicios', 'punto_venta', 'sucursal'))->render();
+                    $data['estado']  = 'success';
+                    $data['text']    = 'Se Sincronizo con exito!';
 
                 }else{
                     $data['text']    = $sincronizarListaProductosServicios->resultado->RespuestaListaActividades->mensajesList;
@@ -936,8 +963,11 @@ class EmpresaController extends Controller
                                         ->where('codigoPuntoVenta',0)
                                         ->first();
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlOperaciones($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
             $header         = $empresa->api_token;
-            $url4           = $empresa->url_facturacion_operaciones;
+            $url4           = $UrlSincronizacion->url_servicio;
             $codigoAmbiente = $empresa->codigo_ambiente;
             $codigoSistema  = $empresa->codigo_sistema;
             $codigoSucursal = $sucursal->codigo_sucursal;

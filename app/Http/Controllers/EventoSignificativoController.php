@@ -408,6 +408,7 @@ class EventoSignificativoController extends Controller
                                     ->WhereNull('codigo_descripcion')
                                     ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                     ->orderBy('id', 'desc')
+                                    ->limit(500)
                                     ->get();
                 $data['listado'] = view('factura.ajaxMuestraTableFacturaPaquete')->with(compact('facturas'))->render();
                 $data['estado'] = "success";

@@ -30,6 +30,8 @@ return new class extends Migration
             $table->unsignedBigInteger('punto_venta_id')->nullable();
             $table->foreign('cufd_id')->references('id')->on('cufds');
             $table->unsignedBigInteger('cufd_id')->nullable();
+            $table->foreign('siat_documento_sector_id')->references('id')->on('siat_tipo_documento_sectores');
+            $table->unsignedBigInteger('siat_documento_sector_id')->nullable();
 
             $table->dateTime('fecha')->nullable();
             $table->string('nit')->nullable();

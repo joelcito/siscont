@@ -179,6 +179,10 @@
 </head>
 
 <body>
+    @php
+        $documento_sector      = $factura->siat_tipo_documento_sector;
+        $tipo_documento_sector = $documento_sector->codigo_clasificador;
+    @endphp
 
     <table id="table_casa_matriz">
         <thead>
@@ -227,7 +231,7 @@
         <thead>
             <tr>
                 <th style="font-size: 12;">
-                    @if ($empresa->codigo_documento_sector == 8)
+                    @if ($tipo_documento_sector == "8")
                         FACTURA TASA CERO - VENTA DE LIBROS O TRANSPORTE DE CARGA <br> INTERNACIONAL
                     @else
                         FACTURA
@@ -238,7 +242,7 @@
         <tbody>
             <tr>
                 <td style="font-size: 8;">
-                    @if ($empresa->codigo_documento_sector == 8)
+                    @if ($tipo_documento_sector == "8")
                         (Sin Derecho a Crédito Fiscal)
                     @else
                         (Con Derecho a Crédito Fiscal)
@@ -321,7 +325,6 @@
                 $array                 = json_decode($json, true);
                 $listado_detalles      = $array['detalle'];
                 $subTotales            = 0;
-                $tipo_documento_sector = $empresa->codigo_documento_sector;
             @endphp
 
             @foreach ($listado_detalles as $d)
@@ -367,7 +370,7 @@
                 @endif
             @endforeach
             <tr style="align: right;">
-                <td  style="background: white; border: none;" colspan="4" rowspan="{{ ($tipo_documento_sector == 1)? 6 : 5 }}">
+                <td  style="background: white; border: none;" colspan="4" rowspan="{{ ($tipo_documento_sector == "1")? 6 : 5 }}">
                     @php
                         $to = ((float) $archivoXML->cabecera->montoTotal);
                         $number = $to;
@@ -408,7 +411,7 @@
                     <b>{{ number_format((float) $archivoXML->cabecera->montoTotal,2) }}</b>
                 </td>
             </tr>
-            @if ($tipo_documento_sector == 1)
+            @if ($tipo_documento_sector == "1")
                 <tr>
                     <td colspan="2" style="text-align: right; padding-right: 10px;"><b>IMPORTE BASE CRÉDITO FISCAL</b></td>
                     <td style="text-align: right;">

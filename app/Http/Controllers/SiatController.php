@@ -7,6 +7,7 @@ use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\PuntoVenta;
 use App\Models\Sucursal;
+use App\Models\UrlApiServicioSiat;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -1498,6 +1499,19 @@ class SiatController extends Controller
         $scuis,
         $nit
     ){
+
+        // dd(
+        //     $header,
+        //     $url1,
+        //     $codigoAmbiente,
+        //     $codigoModalidad,
+        //     $codigoPuntoVenta,
+        //     $codigoSistema,
+        //     $codigoSucursal,
+        //     $scuis,
+        //     $nit
+        // );
+
         $comunicacion =  json_decode($this->verificarComunicacion($url1,$header));
         if($comunicacion->estado == "success"){
             if($comunicacion->resultado->RespuestaComunicacion->transaccion){
@@ -1680,10 +1694,12 @@ class SiatController extends Controller
         $cuis        = Cuis::find($cuis_id);
         $punto_venta = PuntoVenta::find($punto_venta_id);
 
+        $urlApiServicioSiat = new UrlApiServicioSiat();
+        $UrlSincronizacion  = $urlApiServicioSiat->getUrlCodigos($empresa->codigo_ambiente, $empresa->codigo_modalidad);
 
         $header           = $empresa->api_token;
         // dd($header);
-        $url1             = $empresa->url_facturacionCodigos;
+        $url1             = $UrlSincronizacion->url_servicio;
         $codigoAmbiente   = $empresa->codigo_ambiente;
         $codigoModalidad  = $empresa->codigo_modalidad;
         $codigoPuntoVenta = $punto_venta->codigoPuntoVenta;
@@ -1761,6 +1777,20 @@ class SiatController extends Controller
                 $scuis,
                 $nit
             ));
+
+            // dd(
+            //     $cufd,
+            //     $header,
+            //     $url1,
+            //     $codigoAmbiente,
+            //     $codigoModalidad,
+            //     $codigoPuntoVenta,
+            //     $codigoSistema,
+            //     $codigoSucursal,
+            //     $scuis,
+            //     $nit
+            // );
+
             if($cufd->estado == "success"){
                 if($cufd->resultado->RespuestaCufd->transaccion){
 
