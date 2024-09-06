@@ -741,8 +741,6 @@
 
         function emitirFactura(){
 
-            console.log(arrayProductoCar);
-
             if($("#formularioGeneraFactura")[0].checkValidity()){
 
                 if(arrayProductoCar.length > 0){
@@ -774,7 +772,12 @@
                                     text : 'LA FACTURA FUE VALIDADA',
                                     timer: 3000
                                 })
-                                window.location.href = "{{ url('factura/listado')}}"
+                                if(data.numero != null && data.numero != ''){
+                                    window.open("{{ url('factura/generaPdfFacturaNewCv')}}/"+data.numero, "_blank", "width=800,height=600");
+                                    window.location.reload();
+                                }else{
+                                    window.location.href = "{{ url('factura/listado')}}"
+                                }
                             }else if(data.estado === "error_email"){
                                 Swal.fire({
                                     icon : 'error',

@@ -23,7 +23,16 @@
                 <div class="modal-body scroll-y">
                     <form id="formulario_new_servicio">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
+                                <select data-control="select2" name="documento_sector_siat_id_new_servicio" id="documento_sector_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                    <option></option>
+                                    @foreach ($documentos_sectores_asignados as $dsa)
+                                        <option value="{{ $dsa->siat_tipo_documento_sector->id }}">{{ $dsa->siat_tipo_documento_sector->descripcion }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Actividad Economica Siat</label>
                                 <select data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
@@ -32,7 +41,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Producto Servicio Siat</label>
                                 <select data-control="select2" name="producto_servicio_siat_id_new_servicio" id="producto_servicio_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
@@ -41,7 +50,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2">Unidad Medida Siat</label>
                                 <select data-control="select2" name="unidad_medida_siat_id_new_servicio" id="unidad_medida_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
@@ -169,7 +178,7 @@
             // ajaxListadoTipoDocumentoSector();
             ajaxListado();
 
-            $("#actividad_economica_siat_id_new_servicio, #producto_servicio_siat_id_new_servicio, #unidad_medida_siat_id_new_servicio, #documento_sectores").select2();
+            $("#actividad_economica_siat_id_new_servicio, #producto_servicio_siat_id_new_servicio, #unidad_medida_siat_id_new_servicio, #documento_sectores, #documento_sector_siat_id_new_servicio").select2();
 
         });
 

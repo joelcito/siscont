@@ -1207,13 +1207,13 @@ class EmpresaController extends Controller
 
         $documentos_sectores_asignados = $empresa->empresasDocumentos;
 
-        dd($documentos_sectores_asignados);
+        // dd($documentos_sectores_asignados);
 
         $activiadesEconomica = SiatDependeActividades::where('empresa_id', $empresa_id)->get();
         $productoServicio    = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
         $unidadMedida        = SiatUnidadMedida::all();
 
-        return view('empresa.listadoProductoServicioEmpresa')->with(compact('activiadesEconomica', 'productoServicio','unidadMedida'));
+        return view('empresa.listadoProductoServicioEmpresa')->with(compact('activiadesEconomica', 'productoServicio','unidadMedida','documentos_sectores_asignados'));
     }
 
     public function ajaxListadoProductoServicioEmpresa(Request $request){
@@ -1255,6 +1255,7 @@ class EmpresaController extends Controller
                     $servicio->usuario_creador_id          = $usuario->id;
                     $servicio->empresa_id                  = $empresa_id;
                     $servicio->siat_depende_actividades_id = $request->input('actividad_economica_siat_id_new_servicio');
+                    $servicio->siat_documento_sector_id    = $request->input('documento_sector_siat_id_new_servicio');
                     $servicio->siat_producto_servicios_id  = $request->input('producto_servicio_siat_id_new_servicio');
                     $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
                     $servicio->descripcion                 = $request->input('descrpcion_new_servicio');

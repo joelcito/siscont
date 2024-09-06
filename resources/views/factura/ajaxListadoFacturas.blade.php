@@ -1,24 +1,11 @@
-{{-- <div class="row">
-    <div class="col-3">
-        <button class="btn btn-primary btn-sm" onclick="modalNuevoCliente()"><i class="fa fa-plus"></i> Nuevo Cliente</button>
-    </div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-3">
-
-    </div>
-    <div class="col-3">
-
-    </div>
-</div> --}}
-<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_facturas">
+<table class="table align-middle table-row-dashed fs-8 gy-2" id="kt_table_facturas">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
             <th>Cliente</th>
             <th>Fecha</th>
             <th>Monto</th>
             <th>Numero</th>
+            <th>Sector</th>
             <th>Estado</th>
             <th>Estado SIAT</th>
             <th>Emision</th>
@@ -39,6 +26,7 @@
                         {{ $fac->numero_factura }}
                     @endif
                 </td>
+                <td>{{ $fac->siat_tipo_documento_sector->descripcion }}</td>
                 <td>
                     @if (is_null($fac->estado))
                         <span class="badge badge-success">VIGENTE</span>
@@ -54,7 +42,7 @@
                     @elseif($fac->codigo_descripcion == "PENDIENTE")
                         <span class="badge badge-warning">{{ $fac->codigo_descripcion }}</span>
                     @else
-                        <span class="badge badge-info">PARA SU ENVIO FUERA DE LINEA 1</span>
+                        <span class="badge badge-info">NO VALIDADA</span>
                     @endif
                 </td>
                 <td>
@@ -70,23 +58,23 @@
                 <td>
                     {{-- <a href="https://siat.impuestos.gob.bo/consulta/QR?nit=5427648016&cuf={{ $p->cuf }}&numero={{ $p->numero_cafc }}&t=2" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a> --}}
                     @if ($fac->uso_cafc == 'Si')
-                        <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_cafc."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a>
+                        <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_cafc."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm tamanio_boton"><i class="fa fa-file"></i></a>
                     @else
-                        <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a>
+                        <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-dark btn-icon btn-sm tamanio_boton"><i class="fa fa-file"></i></a>
                     @endif
 
-                    <a  class="btn btn-primary btn-icon btn-sm" title="Imprime Factura oficio" href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
-                    <a  class="btn btn-white btn-icon btn-sm" title="Imprime Factura rollo" href="{{ url('factura/imprimeFactura', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
+                    <a  class="btn btn-primary btn-icon btn-sm tamanio_boton" title="Imprime Factura oficio" href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
+                    <a  class="btn btn-white btn-icon btn-sm tamanio_boton" title="Imprime Factura rollo" href="{{ url('factura/imprimeFactura', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>
 
                     @if (is_null($fac->estado))
                         @if ($fac->tipo_factura == "offline" && is_null($fac->codigo_descripcion) )
-                            <button class="btn btn-info btn-icon btn-sm" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                            <button class="btn btn-info btn-icon btn-sm tamanio_boton" onclick="modalRecepcionFacuraContingenciaFueraLinea()"><i class="fa fa-upload" aria-hidden="true"></i></button>
                         @else
 
                         @endif
-                        <button class="btn btn-danger btn-sm btn-icon" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-danger btn-sm btn-icon tamanio_boton" onclick="modalAnularFactura('{{ $fac->id }}')"><i class="fa fa-trash"></i></button>
                     @elseif($fac->estado == "Anulado")
-                        <button class="btn btn-warning btn-sm btn-icon" onclick="desanularFacturaAnulado('{{ $fac->id }}')"  title="Desanular Factura"><i class="fa fa-toggle-off"></i></button>
+                        <button class="btn btn-warning btn-sm btn-icon tamanio_boton" onclick="desanularFacturaAnulado('{{ $fac->id }}')"  title="Desanular Factura"><i class="fa fa-toggle-off"></i></button>
                     @else
 
                     @endif

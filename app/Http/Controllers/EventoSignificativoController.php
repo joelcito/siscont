@@ -10,6 +10,7 @@ use App\Models\Factura;
 use App\Models\PuntoVenta;
 use App\Models\SiatEventoSignificativo;
 use App\Models\Sucursal;
+use App\Models\UrlApiServicioSiat;
 use Carbon\Carbon;
 use ErrorException;
 use Illuminate\Http\Request;
@@ -113,8 +114,6 @@ class EventoSignificativoController extends Controller
                                 // ->orderBy('id','desc')->take(1)->get();
                                 ->orderBy('id','desc')->first();
 
-        // dd($cufd);
-
 
         $sw             = true;
         $tam            = 0;
@@ -150,16 +149,6 @@ class EventoSignificativoController extends Controller
     public function  agregarEventoSignificativo(Request $request){
         if($request->ajax()){
 
-            // dd($request->all());
-
-
-            // RECUPERAMOS EL ULTIMO CUFD QUE FUE VIGENTE
-            // $cufd   = app(CufdController::class);
-            // $datosCufdOffLine  = $cufd->sacarCufdVigenteFueraLinea();
-
-            // ELIMINAMOS EL CUFD Y CREAMOS OTRO PARA EL REGISTRO DE UN NUEVO EVENTOS SIGNIFICACITO
-            // session()->forget(['scufd','scodigoControl','sdireccion','sfechaVigenciaCufd']);
-
             $codigo_tipo_evento = $request->input('codigo_tipo_evento');
             $descripcion        = $request->input('descripcion');
             $fecha_inicio       = $request->input('fecha_inicio');
@@ -181,20 +170,17 @@ class EventoSignificativoController extends Controller
             $sucursal    = Sucursal::find($sucursal_id);
             $cuis        = Cuis::find($cuis_id);
 
-            $codMotEvent    = $siat_evento_significativo->codigo_clasificador;
-            $cufdEvent      = $cufdOffLine->codigo;
-            $desc           = $descripcion;
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlCodigos         = $urlApiServicioSiat->getUrlCodigos($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+            $UrlOperaciones     = $urlApiServicioSiat->getUrlOperaciones($empresa->codigo_ambiente, $empresa->codigo_modalidad);
 
-            // $fechaIni       = $request->input('fechainicio').":00";
-            // $fechaFin       = $request->input('fechafin').":00";
-            // $fechaIni       = str_replace(' ', 'T', trim($request->input('fechainicio')));
-            // $fechaFin       = str_replace(' ', 'T', trim($request->input('fechafin')));
-
-            $fechaIni       = $fecha_inicio."T".$hora_inicio;
-            $fechaFin       = $fecha_fin."T".$hora_fin;
-
+            $codMotEvent      = $siat_evento_significativo->codigo_clasificador;
+            $cufdEvent        = $cufdOffLine->codigo;
+            $desc             = $descripcion;
+            $fechaIni         = $fecha_inicio."T".$hora_inicio;
+            $fechaFin         = $fecha_fin."T".$hora_fin;
             $header           = $empresa->api_token;
-            $url1             = $empresa->url_facturacionCodigos;
+            $url1             = $UrlCodigos->url_servicio;
             $codigoAmbiente   = $empresa->codigo_ambiente;
             $codigoModalidad  = $empresa->codigo_modalidad;
             $codigoPuntoVenta = $punto_venta->codigoPuntoVenta;
@@ -218,8 +204,6 @@ class EventoSignificativoController extends Controller
                     $nit
                 ));
 
-
-
                 if($cufd->estado === "success"){
                     if($cufd->resultado->RespuestaCufd->transaccion){
 
@@ -233,28 +217,15 @@ class EventoSignificativoController extends Controller
                         $cufdNew->codigo             = $cufd->resultado->RespuestaCufd->codigo;
                         $cufdNew->codigo_control     = $cufd->resultado->RespuestaCufd->codigoControl;
                         $cufdNew->direccion          = $cufd->resultado->RespuestaCufd->direccion;
-                        // $cufdNew->fecha_vigencia     = $cufd->resultado->RespuestaCufd->fechaVigencia;
                         $cufdNew->fecha_vigencia     = Carbon::parse($cufd->resultado->RespuestaCufd->fechaVigencia)->format('Y-m-d H:i:s');
                         $cufdNew->save();
                         $cufdRescatadoUtilizar =  $cufdNew;
 
-                        // session(['scufd' => $cufd->resultado->RespuestaCufd->codigo]);
-                        // session(['scodigoControl' => $cufd->resultado->RespuestaCufd->codigoControl]);
-                        // session(['sdireccion' => $cufd->resultado->RespuestaCufd->direccion]);
-                        // session(['sfechaVigenciaCufd' => $cufd->resultado->RespuestaCufd->fechaVigencia]);
-                        // $cufdNew = app(CufdController::class);
-                        // $cufdNew->create(
-                        //                 $cufd->resultado->RespuestaCufd->codigo,
-                        //                 $cufd->resultado->RespuestaCufd->codigoControl,
-                        //                 $cufd->resultado->RespuestaCufd->direccion,
-                        //                 $cufd->resultado->RespuestaCufd->fechaVigencia,
-                        //                 Auth::user()->codigo_punto_venta
-                        //             );
                     }
                 }
 
                 $header           = $empresa->api_token;
-                $url4             = $empresa->url_facturacion_operaciones;
+                $url4             = $UrlOperaciones->url_servicio;
                 $codigoAmbiente   = $empresa->codigo_ambiente;
                 $codigoPuntoVenta = $punto_venta->codigoPuntoVenta;
                 $codigoSistema    = $empresa->codigo_sistema;
@@ -442,14 +413,18 @@ class EventoSignificativoController extends Controller
             $punto_venta          = PuntoVenta::find($punto_venta_id);
             $cuis                 = $empresa->cuisVigente($sucursal_id,$punto_venta_id, $empresa->codigo_ambiente);
 
-            $codigo_evento_significativo    = $evento_significativo->codigoRecepcionEventoSignificativo;
-            $siat                           = app(SiatController::class);
-            // $codigo_cafc_contingencia       = NULL;
-            $codigo_cafc_contingencia       = $empresa->cafc;
-            $fechaActual                    = date('Y-m-d\TH:i:s.v');
-            $fechaEmicion                   = $fechaActual;
+            $codigo_evento_significativo = $evento_significativo->codigoRecepcionEventoSignificativo;
+            $siat                        = app(SiatController::class);
+              // $codigo_cafc_contingencia       = NULL;
+            $codigo_cafc_contingencia = $empresa->cafc;
+            $fechaActual              = date('Y-m-d\TH:i:s.v');
+            $fechaEmicion             = $fechaActual;
+
 
             $contado = 0;
+
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlOpereaciones    = $urlApiServicioSiat->getUrlOperaciones($empresa->codigo_ambiente, $empresa->codigo_modalidad);
 
             $rutaCarpeta = "assets/docs/paquete";
             // Verificar si la carpeta existe
@@ -473,18 +448,18 @@ class EventoSignificativoController extends Controller
 
             $idsToUpdate = [];
             foreach($checkboxes as $key => $chek){
-                $ar = explode("_",$key);
-                $factura = Factura::find($ar[1]);
-
+                $ar            = explode("_",$key);
+                $factura       = Factura::find($ar[1]);
                 $idsToUpdate[] = (int)$ar[1];
-
-                $xml                            = $factura->productos_xml;
-                $archivoXML                     = new SimpleXMLElement($xml);
+                $xml           = $factura->productos_xml;
+                $archivoXML    = new SimpleXMLElement($xml);
 
                 // GUARDAMOS EN LA CARPETA EL XML
                 $archivoXML->asXML("assets/docs/paquete/facturaxmlContingencia$ar[1].xml");
                 $contado++;
             }
+
+            $documento_sector         = $factura->siat_tipo_documento_sector;
 
             // Ruta de la carpeta que deseas comprimir
             $rutaCarpeta = "assets/docs/paquete";
@@ -518,7 +493,6 @@ class EventoSignificativoController extends Controller
             // Calcular el HASH (SHA256) del contenido del archivo
             $hashArchivo = hash('sha256', $contenidoArchivo);
 
-
             try {
 
                 $cufdVigente = json_decode(
@@ -530,10 +504,16 @@ class EventoSignificativoController extends Controller
                         $empresa->codigo_ambiente
                     ));
 
+                $urlApiServicioSiat = new UrlApiServicioSiat();
+                if($documento_sector->codigo_clasificador == "8")
+                    $UrlFacturaCompraVenta = $urlApiServicioSiat->getUrlFacturacionTasaCeroElectronica($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+                else
+                    $UrlFacturaCompraVenta = $urlApiServicioSiat->getUrlFacturacionCompraVentaElctronica($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
                 $header                = $empresa->api_token;
-                $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+                $url3                  = $UrlFacturaCompraVenta->url_servicio;
                 $codigoAmbiente        = $empresa->codigo_ambiente;
-                $codigoDocumentoSector = $empresa->codigo_documento_sector;
+                $codigoDocumentoSector = $documento_sector->codigo_clasificador;
                 $tipo_online_o_offline = 2;                                                // FUERA DE  LINEA (LINEA = 1 | FUERA DE LINEA = 2)
                 $codigoModalidad       = $empresa->codigo_modalidad;
                 $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
@@ -542,7 +522,7 @@ class EventoSignificativoController extends Controller
                 $scufd                 = $cufdVigente->codigo;
                 $scuis                 = $cuis->codigo;
                 $nit                   = $empresa->nit;
-                $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
+                $tipoFacturaDocumento  = ($documento_sector->codigo_clasificador == "8")? 2 : 1;
 
                 // Código que puede lanzar el error
                 // Por ejemplo, puedes tener algo como:
@@ -563,12 +543,15 @@ class EventoSignificativoController extends Controller
 
                     $contenidoArchivo, $fechaEmicion, $hashArchivo, $codigo_cafc_contingencia, $contado, $codigo_evento_significativo
                 ));
+
+                // dd($res->resultado->RespuestaServicioFacturacion->transaccion);
+
                 if($res->resultado->RespuestaServicioFacturacion->transaccion){
 
                     $header                = $empresa->api_token;
-                    $url3                  = $empresa->url_servicio_facturacion_compra_venta;;
+                    $url3                  = $UrlFacturaCompraVenta->url_servicio;
                     $codigoAmbiente        = $empresa->codigo_ambiente;
-                    $codigoDocumentoSector = $empresa->codigo_documento_sector;
+                    $codigoDocumentoSector = $documento_sector->codigo_clasificador;
                     $codigoModalidad       = $empresa->codigo_modalidad;
                     $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
                     $codigoSistema         = $empresa->codigo_sistema;
@@ -576,7 +559,7 @@ class EventoSignificativoController extends Controller
                     $scufd                 = $cufdVigente->codigo;
                     $scuis                 = $cuis->codigo;
                     $nit                   = $empresa->nit;
-                    $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
+                    $tipoFacturaDocumento  = ($documento_sector->codigo_clasificador == "8")? 2 : 1;
 
                     $validad = json_decode($siat->validacionRecepcionPaqueteFactura(
                         $header,

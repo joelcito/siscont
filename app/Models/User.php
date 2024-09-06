@@ -65,13 +65,31 @@ class User extends Authenticatable
     }
 
     public function isFacturacionCompraVenta(){
+
         $empresa = $this->empresa;
-        return $empresa->codigo_documento_sector == '1' ? true : false;
+        $estado  = false;
+        if($empresa)
+            if($empresa->empresasDocumentosTipoSector('1'))
+                $estado  = true;
+
+        return $estado;
+
+        // $empresa = $this->empresa;
+        // return $empresa->codigo_documento_sector == '1' ? true : false;
     }
 
     public function isFacturacionTasaCero(){
         $empresa = $this->empresa;
-        return $empresa->codigo_documento_sector == '8' ? true : false;
+        $estado  = false;
+        if($empresa)
+            if($empresa->empresasDocumentosTipoSector('8'))
+                $estado  = true;
+
+        return $estado;
+
+        // $empresa = $this->empresa;
+        // return $empresa->codigo_documento_sector == '8' ? true : false;
+
     }
 
 }

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->unsignedBigInteger('siat_producto_servicios_id')->nullable();
             $table->foreign('siat_unidad_medidas_id')->references('id')->on('siat_unidad_medidas');
             $table->unsignedBigInteger('siat_unidad_medidas_id')->nullable();
+            $table->foreign('siat_documento_sector_id')->references('id')->on('siat_tipo_documento_sectores');
+            $table->unsignedBigInteger('siat_documento_sector_id')->nullable();
 
             $table->string('descripcion')->nullable();
             $table->decimal('precio',12,2)->nullable();

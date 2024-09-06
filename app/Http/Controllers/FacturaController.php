@@ -1543,6 +1543,7 @@ class FacturaController extends Controller
                             'facturas.total',
                             'facturas.numero_factura',
                             'facturas.empresa_id',
+                            'facturas.siat_documento_sector_id',
 
                             'clientes.cedula',
                             'clientes.nombres',
@@ -1604,17 +1605,16 @@ class FacturaController extends Controller
     public function anularFactura(Request $request){
         if($request->ajax()){
 
-            // dd($request->all());
             $factura_id       = $request->input('factura_id');
             $motivo_anulacion = $request->input('codigoMotivoAnulacion');
 
-            $factura     = Factura::find($factura_id);
-            $empresa_id  = $factura->empresa_id;
-            $empresa     = Empresa::find($empresa_id);
-            $sucursal    = Sucursal::find($factura->sucursal_id);
-            $punto_venta = PuntoVenta::find($factura->punto_venta_id);
-            $cuis        = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
-
+            $factura          = Factura::find($factura_id);
+            $empresa_id       = $factura->empresa_id;
+            $empresa          = Empresa::find($empresa_id);
+            $sucursal         = Sucursal::find($factura->sucursal_id);
+            $punto_venta      = PuntoVenta::find($factura->punto_venta_id);
+            $cuis             = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
+            $documento_sector = $factura->siat_tipo_documento_sector;
 
             $siat       = app(SiatController::class);
 
@@ -1627,13 +1627,17 @@ class FacturaController extends Controller
                     $empresa->codigo_ambiente
                 ));
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            if($documento_sector->codigo_clasificador == "8")
+                $UrlSincronizacion  = $urlApiServicioSiat->getUrlFacturacionTasaCeroElectronica($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+            else
+                $UrlSincronizacion  = $urlApiServicioSiat->getUrlFacturacionCompraVentaElctronica($empresa->codigo_ambiente, $empresa->codigo_modalidad);
 
-            // dd($cufdVigente);
 
             $header                = $empresa->api_token;
-            $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+            $url3                  = $UrlSincronizacion->url_servicio;
             $codigoAmbiente        = $empresa->codigo_ambiente;
-            $codigoDocumentoSector = $empresa->codigo_documento_sector;
+            $codigoDocumentoSector = $documento_sector->codigo_clasificador;
             $codigoModalidad       = $empresa->codigo_modalidad;
             $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
             $codigoSistema         = $empresa->codigo_sistema;
@@ -1641,7 +1645,7 @@ class FacturaController extends Controller
             $scufd                 = $cufdVigente->codigo;
             $scuis                 = $cuis->codigo;
             $nit                   = $empresa->nit;
-            $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
+            $tipoFacturaDocumento  = ($documento_sector->codigo_clasificador == "8")? 2 : 1;
 
             $respuesta = json_decode($siat->anulacionFactura(
                 $header,
@@ -1657,31 +1661,16 @@ class FacturaController extends Controller
                 $nit,
                 $tipoFacturaDocumento,
 
-                $motivo_anulacion, $factura->cuf
+                $motivo_anulacion,
+                $factura->cuf
             ));
-
-            // dd($respuesta);
 
             if($respuesta->estado == "success"){
                 if($respuesta->resultado->RespuestaServicioFacturacion->transaccion){
                     $factura->estado = 'Anulado';
 
-                    // PARA ELIMINAR LOS PAGOS
-                    // Pago::where('factura_id', $fatura->id)->delete();
-
                     // PARA ELIMINAR LOS DETALLES
                     Detalle::where('factura_id', $factura->id)->delete();
-
-                    // $cliente = Cliente::find($factura->cliente_id);
-
-                    // $correo = $cliente->correo;
-                    // $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
-                    // $numero = $factura->numero;
-                    // $fecha  = $factura->fecha;
-
-                    //protected function enviaCorreoAnulacion($correo, $nombre, $numero, $fecha){
-
-                    // $this->enviaCorreoAnulacion($correo, $nombre, $numero, $fecha );
 
                     $data['estado'] = "success";
                 }else{
@@ -1689,13 +1678,14 @@ class FacturaController extends Controller
                     $data['estado']       = "error";
                     $data['descripcion']  = $respuesta->resultado->RespuestaServicioFacturacion;
                     $data['msg']          = $respuesta->resultado;
-                    // dd($respuesta->resultado->RespuestaServicioFacturacion);
                 }
                 $factura->save();
             }else{
-                $data['text']   = 'No existe';
-                $data['estado'] = 'error';
-                $data['msg']    = $respuesta;
+                $data['text']                             = 'No existe';
+                $data['estado']                           = 'error';
+                $data['descripcion']['codigoDescripcion'] = 'Error al anular';
+                $data['descripcion']['mensajesList']      = $respuesta;
+                $data['msg']                              = $respuesta;
             }
         }else{
             $data['text']   = 'No existe';
@@ -1714,10 +1704,11 @@ class FacturaController extends Controller
             $sucursal_id    = $factura->sucursal_id;
             $punto_venta_id = $factura->punto_venta_id;
 
-            $empresa     = Empresa::find($empresa_id);
-            $sucursal    = Sucursal::find($sucursal_id);
-            $punto_venta = PuntoVenta::find($punto_venta_id);
-            $cuis        = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
+            $empresa          = Empresa::find($empresa_id);
+            $sucursal         = Sucursal::find($sucursal_id);
+            $punto_venta      = PuntoVenta::find($punto_venta_id);
+            $cuis             = $empresa->cuisVigente($sucursal->id, $punto_venta->id, $empresa->codigo_ambiente);
+            $documento_sector = $factura->siat_tipo_documento_sector;
 
             $siat       = app(SiatController::class);
 
@@ -1729,6 +1720,13 @@ class FacturaController extends Controller
                     $punto_venta->id,
                     $empresa->codigo_ambiente
                 ));
+
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            if($documento_sector->codigo_clasificador == "8")
+                $UrlSincronizacion  = $urlApiServicioSiat->getUrlFacturacionTasaCeroElectronica($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+            else
+                $UrlSincronizacion  = $urlApiServicioSiat->getUrlFacturacionCompraVentaElctronica($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
 
 
             // dd($cufdVigente);
@@ -1747,9 +1745,9 @@ class FacturaController extends Controller
 
 
             $header                = $empresa->api_token;
-            $url3                  = $empresa->url_servicio_facturacion_compra_venta;
+            $url3                  = $UrlSincronizacion->url_servicio;
             $codigoAmbiente        = $empresa->codigo_ambiente;
-            $codigoDocumentoSector = $empresa->codigo_documento_sector;
+            $codigoDocumentoSector = $documento_sector->codigo_clasificador;
             $codigoModalidad       = $empresa->codigo_modalidad;
             $codigoPuntoVenta      = $punto_venta->codigoPuntoVenta;
             $codigoSistema         = $empresa->codigo_sistema;
@@ -1758,7 +1756,7 @@ class FacturaController extends Controller
             $scuis                 = $cuis->codigo;
             $nit                   = $empresa->nit;
             $cuf1                  = $factura->cuf;
-            $tipoFacturaDocumento  = ($empresa->codigo_documento_sector == 8)? 2 : 1;
+            $tipoFacturaDocumento  = ($documento_sector->codigo_clasificador == "8")? 2 : 1;
 
             $respuesta = json_decode($siat->reversionAnulacionFactura(
                 $header,
@@ -1844,10 +1842,13 @@ class FacturaController extends Controller
                               ->where('codigo_ambiente', $empresa_objeto->codigo_ambiente)
                               ->first();
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlSincronizacion  = $urlApiServicioSiat->getUrlCodigos($empresa_objeto->codigo_ambiente, $empresa_objeto->codigo_modalidad);
+
             $siat = app(SiatController::class);
 
             $verificarNit = json_decode($siat->verificarNit(
-                $empresa_objeto->url_facturacionCodigos,
+                $UrlSincronizacion->url_servicio,
                 $empresa_objeto->api_token,
                 $empresa_objeto->codigo_ambiente,
                 $punto_venta_objeto->nombrePuntoVenta,
@@ -1892,6 +1893,8 @@ class FacturaController extends Controller
         $url1   = $UrlSincronizacion->url_servicio;
         $header = $empresa->api_token;
 
+        $siat_documento_sector_id = 33; //COMPRA Y VENTA
+
         // $documentoSector = 1;
 
         // para el siat LA CONECCION
@@ -1908,7 +1911,8 @@ class FacturaController extends Controller
         $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
         $servicios = Servicio::where('empresa_id', $empresa_id)
-                            ->get();
+                                ->where('siat_documento_sector_id', $siat_documento_sector_id)
+                                ->get();
 
         // TIP DE DOCUMENTO
         $tipoDocumento = SiatTipoDocumentoIdentidad::all();
@@ -1940,6 +1944,8 @@ class FacturaController extends Controller
         $url1   = $UrlSincronizacion->url_servicio;
         $header = $empresa->api_token;
 
+        $siat_documento_sector_id = 10; //TASA CERO
+
         // para el siat LA CONECCION
         $siat = app(SiatController::class);
         $verificacionSiat = json_decode($siat->verificarComunicacion(
@@ -1954,6 +1960,7 @@ class FacturaController extends Controller
         $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
         $servicios = Servicio::where('empresa_id', $empresa_id)
+                            ->where('siat_documento_sector_id',$siat_documento_sector_id)
                             ->get();
 
         // TIP DE DOCUMENTO
@@ -2091,17 +2098,13 @@ class FacturaController extends Controller
                     $uso_cafc                           = $request->input('uso_cafc');
                     $leyenda                            = "Ley N° 453: El proveedor deberá suministrar el servicio en las modalidades y términos ofertados o convenidos.";
 
-                    $contenidoabeceraFcv = array();
-                    $cabeceraFcv         = array();
-
-                    $contenidoFacturaFcv = array();
-
-                    $contenidoDetalleFcv = array();
-                    $DetalleFcv         = array();
-
+                    $contenidoabeceraFcv      = array();
+                    $cabeceraFcv              = array();
+                    $contenidoFacturaFcv      = array();
+                    $contenidoDetalleFcv      = array();
+                    $DetalleFcv               = array();
                     $contenidoFacturaPadreFcv = array();
-
-                    $idDetalles = array();
+                    $idDetalles               = array();
 
                     $contenidoabeceraFcv['nitEmisor']                    = $empresa_objeto->nit;
                     $contenidoabeceraFcv['razonSocialEmisor']            = $empresa_objeto->razon_social;
@@ -2192,13 +2195,11 @@ class FacturaController extends Controller
                     }
 
                     $contenidoFacturaPadreFcv['factura'] = $contenidoFacturaFcv;
-
-                    $datos           = $contenidoFacturaPadreFcv;
-                    $valoresCabecera = $datos['factura'][0]['cabecera'];
-                    $puntoVenta      = $punto_venta_objeto->codigoPuntoVenta;
-
-                    $nitEmisorEmpresa     = $empresa_objeto->nit;
-                    $sucursalEmpresa      = $sucursal_objeto->codigo_sucursal;
+                    $datos                               = $contenidoFacturaPadreFcv;
+                    $valoresCabecera                     = $datos['factura'][0]['cabecera'];
+                    $puntoVenta                          = $punto_venta_objeto->codigoPuntoVenta;
+                    $nitEmisorEmpresa                    = $empresa_objeto->nit;
+                    $sucursalEmpresa                     = $sucursal_objeto->codigo_sucursal;
 
                     if($uso_cafc === "Si"){
                         $numeroFacturaEmpresa = $numero_factura_cafc;
@@ -2418,6 +2419,7 @@ class FacturaController extends Controller
                                         ]);
 
                                 $data['estado'] = $codigo_descripcion;
+                                $data['numero'] = $facturaVerdad->id;
 
                                 // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
                                 // if($swFacturaEnvio){
@@ -2442,6 +2444,8 @@ class FacturaController extends Controller
                     }else{
 
                         // ESTO ES PARA LA FACTURA LA CREACION
+                        $documentos_sector_model = $empresa_objeto->empresasDocumentosTipoSector($documento_sector);
+
                         $facturaVerdad                          = new Factura();
                         $facturaVerdad->usuario_creador_id      = Auth::user()->id;
                         $facturaVerdad->cliente_id              = $cliente->id;
@@ -2458,19 +2462,20 @@ class FacturaController extends Controller
                         else
                             $facturaVerdad->numero_factura       = $numeroFacturaEmpresa;
 
-                        $facturaVerdad->facturado               = "Si";
-                        $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
-                        $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
-                        $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                        $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml");
-                        $facturaVerdad->codigo_descripcion      = NULL;
-                        $facturaVerdad->codigo_recepcion        = NULL;
-                        $facturaVerdad->codigo_transaccion      = NULL;
-                        $facturaVerdad->descripcion             = NULL;
-                        $facturaVerdad->uso_cafc                = ($uso_cafc === "Si")? "Si" : "No";
-                        $facturaVerdad->tipo_factura            = "offline";
-                        $facturaVerdad->registro_compra         = 'No';
-
+                        $facturaVerdad->facturado                = "Si";
+                        $facturaVerdad->total                    = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
+                        $facturaVerdad->monto_total_subjeto_iva  = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
+                        $facturaVerdad->descuento_adicional      = $datos['factura'][0]['cabecera']['descuentoAdicional'];
+                        $facturaVerdad->cuf                      = $datos['factura'][0]['cabecera']['cuf'];
+                        $facturaVerdad->productos_xml            = file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml");
+                        $facturaVerdad->codigo_descripcion       = NULL;
+                        $facturaVerdad->codigo_recepcion         = NULL;
+                        $facturaVerdad->codigo_transaccion       = NULL;
+                        $facturaVerdad->descripcion              = NULL;
+                        $facturaVerdad->uso_cafc                 = ($uso_cafc === "Si")? "Si" : "No";
+                        $facturaVerdad->tipo_factura             = "offline";
+                        $facturaVerdad->registro_compra          = 'No';
+                        $facturaVerdad->siat_documento_sector_id = $documentos_sector_model->id;
 
                         $facturaVerdad->save();
 

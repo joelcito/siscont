@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .tamanio_boton{
+            font-size: 6px;
+        }
+    </style>
 @endsection
 @section('metadatos')
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -95,7 +100,7 @@
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <!--begin::Toolbar container-->
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+            <div id="kt_app_toolbar_container" class="app-container container-xxlg d-flex flex-stack">
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
@@ -128,14 +133,16 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
+
+                {{-- @dd(Auth::user()->isFacturacionTasaCero()) --}}
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     @if (Auth::user()->isFacturacionCompraVenta())
-                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionCv') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
+                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionCv') }}"><i class="fa fa-plus"></i>Nueva Venta Compra Venta</a>
                     @endif
 
                     @if (Auth::user()->isFacturacionTasaCero())
-                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionTc') }}"><i class="fa fa-plus"></i>Nueva Venta</a>
+                        <a class="btn btn-sm fw-bold btn-primary" href="{{ url('factura/formularioFacturacionTc') }}"><i class="fa fa-plus"></i>Nueva Venta Tasa Cero</a>
                     @endif
                 </div>
                 <!--end::Actions-->
@@ -300,6 +307,9 @@
                     method: "POST",
                     data: datos,
                     success: function (data) {
+
+                        console.log(data);
+
                         if(data.estado === 'success'){
                             Swal.fire({
                                 icon : 'success',
@@ -308,11 +318,11 @@
                             })
                             ajaxListado();
                             $('#modalAnular').modal('hide')
-                        }else{
+                        }else if(data.estado === 'error'){
                             Swal.fire({
-                                icon:'error',
+                                icon : 'error',
                                 title: data.descripcion.codigoDescripcion,
-                                text:  JSON.stringify(data.descripcion.mensajesList),
+                                text : JSON.stringify(data.descripcion.mensajesList),
                                 // timer:1500
                             })
                             $('#modalAnular').modal('hide')
@@ -419,7 +429,7 @@
 
         function desanularFacturaAnulado(factura){
             Swal.fire({
-                title: "Estas seguro de desanular la Factura?",
+                title: "Estas seguro de Revertir la Factura anulada?",
                 text: "Esta accion no se podra revertir!",
                 icon: "warning",
                 showCancelButton: true,
