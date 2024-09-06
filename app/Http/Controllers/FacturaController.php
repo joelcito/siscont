@@ -2850,6 +2850,7 @@ class FacturaController extends Controller
                         );
 
                         // NUEVO CODIGO PARA EVITAR ERROES DE GENERACION DE FACTURAS Y EVITAR QUE SE CREE MAS FACTURAS ASI NOMAS
+
                         if($for->estado === "success"){
 
                             // $codigo_descripcion = $for->resultado->RespuestaServicioFacturacion->codigoDescripcion;
