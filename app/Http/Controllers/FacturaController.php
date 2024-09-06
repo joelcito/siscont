@@ -2463,7 +2463,7 @@ class FacturaController extends Controller
                             $facturaVerdad->numero_factura       = $numeroFacturaEmpresa;
 
                         $facturaVerdad->facturado                = "Si";
-                        $facturaVerdad->total                    = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
+                        $facturaVerdad->total                    = $datos['factura'][0]['cabecera']['montoTotal'];
                         $facturaVerdad->monto_total_subjeto_iva  = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional      = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                         $facturaVerdad->cuf                      = $datos['factura'][0]['cabecera']['cuf'];
@@ -2941,6 +2941,7 @@ class FacturaController extends Controller
                             $facturaVerdad->numero_factura       = $numeroFacturaEmpresa;
 
                         $facturaVerdad->facturado               = "Si";
+                        $facturaVerdad->total                   = $datos['factura'][0]['cabecera']['montoTotal'];
                         $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                         $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
