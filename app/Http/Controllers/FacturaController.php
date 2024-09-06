@@ -2940,7 +2940,7 @@ class FacturaController extends Controller
                         $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
                         $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
                         $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-                        $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxml_$nombreArchivo.xml");
+                        $facturaVerdad->productos_xml           = file_get_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
                         $facturaVerdad->codigo_descripcion      = NULL;
                         $facturaVerdad->codigo_recepcion        = NULL;
                         $facturaVerdad->codigo_transaccion      = NULL;
@@ -3388,7 +3388,7 @@ class FacturaController extends Controller
         // $numeroSerie        = null;
         // $numeroImei         = null;
 
-        $clienteId = "2";
+        $clienteId = "1";
         $pagos     = ["915"];
 
 
@@ -3452,13 +3452,14 @@ class FacturaController extends Controller
 
         $modalidad = "offline";
 
-        $usuario            = Auth::user();
-        $empresa_id         = $usuario->empresa_id;
-        $punto_venta_id     = $usuario->punto_venta_id;
-        $sucursal_id        = $usuario->sucursal_id;
-        $empresa_objeto     = Empresa::find($empresa_id);
-        $punto_venta_objeto = PuntoVenta::find($punto_venta_id);
-        $sucursal_objeto    = Sucursal::find($sucursal_id);
+        $usuario                 = Auth::user();
+        $empresa_id              = $usuario->empresa_id;
+        $punto_venta_id          = $usuario->punto_venta_id;
+        $sucursal_id             = $usuario->sucursal_id;
+        $empresa_objeto          = Empresa::find($empresa_id);
+        $punto_venta_objeto      = PuntoVenta::find($punto_venta_id);
+        $sucursal_objeto         = Sucursal::find($sucursal_id);
+        $documentos_sector_model = $empresa_objeto->empresasDocumentosTipoSector($codigoDocumentoSector);
 
         // Crear el array final con la estructura proporcionada
         $array = [
@@ -3528,7 +3529,7 @@ class FacturaController extends Controller
         // print_r($arrayFinal);
 
 
-        for ($k=1; $k <= 2000 ; $k++) {
+        for ($k=1; $k <= 1500 ; $k++) {
         // for ($k=1; $k <= 500 ; $k++) {
         // for ($k=1; $k <= 1 ; $k++) {
 
@@ -3581,7 +3582,7 @@ class FacturaController extends Controller
                 $tipoEmision        = 2;
             }
 
-            $tipoFactura        = ($empresa_objeto->codigo_documento_sector == 8)? 2 : 1; // Factura sin Derecho a Crédito Fiscal
+            $tipoFactura        = ($codigoDocumentoSector == "8")? 2 : 1; // Factura sin Derecho a Crédito Fiscal
             $tipoFacturaSector  = str_pad($valoresCabecera['codigoDocumentoSector'],2,"0",STR_PAD_LEFT);;
             $puntoVenta         = str_pad($puntoVenta,4,"0",STR_PAD_LEFT);
 
@@ -3668,7 +3669,7 @@ class FacturaController extends Controller
 
             $temporal = $datos['factura'];
 
-            if($empresa_objeto->codigo_documento_sector == 8){
+            if($codigoDocumentoSector == "8"){
                 if($empresa_objeto->codigo_modalidad == "1"){
                     $dar = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
                             <facturaElectronicaTasaCero xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="facturaElectronicaTasaCero.xsd">
@@ -3739,19 +3740,20 @@ class FacturaController extends Controller
             else
                 $facturaVerdad->numero_factura       = $numeroFacturaEmpresa;
 
-            $facturaVerdad->facturado               = "Si";
-            $facturaVerdad->total                   = $datos['factura'][0]['cabecera']['montoTotal'];
-            $facturaVerdad->monto_total_subjeto_iva = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
-            $facturaVerdad->descuento_adicional     = $datos['factura'][0]['cabecera']['descuentoAdicional'];
-            $facturaVerdad->cuf                     = $datos['factura'][0]['cabecera']['cuf'];
-            $facturaVerdad->productos_xml           = file_get_contents('assets/docs/facturaxmlTasaCero.xml');
-            $facturaVerdad->codigo_descripcion      = NULL;
-            $facturaVerdad->codigo_recepcion        = NULL;
-            $facturaVerdad->codigo_transaccion      = NULL;
-            $facturaVerdad->descripcion             = NULL;
-            $facturaVerdad->uso_cafc                = ($datosRecepcion['uso_cafc'] === "Si")? "Si" : "No";
-            $facturaVerdad->tipo_factura            = "offline";
-            $facturaVerdad->registro_compra         = 'No';
+            $facturaVerdad->facturado                = "Si";
+            $facturaVerdad->total                    = $datos['factura'][0]['cabecera']['montoTotal'];
+            $facturaVerdad->monto_total_subjeto_iva  = $datos['factura'][0]['cabecera']['montoTotalSujetoIva'];
+            $facturaVerdad->descuento_adicional      = $datos['factura'][0]['cabecera']['descuentoAdicional'];
+            $facturaVerdad->cuf                      = $datos['factura'][0]['cabecera']['cuf'];
+            $facturaVerdad->productos_xml            = file_get_contents('assets/docs/facturaxmlTasaCero.xml');
+            $facturaVerdad->siat_documento_sector_id = $documentos_sector_model->id;
+            $facturaVerdad->codigo_descripcion       = NULL;
+            $facturaVerdad->codigo_recepcion         = NULL;
+            $facturaVerdad->codigo_transaccion       = NULL;
+            $facturaVerdad->descripcion              = NULL;
+            $facturaVerdad->uso_cafc                 = ($datosRecepcion['uso_cafc'] === "Si")? "Si" : "No";
+            $facturaVerdad->tipo_factura             = "offline";
+            $facturaVerdad->registro_compra          = 'No';
 
             $facturaVerdad->save();
 
