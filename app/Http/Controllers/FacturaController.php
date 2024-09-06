@@ -2919,17 +2919,20 @@ class FacturaController extends Controller
                         }
                     }else{
 
+                        $documentos_sector_model = $empresa_objeto->empresasDocumentosTipoSector($documento_sector);
+
                         // ESTO ES PARA LA FACTURA LA CREACION
-                        $facturaVerdad                          = new Factura();
-                        $facturaVerdad->usuario_creador_id      = Auth::user()->id;
-                        $facturaVerdad->cliente_id              = $cliente->id;
-                        $facturaVerdad->empresa_id              = $empresa_objeto->id;
-                        $facturaVerdad->sucursal_id             = $sucursal_objeto->id;
-                        $facturaVerdad->punto_venta_id          = $punto_venta_objeto->id;
-                        $facturaVerdad->cufd_id                 = $datosCufdOffLine['scufd_id'];
-                        $facturaVerdad->fecha                   = $datos['factura'][0]['cabecera']['fechaEmision'];
-                        $facturaVerdad->nit                     = $empresa_objeto->nit;
-                        $facturaVerdad->razon_social            = $empresa_objeto->razon_social;
+                        $facturaVerdad                           = new Factura();
+                        $facturaVerdad->usuario_creador_id       = Auth::user()->id;
+                        $facturaVerdad->cliente_id               = $cliente->id;
+                        $facturaVerdad->empresa_id               = $empresa_objeto->id;
+                        $facturaVerdad->sucursal_id              = $sucursal_objeto->id;
+                        $facturaVerdad->punto_venta_id           = $punto_venta_objeto->id;
+                        $facturaVerdad->cufd_id                  = $datosCufdOffLine['scufd_id'];
+                        $facturaVerdad->siat_documento_sector_id = $documentos_sector_model->id;
+                        $facturaVerdad->fecha                    = $datos['factura'][0]['cabecera']['fechaEmision'];
+                        $facturaVerdad->nit                      = $empresa_objeto->nit;
+                        $facturaVerdad->razon_social             = $empresa_objeto->razon_social;
 
                         if($uso_cafc === "Si")
                             $facturaVerdad->numero_cafc          = $numeroFacturaEmpresa;
