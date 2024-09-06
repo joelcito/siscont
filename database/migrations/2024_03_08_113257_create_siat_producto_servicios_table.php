@@ -26,6 +26,8 @@ return new class extends Migration
             $table->unsignedBigInteger('punto_venta_id')->nullable();
             $table->foreign('sucursal_id')->references('id')->on('sucursales');
             $table->unsignedBigInteger('sucursal_id')->nullable();
+            $table->foreign('siat_documento_sector_id')->references('id')->on('siat_tipo_documento_sectores');
+            $table->unsignedBigInteger('siat_documento_sector_id')->nullable();
             $table->string('codigo_ambiente')->nullable();
             $table->string('numero_serie')->nullable();
             $table->string('codigo_imei')->nullable();

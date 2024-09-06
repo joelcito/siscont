@@ -1201,8 +1201,13 @@ class EmpresaController extends Controller
     }
 
     public function listadoProductoServicioEmpresa(Request $request){
-        $usuario = Auth::user();
+        $usuario    = Auth::user();
         $empresa_id = $usuario->empresa_id;
+        $empresa    = $usuario->empresa;
+
+        $documentos_sectores_asignados = $empresa->empresasDocumentos;
+
+        dd($documentos_sectores_asignados);
 
         $activiadesEconomica = SiatDependeActividades::where('empresa_id', $empresa_id)->get();
         $productoServicio    = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
