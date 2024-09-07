@@ -1558,7 +1558,7 @@ class FacturaController extends Controller
                             ->where('facturas.sucursal_id', $sucursal_id)
                             ->where('facturas.punto_venta_id', $punto_venta_id)
 
-                            // ->whereNull('facturas.codigo_descripcion')
+                            ->whereNull('facturas.codigo_descripcion')
                             ;
 
             if(!is_null($request->input('buscar_nro_factura'))){
