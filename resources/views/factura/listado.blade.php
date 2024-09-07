@@ -12,7 +12,6 @@
 @endsection
 @section('content')
 
-
     <!--begin::Modal - Add task-->
     <div class="modal fade" id="modmodalContingenciaFueraLinea" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -180,7 +179,17 @@
                                     <input type="date" class="form-control form-control-sm" name="buscar_fecha_fin" id="buscar_fecha_fin">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success btn-sm w-100 mt-8" onclick="ajaxListado()">BUSCAR</button>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-success btn-sm w-100 mt-8 btn-icon" onclick="ajaxListado()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-danger btn-sm w-100 btn-icon mt-8" title="Expotar en PDF" onclick="reportePDF()"><i class="fa fa-file-pdf"></i></button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-success btn-sm w-100 btn-icon mt-8" title="Expotar en Excel" onclick="exportarExcel()"><i class="fa fa-file-excel"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -478,10 +487,98 @@
                     // });
                 }
             });
+        }
 
+        function reportePDF(){
 
+            let datos = $('#formulario-busqueda-factura').serializeArray();
 
+            // Mostrar SweetAlert2 antes de enviar la solicitud
+            Swal.fire({
+                title: 'Generando PDF...',
+                text: 'Por favor espera mientras generamos el archivo.',
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+                didOpen: () => {
+                    Swal.showLoading(); // Mostrar el spinner de carga
+                }
+            });
 
+            $.ajax({
+                url: "{{ url('factura/reportePDF') }}",
+                method: "POST",
+                data: datos,
+                xhrFields: {
+                    responseType: 'blob' // Esto le dice a jQuery que espere un archivo binario (PDF)
+                },
+                success: function (data, status, xhr) {
+                    // Ocultar SweetAlert2 cuando la solicitud sea exitosa
+                    Swal.close();
+
+                    // Crear un enlace temporal para iniciar la descarga
+                    var blob = new Blob([data], { type: 'application/pdf' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = "reporte_facturas.pdf"; // Nombre del archivo
+                    link.click();
+                },
+                error: function (xhr, status, error) {
+                    // Mostrar error si algo falla
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo generar el PDF. Inténtalo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    console.error("Error al generar el PDF: ", error);
+                }
+            });
+
+        }
+
+        function exportarExcel(){
+            let datos = $('#formulario-busqueda-factura').serializeArray();
+
+            // // Mostrar SweetAlert2 antes de enviar la solicitud
+            // Swal.fire({
+            //     title: 'Generando PDF...',
+            //     text: 'Por favor espera mientras generamos el archivo.',
+            //     allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+            //     didOpen: () => {
+            //         Swal.showLoading(); // Mostrar el spinner de carga
+            //     }
+            // });
+
+            $.ajax({
+                url: "{{ url('factura/reporteExcel') }}",
+                method: "POST",
+                data: datos,
+                xhrFields: {
+                    responseType: 'blob' // Esto le dice a jQuery que espere un archivo binario (PDF)
+                },
+                success: function (data, status, xhr) {
+                    // // Ocultar SweetAlert2 cuando la solicitud sea exitosa
+                    // Swal.close();
+
+                    // Assume `data` contains the binary response from the server
+                    var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'reporte_facturas.xlsx'; // Nombre del archivo Excel
+                    document.body.appendChild(link); // Required for Firefox
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (xhr, status, error) {
+                    // Mostrar error si algo falla
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo generar el PDF. Inténtalo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    console.error("Error al generar el PDF: ", error);
+                }
+            });
         }
 
    </script>

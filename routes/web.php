@@ -144,7 +144,6 @@ Route::middleware(['auth', 'one.session'])->group(function () {
 
         Route::post('/sacaNumeroCafcUltimo', [FacturaController::class, 'sacaNumeroCafcUltimo']);
 
-
         // PARA LAS SINCRONIZACIONES MASA
         Route::get('/pruebas', [FacturaController::class, 'pruebas']);
         Route::get('/pruebaCompraVenta', [FacturaController::class, 'pruebaCompraVenta']);
@@ -167,11 +166,9 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/generaPdfFacturaNewCv/{factura_id}', [FacturaController::class, 'generaPdfFacturaNewCv']);
         Route::get('/imprimeFactura/{factura_id}', [FacturaController::class, 'imprimeFactura']);
 
-        // Route::post('/buscarFactura', [FacturaController::class, 'buscarFactura']);
+        Route::post('/reportePDF', [FacturaController::class,'reportePDF']);
+        Route::post('/reporteExcel', [FacturaController::class,'reporteExcel']);
 
-
-        // Route::post('/ajaxListado', [RolController::class, 'ajaxListado']);
-        // Route::post('/agregarRol', [RolController::class, 'agregarRol']);
     });
 
     Route::prefix('/registrocompras')->group(function(){

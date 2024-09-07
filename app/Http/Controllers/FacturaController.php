@@ -28,6 +28,8 @@ use SimpleXMLElement;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FacturaController extends Controller
@@ -1544,6 +1546,7 @@ class FacturaController extends Controller
                             'facturas.numero_factura',
                             'facturas.empresa_id',
                             'facturas.siat_documento_sector_id',
+                            'facturas.usuario_creador_id',
 
                             'clientes.cedula',
                             'clientes.nombres',
@@ -1554,6 +1557,8 @@ class FacturaController extends Controller
                             ->where('facturas.empresa_id', $empresa_id)
                             ->where('facturas.sucursal_id', $sucursal_id)
                             ->where('facturas.punto_venta_id', $punto_venta_id)
+
+                            // ->whereNull('facturas.codigo_descripcion')
                             ;
 
             if(!is_null($request->input('buscar_nro_factura'))){
@@ -1586,11 +1591,9 @@ class FacturaController extends Controller
                 $facturas = $query->limit(500)->with('factura.empresa')->get();
             }else{
                 $facturas = $query->orderBy('facturas.id', 'desc')->limit(100)->with('empresa')->get();
-                // $facturas = $query->orderBy('facturas.id', 'desc')->limit(100)->toSql();
-                // dd($facturas, $fecha_ini, $fecha_fin);
+                // $facturas = $query->orderBy('facturas.id', 'desc')->with('empresa')->get();
             }
 
-            // dd($facturas[0]);
 
             $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas'))->render();
             $data['estado'] = 'success';
@@ -3076,6 +3079,183 @@ class FacturaController extends Controller
 
     }
 
+    public function reportePDF(Request $request){
+
+        if($request->ajax()){
+
+            // DE AQUI ESE EL ANTIGUO
+            $usuario_id     = Auth::user()->id;
+            $empresa_id     = Auth::user()->empresa_id;
+            $sucursal_id    = Auth::user()->sucursal_id;
+            $punto_venta_id = Auth::user()->punto_venta_id;
+            $empresa        = Auth::user()->empresa;
+
+            $query = Factura::select(
+                'facturas.numero_cafc',
+                'facturas.estado',
+                'facturas.codigo_descripcion',
+                'facturas.tipo_factura',
+                'facturas.uso_cafc',
+                'facturas.nit',
+                'facturas.cuf',
+                'facturas.id',
+                'facturas.fecha',
+                'facturas.total',
+                'facturas.razon_social',
+                'facturas.numero_factura',
+                'facturas.empresa_id',
+                'facturas.siat_documento_sector_id',
+                'facturas.usuario_creador_id',
+
+                'clientes.cedula',
+                'clientes.nombres',
+                'clientes.ap_paterno',
+                'clientes.ap_materno',
+                )
+            ->join('clientes', 'clientes.id', '=', 'facturas.cliente_id')
+            ->where('facturas.empresa_id', $empresa_id)
+            ->where('facturas.sucursal_id', $sucursal_id)
+            ->where('facturas.punto_venta_id', $punto_venta_id)
+            ;
+
+            if(!is_null($request->input('buscar_nro_factura'))){
+                $numero_factura = $request->input('buscar_nro_factura');
+                $query->where('facturas.numero_factura', $numero_factura);
+            }
+
+            if(!is_null($request->input('buscar_nro_cedula'))){
+                $cedula = $request->input('buscar_nro_cedula');
+                $query->where('clientes.cedula', $cedula);
+            }
+
+            if(!is_null($request->input('buscar_nit'))){
+                $nit = $request->input('buscar_nit');
+                $query->where('facturas.nit', $nit);
+            }
+
+            if(!is_null($request->input('buscar_fecha_inicio')) && !is_null($request->input('buscar_fecha_fin'))){
+                $fecha_ini = $request->input('buscar_fecha_inicio');
+                $fecha_fin = $request->input('buscar_fecha_fin');
+                $query->whereBetween('facturas.fecha', [$fecha_ini." 00:00:00", $fecha_fin." 23:59:59"]);
+            }
+
+            $facturas = $query->get();
+
+            // Generar el PDF, configurando la orientación y el tamaño
+            $pdf = PDF::loadView('factura.pdf.reportePDF', compact('facturas','empresa'))
+            ->setPaper('letter', 'landscape'); // 'letter' es tamaño carta, 'landscape' es horizontal
+
+            // Forzar la descarga del PDF con un nombre específico
+            return $pdf->download('reporte_facturas.pdf');
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
+
+    }
+
+    public function reporteExcel(Request $request){
+
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            // DE AQUI ESE EL ANTIGUO
+            $usuario_id     = Auth::user()->id;
+            $empresa_id     = Auth::user()->empresa_id;
+            $sucursal_id    = Auth::user()->sucursal_id;
+            $punto_venta_id = Auth::user()->punto_venta_id;
+            $empresa        = Auth::user()->empresa;
+
+            $query = Factura::select(
+                'facturas.numero_cafc',
+                'facturas.estado',
+                'facturas.codigo_descripcion',
+                'facturas.tipo_factura',
+                'facturas.uso_cafc',
+                'facturas.nit',
+                'facturas.cuf',
+                'facturas.id',
+                'facturas.fecha',
+                'facturas.total',
+                'facturas.razon_social',
+                'facturas.numero_factura',
+                'facturas.empresa_id',
+                'facturas.siat_documento_sector_id',
+                'facturas.usuario_creador_id',
+
+                'clientes.cedula',
+                'clientes.nombres',
+                'clientes.ap_paterno',
+                'clientes.ap_materno',
+                )
+            ->join('clientes', 'clientes.id', '=', 'facturas.cliente_id')
+            ->where('facturas.empresa_id', $empresa_id)
+            ->where('facturas.sucursal_id', $sucursal_id)
+            ->where('facturas.punto_venta_id', $punto_venta_id)
+            ;
+
+            if(!is_null($request->input('buscar_nro_factura'))){
+                $numero_factura = $request->input('buscar_nro_factura');
+                $query->where('facturas.numero_factura', $numero_factura);
+            }
+
+            if(!is_null($request->input('buscar_nro_cedula'))){
+                $cedula = $request->input('buscar_nro_cedula');
+                $query->where('clientes.cedula', $cedula);
+            }
+
+            if(!is_null($request->input('buscar_nit'))){
+                $nit = $request->input('buscar_nit');
+                $query->where('facturas.nit', $nit);
+            }
+
+            if(!is_null($request->input('buscar_fecha_inicio')) && !is_null($request->input('buscar_fecha_fin'))){
+                $fecha_ini = $request->input('buscar_fecha_inicio');
+                $fecha_fin = $request->input('buscar_fecha_fin');
+                $query->whereBetween('facturas.fecha', [$fecha_ini." 00:00:00", $fecha_fin." 23:59:59"]);
+            }
+
+            $facturas = $query->get();
+
+            // generacion del excel
+            $fileName = 'Facturas.xlsx';
+            $libro = new Spreadsheet();
+            $hoja = $libro->getActiveSheet();
+
+            // Añadir datos a la hoja de cálculo
+            $hoja->setCellValue('A1', 'Número de Factura');
+            $hoja->setCellValue('B1', 'Fecha');
+
+            // Establecer los encabezados para forzar la descarga
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'. $fileName .'"');
+            header('Cache-Control: max-age=0');
+
+            // Guardar el archivo
+            $writer = new Xlsx($libro);
+            $writer->save('php://output');
+            exit;
+
+            // // Generar el PDF, configurando la orientación y el tamaño
+            // $pdf = PDF::loadView('factura.pdf.reportePDF', compact('facturas','empresa'))
+            // ->setPaper('letter', 'landscape'); // 'letter' es tamaño carta, 'landscape' es horizontal
+
+            // // Forzar la descarga del PDF con un nombre específico
+            // return $pdf->download('reporte_facturas.pdf');
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
+
+    }
+
     // ********************  PRUEBAS FACUTRAS SINCRONIZACION   *****************************
     public function pruebas(){
 
@@ -3447,13 +3627,13 @@ class FacturaController extends Controller
 
 
 
-        // // ********* SIN CAFC *********
-        $numero_cafc = null;
-        $uso_cafc = "No";
+        // // // ********* SIN CAFC *********
+        // $numero_cafc = null;
+        // $uso_cafc = "No";
 
         // ********* CON CAFC *********
-        // $numero_cafc = 1;
-        // $uso_cafc = "Si";
+        $numero_cafc = 2;
+        $uso_cafc = "Si";
 
         $modalidad = "offline";
 
@@ -3533,8 +3713,8 @@ class FacturaController extends Controller
         // Imprimir el array final
         // print_r($arrayFinal);
 
-
-        for ($k=1; $k <= 1500 ; $k++) {
+        for ($k=1; $k <= 5000 ; $k++) {
+        // for ($k=1; $k <= 2500 ; $k++) {
         // for ($k=1; $k <= 500 ; $k++) {
         // for ($k=1; $k <= 1 ; $k++) {
 

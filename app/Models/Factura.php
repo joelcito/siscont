@@ -34,5 +34,9 @@ class Factura extends Model
         return $this->belongsTo('App\Models\SiatTipoDocumentoSector', 'siat_documento_sector_id');
     }
 
+    public function usuarioCreador(){
+        return $this->belongsTo('App\Models\User', 'usuario_creador_id');
+    }
+
 
 }

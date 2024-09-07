@@ -6,6 +6,7 @@
             <th>Monto</th>
             <th>Numero</th>
             <th>Sector</th>
+            <th>Usuario</th>
             <th>Estado</th>
             <th>Estado SIAT</th>
             <th>Emision</th>
@@ -26,7 +27,16 @@
                         {{ $fac->numero_factura }}
                     @endif
                 </td>
-                <td>{{ $fac->siat_tipo_documento_sector->descripcion }}</td>
+                <td>
+                    @if ($fac->siat_tipo_documento_sector->codigo_clasificador == "8")
+                        Fac. Tasa Cero
+                    @else
+                        Fac. Com. Venta
+                    @endif
+                </td>
+                <td>
+                    {{ $fac->usuarioCreador->nombres." ".$fac->usuarioCreador->ap_paterno }}
+                </td>
                 <td>
                     @if (is_null($fac->estado))
                         <span class="badge badge-success">VIGENTE</span>
