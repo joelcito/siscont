@@ -1367,13 +1367,16 @@ class FacturaController extends Controller
                                 // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
                                 if($swFacturaEnvio){
                                     $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
-                                    $this->enviaCorreo(
-                                        $cliente->correo,
-                                        $nombre,
-                                        $facturaVerdad->numero,
-                                        $facturaVerdad->fecha,
-                                        $facturaVerdad->id
-                                    );
+
+                                    // dd(
+                                    //     $this->enviaCorreo(
+                                    //         $cliente->correo,
+                                    //         $nombre,
+                                    //         $facturaVerdad->numero,
+                                    //         $facturaVerdad->fecha,
+                                    //         $facturaVerdad->id
+                                    //     )
+                                    // );
                                 }
 
                             }else{
@@ -3419,14 +3422,16 @@ class FacturaController extends Controller
 
             // Genera la ruta donde se guardará el archivo PDF
             $rutaPDF = storage_path("app/public/factura_$factura->cuf.pdf");
+            $rutaXML = storage_path("app/public/facturaxml_$factura->cuf.xml");
+
             // Guarda el PDF en la ruta especificada
             $pdf->save($rutaPDF);
-            // $pdfPath = "assets/docs/facturapdf.pdf";
-            $xmlPath = "assets/docs/facturaxml_$factura->cuf.xml";
+            $archivoXML->asXML($rutaXML);
+
+            // $xmlPath = "assets/docs/facturaxml_$factura->cuf.xml";
 
             $mail->addAttachment($rutaPDF, "Factura.pdf"); // Adjuntar archivo PDF
-            $mail->addAttachment($xmlPath, "Factura.xml"); // Adjuntar archivo XML
-
+            $mail->addAttachment($rutaXML, "Factura.xml"); // Adjuntar archivo XML
 
             $mail->send();
 
@@ -3439,6 +3444,8 @@ class FacturaController extends Controller
             $data['msg'] = 'No se pudo enviar el correo: ' . $mail->ErrorInfo;
             // return 'No se pudo enviar el correo: ' . $mail->ErrorInfo;
         }
+
+        return $data;
 
 
 
