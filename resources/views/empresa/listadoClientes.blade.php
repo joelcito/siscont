@@ -14,7 +14,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Cliente</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -27,6 +27,7 @@
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombres_cliente_new_usuaio_empresa" id="nombres_cliente_new_usuaio_empresa" required>
+                                <input type="hidden" name="cliente_id_cliente_new_usuaio_empresa" id="cliente_id_cliente_new_usuaio_empresa" required>
                             </div>
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
@@ -48,7 +49,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label class="fs-6 fw-semibold form-label mb-2">Complemento</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="complemento_cliente_new_usuaio_empresa" id="complemento_cliente_new_usuaio_empresa">
+                                <input type="text" class="form-control fw-bold form-control-solid" name="complemento_cliente_new_usuaio_empresa" id="complemento_cliente_new_usuaio_empresa">
                             </div>
                             <div class="col-md-2">
                                 <label class="fs-6 fw-semibold form-label mb-2">Nit</label>
@@ -180,6 +181,7 @@
         }
 
         function modalNuevoCliente(){
+            $('#cliente_id_cliente_new_usuaio_empresa').val(0)
             $('#nombres_cliente_new_usuaio_empresa').val("")
             $('#ap_paterno_cliente_new_usuaio_empresa').val("")
             $('#ap_materno_cliente_new_usuaio_empresa').val("")
@@ -222,6 +224,60 @@
             }else{
                 $("#formulario_new_cliente_empresa")[0].reportValidity();
             }
+        }
+
+        function editarCliente(id,nombres ,ap_paterno,ap_materno ,numero_celular ,nit,razon_social ,cedula ,complemento,correo){
+
+            $('#cliente_id_cliente_new_usuaio_empresa').val(id)
+            $('#nombres_cliente_new_usuaio_empresa').val(nombres)
+            $('#ap_paterno_cliente_new_usuaio_empresa').val(ap_paterno)
+            $('#ap_materno_cliente_new_usuaio_empresa').val(ap_materno)
+            $('#complemento_cliente_new_usuaio_empresa').val(complemento)
+            $('#num_ceular_cliente_new_usuaio_empresa').val(numero_celular)
+            $('#cedula_cliente_new_usuaio_empresa').val(cedula)
+            $('#nit_cliente_new_usuaio_empresa').val(nit)
+            $('#razon_social_cliente_new_usuaio_empresa').val(razon_social)
+            $('#correo_cliente_new_usuaio_empresa').val(correo)
+
+            $('#modal_new_cliente').modal('show')
+        }
+
+        function eliminarCliente(id){
+            Swal.fire({
+                title: "Estas seguro de eliminar al cliente?",
+                text: "No podras revertir eso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url   : "{{ url('empresa/eliminarCliente') }}",
+                        method: "POST",
+                        data  : {
+                            cliente : id
+                        },
+                        success: function (data) {
+                            if(data.estado === 'success'){
+                                Swal.fire({
+                                    icon:'success',
+                                    title: "EXITO!",
+                                    text:  data.text,
+                                })
+                                ajaxListado();
+                            }else if(data.estado === 'error'){
+                                Swal.fire({
+                                    icon : 'warning',
+                                    title: "ALTO!",
+                                    text : data.text,
+                                })
+                            }
+                        }
+                    })
+                }
+            });
         }
    </script>
 @endsection

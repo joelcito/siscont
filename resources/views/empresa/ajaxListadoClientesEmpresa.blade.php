@@ -8,6 +8,7 @@
             <th>Nit</th>
             <th>Razon Social</th>
             <th>Cedula</th>
+            <th>Complemento</th>
             <th>Correo</th>
             <th>Actions</th>
         </tr>
@@ -22,10 +23,13 @@
                 <td>{{ $cli->nit }}</td>
                 <td>{{ $cli->razon_social }}</td>
                 <td>{{ $cli->cedula }}</td>
+                <td>{{ $cli->complemento }}</td>
                 <td>{{ $cli->correo }}</td>
                 <td>
-                    <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-sm btn-warning btn-icon" onclick="editarCliente('{{ $cli->id }}', '{{ $cli->nombres }}', '{{ $cli->ap_paterno }}', '{{ $cli->ap_materno }}', '{{ $cli->numero_celular }}', '{{ $cli->nit }}', '{{ $cli->razon_social }}', '{{ $cli->cedula }}', '{{ $cli->complemento }}', '{{ $cli->correo }}')"><i class="fa fa-edit"></i></button>
+                    @if ($cli->contarFacturas() == 0)
+                        <button class="btn btn-sm btn-danger btn-icon" onclick="eliminarCliente('{{ $cli->id }}')"><i class="fa fa-trash"></i></button>
+                    @endif
                 </td>
             </tr>
         @empty

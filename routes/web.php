@@ -84,6 +84,8 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/listadoProductoServicioEmpresa', [EmpresaController::class, 'listadoProductoServicioEmpresa']);
         Route::post('/ajaxListadoProductoServicioEmpresa', [EmpresaController::class, 'ajaxListadoProductoServicioEmpresa']);
         Route::post('/guardarProductoServicioEmpresa', [EmpresaController::class, 'guardarProductoServicioEmpresa']);
+        Route::post('/eliminarCliente', [EmpresaController::class, 'eliminarCliente']);
+        Route::post('/eliminarServicio', [EmpresaController::class, 'eliminarServicio']);
 
         Route::post('/ajaxListadoAsignacionDocumentosSectores', [EmpresaController::class, 'ajaxListadoAsignacionDocumentosSectores']);
         Route::post('/guardarAsignacionDocumentoSector', [EmpresaController::class, 'guardarAsignacionDocumentoSector']);
@@ -135,12 +137,9 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/descuentoAdicionalGlobal', [FacturaController::class, 'descuentoAdicionalGlobal']);
         Route::post('/verificaItemsGeneracion', [FacturaController::class, 'verificaItemsGeneracion']);
         Route::post('/arrayCuotasPagar', [FacturaController::class, 'arrayCuotasPagar']);
-        // Route::post('/emitirFactura', [FacturaController::class, 'emitirFactura']);
         Route::post('/anularFactura', [FacturaController::class, 'anularFactura']);
         Route::post('/desanularFacturaAnulado', [FacturaController::class, 'desanularFacturaAnulado']);
         Route::post('/verificarNit', [FacturaController::class, 'verificarNit']);
-
-        // Route::post('/emitirFacturaTasaCero', [FacturaController::class, 'emitirFacturaTasaCero']);
 
         Route::post('/sacaNumeroCafcUltimo', [FacturaController::class, 'sacaNumeroCafcUltimo']);
 

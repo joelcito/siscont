@@ -21,4 +21,24 @@ class Servicio extends Model
     public function siatUnidadMedida(){
         return $this->belongsTo('App\Models\SiatUnidadMedida', 'siat_unidad_medidas_id');
     }
+
+    // public function detalles()
+    // {
+    //     return $this->hasMany(Detalle::class, 'servicio_id');
+    // }
+
+    // public function contarDetallesConFactura()
+    // {
+    //     return $this->detalles()->whereNotNull('factura_id')->count();
+    // }
+
+    // Relación: un cliente tiene muchas facturas
+    public function detalles($servico_id)
+    {
+        return $this->join('detalles', 'detalles.servicio_id', '=', 'servicios.id')
+                    ->whereNotNull('detalles.factura_id')
+                    ->where('detalles.servicio_id', $servico_id)
+                    ->whereNull('detalles.deleted_at')
+                    ->count();
+    }
 }

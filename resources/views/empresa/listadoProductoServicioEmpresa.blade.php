@@ -12,8 +12,8 @@
         <div class="modal-dialog modal-dialog-centered mw-1000px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="fw-bold">Formulario de Servicio</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <h2 class="fw-bold">Formulario de Servicio / Producto</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -24,17 +24,18 @@
                     <form id="formulario_new_servicio">
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
-                                <select data-control="select2" name="documento_sector_siat_id_new_servicio" id="documento_sector_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Documento Sector</label>
+                                <select required data-control="select2" name="documento_sector_siat_id_new_servicio" id="documento_sector_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($documentos_sectores_asignados as $dsa)
                                         <option value="{{ $dsa->siat_tipo_documento_sector->id }}">{{ $dsa->siat_tipo_documento_sector->descripcion }}</option>
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="servicio_producto_id_new_servicio" id="servicio_producto_id_new_servicio">
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Actividad Economica Siat</label>
-                                <select data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <label class="fs-6 required fw-semibold form-label mb-2">Actividad Economica Siat</label>
+                                <select required data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($activiadesEconomica as $ae)
                                         <option value="{{ $ae->id }}">{{ $ae->descripcion }}</option>
@@ -42,8 +43,8 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Producto Servicio Siat</label>
-                                <select data-control="select2" name="producto_servicio_siat_id_new_servicio" id="producto_servicio_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <label class="fs-6 fw-semibold required form-label mb-2">Producto Servicio Siat</label>
+                                <select required data-control="select2" name="producto_servicio_siat_id_new_servicio" id="producto_servicio_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($productoServicio as $ps)
                                         <option value="{{ $ps->id }}">{{ $ps->descripcion_producto }}</option>
@@ -51,8 +52,8 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2">Unidad Medida Siat</label>
-                                <select data-control="select2" name="unidad_medida_siat_id_new_servicio" id="unidad_medida_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <label class="fs-6 required fw-semibold form-label mb-2">Unidad Medida Siat</label>
+                                <select required data-control="select2" name="unidad_medida_siat_id_new_servicio" id="unidad_medida_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($unidadMedida as $um)
                                         <option value="{{ $um->id }}">{{ $um->descripcion }}</option>
@@ -199,7 +200,16 @@
         }
 
         function modalNuevoServicio(){
-            $('#servicio_id_new_servicio').val(0)
+            $('#servicio_producto_id_new_servicio').val(0)
+            $('#documento_sector_siat_id_new_servicio').val(null).trigger('change')
+            $('#actividad_economica_siat_id_new_servicio').val(null).trigger('change')
+            $('#producto_servicio_siat_id_new_servicio').val(null).trigger('change')
+            $('#unidad_medida_siat_id_new_servicio').val(null).trigger('change')
+            $('#numero_serie').val("")
+            $('#codigo_imei').val("")
+            $('#descrpcion_new_servicio').val("")
+            $('#precio_new_servicio').val("")
+
             $('#modal_new_servicio').modal('show')
         }
 
@@ -231,6 +241,57 @@
             }else{
                 $("#formulario_new_servicio")[0].reportValidity();
             }
+        }
+
+        function editaraSErvicio(id ,siat_documento_sector_id ,siat_depende_actividades_id ,siat_producto_servicios_id,siat_unidad_medidas_id,numero_serie,codigo_imei ,descripcion, precio){
+            $('#servicio_producto_id_new_servicio').val(id)
+            $('#documento_sector_siat_id_new_servicio').val(siat_documento_sector_id).trigger('change')
+            $('#actividad_economica_siat_id_new_servicio').val(siat_depende_actividades_id).trigger('change')
+            $('#producto_servicio_siat_id_new_servicio').val(siat_producto_servicios_id).trigger('change')
+            $('#unidad_medida_siat_id_new_servicio').val(siat_unidad_medidas_id).trigger('change')
+            $('#numero_serie').val(numero_serie)
+            $('#codigo_imei').val(codigo_imei)
+            $('#descrpcion_new_servicio').val(descripcion)
+            $('#precio_new_servicio').val(precio)
+            $('#modal_new_servicio').modal('show')
+        }
+
+        function eliminarServicio(id){
+            Swal.fire({
+                title: "Estas seguro de eliminar el servicio?",
+                text: "No podras revertir eso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url   : "{{ url('empresa/eliminarServicio') }}",
+                        method: "POST",
+                        data  : {
+                            servicio : id
+                        },
+                        success: function (data) {
+                            if(data.estado === 'success'){
+                                Swal.fire({
+                                    icon:'success',
+                                    title: "EXITO!",
+                                    text:  data.text,
+                                })
+                                ajaxListado();
+                            }else if(data.estado === 'error'){
+                                Swal.fire({
+                                    icon : 'warning',
+                                    title: "ALTO!",
+                                    text : data.text,
+                                })
+                            }
+                        }
+                    })
+                }
+            });
         }
    </script>
 @endsection

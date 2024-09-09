@@ -12,7 +12,7 @@
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes" />
-		<meta property="og:url" content="https://keenthemes.com/metronic" />
+		<meta property="og:url" content="http://infinitassoluciones.net/metronic" />
 		<meta property="og:site_name" content="Metronic by Keenthemes" />
 		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
 		<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
@@ -5024,7 +5024,7 @@
 						@include('partials.menu')
 						<!--end::sidebar menu-->
 						<!--begin::Footer-->
-						<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+						{{--  <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
 							<a href="https://preview.keenthemes.com/html/metronic/docs" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
 								<span class="btn-label">Docs & Components</span>
 								<i class="ki-duotone ki-document btn-icon fs-2 m-0">
@@ -5032,7 +5032,7 @@
 									<span class="path2"></span>
 								</i>
 							</a>
-						</div>
+						</div>  --}}
 						<!--end::Footer-->
 					</div>
 					<!--end::Sidebar-->
@@ -5056,14 +5056,14 @@
 							<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
 								<!--begin::Copyright-->
 								<div class="text-gray-900 order-2 order-md-1">
-									<span class="text-muted fw-semibold me-1">2024&copy;</span>
-									<a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
+									<span class="text-muted fw-semibold me-1">{{ date('Y') }}&copy;</span>
+									Desarrollado por <a href="http://infinitassoluciones.net" target="_blank" class="text-gray-800 text-hover-primary">Infinitas Soluciones</a>
 								</div>
 								<!--end::Copyright-->
 								<!--begin::Menu-->
 								<ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
 									<li class="menu-item">
-										<a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+										<a href="http://infinitassoluciones.net" target="_blank" class="menu-link px-2">About</a>
 									</li>
 									<li class="menu-item">
 										<a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
@@ -5884,7 +5884,7 @@
 								<!--end::User-->
 								<!--begin::Text-->
 								<div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start" data-kt-element="message-text">You can unwatch this repository immediately by clicking here:
-								<a href="https://keenthemes.com">Keenthemes.com</a></div>
+								<a href="http://infinitassoluciones.net">Keenthemes.com</a></div>
 								<!--end::Text-->
 							</div>
 							<!--end::Wrapper-->

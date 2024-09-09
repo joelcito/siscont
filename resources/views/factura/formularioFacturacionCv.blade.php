@@ -13,7 +13,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Cliente</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -744,6 +744,14 @@
             if($("#formularioGeneraFactura")[0].checkValidity()){
 
                 if(arrayProductoCar.length > 0){
+
+                    // Obtén el botón y el icono de carga
+                    var boton = $("#boton_enviar_factura");
+                    var iconoCarga = boton.find("i");
+                    // Deshabilita el botón y muestra el icono de carga
+                    boton.attr("disabled", true);
+                    iconoCarga.show();
+
                     $.ajax({
                         url   : "{{ url('factura/emitirFacturaCv') }}",
                         method: "POST",

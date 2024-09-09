@@ -25,6 +25,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Ui\Presets\React;
+use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 
 class EmpresaController extends Controller
 {
@@ -1168,8 +1169,11 @@ class EmpresaController extends Controller
                 $empresa_id = $usuario->empresa_id;
                 $plan       = $obtenerSuscripcionVigenteEmpresa->plan;
 
-                if($suscripcion->verificarRegistroClienteByPlan($plan, $empresa)){
-                    $cliente                     = new Cliente();
+                $cliente_id                  = $request->input('cliente_id_cliente_new_usuaio_empresa') ;
+
+                if($suscripcion->verificarRegistroClienteByPlan($plan, $empresa) || $cliente_id != "0"){
+
+                    $cliente                     = $cliente_id == "0" ? new Cliente() : Cliente::find($cliente_id);
                     $cliente->usuario_creador_id = $usuario->id;
                     $cliente->empresa_id         = $empresa_id;
                     $cliente->nombres            = $request->input('nombres_cliente_new_usuaio_empresa');
@@ -1248,16 +1252,25 @@ class EmpresaController extends Controller
                 $empresa_id = $usuario->empresa_id;
                 $plan       = $obtenerSuscripcionVigenteEmpresa->plan;
 
-                // if($cantidadServicioProducto <= $plan->cantidad_producto){
-                if($suscripcion->verificarRegistroServicioProductoByPlan($plan, $empresa)){
+                $guardarProductoServicioEmpresa = $request->input('servicio_producto_id_new_servicio');
 
-                    $servicio                              = new Servicio();
-                    $servicio->usuario_creador_id          = $usuario->id;
+                if($suscripcion->verificarRegistroServicioProductoByPlan($plan, $empresa) || $guardarProductoServicioEmpresa != "0"){
+
+                    if($guardarProductoServicioEmpresa == "0"){
+                        $servicio                     = new Servicio();
+                        $servicio->usuario_creador_id = $usuario->id;
+                    }else{
+                        $servicio                         = Servicio::find($guardarProductoServicioEmpresa);
+                        $servicio->usuario_modificador_id = $usuario->id;
+                    }
+                    // $servicio                              = $guardarProductoServicioEmpresa == "0" ? new Servicio()  : Servicio::find($guardarProductoServicioEmpresa);
                     $servicio->empresa_id                  = $empresa_id;
                     $servicio->siat_depende_actividades_id = $request->input('actividad_economica_siat_id_new_servicio');
                     $servicio->siat_documento_sector_id    = $request->input('documento_sector_siat_id_new_servicio');
                     $servicio->siat_producto_servicios_id  = $request->input('producto_servicio_siat_id_new_servicio');
                     $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
+                    $servicio->numero_serie                = $request->input('numero_serie');
+                    $servicio->codigo_imei                 = $request->input('codigo_imei');
                     $servicio->descripcion                 = $request->input('descrpcion_new_servicio');
                     $servicio->precio                      = $request->input('precio_new_servicio');
                     $servicio->save();
@@ -1316,5 +1329,57 @@ class EmpresaController extends Controller
         }
         return $data;
     }
+
+    public function eliminarCliente(Request $request){
+        if($request->ajax()){
+            $usuario    = Auth::user();
+            $cliente_id = $request->input('cliente');
+            $cliente    = Cliente::find($cliente_id);
+            if($cliente){
+                if($cliente->empresa_id == $usuario->empresa_id){
+                    Cliente::destroy($cliente_id);
+                    $data['text']   = 'El cliente se elimino con exito!';
+                    $data['estado'] = 'success';
+                }else{
+                    $data['text']   = 'El cliente no pertenece a la empresa';
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['text']   = 'El cliente no existe';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function eliminarServicio(Request $request){
+        if($request->ajax()){
+            $usuario     = Auth::user();
+            $servicio_id = $request->input('servicio');
+            $servicio    = Servicio::find($servicio_id);
+            if($servicio){
+                if($servicio->empresa_id == $usuario->empresa_id){
+                    Servicio::destroy($servicio_id);
+                    $data['text']   = 'El servicio se elimino con exito!';
+                    $data['estado'] = 'success';
+                }else{
+                    $data['text']   = 'El cliente no pertenece a la empresa';
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['text']   = 'El servicio no existe';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+
 
 }
