@@ -72,6 +72,9 @@
             <div class="line">
                 ¡Que tengas un gran día!
             </div>
+            <div class="line">
+                Desarrollado por <a href="https://infinitassoluciones.net">Infinitas Soluciones</a>
+            </div>
         </div>
         <br>
         <hr>
