@@ -1368,14 +1368,15 @@ class FacturaController extends Controller
                                 if($swFacturaEnvio){
                                     $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
 
+
                                     // dd(
-                                    //     $this->enviaCorreo(
-                                    //         $cliente->correo,
-                                    //         $nombre,
-                                    //         $facturaVerdad->numero,
-                                    //         $facturaVerdad->fecha,
-                                    //         $facturaVerdad->id
-                                    //     )
+                                        $this->enviaCorreo(
+                                            $cliente->correo,
+                                            $nombre,
+                                            $facturaVerdad->numero,
+                                            $facturaVerdad->fecha,
+                                            $facturaVerdad->id
+                                        );
                                     // );
                                 }
 
