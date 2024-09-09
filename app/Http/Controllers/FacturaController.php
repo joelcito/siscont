@@ -3379,7 +3379,8 @@ class FacturaController extends Controller
             'name'         => $nombre,
             'number'       => $numero,
             'date'         => $fecha,
-            'empresa_name' => $empresa->nombre
+            'empresa_name' => $empresa->nombre,
+            'logo'         => url($empresa->logo)
         ];
 
         foreach ($data as $key => $value)

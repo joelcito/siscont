@@ -49,7 +49,7 @@
         <div class="hijo">
             <div class="line">
                 <center>
-                    <img src="https://goghu.net/micarLogo.png" alt="aqui va el Logo de KENNEL" width="50%">
+                    <img src="{{ $logo }}" alt="aqui va el Logo de KENNEL" width="50%">
                 </center>
             </div>
             <div class="titulo">
