@@ -3380,7 +3380,9 @@ class FacturaController extends Controller
             'number'       => $numero,
             'date'         => $fecha,
             'empresa_name' => $empresa->nombre,
-            'logo'         => url($empresa->logo)
+            // 'logo'         => url($empresa->logo)
+            // 'logo'         => "https://virusnotsystem.infinitassoluciones.net/public/assets/img/1725852799_development-icon-3335977.jpg"
+            'logo'         => asset("assets/img")."/".$empresa->logo
         ];
 
         foreach ($data as $key => $value)
