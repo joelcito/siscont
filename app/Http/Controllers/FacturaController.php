@@ -1173,7 +1173,7 @@ class FacturaController extends Controller
                     $cadena = $nitEmisor.$fechaEmision.$sucursal.$modalidad.$tipoEmision.$tipoFactura.$tipoFacturaSector.$numeroFactura.$puntoVenta;
 
                     // VERIFICAMOS SI EXISTE LOS DATOS SUFICINTES APRA EL MANDAO DEL CORREO
-                    $cliente = Cliente::find($cliente_id);
+                    $cliente        = Cliente::find($cliente_id);
                     $swFacturaEnvio = true;
                     if(!($cliente && $cliente->correo != null && $cliente->correo != '')){
                         // $data['estado'] = "error_email";
@@ -1367,17 +1367,13 @@ class FacturaController extends Controller
                                 // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
                                 if($swFacturaEnvio){
                                     $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
-
-
-                                    // dd(
-                                        $this->enviaCorreo(
-                                            $cliente->correo,
-                                            $nombre,
-                                            $facturaVerdad->numero,
-                                            $facturaVerdad->fecha,
-                                            $facturaVerdad->id
-                                        );
-                                    // );
+                                    $this->enviaCorreo(
+                                        $cliente->correo,
+                                        $nombre,
+                                        $facturaVerdad->numero,
+                                        $facturaVerdad->fecha,
+                                        $facturaVerdad->id
+                                    );
                                 }
 
                             }else{
@@ -1433,17 +1429,17 @@ class FacturaController extends Controller
                             'factura_id' => $facturaVerdad->id
                         ]);
 
-                        // if($swFacturaEnvio){
-                        //     // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
-                        //     $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
-                        //     $this->enviaCorreo(
-                        //         $cliente->correo,
-                        //         $nombre,
-                        //         $facturaVerdad->numero,
-                        //         $facturaVerdad->fecha,
-                        //         $facturaVerdad->id
-                        //     );
-                        // }
+                        if($swFacturaEnvio){
+                            // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
+                            $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
+                            $this->enviaCorreo(
+                                $cliente->correo,
+                                $nombre,
+                                $facturaVerdad->numero,
+                                $facturaVerdad->fecha,
+                                $facturaVerdad->id
+                            );
+                        }
 
                         $data['estado']     = 'OFFLINE';
                     }
@@ -1649,6 +1645,7 @@ class FacturaController extends Controller
 
                     // VERIFICAMOS SI EXISTE LOS DATOS SUFICINTES APRA EL MANDAO DEL CORREO
                     $cliente = Cliente::find($cliente_id);
+                    $swFacturaEnvio = true;
                     if(!($cliente && $cliente->correo != null && $cliente->correo != '')){
                         // $data['estado'] = "error_email";
                         // $data['text']    = "La persona no tiene correo";
@@ -1846,16 +1843,16 @@ class FacturaController extends Controller
                                 $data['numero'] = $facturaVerdad->id;
 
                                 // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
-                                // if($swFacturaEnvio){
-                                //     $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
-                                //     $this->enviaCorreo(
-                                //         $cliente->correo,
-                                //         $nombre,
-                                //         $facturaVerdad->numero,
-                                //         $facturaVerdad->fecha,
-                                //         $facturaVerdad->id
-                                //     );
-                                // }
+                                if($swFacturaEnvio){
+                                    $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
+                                    $this->enviaCorreo(
+                                        $cliente->correo,
+                                        $nombre,
+                                        $facturaVerdad->numero,
+                                        $facturaVerdad->fecha,
+                                        $facturaVerdad->id
+                                    );
+                                }
 
                             }else{
                                 $data['estado'] = "RECHAZADA";
@@ -1911,17 +1908,17 @@ class FacturaController extends Controller
                             'factura_id' => $facturaVerdad->id
                         ]);
 
-                        // if($swFacturaEnvio){
-                        //     // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
-                        //     $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
-                        //     $this->enviaCorreo(
-                        //         $cliente->correo,
-                        //         $nombre,
-                        //         $facturaVerdad->numero,
-                        //         $facturaVerdad->fecha,
-                        //         $facturaVerdad->id
-                        //     );
-                        // }
+                        if($swFacturaEnvio){
+                            // ***************** ENVIAMOS EL CORREO DE LA FACTURA *****************
+                            $nombre = $cliente->nombres." ".$cliente->ap_paterno." ".$cliente->ap_materno;
+                            $this->enviaCorreo(
+                                $cliente->correo,
+                                $nombre,
+                                $facturaVerdad->numero,
+                                $facturaVerdad->fecha,
+                                $facturaVerdad->id
+                            );
+                        }
 
                         $data['estado']     = 'OFFLINE';
                     }
@@ -2806,7 +2803,7 @@ class FacturaController extends Controller
 
             // VERIFICAMOS SI EXISTE LOS DATOS SUFICINTES APRA EL MANDAO DEL CORREO
             $cliente = Cliente::find($datosCliente['cliente_id']);
-            // $cliente = Cliente::find($vehiculo->cliente->id);
+            $swFacturaEnvio = true;
             if(!($cliente && $cliente->correo != null && $cliente->correo != '')){
                 // $data['estado'] = "error_email";
                 // $data['msg']    = "La persona no tiene correo";
@@ -3380,8 +3377,6 @@ class FacturaController extends Controller
             'number'       => $numero,
             'date'         => $fecha,
             'empresa_name' => $empresa->nombre,
-            // 'logo'         => url($empresa->logo)
-            // 'logo'         => "https://virusnotsystem.infinitassoluciones.net/public/assets/img/1725852799_development-icon-3335977.jpg"
             'logo'         => asset("assets/img")."/".$empresa->logo
         ];
 
