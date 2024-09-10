@@ -26,6 +26,7 @@
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombres_cliente_new_usuaio_empresa" id="nombres_cliente_new_usuaio_empresa" required>
+                                <input type="hidden" name="cliente_id_cliente_new_usuaio_empresa" id="cliente_id_cliente_new_usuaio_empresa" required value="0">
                             </div>
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
@@ -724,11 +725,17 @@
 
         function emitirFactura(){
 
-            console.log(arrayProductoCar);
-
             if($("#formularioGeneraFactura")[0].checkValidity()){
 
                 if(arrayProductoCar.length > 0){
+
+                    // Obtén el botón y el icono de carga
+                    var boton = $("#boton_enviar_factura");
+                    var iconoCarga = boton.find("i");
+                    // Deshabilita el botón y muestra el icono de carga
+                    boton.attr("disabled", true);
+                    iconoCarga.show();
+
                     $.ajax({
                         url   : "{{ url('factura/emitirFacturaTc') }}",
                         method: "POST",

@@ -1453,6 +1453,15 @@ class FacturaController extends Controller
                         $data['estado']     = 'OFFLINE';
                     }
 
+                    $archivo = "assets/docs/facturaxml_$nombreArchivo.xml";
+                    $archivoZip = "assets/docs/facturaxml_$nombreArchivo.xml.zip";
+                    // Verifica si el archivo existe antes de intentar eliminarlo
+                    if (file_exists($archivo))
+                        unlink($archivo);
+
+                    if(file_exists($archivoZip))
+                        unlink($archivoZip);
+
                 }else{
                     $data['text']   = 'Alcanzo la cantidad maxima registros de facturas, solicite un plan superior.';
                     $data['estado'] = 'error_sus';
@@ -1931,6 +1940,15 @@ class FacturaController extends Controller
 
                         $data['estado']     = 'OFFLINE';
                     }
+
+                    $archivo = "assets/docs/facturaxmlTasaCero_$nombreArchivo.xml";
+                    $archivoZip = "assets/docs/facturaxmlTasaCero_$nombreArchivo.xml.zip";
+                    // Verifica si el archivo existe antes de intentar eliminarlo
+                    if (file_exists($archivo))
+                        unlink($archivo);
+
+                    if(file_exists($archivoZip))
+                        unlink($archivoZip);
                 }else{
                     $data['text']   = 'Alcanzo la cantidad maxima registros de facturas, solicite un plan superior.';
                     $data['estado'] = 'error_sus';
@@ -3440,6 +3458,14 @@ class FacturaController extends Controller
             $mail->addAttachment($rutaXML, "Factura.xml"); // Adjuntar archivo XML
 
             $mail->send();
+
+            // Verifica si el archivo PDF existe antes de intentar eliminarlo
+            if (file_exists($rutaPDF))
+                unlink($rutaPDF);
+
+            // Verifica si el archivo XML existe antes de intentar eliminarlo
+            if (file_exists($rutaXML))
+                unlink($rutaXML);
 
             // return 'Correo enviado correctamente';
             $data['estado'] = 'success';

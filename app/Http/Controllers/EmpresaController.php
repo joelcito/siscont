@@ -255,6 +255,7 @@ class EmpresaController extends Controller
              // Obtener la instancia del modelo
             $urlApiServicioSiat = new UrlApiServicioSiat();
             $UrlCodigos         = $urlApiServicioSiat->getUrlCodigos($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+            // dd($empresa->codigo_ambiente, $empresa->codigo_modalidad, $UrlCodigos);
 
             if($UrlCodigos){
 
@@ -1033,7 +1034,6 @@ class EmpresaController extends Controller
         return $data;
     }
 
-
     public function guardarNewServioEmpresa(Request $request){
         if($request->ajax()){
 
@@ -1173,8 +1173,15 @@ class EmpresaController extends Controller
 
                 if($suscripcion->verificarRegistroClienteByPlan($plan, $empresa) || $cliente_id != "0"){
 
-                    $cliente                     = $cliente_id == "0" ? new Cliente() : Cliente::find($cliente_id);
-                    $cliente->usuario_creador_id = $usuario->id;
+                    // $cliente                     = $cliente_id == "0" ? new Cliente() : Cliente::find($cliente_id);
+                    if($cliente_id == "0"){
+                        $cliente                     = new Cliente();
+                        $cliente->usuario_creador_id = $usuario->id;
+                    }else{
+                        $cliente                         = Cliente::find($cliente_id);
+                        $cliente->usuario_modificador_id = $usuario->id;
+                    }
+
                     $cliente->empresa_id         = $empresa_id;
                     $cliente->nombres            = $request->input('nombres_cliente_new_usuaio_empresa');
                     $cliente->ap_paterno         = $request->input('ap_paterno_cliente_new_usuaio_empresa');
@@ -1379,7 +1386,5 @@ class EmpresaController extends Controller
         }
         return $data;
     }
-
-
 
 }

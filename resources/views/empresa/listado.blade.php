@@ -36,7 +36,7 @@
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombre Empresa</label>
                                 <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="nombre_empresa" id="nombre_empresa" required>
-                                <input type="text" name="empresa_id" id="empresa_id" value="0">
+                                <input type="hidden" name="empresa_id" id="empresa_id" value="0">
                             </div>
                             <div class="col-md-2">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nit Empresa</label>

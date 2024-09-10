@@ -31,7 +31,7 @@
                                         <option value="{{ $stDocumentoSector->id }}">{{ $stDocumentoSector->descripcion }}</option>
                                     @endforeach
                                 </select>
-                                <input type="text" name="new_asignacion_empresa_id" id="new_asignacion_empresa_id" value="{{$empresa->id}}">
+                                <input type="hidden" name="new_asignacion_empresa_id" id="new_asignacion_empresa_id" value="{{$empresa->id}}">
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -72,8 +72,7 @@
                                         <option value="{{ $plan->id }}">{{ $plan->nombre." | ".$plan->tipo_plan }}</option>
                                     @endforeach
                                 </select>
-
-                                <input type="text" name="empresa_id_new_plan" id="empresa_id_new_plan" value="{{ $empresa->id }}">
+                                <input type="hidden" name="empresa_id_new_plan" id="empresa_id_new_plan" value="{{ $empresa->id }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Fecha Inicio</label>
