@@ -25,8 +25,7 @@
                 <td>{{ $plan->cantidad_usuario }}</td>
                 <td>{{ $plan->cantidad_producto }}</td>
                 <td>
-                    {{-- <button class="btn btn-icon btn-sm btn-warning"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-icon btn-sm btn-danger"><i class="fa fa-trash"></i></button> --}}
+                    {{-- <button class="btn btn-warning"></button> --}}
                 </td>
             </tr>
         @empty

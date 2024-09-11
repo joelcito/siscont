@@ -34,7 +34,6 @@
                 </td>
                 <td>
                     <a class="btn btn-sm btn-info btn-icon" title="Detalles de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a>
-                    <a class="btn btn-sm btn-info btn-icon" title="Permisos de la Empresa" href="#"><i class="fa fa-server"></i></a>
                 </td>
             </tr>
         @empty

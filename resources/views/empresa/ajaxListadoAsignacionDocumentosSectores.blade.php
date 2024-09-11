@@ -26,7 +26,7 @@
                 <td>{{ $dsa->empresa->nombre }}</td>
                 <td>{{ $dsa->siat_tipo_documento_sector->descripcion }}</td>
                 <td>
-                    <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-sm btn-danger btn-icon" onclick="eliminarAsignaconDocumentoSector('{{ $dsa->id }}')"><i class="fa fa-trash"></i></button>
                 </td>
             </tr>
         @empty

@@ -13,7 +13,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de asignacion de Documento Sector</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -54,7 +54,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Suscripcion</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -66,13 +66,14 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Plan</label>
-                                <select    data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_suscripcion" data-hide-search="true" class="form-select form-select-solid fw-bold"     name="plan_id_new_plan" id="plan_id_new_plan" class="form-control">
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_suscripcion" data-hide-search="true" class="form-select form-select-solid fw-bold"     name="plan_id_new_plan" id="plan_id_new_plan" class="form-control">
                                     <option></option>
                                     @foreach ($planes as $plan)
                                         <option value="{{ $plan->id }}">{{ $plan->nombre." | ".$plan->tipo_plan }}</option>
                                     @endforeach
                                 </select>
                                 <input type="hidden" name="empresa_id_new_plan" id="empresa_id_new_plan" value="{{ $empresa->id }}">
+                                <input type="hidden" name="suscripcion_id_new_plan" id="suscripcion_id_new_plan">
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Fecha Inicio</label>
@@ -113,7 +114,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Cliente</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -183,7 +184,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Lista Productos Servicios</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -213,7 +214,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario Sincronizacion Actividades Economicas</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -258,7 +259,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Actividades Economicass</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -288,7 +289,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Servicio</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -368,7 +369,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de usuario</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -452,7 +453,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario Generar Cuis</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -506,7 +507,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Sucursal</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -521,6 +522,7 @@
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombre_sucursal" id="nombre_sucursal" required>
                                 <input type="hidden" name="empresa_id_sucursal" id="empresa_id_sucursal" value="{{ $empresa->id }}" required>
+                                <input type="hidden" name="sucursal_id_sucursal" id="sucursal_id_sucursal" value="{{ $empresa->id }}" required>
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -555,7 +557,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Puntos de ventas del sucursal <span class="text-info" id="name_sucursal"></span></h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -581,7 +583,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="fw-bold">Formulario de Punto de Venta</h2>
-                    {{-- <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    {{-- <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -662,7 +664,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Detalle de la Empresa <span class="text-info">Name Empresa</span></h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Detalle de la Empresa <span class="text-info">{{ $empresa->nombre }}</span></h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -1083,7 +1085,11 @@
         }
 
         function modalNuevoSucursal(){
-            $('#modal_new_sucursal').modal('show')
+            $('#sucursal_id_sucursal').val(0)
+            $('#nombre_sucursal').val("")
+            $('#codigo_sucursal').val("")
+            $('#direccion_sucursal').val("")
+            $('#modal_new_sucursal').modal('show');
         }
 
         function guardarSucursal(){
@@ -1507,6 +1513,12 @@
         }
 
         function sincronizarPuntosVentas(sucursal){
+
+            // Bloquear el botón
+            $('#botonSincronizarPuntoVenta').prop('disabled', true);
+            // Añadir la clase fa-spin para que el icono gire
+            $('#iconoRefreshSincronizarPuntoVenta').addClass('fa-spin');
+
             $.ajax({
                 url   : "{{ url('empresa/sincronizarPuntosVentas') }}",
                 method: "POST",
@@ -1516,6 +1528,11 @@
                 },
                 success: function (data) {
                     if(data.estado === 'success'){
+                        Swal.fire({
+                            icon:'success',
+                            title: "EXITO!",
+                            text:  "SE SINCRONIZO CON EXITO",
+                        })
                         $('#tabla_puntos_ventas').html(data.listado)
                     }else if(data.estado === 'error'){
                         Swal.fire({
@@ -1524,6 +1541,13 @@
                             text : JSON.stringify(data.text),
                         })
                     }
+
+                    // Desbloquear el botón después de la operación
+                    $('#botonSincronizarPuntoVenta').prop('disabled', false);
+
+                    // Quitar la clase fa-spin para que el icono deje de girar
+                    $('#iconoRefreshSincronizarPuntoVenta').removeClass('fa-spin');
+
                 }
             })
         }
@@ -1661,7 +1685,13 @@
         }
 
         function modalNuevoSuscripcion(){
-            $('#modal_new_suscripcion').modal("show")
+            $('#suscripcion_id_new_plan').val(0)
+            $('#plan_id_new_plan').val(null).trigger('change')
+            $('#fecha_inicio_new_plan').val('')
+            $('#fecha_fin_new_plan').val('')
+            $('#descripcion_new_plan').val('')
+            $('#ampliacion_cantidad_facturas_new_plan').val('')
+            $('#modal_new_suscripcion').modal('show');
         }
 
         function guardarSuscripcion(){
@@ -1719,6 +1749,65 @@
             }else{
                 $("#formulario_new_asignacion_documento_sector")[0].reportValidity();
             }
+        }
+
+        function editarSuscripcion(suscripcion, plan, fecha_ini, fecha_fin, descripcion, cant){
+
+            $('#suscripcion_id_new_plan').val(suscripcion)
+            $('#plan_id_new_plan').val(plan).trigger('change')
+            $('#fecha_inicio_new_plan').val(fecha_ini.split(' ')[0])
+            $('#fecha_fin_new_plan').val(fecha_fin.split(' ')[0])
+            $('#descripcion_new_plan').val(descripcion)
+            $('#ampliacion_cantidad_facturas_new_plan').val(cant)
+            $('#modal_new_suscripcion').modal('show');
+
+        }
+
+        function eliminarAsignaconDocumentoSector(asignacion){
+            Swal.fire({
+                title: "Estas seguro de eliminar la asignacion?",
+                text: "No podras revertir eso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url   : "{{ url('empresa/eliminarAsignaconDocumentoSector') }}",
+                        method: "POST",
+                        data  : {
+                            asignacion : asignacion
+                        },
+                        success: function (data) {
+                            if(data.estado === 'success'){
+                                Swal.fire({
+                                    icon:'success',
+                                    title: "EXITO!",
+                                    text:  data.text,
+                                })
+                                ajaxListadoAsignacionDocumentosSectores();
+                            }else if(data.estado === 'error'){
+                                Swal.fire({
+                                    icon : 'warning',
+                                    title: "ALTO!",
+                                    text : data.text,
+                                })
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
+        function modalEditarSucursal(sucursal, nombre, codigo_sucursal, direccion){
+
+            $('#sucursal_id_sucursal').val(sucursal)
+            $('#nombre_sucursal').val(nombre)
+            $('#codigo_sucursal').val(codigo_sucursal)
+            $('#direccion_sucursal').val(direccion)
+            $('#modal_new_sucursal').modal('show');
         }
    </script>
 @endsection

@@ -43,18 +43,23 @@
                 <td>
                     @php
                         $fechaActual = date('Y-m-d');
-                        if($fechaActual < $sus->fecha_fin){
-                            echo '<span class="badge badge-success">VIGENTE</span>';
-                        }else{
+                        if($sus->estado == null){
+                            if($fechaActual < $sus->fecha_fin){
+                                echo '<span class="badge badge-success">VIGENTE</span>';
+                            }else{
+                                echo '<span class="badge badge-danger">VENCIDO</span>';
+                            }
+                        }else if($sus->estado == 'Vencido'){
                             echo '<span class="badge badge-danger">VENCIDO</span>';
                         }
                     @endphp
-
                 </td>
                 <td>
-                    {{-- <button class="btn btn-icon btn-sm btn-primary" onclick="modal_genera_cuis('{{ $sus->id }}', '{{ $sus->sucursal_id }}')"><i class="fa fa-refresh"></i></button>
-                    <button class="btn btn-icon btn-sm btn-dark" onclick="ajaxListadoActiviadesEconomicas('{{ $sus->id }}', '{{ $sus->sucursal_id }}')"><i class="fa fa-hat-wizard"></i></button>
-                    <button class="btn btn-icon btn-sm btn-info" onclick="ajaxListadoSiatProductosServicios('{{ $sus->id }}', '{{ $sus->sucursal_id }}')"><i class="fa fa-header"></i></button> --}}
+                    @if ($sus->estado == null)
+                        @if ($fechaActual < $sus->fecha_fin)
+                            <button class="btn btn-icon btn-warning btn-sm" onclick="editarSuscripcion('{{ $sus->id }}','{{ $sus->plan->id }}', '{{ $sus->fecha_inicio }}', '{{ $sus->fecha_fin }}', '{{ $sus->descripcion }}', '{{ $sus->ampliacion_cantidad_facturas }}')"><i class="fa fa-edit"></i></button>
+                        @endif
+                    @endif
                 </td>
             </tr>
         @empty

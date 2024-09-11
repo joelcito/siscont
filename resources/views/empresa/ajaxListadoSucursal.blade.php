@@ -28,9 +28,8 @@
                 <td>{{ $s->codigo_sucursal }}</td>
                 <td>{{ $s->direccion }}</td>
                 <td>
-                    {{-- <a class="btn btn-sm btn-info btn-icon" title="Configuraciones de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a> --}}
-                    <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $s->id }}', '{{ $s->nombre }}', {{ $s->codigo_sucursal }})"><i class="fa fa-home"></i></button>
-                    <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-sm btn-info btn-icon" title="Creacion de puntos de Venta" onclick="modalPuntoVentas('{{ $s->id }}', '{{ $s->nombre }}', {{ $s->codigo_sucursal }})"><i class="fa fa-home"></i></button>
+                    <button class="btn btn-sm btn-warning btn-icon" title="Editar Sucursal" onclick="modalEditarSucursal('{{ $s->id }}', '{{ $s->nombre }}', '{{ $s->codigo_sucursal }}', '{{ $s->direccion }}')"><i class="fa fa-edit"></i></button>
                     <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button>
                 </td>
             </tr>

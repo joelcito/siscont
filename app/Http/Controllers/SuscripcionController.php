@@ -25,6 +25,7 @@ class SuscripcionController extends Controller
             $empresa = Empresa::find($empresa_id);
 
             $suscripciones = Suscripcion::where('empresa_id', $empresa_id)
+                                        ->orderBy('id', 'desc')
                                         ->get();
 
             $data['text']    = 'Se proceso con exito';
@@ -48,12 +49,31 @@ class SuscripcionController extends Controller
     {
         if($request->all()){
 
-            $suscripcion                               = new Suscripcion();
-            $suscripcion->usuario_creador_id           = Auth::user()->id;
-            $suscripcion->empresa_id                   = $request->input('empresa_id_new_plan');
+            $usaurio    = Auth::user();
+            $empresa_id = $request->input('empresa_id_new_plan');
+            $suscripcion_id = $request->input('suscripcion_id_new_plan');
+
+            if($suscripcion_id == "0"){
+                $suscripcion                               = new Suscripcion();
+                $suscripcion->usuario_creador_id           = $usaurio->id;
+
+                $suscripcion->fecha_inicio                 = $request->input('fecha_inicio_new_plan')." ".date('H:i:s');
+                $suscripcion->fecha_fin                    = $request->input('fecha_fin_new_plan')." ".date('H:i:s');
+                $this->cambiaEstadoSuscripcionVigente($empresa_id);
+
+            }else{
+                $suscripcion                         = Suscripcion::find($suscripcion_id);
+                $suscripcion->usuario_modificador_id = $usaurio->id;
+
+                $hora = explode(' ', $suscripcion->fecha_fin);
+
+                $suscripcion->fecha_inicio                 = $request->input('fecha_inicio_new_plan')." ".$hora[1];
+                $suscripcion->fecha_fin                    = $request->input('fecha_fin_new_plan')." ".$hora[1];
+
+            }
+
+            $suscripcion->empresa_id                   = $empresa_id;
             $suscripcion->plan_id                      = $request->input('plan_id_new_plan');
-            $suscripcion->fecha_inicio                 = $request->input('fecha_inicio_new_plan');
-            $suscripcion->fecha_fin                    = $request->input('fecha_fin_new_plan');
             $suscripcion->descripcion                  = $request->input('descripcion_new_plan');
             $suscripcion->ampliacion_cantidad_facturas = $request->input('ampliacion_cantidad_facturas_new_plan');
             $suscripcion->save();
@@ -69,9 +89,6 @@ class SuscripcionController extends Controller
         return $data;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function obtenerSuscripcionVigenteEmpresa(Empresa $empresa)
     {
         $empresa_id = $empresa->id;
@@ -79,12 +96,10 @@ class SuscripcionController extends Controller
         $fecha_actual = date('Y-m-d H:i:s');
 
         $suscripcion = Suscripcion::where('empresa_id', $empresa_id)
-                                // ->whereBetween($fecha_actual,['fecha_inicio','fecha_fin'])
                                 ->where('fecha_inicio', '<=', $fecha_actual)
                                 ->where('fecha_fin', '>=', $fecha_actual)
                                 ->whereNull('estado')
                                 ->first();
-                                // ->toSql();
 
         return $suscripcion;
 
@@ -114,18 +129,29 @@ class SuscripcionController extends Controller
     public function verificarRegistroFacturaByPlan(Plan $plan, Empresa $empresa, Suscripcion $suscripcion)
     {
 
-        // dd($suscripcion, $empresa, $plan);
-
         $cantidadFactura = Factura::where('empresa_id', $empresa->id)->count();
 
         return $cantidadFactura < ($plan->cantidad_factura + $suscripcion->ampliacion_cantidad_facturas) ? true : false;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Suscripcion $suscripcion)
-    {
-        //
+    private function cambiaEstadoSuscripcionVigente($empresa_id){
+
+        // $b = false;
+
+        $suscripcion = Suscripcion::where('empresa_id', $empresa_id)
+                                    ->whereNull('estado')
+                                    ->orderBy('id', 'DESC')
+                                    ->first();
+
+        if($suscripcion){
+            $suscripcion->estado = 'Vencido';
+            $suscripcion->save();
+            //  $b = true;
+        }
+
+        // $data['estado'] = $b;
+        // $data['objeto'] = $suscripcion;
+
+        // return $data;
     }
 }

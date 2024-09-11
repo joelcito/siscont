@@ -1,7 +1,6 @@
 <div class="row">
     <div class="col-3">
-        {{-- <button class="btn btn-dark btn-sm" onclick="sincronizarPuntosVentas()"><i class="fa fa-refresh"></i> Sincronizar Punto de Venta</button> --}}
-        <button class="btn btn-dark btn-sm" onclick="sincronizarPuntosVentas({{ $sucursal_id }})"><i class="fa fa-refresh"></i> Sincronizar Punto de Venta</button>
+        <button class="btn btn-dark btn-sm" id="botonSincronizarPuntoVenta" onclick="sincronizarPuntosVentas({{ $sucursal_id }})"><i id="iconoRefreshSincronizarPuntoVenta" class="fa fa-refresh"></i> Sincronizar Punto de Venta</button>
     </div>
     <div class="col-3">
     </div>

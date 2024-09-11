@@ -89,6 +89,7 @@ Route::middleware(['auth', 'one.session'])->group(function () {
 
         Route::post('/ajaxListadoAsignacionDocumentosSectores', [EmpresaController::class, 'ajaxListadoAsignacionDocumentosSectores']);
         Route::post('/guardarAsignacionDocumentoSector', [EmpresaController::class, 'guardarAsignacionDocumentoSector']);
+        Route::post('/eliminarAsignaconDocumentoSector', [EmpresaController::class, 'eliminarAsignaconDocumentoSector']);
 
     });
 

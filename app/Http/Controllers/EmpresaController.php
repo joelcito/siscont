@@ -194,8 +194,17 @@ class EmpresaController extends Controller
     public function guardaSucursal(Request $request){
         if($request->ajax()){
 
-            $sucursal                     = new Sucursal();
-            $sucursal->usuario_creador_id = Auth::user()->id;
+            $sucursal_id = $request->input('sucursal_id_sucursal');
+            $usuario     = Auth::user();
+
+            if($sucursal_id == "0"){
+                $sucursal                     = new Sucursal();
+                $sucursal->usuario_creador_id = $usuario->id;
+            }else{
+                $sucursal                         = new Sucursal();
+                $sucursal->usuario_modificador_id = $usuario->id;
+            }
+
             $sucursal->nombre             = $request->input('nombre_sucursal');
             $sucursal->codigo_sucursal    = $request->input('codigo_sucursal');
             $sucursal->direccion          = $request->input('direccion_sucursal');
@@ -1380,6 +1389,19 @@ class EmpresaController extends Controller
                 $data['text']   = 'El servicio no existe';
                 $data['estado'] = 'error';
             }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function eliminarAsignaconDocumentoSector(Request $request){
+        if($request->ajax()){
+            $asignaicon_id = $request->input('asignacion');
+            EmpresaDocumentoSector::destroy($asignaicon_id);
+            $data['text']   = 'Se elimino con exito!';
+            $data['estado'] = 'success';
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
