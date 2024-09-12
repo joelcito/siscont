@@ -91,6 +91,10 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/guardarAsignacionDocumentoSector', [EmpresaController::class, 'guardarAsignacionDocumentoSector']);
         Route::post('/eliminarAsignaconDocumentoSector', [EmpresaController::class, 'eliminarAsignaconDocumentoSector']);
 
+        Route::get('/detalleEmpresa', [EmpresaController::class, 'detalleEmpresa']);
+        Route::post('/guardaEmpresa', [EmpresaController::class, 'guardaEmpresa']);
+
+
     });
 
     Route::prefix('/sincronizacion')->group(function(){

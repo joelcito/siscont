@@ -11,6 +11,7 @@ use App\Models\Suscripcion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class SuscripcionController extends Controller
 {
     /**
@@ -21,18 +22,24 @@ class SuscripcionController extends Controller
         if($request->ajax()){
 
             $empresa_id = $request->input('empresa');
-
-            $empresa = Empresa::find($empresa_id);
+            $empresa    = Empresa::find($empresa_id);
 
             $suscripciones = Suscripcion::where('empresa_id', $empresa_id)
                                         ->orderBy('id', 'desc')
                                         ->get();
 
+            $isAdmin = Auth::user()->isAdmin();
+
             $data['text']    = 'Se proceso con exito';
             $data['estado']  = 'success';
             $data['listado'] = view('empresa.ajaxListadoSuscripcion')
-                                ->with(compact('suscripciones'))
+                                ->with(compact(
+                                    'suscripciones',
+                                    'isAdmin'
+                                    ))
                                 ->render();
+
+
 
         }else{
             $data['text']   = 'No existe';

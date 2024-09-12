@@ -1313,12 +1313,14 @@ class EmpresaController extends Controller
 
         if($request->ajax()){
 
-            $empresa_id = $request->input('empresa');
-
+            $usuario                       = Auth::user();
+            $empresa_id                    = $request->input('empresa');
             $documentos_sectores_asignados = EmpresaDocumentoSector::where('empresa_id', $empresa_id)
                                                                     ->get();
 
-            $data['listado'] = view('empresa.ajaxListadoAsignacionDocumentosSectores')->with(compact('documentos_sectores_asignados'))->render();
+            $isAdmin = $usuario->isAdmin();
+
+            $data['listado'] = view('empresa.ajaxListadoAsignacionDocumentosSectores')->with(compact('documentos_sectores_asignados', 'isAdmin'))->render();
             $data['estado'] = 'success';
 
         }else{
@@ -1409,4 +1411,99 @@ class EmpresaController extends Controller
         return $data;
     }
 
+    public function detalleEmpresa(Request $request) {
+
+        $usuario = Auth::user();
+        $empresa = $usuario->empresa;
+
+        return view('empresa.detalleEmpresa')->with(compact('empresa'));
+    }
+
+    public function guardaEmpresa(Request $request){
+
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $usuario = Auth::user();
+            $empresa = $usuario->empresa;
+
+            $empresa_id = $empresa->id;
+
+            $empresa                         = Empresa::find($empresa_id);
+            $empresa->usuario_modificador_id = Auth::user()->id;
+
+            // $empresa->nombre                                = $request->input('nombre_empresa');
+            // $empresa->nit                                   = $request->input('nit_empresa');
+            // $empresa->razon_social                          = $request->input('razon_social');
+            // $empresa->codigo_ambiente                       = $request->input('codigo_ambiente');
+            // $empresa->codigo_modalidad                      = $request->input('codigo_modalidad');
+            // $empresa->codigo_sistema                        = $request->input('codigo_sistema');
+            // $empresa->codigo_documento_sector               = $request->input('documento_sectores');
+            // $empresa->api_token                             = $request->input('api_token');
+            // $empresa->url_facturacionCodigos                = $request->input('url_fac_codigos');
+            // $empresa->url_facturacionSincronizacion         = $request->input('url_fac_sincronizacion');
+            // $empresa->url_servicio_facturacion_compra_venta = $request->input('url_fac_servicios');
+            // $empresa->url_facturacion_operaciones           = $request->input('url_fac_operaciones');
+            // $empresa->municipio                             = $request->input('municipio');
+            // $empresa->celular                               = $request->input('celular');
+            $empresa->cafc                                  = $request->input('codigo_cafc');
+
+            if($request->has('fila_archivo_p12')){
+                // Obtén el archivo de la solicitud
+                $file = $request->file('fila_archivo_p12');
+
+                // Define el nombre del archivo y el directorio de almacenamiento
+                $originalName = $file->getClientOriginalName();
+                $filename     = time() . '_'. str_replace(' ', '_', $originalName);
+                $directory    = 'assets/docs/certificate';
+
+                // Guarda el archivo en el directorio especificado
+                $file->move(public_path($directory), $filename);
+
+                // Obtén la ruta completa del archivo
+                $filePath = $directory . '/' . $filename;
+
+                // Guarda la ruta del archivo en la base de datos
+                $empresa->archivop12 = $filePath;
+
+                if($request->input('contrasenia_archivo_p12') != null)
+                    $empresa->contrasenia = $request->input('contrasenia_archivo_p12');
+
+            }
+
+            if($request->has('logo_empresa')){
+                $foto = $request->file('logo_empresa');
+
+                // Define el nombre del archivo y el directorio de almacenamiento
+                $originalName = $foto->getClientOriginalName();
+                $filename     = time() . '_'. str_replace(' ', '_', $originalName);
+                $directory    = 'assets/img';
+
+                // Guarda el archivo en el directorio especificado
+                $foto->move(public_path($directory), $filename);
+
+                // Obtén la ruta completa del archivo
+                $filePath = $filename;
+
+                // Guarda la ruta del archivo en la base de datos
+                $empresa->logo = $filePath;
+
+            }
+
+            if($empresa->save()){
+                $data['estado'] = 'success';
+                $data['text']   = 'Se creo con exito';
+            }else{
+                $data['text']   = 'Erro al crear';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+        return $data;
+
+    }
 }

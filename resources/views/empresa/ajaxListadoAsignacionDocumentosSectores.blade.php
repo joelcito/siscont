@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-3">
-        <button class="btn btn-primary btn-sm" onclick="modalNuevoAginacionDocumentoSector()"><i class="fa fa-plus"></i> Nuevo Documento Sector</button>
+        @if ($isAdmin)
+            <button class="btn btn-primary btn-sm" onclick="modalNuevoAginacionDocumentoSector()"><i class="fa fa-plus"></i> Nuevo Documento Sector</button>
+        @endif
     </div>
     <div class="col-3">
 
@@ -17,7 +19,9 @@
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
             <th class="min-w-125px">Empresa</th>
             <th class="min-w-125px">Documento Sector</th>
+            @if ($isAdmin)
             <th class="text-end min-w-100px">Actions</th>
+            @endif
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
@@ -25,9 +29,11 @@
             <tr>
                 <td>{{ $dsa->empresa->nombre }}</td>
                 <td>{{ $dsa->siat_tipo_documento_sector->descripcion }}</td>
+                @if ($isAdmin)
                 <td>
                     <button class="btn btn-sm btn-danger btn-icon" onclick="eliminarAsignaconDocumentoSector('{{ $dsa->id }}')"><i class="fa fa-trash"></i></button>
                 </td>
+                @endif
             </tr>
         @empty
             <h4 class="text-danger">No hay datos</h4>

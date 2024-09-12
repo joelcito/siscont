@@ -1,7 +1,5 @@
 <div class="row">
     <div class="col-3">
-        {{-- <button class="btn btn-dark btn-sm" onclick="sincronizarPuntosVentas()"><i class="fa fa-refresh"></i> Sincronizar Punto de Venta</button> --}}
-        {{-- <button class="btn btn-dark btn-sm" onclick="sincronizarPuntosVentas({{ $sucursal_id }})"><i class="fa fa-refresh"></i> Sincronizar Punto de Venta</button> --}}
     </div>
     <div class="col-3">
     </div>
@@ -9,7 +7,9 @@
 
     </div>
     <div class="col-3">
+        @if ($isAdmin)
         <button class="btn btn-primary btn-sm" onclick="modalNuevoSuscripcion()"><i class="fa fa-plus"></i> Nuevo Suscripcion</button>
+        @endif
     </div>
 </div>
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_suscripciones">
@@ -25,7 +25,9 @@
             <th >Ampliacion Cantidad Facturas</th>
             <th >Descripcion</th>
             <th >Estado</th>
+            @if ($isAdmin)
             <th>Acciones</th>
+            @endif
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
@@ -54,6 +56,7 @@
                         }
                     @endphp
                 </td>
+                @if ($isAdmin)
                 <td>
                     @if ($sus->estado == null)
                         @if ($fechaActual < $sus->fecha_fin)
@@ -61,6 +64,7 @@
                         @endif
                     @endif
                 </td>
+                @endif
             </tr>
         @empty
             <h4 class="text-danger text-center">No hay datos</h4>

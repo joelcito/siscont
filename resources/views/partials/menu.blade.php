@@ -176,10 +176,8 @@
                     </div>
                 @endif
 
-
                 @if (Auth::user()->isCajero() || Auth::user()->isJefeEmpresa())
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                        <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-address-book fs-2">
@@ -191,31 +189,31 @@
                             <span class="menu-title">Perfil de Empresa</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-accordion">
-                            {{-- @if (Auth::user()->isFacturacionCompraVenta())
-                                <div class="menu-item">
-                                    <a class="menu-link" href="{{ url('factura/formularioFacturacionCv') }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Facturacion Compra Venta</span>
-                                    </a>
-                                </div>
-                            @endif
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ url('empresa/detalleEmpresa') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Datos de Empresa</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-                            @if (Auth::user()->isFacturacionTasaCero())
-                                <div class="menu-item">
-                                    <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Facturacion Tasa Cero</span>
-                                    </a>
-                                </div>
-                            @endif --}}
-
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-address-book fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Facturacion en Linea</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
                             @forelse (Auth::user()->empresa->empresasDocumentos as $key => $eds)
                                 @if ($eds->siat_tipo_documento_sector->codigo_clasificador == '1')
                                     <div class="menu-item">
@@ -255,108 +253,87 @@
                                     </a>
                                 </div>
                             @endforelse
-
-                            {{-- @foreach ( Auth::user()->empresa->empresasDocumentos as $key => $eds)
-                                @if ($eds->siat_tipo_documento_sector->codigo_clasificador == '1')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ url('factura/formularioFacturacionCv') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Facturacion Compra Venta</span>
-                                        </a>
-                                    </div>
-                                @elseif($eds->siat_tipo_documento_sector->codigo_clasificador == '8')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ url('factura/formularioFacturacionTc') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Facturacion Tasa Cero</span>
-                                        </a>
-                                    </div>
-                                @else
-
-                                @endif
-                            @endforeach --}}
-
-                            <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
                                 <a class="menu-link" href="{{ url('factura/listado') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Listado de facturas</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
+                        </div>
+                    </div>
 
-                            <!--begin:Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-address-book fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Clientes</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
                             <div class="menu-item">
-                                <!--begin:Menu link-->
                                 <a class="menu-link" href="{{ url('empresa/listadoClientes') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Listado de clientes</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
+                        </div>
+                    </div>
 
-                            <!--begin:Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-address-book fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Servicio / Producto</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
                             <div class="menu-item">
-                                <!--begin:Menu link-->
                                 <a class="menu-link" href="{{ url('empresa/listadoProductoServicioEmpresa') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Listado de Producto / Servicio</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
+                        </div>
+                    </div>
 
-                            <!--begin:Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-address-book fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Siat</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
                             <div class="menu-item">
-                                <!--begin:Menu link-->
                                 <a class="menu-link" href="{{ url('eventosignificativo/listado') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Eventos Significativos</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            {{-- <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="{{ url('factura/formularioFacturacionCv') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">FacturacionNewDesarrollo</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div> --}}
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            {{-- <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="pages/user-profile/activity.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Activity</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div> --}}
-                            <!--end:Menu item-->
                         </div>
-                        <!--end:Menu sub-->
                     </div>
                 @endif
                 <!--end:Menu item-->
