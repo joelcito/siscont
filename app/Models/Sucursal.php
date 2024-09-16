@@ -11,4 +11,14 @@ class Sucursal extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'sucursales';
+
+
+    public function facturas(){
+        return $this->hasMany(Factura::class);
+    }
+
+    public function cantidadFacturas(){
+        return $this->facturas()->count();
+    }
+
 }

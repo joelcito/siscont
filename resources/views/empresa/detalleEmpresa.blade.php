@@ -7,6 +7,398 @@
 @endsection
 @section('content')
 
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_puntos_ventas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Puntos de ventas del sucursal <span class="text-info" id="name_sucursal"></span></h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <div id="tabla_puntos_ventas">
+
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_new_punto_venta" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Punto de Venta</h2>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_punto_venta">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_punto_venta" id="codigo_ambiente_punto_venta" data-dropdown-parent="#modal_new_punto_venta" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad_punto_venta" id="codigo_modalidad_punto_venta" data-dropdown-parent="#modal_new_punto_venta" disabled>
+                                    <option></option>
+                                    <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
+                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en Linea</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_punto_venta" id="nombre_punto_venta" required>
+                                <input type="hidden" name="sucursal_id_punto_venta" id="sucursal_id_punto_venta" required>
+                                <input type="hidden" name="empresa_id_punto_venta" id="empresa_id_punto_venta" required value="{{ $empresa->id }}">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion Punto Venta</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="descripcion_punto_venta" id="descripcion_punto_venta" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Tipo Punto Venta</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_tipo_punto_id_punto_venta" id="codigo_tipo_punto_id_punto_venta" data-dropdown-parent="#modal_new_punto_venta" required>
+                                    <option></option>
+                                    @foreach ( $siat_tipo_ventas as $tpv)
+                                        <option value="{{ $tpv->codigo_clasificador }}">{{$tpv->descripcion}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row mt-5">
+                        <div class="col-md-6">
+                            <button class="btn btn-sm btn-success w-100" onclick="guardarPuntoVentaEmpresa()">Guardar</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-sm btn-dark w-100" onclick="cancelarCreacionPuntoVenta()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_new_sucursal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Sucursal</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_sucursal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_sucursal" id="nombre_sucursal" required>
+                                <input type="hidden" name="empresa_id_sucursal" id="empresa_id_sucursal" value="{{ $empresa->id }}" required>
+                                <input type="hidden" name="sucursal_id_sucursal" id="sucursal_id_sucursal" value="{{ $empresa->id }}" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Codigo Sucursal</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="codigo_sucursal" id="codigo_sucursal" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Direccion</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="direccion_sucursal" id="direccion_sucursal" required>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row mt-5">
+                        <div class="col-md-12">
+                            <button class="btn btn-sm btn-success w-100" onclick="guardarSucursal()">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_genera_cuis" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario Generar Cuis</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_genera_cuis">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                                <input type="hidden" name="codigo_punto_venta_id_cuis" id="codigo_punto_venta_id_cuis">
+                                <input type="hidden" name="codigo_sucursal_id_cuis" id="codigo_sucursal_id_cuis">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="modalidad_cuis" id="modalidad_cuis" disabled>
+                                    <option></option>
+                                    <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
+                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en Linea</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVenta()">Volver Punto Venta</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="generarCuis()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_actividades_economicas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Actividades Economicass</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <div id="tabla_activiades_economicas">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVentas()">Volver Punto Ventas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_sincronizar_actividad" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario Sincronizacion Actividades Economicas</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_sincronizar_actividades_economicas">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
+                                    <option></option>
+                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
+                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
+                                </select>
+                                <input type="hidden" name="punto_venta_id_sincronizar_actividad" id="punto_venta_id_sincronizar_actividad">
+                                <input type="hidden" name="sucuarsal_id_sincronizar_actividad" id="sucuarsal_id_sincronizar_actividad">
+                                <input type="hidden" name="empresa_id_sincronizar_actividad" id="empresa_id_sincronizar_actividad" value="{{ $empresa->id }}">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="cancelarSincronizacion()">Cancelar</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="sincronizarActividades()">Sincronizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
+    <!--begin::Modal - Adjust Balance-->
+    <div class="modal fade" id="modal_lista_producto_servicios" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Lista Productos Servicios</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <div id="tabla_lista_producto_servicios">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVentasProductoServicios()">Volver Punto Ventas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_usuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de usuario</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_usuario_empresa">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="nombres_new_usuaio_empresa" id="nombres_new_usuaio_empresa" required>
+                                <input type="hidden" name="empresa_id_new_usuario_empresa" id="empresa_id_new_usuario_empresa" value="{{ $empresa->id }}">
+                                <input type="hidden" name="usuario_id_new_usuario_empresa" id="usuario_id_new_usuario_empresa" value="0">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_new_usuaio_empresa" id="ap_paterno_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_new_usuaio_empresa" id="ap_materno_new_usuaio_empresa" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_new_usuaio_empresa" id="num_ceular_new_usuaio_empresa" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Usuario / Correo</label>
+                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required autocomplete="username">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
+                                <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa"  autocomplete="current-password" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Rol</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="rol_id_new_usuaio_empresa" id="rol_id_new_usuaio_empresa" required>
+                                    <option></option>
+                                    @foreach ($roles as $r)
+                                        <option value="{{ $r->id }}">{{ $r->nombres }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Sucursal</label>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="sucursal_id_new_usuaio_empresa" id="sucursal_id_new_usuaio_empresa" onchange="ajaxBuscarPuntoVentaNewUsuarioSelect(this)">
+                                    <option></option>
+                                    @foreach ($sucursales as $suc)
+                                        <option value="{{ $suc->id }}">{{ $suc->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Punto de Venta</label>
+                                <div id="bloque_tabla_punto_ventas_new_usuario_empresa">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarUsuarioEmpresa()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
     {{--  <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_new_documento_sector" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-800px">
@@ -178,110 +570,9 @@
     </div>
     <!--end::Modal - New Card-->
 
-    <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="modal_lista_producto_servicios" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-1000px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Lista Productos Servicios</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <div id="tabla_lista_producto_servicios">
 
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVentasProductoServicios()">Volver Punto Ventas</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
 
-    <!--end::Modal - New Card-->
-    <div class="modal fade" id="modal_sincronizar_actividad" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-500px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Sincronizacion Actividades Economicas</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_sincronizar_actividades_economicas">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_cuis" id="codigo_ambiente_cuis" disabled>
-                                    <option></option>
-                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
-                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
-                                </select>
-                                <input type="hidden" name="punto_venta_id_sincronizar_actividad" id="punto_venta_id_sincronizar_actividad">
-                                <input type="hidden" name="sucuarsal_id_sincronizar_actividad" id="sucuarsal_id_sincronizar_actividad">
-                                <input type="hidden" name="empresa_id_sincronizar_actividad" id="empresa_id_sincronizar_actividad" value="{{ $empresa->id }}">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="cancelarSincronizacion()">Cancelar</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="sincronizarActividades()">Sincronizar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
 
-    <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="modal_actividades_economicas" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-1000px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Actividades Economicass</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <div id="tabla_activiades_economicas">
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVentas()">Volver Punto Ventas</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
 
     <!--end::Modal - New Card-->
     <div class="modal fade" id="modal_new_servicio" tabindex="-1" aria-hidden="true">
@@ -363,288 +654,11 @@
     </div>
     <!--end::Modal - New Card-->
 
-    <!--end::Modal - New Card-->
-    <div class="modal fade" id="modal_new_usuario" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-800px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario de usuario</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_new_usuario_empresa">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombres_new_usuaio_empresa" id="nombres_new_usuaio_empresa" required>
-                                <input type="hidden" name="empresa_id_new_usuario_empresa" id="empresa_id_new_usuario_empresa" value="{{ $empresa->id }}">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_paterno_new_usuaio_empresa" id="ap_paterno_new_usuaio_empresa" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Ap Materno</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="ap_materno_new_usuaio_empresa" id="ap_materno_new_usuaio_empresa" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Numero de Celular</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="num_ceular_new_usuaio_empresa" id="num_ceular_new_usuaio_empresa" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Usuario / Correo</label>
-                                <input type="email" class="form-control fw-bold form-control-solid" name="usuario_new_usuaio_empresa" id="usuario_new_usuaio_empresa" required autocomplete="username">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Contraseña</label>
-                                <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_new_usuaio_empresa" id="contrasenia_new_usuaio_empresa"  autocomplete="current-password" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Rol</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="rol_id_new_usuaio_empresa" id="rol_id_new_usuaio_empresa">
-                                    <option></option>
-                                    @foreach ($roles as $r)
-                                        <option value="{{ $r->id }}">{{ $r->nombres }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Sucursal</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_usuario" data-hide-search="true" class="form-select form-select-solid fw-bold" name="sucursal_id_new_usuaio_empresa" id="sucursal_id_new_usuaio_empresa" onchange="ajaxBuscarPuntoVentaNewUsuarioSelect(this)">
-                                    <option></option>
-                                    @foreach ($sucursales as $suc)
-                                        <option value="{{ $suc->id }}">{{ $suc->nombre }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Punto de Venta</label>
-                                <div id="bloque_tabla_punto_ventas_new_usuario_empresa">
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarUsuarioEmpresa()">Generar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
 
-    <!--end::Modal - New Card-->
-    <div class="modal fade" id="modal_genera_cuis" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-500px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Generar Cuis</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_genera_cuis">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" disabled>
-                                    <option></option>
-                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
-                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
-                                </select>
-                                <input type="hidden" name="codigo_punto_venta_id_cuis" id="codigo_punto_venta_id_cuis">
-                                <input type="hidden" name="codigo_sucursal_id_cuis" id="codigo_sucursal_id_cuis">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_genera_cuis" data-hide-search="true" class="form-select form-select-solid fw-bold" name="modalidad_cuis" id="modalidad_cuis" disabled>
-                                    <option></option>
-                                    <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
-                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en Linea</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-dark w-100 btn-sm" onclick="volverPuntoVenta()">Volver Punto Venta</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="generarCuis()">Generar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
 
-    <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="modal_new_sucursal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-400px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario de Sucursal</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_sucursal">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_sucursal" id="nombre_sucursal" required>
-                                <input type="hidden" name="empresa_id_sucursal" id="empresa_id_sucursal" value="{{ $empresa->id }}" required>
-                                <input type="hidden" name="sucursal_id_sucursal" id="sucursal_id_sucursal" value="{{ $empresa->id }}" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Codigo Sucursal</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="codigo_sucursal" id="codigo_sucursal" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Direccion</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="direccion_sucursal" id="direccion_sucursal" required>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="row mt-5">
-                        <div class="col-md-12">
-                            <button class="btn btn-sm btn-success w-100" onclick="guardarSucursal()">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
 
-    <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="modal_puntos_ventas" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-1000px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Puntos de ventas del sucursal <span class="text-info" id="name_sucursal"></span></h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
-                        <i class="ki-duotone ki-cross fs-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y">
-                    <div id="tabla_puntos_ventas">
-
-                    </div>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->
-
-    <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="modal_new_punto_venta" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-400px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="fw-bold">Formulario de Punto de Venta</h2>
-                </div>
-                <div class="modal-body scroll-y">
-                    <form id="formulario_punto_venta">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Ambiente</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_ambiente_punto_venta" id="codigo_ambiente_punto_venta" data-dropdown-parent="#modal_new_punto_venta" disabled>
-                                    <option></option>
-                                    <option value="2" {{ ($empresa->codigo_ambiente == 2)? 'selected' : '' }}>Desarrollo</option>
-                                    <option value="1" {{ ($empresa->codigo_ambiente == 1)? 'selected' : '' }}>Produccion</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2">Modalidad</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_modalidad_punto_venta" id="codigo_modalidad_punto_venta" data-dropdown-parent="#modal_new_punto_venta" disabled>
-                                    <option></option>
-                                    <option value="1" {{ ($empresa->codigo_modalidad == 1)? 'selected' : '' }}>Electronica en Linea</option>
-                                    <option value="2" {{ ($empresa->codigo_modalidad == 2)? 'selected' : '' }}>Computarizada en Linea</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="nombre_punto_venta" id="nombre_punto_venta" required>
-                                <input type="hidden" name="sucursal_id_punto_venta" id="sucursal_id_punto_venta" required>
-                                <input type="hidden" name="empresa_id_punto_venta" id="empresa_id_punto_venta" required value="{{ $empresa->id }}">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion Punto Venta</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="descripcion_punto_venta" id="descripcion_punto_venta" required>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Tipo Punto Venta</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-hide-search="true" class="form-select form-select-solid fw-bold" name="codigo_tipo_punto_id_punto_venta" id="codigo_tipo_punto_id_punto_venta" data-dropdown-parent="#modal_new_punto_venta" required>
-                                    <option></option>
-                                    @foreach ( $siat_tipo_ventas as $tpv)
-                                        <option value="{{ $tpv->codigo_clasificador }}">{{$tpv->descripcion}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="row mt-5">
-                        <div class="col-md-6">
-                            <button class="btn btn-sm btn-success w-100" onclick="guardarPuntoVenta()">Guardar</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-sm btn-dark w-100" onclick="cancelarCreacionPuntoVenta()">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Card-->  --}}
+      --}}
 
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
@@ -944,9 +958,9 @@
             ajaxListadoSuscripcion();
             ajaxListadoAsignacionDocumentosSectores();
             ajaxListadoSucursal();
+            ajaxListadoUsuarioEmpresa();
 
             /*
-            ajaxListadoUsuarioEmpresa();
             ajaxListadoServicios();
             ajaxListadoClientes();
 
@@ -1041,111 +1055,6 @@
             })
         }
 
-        /*
-
-        function ajaxListadoUsuarioEmpresa(){
-            let datos = {
-                empresa: {{$empresa->id}}
-            }
-            $.ajax({
-                // url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa', [$empresa->id]) }}",
-                url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa') }}",
-                method: "POST",
-                data  : datos,
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        $('#tabla_usuario_empres').html(data.listado)
-                    }else{
-
-                    }
-                }
-            })
-        }
-
-        function ajaxListadoServicios(){
-            let datos = {
-                empresa: {{$empresa->id}}
-            }
-            $.ajax({
-                url   : "{{ url('empresa/ajaxListadoServicios') }}",
-                method: "POST",
-                data  : datos,
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        $('#tabla_servicios').html(data.listado)
-                    }else{
-
-                    }
-                }
-            })
-        }
-
-        function ajaxListadoClientes(){
-            let datos = {
-                empresa: {{$empresa->id}}
-            }
-            $.ajax({
-                url   : "{{ url('empresa/ajaxListadoClientes') }}",
-                method: "POST",
-                data  : datos,
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        $('#tabla_clientes').html(data.listado)
-                    }else{
-
-                    }
-                }
-            })
-        }
-
-        function modalNuevoSucursal(){
-            $('#sucursal_id_sucursal').val(0)
-            $('#nombre_sucursal').val("")
-            $('#codigo_sucursal').val("")
-            $('#direccion_sucursal').val("")
-            $('#modal_new_sucursal').modal('show');
-        }
-
-        function guardarSucursal(){
-            if($("#formulario_sucursal")[0].checkValidity()){
-
-                let datos = $('#formulario_sucursal').serializeArray();
-
-                $.ajax({
-                    url   : "{{ url('empresa/guardaSucursal') }}",
-                    method: "POST",
-                    data  : datos,
-                    success: function (data) {
-
-                        console.log(data)
-
-                        if(data.estado === 'success'){
-                            // console.log(data)
-                            Swal.fire({
-                                icon:'success',
-                                title: "EXITO!",
-                                text:  "SE REGISTRO CON EXITO",
-                            })
-                            ajaxListadoSucursal();
-                            $('#modal_new_sucursal').modal('hide')
-                            // location.reload();
-                        }else{
-                            // console.log(data, data.detalle.mensajesList)
-                            // Swal.fire({
-                            //     icon:'error',
-                            //     title: data.detalle.codigoDescripcion,
-                            //     text:  JSON.stringify(data.detalle.mensajesList),
-                            //     // timer:1500
-                            // })
-                        }
-                    }
-                })
-
-            }else{
-                $("#formulario_sucursal")[0].reportValidity();
-            }
-        }
-
         function modalPuntoVentas(sucursal, nombre, codigo_sucursal){
             let datos = {
                 sucursal:sucursal
@@ -1186,79 +1095,17 @@
             $('#modal_new_punto_venta').modal('show');
         }
 
-        function cancelarCreacionPuntoVenta(){
-            $('#modal_new_punto_venta').modal('hide');
-            $('#modal_puntos_ventas').modal('show');
-        }
-
-        function generarCuis(){
-            Swal.fire({
-                title: "Esta seguro de generar un CUIS par el Punto de Venta?",
-                text: "Se verificar antes de crear!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si, crear!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        let datos = $('#formulario_genera_cuis').serializeArray()
-                        $.ajax({
-                            url   : "{{ url('empresa/crearCuis') }}",
-                            method: "POST",
-                            data  : datos,
-                            success: function (data) {
-                                console.log(data)
-                                if(data.estado === 'success'){
-                                    Swal.fire({
-                                        icon:'success',
-                                        title: "EXITO!",
-                                        text:  data.text,
-                                    })
-                                }else if( data.estado === 'warnig'){
-                                    Swal.fire({
-                                        icon : 'warning',
-                                        title: "ALTERTA!",
-                                        text : data.text,
-                                        timer: 5000
-                                    })
-                                }else{
-                                    Swal.fire({
-                                        icon : 'error',
-                                        title: "SE GENERO UN ERROR!",
-                                        text : JSON.stringify(data.msg),
-                                        timer: 100000
-                                    })
-                                }
-                                $('#modal_genera_cuis').modal('hide')
-                            }
-                        })
-                    }
-                });
-        }
-
-        function modal_genera_cuis(punto_venta, sucursal){
-
-            $('#codigo_punto_venta_id_cuis').val(punto_venta)
-            $('#codigo_sucursal_id_cuis').val(sucursal)
-
-            $('#modal_puntos_ventas').modal('hide')
-            $('#modal_genera_cuis').modal('show');
-        }
-
-        function guardarPuntoVenta(){
+        function guardarPuntoVentaEmpresa(){
 
             if($("#formulario_punto_venta")[0].checkValidity()){
 
                 let datos = $('#formulario_punto_venta').serializeArray();
 
                 $.ajax({
-                    url   : "{{ url('empresa/guardaPuntoVenta') }}",
+                    url   : "{{ url('empresa/guardarPuntoVentaEmpresa') }}",
                     method: "POST",
                     data  : datos,
                     success: function (data) {
-
-                        console.log(data)
 
                         if(data.estado === 'success'){
                             // console.log(data)
@@ -1272,14 +1119,14 @@
                             $('#modal_puntos_ventas').modal('show');
                             $('#tabla_puntos_ventas').html(data.listado)
                             // location.reload();
-                        }else{
+                        }else if(data.estado === 'error_sus'){
                             // console.log(data, data.detalle.mensajesList)
-                            // Swal.fire({
-                            //     icon:'error',
-                            //     title: data.detalle.codigoDescripcion,
-                            //     text:  JSON.stringify(data.detalle.mensajesList),
-                            //     // timer:1500
-                            // })
+                            Swal.fire({
+                                icon:'error',
+                                title: "Error",
+                                text:  data.text,
+                                // timer:1500
+                            })
                         }
                     }
                 })
@@ -1287,243 +1134,6 @@
             }else{
                 $("#formulario_punto_venta")[0].reportValidity();
             }
-        }
-
-        function agregarUsuarioEmpresa(){
-            // $('#empresa_id_new_usuario_empresa').val(0)
-            $('#nombres_new_usuaio_empresa').val("")
-            $('#ap_paterno_new_usuaio_empresa').val("")
-            $('#ap_materno_new_usuaio_empresa').val("")
-            $('#usuario_new_usuaio_empresa').val("")
-            $('#contrasenia_new_usuaio_empresa').val("")
-            $('#num_ceular_new_usuaio_empresa').val("")
-            $('#modal_new_usuario').modal('show')
-        }
-
-        function guardarUsuarioEmpresa(){
-            if($("#formulario_new_usuario_empresa")[0].checkValidity()){
-
-                let datos = $('#formulario_new_usuario_empresa').serializeArray();
-
-                $.ajax({
-                    url   : "{{ url('empresa/guardarUsuarioEmpresa') }}",
-                    method: "POST",
-                    data  : datos,
-                    success: function (data) {
-
-                        console.log(data)
-
-                        if(data.estado === 'success'){
-                            // console.log(data)
-                            Swal.fire({
-                                icon:'success',
-                                title: "EXITO!",
-                                text:  "SE REGISTRO CON EXITO",
-                            })
-                            // ajaxListadoSucursal();
-                            ajaxListadoUsuarioEmpresa();
-                            $('#modal_new_usuario').modal('hide');
-                            // $('#modal_puntos_ventas').modal('show');
-                            // $('#tabla_puntos_ventas').html(data.listado)
-                            // location.reload();
-                        }else{
-                            // console.log(data, data.detalle.mensajesList)
-                            // Swal.fire({
-                            //     icon:'error',
-                            //     title: data.detalle.codigoDescripcion,
-                            //     text:  JSON.stringify(data.detalle.mensajesList),
-                            //     // timer:1500
-                            // })
-                        }
-                    }
-                })
-
-            }else{
-                $("#formulario_new_usuario_empresa")[0].reportValidity();
-            }
-        }
-
-        function modalNuevoServicio(){
-            $('#servicio_id_new_servicio').val(0)
-            $('#modal_new_servicio').modal('show')
-        }
-
-        function sincronizarActividades(){
-
-            let datos = $('#formulario_sincronizar_actividades_economicas').serializeArray()
-
-            $.ajax({
-                    url   : "{{ url('empresa/sincronizarActividades') }}",
-                    method: "POST",
-                    data  : datos,
-                    success: function (data) {
-
-                        console.log(data)
-
-                        if(data.estado === 'success'){
-                            // console.log(data)
-                            Swal.fire({
-                                icon:'success',
-                                title: "EXITO!",
-                                text:  "SE SINCRONIZO CON EXITO",
-                            })
-                            // ajaxListadoSucursal();
-                            $('#modal_sincronizar_actividad').modal('hide');
-                            $('#modal_actividades_economicas').modal('show');
-                            $('#tabla_activiades_economicas').html(data.listado)
-                            // location.reload();
-                        }else if(data.estado === 'error'){
-                            Swal.fire({
-                                icon:'error',
-                                title: "ERROR!",
-                                text:  JSON.stringify(data.text),
-                            })
-                        }
-                    }
-                })
-        }
-
-        function ajaxListadoActiviadesEconomicas(punto_venta_id, sucursal_id){
-
-            $.ajax({
-                url   : "{{ url('empresa/ajaxListadoActiviadesEconomicas') }}",
-                method: "POST",
-                data  : {
-                    empresa       : {{$empresa->id}},
-                    punto_venta_id: punto_venta_id,
-                    sucursal_id   : sucursal_id
-                },
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        // Swal.fire({
-                        //     icon:'success',
-                        //     title: "EXITO!",
-                        //     text:  "SE REGISTRO CON EXITO",
-                        // })
-                        ajaxListadoSucursal();
-                        $('#modal_actividades_economicas').modal('show')
-                        $('#tabla_activiades_economicas').html(data.listado)
-                        $('#modal_puntos_ventas').modal('hide')
-                    }else{
-                        // console.log(data, data.detalle.mensajesList)
-                        // Swal.fire({
-                        //     icon:'error',
-                        //     title: data.detalle.codigoDescripcion,
-                        //     text:  JSON.stringify(data.detalle.mensajesList),
-                        //     // timer:1500
-                        // })
-                    }
-                }
-            })
-        }
-
-        function modal_sincronizar_actividad(punto_venta_id, sucursal_id){
-            console.log(punto_venta_id, sucursal_id)
-            $('#punto_venta_id_sincronizar_actividad').val(punto_venta_id)
-            $('#sucuarsal_id_sincronizar_actividad').val(sucursal_id)
-
-            $('#modal_sincronizar_actividad').modal('show')
-            $('#modal_actividades_economicas').modal('hide')
-
-        }
-
-        function cancelarSincronizacion(){
-            $('#modal_sincronizar_actividad').modal('hide')
-            $('#modal_actividades_economicas').modal('show')
-        }
-
-        function volverPuntoVentas(){
-            $('#modal_actividades_economicas').modal('hide')
-            $('#modal_puntos_ventas').modal('show')
-        }
-
-        function volverPuntoVenta(){
-            $('#modal_genera_cuis').modal('hide')
-            $('#modal_puntos_ventas').modal('show')
-        }
-
-        function ajaxRecuperarPuntosVentasSelect(elemt){
-            $.ajax({
-                url   : "{{ url('empresa/ajaxRecuperarPuntosVentasSelect') }}",
-                method: "POST",
-                data  : {
-                    sucursal_id   : elemt.value
-                },
-                success: function (data) {
-                    if(data.estado === 'success')
-                        $('#new_servicio_bloque_sucursal_id').html(data.select)
-                }
-            })
-        }
-
-        function ajaxRecupraActividadesSelect(elemt){
-            $.ajax({
-                url   : "{{ url('empresa/ajaxRecupraActividadesSelect') }}",
-                method: "POST",
-                data  : {
-                    punto_venta_id: elemt.value,
-                    empresa_id    : $('#new_servicio_empresa_id').val(),
-                    sucursal_id   : $('#new_servicio_sucursal_id').val()
-                },
-                success: function (data) {
-                    if(data.estado === 'success')
-                        $('#new_servicio_bloque_actividad').html(data.select)
-                }
-            })
-        }
-
-        function ajaxListadoSiatProductosServicios(punto_venta , sucursal){
-            $.ajax({
-                url   : "{{ url('empresa/ajaxListadoSiatProductosServicios') }}",
-                method: "POST",
-                data  : {
-                    empresa_id : {{$empresa->id}},
-                    punto_venta: punto_venta,
-                    sucursal   : sucursal,
-                },
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        $('#modal_lista_producto_servicios').modal('show')
-                        $('#modal_puntos_ventas').modal('hide')
-                        $('#tabla_lista_producto_servicios').html(data.listado)
-                    }
-                }
-            })
-        }
-
-        function sincronizarSiatProductoServicios(punto_venta, sucursal){
-            // $('#modal_sincronizar_productos_servicios').modal('show')
-
-            $.ajax({
-                url   : "{{ url('empresa/sincronizarSiatProductoServicios') }}",
-                method: "POST",
-                data  : {
-                    empresa_id : {{$empresa->id}},
-                    punto_venta: punto_venta,
-                    sucursal   : sucursal,
-                },
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        Swal.fire({
-                            icon : 'success',
-                            title: "Exito!",
-                            text : JSON.stringify(data.text),
-                        })
-                        $('#tabla_lista_producto_servicios').html(data.listado)
-                    }else{
-                        Swal.fire({
-                            icon : 'error',
-                            title: "Error!",
-                            text : JSON.stringify(data.text),
-                        })
-                    }
-                }
-            })
-        }
-
-        function volverPuntoVentasProductoServicios(){
-            $('#modal_lista_producto_servicios').modal('hide')
-            $('#modal_puntos_ventas').modal('show')
         }
 
         function sincronizarPuntosVentas(sucursal){
@@ -1566,6 +1176,518 @@
             })
         }
 
+        function cancelarCreacionPuntoVenta(){
+            $('#modal_new_punto_venta').modal('hide');
+            $('#modal_puntos_ventas').modal('show');
+        }
+
+        function modalEditarSucursal(sucursal, nombre, codigo_sucursal, direccion){
+
+            $('#sucursal_id_sucursal').val(sucursal)
+            $('#nombre_sucursal').val(nombre)
+            $('#codigo_sucursal').val(codigo_sucursal)
+            $('#direccion_sucursal').val(direccion)
+            $('#modal_new_sucursal').modal('show');
+        }
+
+        function modalNuevoSucursal(){
+            $('#sucursal_id_sucursal').val(0)
+            $('#nombre_sucursal').val("")
+            $('#codigo_sucursal').val("")
+            $('#direccion_sucursal').val("")
+            $('#modal_new_sucursal').modal('show');
+        }
+
+        function guardarSucursal(){
+            if($("#formulario_sucursal")[0].checkValidity()){
+                let datos = $('#formulario_sucursal').serializeArray();
+                $.ajax({
+                    url   : "{{ url('empresa/guardaSucursalEmpresa') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            ajaxListadoSucursal();
+                            $('#modal_new_sucursal').modal('hide')
+                        }else if(data.estado === 'error_sus'){
+                            Swal.fire({
+                                icon : 'error',
+                                title: "Error",
+                                text : data.text,
+                            })
+                        }else{
+                            Swal.fire({
+                                icon:'error',
+                                title: data.detalle.codigoDescripcion,
+                                text:  JSON.stringify(data.detalle.mensajesList),
+                            })
+                        }
+                    }
+                })
+
+            }else{
+                $("#formulario_sucursal")[0].reportValidity();
+            }
+        }
+
+        function modal_genera_cuis(punto_venta, sucursal){
+
+            $('#codigo_punto_venta_id_cuis').val(punto_venta)
+            $('#codigo_sucursal_id_cuis').val(sucursal)
+
+            $('#modal_puntos_ventas').modal('hide')
+            $('#modal_genera_cuis').modal('show');
+        }
+
+        function generarCuis(){
+            Swal.fire({
+                title: "Esta seguro de generar un CUIS par el Punto de Venta?",
+                text: "Se verificar antes de crear!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, crear!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let datos = $('#formulario_genera_cuis').serializeArray()
+                        $.ajax({
+                            url   : "{{ url('empresa/crearCuis') }}",
+                            method: "POST",
+                            data  : datos,
+                            success: function (data) {
+                                if(data.estado === 'success'){
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: "EXITO!",
+                                        text:  data.text,
+                                    })
+                                }else if( data.estado === 'warnig'){
+                                    Swal.fire({
+                                        icon : 'warning',
+                                        title: "ALTERTA!",
+                                        text : data.text,
+                                        timer: 5000
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        icon : 'error',
+                                        title: "SE GENERO UN ERROR!",
+                                        text : JSON.stringify(data.msg),
+                                        timer: 100000
+                                    })
+                                }
+                                $('#modal_genera_cuis').modal('hide')
+                            }
+                        })
+                    }
+            });
+        }
+
+        function ajaxListadoActiviadesEconomicas(punto_venta_id, sucursal_id){
+
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoActiviadesEconomicas') }}",
+                method: "POST",
+                data  : {
+                    empresa       : {{$empresa->id}},
+                    punto_venta_id: punto_venta_id,
+                    sucursal_id   : sucursal_id
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        // Swal.fire({
+                        //     icon:'success',
+                        //     title: "EXITO!",
+                        //     text:  "SE REGISTRO CON EXITO",
+                        // })
+                        ajaxListadoSucursal();
+                        $('#modal_actividades_economicas').modal('show')
+                        $('#tabla_activiades_economicas').html(data.listado)
+                        $('#modal_puntos_ventas').modal('hide')
+                    }else{
+                        // console.log(data, data.detalle.mensajesList)
+                        // Swal.fire({
+                        //     icon:'error',
+                        //     title: data.detalle.codigoDescripcion,
+                        //     text:  JSON.stringify(data.detalle.mensajesList),
+                        //     // timer:1500
+                        // })
+                    }
+                }
+            })
+        }
+
+        function modal_sincronizar_actividad(punto_venta_id, sucursal_id){
+            $('#punto_venta_id_sincronizar_actividad').val(punto_venta_id)
+            $('#sucuarsal_id_sincronizar_actividad').val(sucursal_id)
+
+            $('#modal_sincronizar_actividad').modal('show')
+            $('#modal_actividades_economicas').modal('hide')
+
+        }
+
+        function sincronizarActividades(){
+
+            let datos = $('#formulario_sincronizar_actividades_economicas').serializeArray()
+
+            $.ajax({
+                    url   : "{{ url('empresa/sincronizarActividades') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            // console.log(data)
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE SINCRONIZO CON EXITO",
+                            })
+                            // ajaxListadoSucursal();
+                            $('#modal_sincronizar_actividad').modal('hide');
+                            $('#modal_actividades_economicas').modal('show');
+                            $('#tabla_activiades_economicas').html(data.listado)
+                            // location.reload();
+                        }else if(data.estado === 'error'){
+                            Swal.fire({
+                                icon:'error',
+                                title: "ERROR!",
+                                text:  JSON.stringify(data.text),
+                            })
+                        }
+                    }
+                })
+        }
+
+        function volverPuntoVentas(){
+            $('#modal_actividades_economicas').modal('hide')
+            $('#modal_puntos_ventas').modal('show')
+        }
+
+        function ajaxListadoSiatProductosServicios(punto_venta , sucursal){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoSiatProductosServicios') }}",
+                method: "POST",
+                data  : {
+                    empresa_id : {{$empresa->id}},
+                    punto_venta: punto_venta,
+                    sucursal   : sucursal,
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#modal_lista_producto_servicios').modal('show')
+                        $('#modal_puntos_ventas').modal('hide')
+                        $('#tabla_lista_producto_servicios').html(data.listado)
+                    }
+                }
+            })
+        }
+
+        function sincronizarSiatProductoServicios(punto_venta, sucursal){
+
+            // Bloquear el botón
+            $('#botom_sincronizarSiatProductoServicios').prop('disabled', true);
+            // Añadir la clase fa-spin para que el icono gire
+            $('#icono_sincronizarSiatProductoServicios').addClass('fa-spin');
+
+            $.ajax({
+                url   : "{{ url('empresa/sincronizarSiatProductoServicios') }}",
+                method: "POST",
+                data  : {
+                    empresa_id : {{$empresa->id}},
+                    punto_venta: punto_venta,
+                    sucursal   : sucursal,
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        Swal.fire({
+                            icon : 'success',
+                            title: "Exito!",
+                            text : JSON.stringify(data.text),
+                        })
+                        $('#tabla_lista_producto_servicios').html(data.listado)
+
+                    }else{
+                        Swal.fire({
+                            icon : 'error',
+                            title: "Error!",
+                            text : JSON.stringify(data.text),
+                        })
+                    }
+
+                    // Bloquear el botón
+                    $('#botom_sincronizarSiatProductoServicios').prop('disabled', false);
+                    // Añadir la clase fa-spin para que el icono gire
+                    $('#icono_sincronizarSiatProductoServicios').removeClass('fa-spin');
+                }
+            })
+        }
+
+        function volverPuntoVentasProductoServicios(){
+            $('#modal_lista_producto_servicios').modal('hide')
+            $('#modal_puntos_ventas').modal('show')
+        }
+
+        function eliminarSucursalEmpresa(sucursal){
+            Swal.fire({
+                title             : "Esta seguro de eliminar el Sucursal?",
+                text              : "No podras revetir eso!",
+                icon              : "warning",
+                showCancelButton  : true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor : "#d33",
+                confirmButtonText : "Si, eliminar!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //let datos = $('#formulario_genera_cuis').serializeArray()
+                        let datos = {sucursal:sucursal}
+                        $.ajax({
+                            url   : "{{ url('empresa/eliminarSucursalEmpresa') }}",
+                            method: "POST",
+                            data  : datos,
+                            success: function (data) {
+                                if(data.estado === 'success'){
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: "EXITO!",
+                                        text:  data.text,
+                                    })
+                                    ajaxListadoSucursal();
+                                }else if( data.estado === 'error'){
+                                    Swal.fire({
+                                        icon : 'error',
+                                        title: "Error!",
+                                        text : data.text,
+                                        timer: 5000
+                                    })
+                                }
+                            }
+                        })
+                    }
+            });
+        }
+
+        function ajaxListadoUsuarioEmpresa(){
+            let datos = {
+                empresa: {{$empresa->id}}
+            }
+            $.ajax({
+                // url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa', [$empresa->id]) }}",
+                url   : "{{ url('empresa/ajaxListadoUsuarioEmpresa') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_usuario_empres').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function agregarUsuarioEmpresa(){
+            $('#usuario_id_new_usuario_empresa').val(0)
+            $('#nombres_new_usuaio_empresa').val("")
+            $('#ap_paterno_new_usuaio_empresa').val("")
+            $('#ap_materno_new_usuaio_empresa').val("")
+            $('#usuario_new_usuaio_empresa').val("")
+            $('#contrasenia_new_usuaio_empresa').val("")
+            $('#num_ceular_new_usuaio_empresa').val("")
+            $('#rol_id_new_usuaio_empresa').val(null).trigger('change')
+            $('#sucursal_id_new_usuaio_empresa').val(null).trigger('change')
+            $('#bloque_tabla_punto_ventas_new_usuario_empresa').text('')
+
+            $('#contrasenia_new_usuaio_empresa').attr('required', true)
+            $('#modal_new_usuario').modal('show')
+        }
+
+        function ajaxBuscarPuntoVentaNewUsuarioSelect(elemt){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxBuscarPuntoVentaNewUsuarioSelect') }}",
+                method: "POST",
+                data  : {
+                    sucursal_id: elemt.value
+                },
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#bloque_tabla_punto_ventas_new_usuario_empresa').html(data.select)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function guardarUsuarioEmpresa(){
+            if($("#formulario_new_usuario_empresa")[0].checkValidity()){
+                let datos = $('#formulario_new_usuario_empresa').serializeArray();
+                $.ajax({
+                    url   : "{{ url('empresa/guardarUsuarioEmpresaEmpresa') }}",
+                    method: "POST",
+                    data  : datos,
+                    success: function (data) {
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            ajaxListadoUsuarioEmpresa();
+                            $('#modal_new_usuario').modal('hide');
+                        }else if(data.estado === 'error_sus'){
+                            Swal.fire({
+                                icon:'error',
+                                title: "Eroor",
+                                text:  data.text,
+                            })
+                        }
+                    }
+                })
+            }else{
+                $("#formulario_new_usuario_empresa")[0].reportValidity();
+            }
+        }
+
+
+        function editarUsuario(id,nombres,ap_paterno,ap_materno,numero_celular,email,rol,sucursal,puntoVenta){
+
+            $('#usuario_id_new_usuario_empresa').val(id)
+            $('#nombres_new_usuaio_empresa').val(nombres)
+            $('#ap_paterno_new_usuaio_empresa').val(ap_materno)
+            $('#ap_materno_new_usuaio_empresa').val(ap_materno)
+            $('#usuario_new_usuaio_empresa').val(email)
+            $('#contrasenia_new_usuaio_empresa').val("")
+            $('#num_ceular_new_usuaio_empresa').val(numero_celular)
+            $('#rol_id_new_usuaio_empresa').val(rol).trigger('change')
+            $('#sucursal_id_new_usuaio_empresa').val(sucursal).trigger('change')
+
+            $('#contrasenia_new_usuaio_empresa').attr('required', false)
+
+            // Verificar después de un tiempo si el valor cambió o no
+            setTimeout(function() {
+                $('#punto_venta_id_new_usuaio_empresa').val(puntoVenta).trigger('change')
+            }, 500); // Tiempo de espera en milisegundos
+            $('#modal_new_usuario').modal('show')
+        }
+
+        /*
+
+
+        function ajaxListadoServicios(){
+            let datos = {
+                empresa: {{$empresa->id}}
+            }
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoServicios') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_servicios').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+        function ajaxListadoClientes(){
+            let datos = {
+                empresa: {{$empresa->id}}
+            }
+            $.ajax({
+                url   : "{{ url('empresa/ajaxListadoClientes') }}",
+                method: "POST",
+                data  : datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_clientes').html(data.listado)
+                    }else{
+
+                    }
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function modalNuevoServicio(){
+            $('#servicio_id_new_servicio').val(0)
+            $('#modal_new_servicio').modal('show')
+        }
+
+
+
+
+
+
+
+        function cancelarSincronizacion(){
+            $('#modal_sincronizar_actividad').modal('hide')
+            $('#modal_actividades_economicas').modal('show')
+        }
+
+
+
+        function volverPuntoVenta(){
+            $('#modal_genera_cuis').modal('hide')
+            $('#modal_puntos_ventas').modal('show')
+        }
+
+        function ajaxRecuperarPuntosVentasSelect(elemt){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxRecuperarPuntosVentasSelect') }}",
+                method: "POST",
+                data  : {
+                    sucursal_id   : elemt.value
+                },
+                success: function (data) {
+                    if(data.estado === 'success')
+                        $('#new_servicio_bloque_sucursal_id').html(data.select)
+                }
+            })
+        }
+
+        function ajaxRecupraActividadesSelect(elemt){
+            $.ajax({
+                url   : "{{ url('empresa/ajaxRecupraActividadesSelect') }}",
+                method: "POST",
+                data  : {
+                    punto_venta_id: elemt.value,
+                    empresa_id    : $('#new_servicio_empresa_id').val(),
+                    sucursal_id   : $('#new_servicio_sucursal_id').val()
+                },
+                success: function (data) {
+                    if(data.estado === 'success')
+                        $('#new_servicio_bloque_actividad').html(data.select)
+                }
+            })
+        }
+
+
+
+
         function guardarNewServioEmpresa(){
 
             if($("#formulario_new_servicio")[0].checkValidity()){
@@ -1593,22 +1715,7 @@
             }
         }
 
-        function ajaxBuscarPuntoVentaNewUsuarioSelect(elemt){
-            $.ajax({
-                url   : "{{ url('empresa/ajaxBuscarPuntoVentaNewUsuarioSelect') }}",
-                method: "POST",
-                data  : {
-                    sucursal_id: elemt.value
-                },
-                success: function (data) {
-                    if(data.estado === 'success'){
-                        $('#bloque_tabla_punto_ventas_new_usuario_empresa').html(data.select)
-                    }else{
 
-                    }
-                }
-            })
-        }
 
         function modalNuevoCliente(){
             $('#nombres_cliente_new_usuaio_empresa').val("")
@@ -1768,14 +1875,7 @@
             });
         }
 
-        function modalEditarSucursal(sucursal, nombre, codigo_sucursal, direccion){
 
-            $('#sucursal_id_sucursal').val(sucursal)
-            $('#nombre_sucursal').val(nombre)
-            $('#codigo_sucursal').val(codigo_sucursal)
-            $('#direccion_sucursal').val(direccion)
-            $('#modal_new_sucursal').modal('show');
-        }
     */
    </script>
 @endsection

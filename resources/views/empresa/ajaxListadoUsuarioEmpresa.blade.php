@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-md-3">
-        <button class="btn w-100 btn-sm btn-primary" onclick="agregarUsuarioEmpresa()">Agrgar Usuario</button>
+        <button class="btn w-100 btn-sm btn-primary" onclick="agregarUsuarioEmpresa()">Agregar Usuario</button>
     </div>
 </div>
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_punto_venta">
     <thead>
         <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-            <th class="min-w-100px">Nombres</th>
-            <th class="min-w-100px">Ap Paterno</th>
-            <th class="min-w-100px">Ap Materno</th>
-            <th class="min-w-100px">Numero Celular</th>
-            <th class="min-w-100px">Email</th>
-            <th class="min-w-100px">Rol</th>
-            {{-- <th class="min-w-125px">Estado</th> --}}
-            <th class="min-w-50px">Accion</th>
+            <th>Nombres</th>
+            <th>Ap Paterno</th>
+            <th>Ap Materno</th>
+            <th>Numero Celular</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Accion</th>
         </tr>
     </thead>
     <tbody class="text-gray-600 fw-semibold">
@@ -25,10 +25,12 @@
                 <td>{{ $u->numero_celular }}</td>
                 <td>{{ $u->email }}</td>
                 <td>{{ $u->rol->nombres }}</td>
-                {{-- <td>{{ $u->nombres }}</td> --}}
+                <td>{{ $u->estado }}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm btn-icon"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm btn-icon"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-warning btn-sm btn-icon" onclick="editarUsuario('{{ $u->id }}','{{ $u->nombres }}','{{ $u->ap_paterno }}','{{ $u->ap_materno }}','{{ $u->numero_celular }}','{{ $u->email }}','{{ $u->rol->id }}','{{ $u->sucursal->id }}','{{ $u->puntoVenta->id }}')"><i class="fa fa-edit"></i></button>
+                    @if ($u->contarFacturas() == 0)
+                        <button class="btn btn-danger btn-sm btn-icon"><i class="fa fa-trash"></i></button>
+                    @endif
                 </td>
             </tr>
         @empty

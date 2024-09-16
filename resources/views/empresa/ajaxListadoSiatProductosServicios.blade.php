@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-3">
-        <button class="btn btn-primary btn-sm" onclick="sincronizarSiatProductoServicios('{{$punto_venta}}', '{{$sucursal}}')"><i class="fa fa-plus"></i> Sincronizar</button>
+        <button class="btn btn-primary btn-sm" id="botom_sincronizarSiatProductoServicios" onclick="sincronizarSiatProductoServicios('{{$punto_venta}}', '{{$sucursal}}')"><i id="icono_sincronizarSiatProductoServicios" class="fa fa-refresh"></i> Sincronizar</button>
     </div>
     <div class="col-3">
 

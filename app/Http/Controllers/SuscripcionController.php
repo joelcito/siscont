@@ -6,8 +6,11 @@ use App\Models\Cliente;
 use App\Models\Empresa;
 use App\Models\Factura;
 use App\Models\Plan;
+use App\Models\PuntoVenta;
 use App\Models\Servicio;
+use App\Models\Sucursal;
 use App\Models\Suscripcion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -139,6 +142,30 @@ class SuscripcionController extends Controller
         $cantidadFactura = Factura::where('empresa_id', $empresa->id)->count();
 
         return $cantidadFactura < ($plan->cantidad_factura + $suscripcion->ampliacion_cantidad_facturas) ? true : false;
+    }
+
+    public function verificarRegistroPuntoVentaByPlan(Plan $plan, Sucursal $sucursal)
+    {
+
+        $cantidadPuntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)->count();
+
+        return $cantidadPuntoVenta < $plan->cantidad_punto_venta ? true : false;
+    }
+
+    public function verificarRegistroSucursalByPlan(Plan $plan, Empresa $empresa)
+    {
+
+        $cantidadSucursal = Sucursal::where('empresa_id', $empresa->id)->count();
+
+        return $cantidadSucursal < $plan->cantidad_sucursal ? true : false;
+    }
+
+    public function verificarRegistroUsuarioByPlan(Plan $plan, Empresa $empresa)
+    {
+
+        $cantidadUsuario = User::where('empresa_id', $empresa->id)->count();
+
+        return $cantidadUsuario < $plan->cantidad_usuario ? true : false;
     }
 
     private function cambiaEstadoSuscripcionVigente($empresa_id){

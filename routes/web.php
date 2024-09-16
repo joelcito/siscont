@@ -93,7 +93,10 @@ Route::middleware(['auth', 'one.session'])->group(function () {
 
         Route::get('/detalleEmpresa', [EmpresaController::class, 'detalleEmpresa']);
         Route::post('/guardaEmpresa', [EmpresaController::class, 'guardaEmpresa']);
-
+        Route::post('/guardarPuntoVentaEmpresa', [EmpresaController::class, 'guardarPuntoVentaEmpresa']);
+        Route::post('/guardaSucursalEmpresa', [EmpresaController::class, 'guardaSucursalEmpresa']);
+        Route::post('/eliminarSucursalEmpresa', [EmpresaController::class, 'eliminarSucursalEmpresa']);
+        Route::post('/guardarUsuarioEmpresaEmpresa', [EmpresaController::class, 'guardarUsuarioEmpresaEmpresa']);
 
     });
 

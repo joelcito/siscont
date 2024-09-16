@@ -48,6 +48,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Rol', 'rol_id');
     }
 
+    public function sucursal(){
+        return $this->belongsTo('App\Models\Sucursal', 'sucursal_id');
+    }
+
+    public function puntoVenta(){
+        return $this->belongsTo('App\Models\PuntoVenta', 'punto_venta_id');
+    }
+
     public function empresa(){
         return $this->belongsTo('App\Models\Empresa', 'empresa_id');
     }
@@ -62,6 +70,17 @@ class User extends Authenticatable
 
     public function  isJefeEmpresa(){
         return $this->rol_id == 2 ? true : false;
+    }
+
+    public function facturas()
+    {
+        return $this->hasMany(Factura::class, 'usuario_creador_id', 'id');
+    }
+
+    // Método para contar facturas
+    public function contarFacturas()
+    {
+        return $this->facturas()->count();
     }
 
     public function isFacturacionCompraVenta(){

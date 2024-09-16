@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Ui\Presets\React;
 use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use PhpParser\Node\Expr\FuncCall;
 
 class EmpresaController extends Controller
 {
@@ -264,7 +265,6 @@ class EmpresaController extends Controller
              // Obtener la instancia del modelo
             $urlApiServicioSiat = new UrlApiServicioSiat();
             $UrlCodigos         = $urlApiServicioSiat->getUrlCodigos($empresa->codigo_ambiente, $empresa->codigo_modalidad);
-            // dd($empresa->codigo_ambiente, $empresa->codigo_modalidad, $UrlCodigos);
 
             if($UrlCodigos){
 
@@ -280,19 +280,6 @@ class EmpresaController extends Controller
                     $sucursal->codigo_sucursal,
                     $empresa->nit
                 ));
-
-                // dd(
-                //     // $codigoCuis,
-                //     // $empresa,
-                //     $empresa->api_token,
-                //     $UrlCodigos->url_servicio,
-                //     $empresa->codigo_ambiente,
-                //     $empresa->codigo_modalidad,
-                //     $punto_venta->codigoPuntoVenta,
-                //     $empresa->codigo_sistema,
-                //     $sucursal->codigo_sucursal,
-                //     $empresa->nit
-                // );
 
                 if($codigoCuis->estado === "success"){
                     // dd($codigoCuis);
@@ -376,12 +363,10 @@ class EmpresaController extends Controller
                     $data['msg']    = $codigoCuis;
                     $data['estado'] = 'error';
                 }
-
             }else{
                 $data['msg']   = 'No existe el servico para la generacion el CUIS';
                 $data['estado'] = 'error';
             }
-
         }else{
             $data['text']   = 'No existe';
             $data['estado'] = 'error';
@@ -503,8 +488,6 @@ class EmpresaController extends Controller
     public function guardarUsuarioEmpresa(Request $request){
         if($request->ajax()){
 
-            // dd($request->all());
-
             $usuario = new User();
 
             $usuario->usuario_creador_id = Auth::user()->id;
@@ -569,7 +552,6 @@ class EmpresaController extends Controller
     public function  sincronizarActividades(Request $request){
         if($request->ajax()){
 
-            // dd($request->all());
             $empresa_id     = $request->input('empresa_id_sincronizar_actividad');
             $punto_venta_id = $request->input('punto_venta_id_sincronizar_actividad');
             $sucursal_id   = $request->input('sucuarsal_id_sincronizar_actividad');
@@ -1413,10 +1395,21 @@ class EmpresaController extends Controller
 
     public function detalleEmpresa(Request $request) {
 
-        $usuario = Auth::user();
-        $empresa = $usuario->empresa;
+        $usuario          = Auth::user();
+        $empresa          = $usuario->empresa;
+        $roles            = Rol::where('id', '!=', 1)->get();
+        $sucursales       = Sucursal::where('empresa_id',$empresa->id)->get();
+        $siat_tipo_ventas = SiatTipoPuntoVenta::all();
 
-        return view('empresa.detalleEmpresa')->with(compact('empresa'));
+        // dd(
+        //     $usuario,
+        //     $empresa,
+        //     $roles,
+        //     $sucursales,
+        //     $siat_tipo_ventas
+        // );
+
+        return view('empresa.detalleEmpresa')->with(compact('empresa','siat_tipo_ventas','roles','sucursales'));
     }
 
     public function guardaEmpresa(Request $request){
@@ -1505,5 +1498,294 @@ class EmpresaController extends Controller
 
         return $data;
 
+    }
+
+    public function guardarPuntoVentaEmpresa(Request $request){
+        if($request->ajax()){
+
+            $usuario        = Auth::user();
+            $empresa        = $usuario->empresa;
+
+            // dd($usuario, $request->all());
+
+            $suscripcion = app(SuscripcionController::class);
+
+            $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
+
+            if($obtenerSuscripcionVigenteEmpresa){
+
+                $sucursal_id = $usuario->sucursal_id;
+                $plan        = $obtenerSuscripcionVigenteEmpresa->plan;
+                $sucursal    = Sucursal::find($sucursal_id);
+
+                if($suscripcion->verificarRegistroPuntoVentaByPlan($plan, $sucursal)){
+                    $empresa_id                      = $empresa->id;
+
+                    // $empresa_id                      = $request->input('empresa_id_punto_venta');
+                    // $sucursal_id                     = $request->input('sucursal_id_punto_venta');
+                    $codigo_clasificador_punto_venta = $request->input('codigo_tipo_punto_id_punto_venta');
+
+                    $puntoVenta = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                            ->first();
+
+                    $cuis       = Cuis::where('punto_venta_id', $puntoVenta->id)
+                                    ->where('sucursal_id', $sucursal->id)
+                                    ->where('codigo_ambiente', $empresa->codigo_ambiente)
+                                    ->first();
+
+                    $urlApiServicioSiat = new UrlApiServicioSiat();
+                    // $UrlCodigos         = $urlApiServicioSiat->getUrlCodigos($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+                    $UrlOperaciones     = $urlApiServicioSiat->getUrlOperaciones($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+
+                    // dd(
+                    //     $empresa->url_facturacion_operaciones,
+                    //     $empresa->codigo_ambiente,
+                    //     $empresa->cogigo_modalidad,
+                    //     $empresa
+                    // );
+
+                    $descripcionPuntoVenta = $request->input('descripcion_punto_venta');
+                    $nombrePuntoVenta      = $request->input('nombre_punto_venta');
+                    $header                = $empresa->api_token;
+                    $url4                  = $UrlOperaciones->url_servicio;
+                    $codigoAmbiente        = $empresa->codigo_ambiente;
+                    $codigoModalidad       = $empresa->cogigo_modalidad;
+                    $codigoSistema         = $empresa->codigo_sistema;
+                    $codigoSucursal        = $sucursal->codigo_sucursal;
+                    $codigoTipoPuntoVenta  = $codigo_clasificador_punto_venta;
+                    $scuis                 = $cuis->codigo;
+                    $nit                   = $empresa->nit;
+
+                    // dd(
+                    //     $descripcionPuntoVenta,
+                    //     $nombrePuntoVenta,
+                    //     $header,
+                    //     $url4,
+                    //     $codigoAmbiente,
+                    //     $codigoModalidad,
+                    //     $codigoSistema,
+                    //     $codigoSucursal,
+                    //     $codigoTipoPuntoVenta,
+                    //     $scuis,
+                    //     $nit
+                    // );
+
+                    $siat = app(SiatController::class);
+
+                    $puntoVentaGenerado = json_decode($siat->registroPuntoVenta(
+                        $descripcionPuntoVenta,
+                        $nombrePuntoVenta,
+                        $header,
+                        $url4,
+                        $codigoAmbiente,
+                        $codigoModalidad,
+                        $codigoSistema,
+                        $codigoSucursal,
+                        $codigoTipoPuntoVenta,
+                        $scuis,
+                        $nit
+                    ));
+
+                    // dd($puntoVentaGenerado);
+
+                    if($puntoVentaGenerado->estado === "success"){
+                        if($puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->transaccion){
+                            $codigoPuntoVentaDevuelto        = $puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->codigoPuntoVenta;
+
+                            $punto_venta                     = new PuntoVenta();
+                            $punto_venta->usuario_creador_id = Auth::user()->id;
+                            $punto_venta->sucursal_id        = $sucursal->id;
+                            $punto_venta->codigoPuntoVenta   = $codigoPuntoVentaDevuelto;
+                            $punto_venta->nombrePuntoVenta   = $nombrePuntoVenta;
+                            $punto_venta->tipoPuntoVenta     = $codigo_clasificador_punto_venta;
+                            $punto_venta->codigo_ambiente    = $codigoAmbiente;
+
+                            if($punto_venta->save()){
+                                $data['text']   = 'Se creo el PUNTO DE VENTA con exito';
+                                $data['estado'] = 'success';
+
+                                $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                            ->get();
+                                $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas', 'sucursal_id'))->render();
+
+                            }else{
+                                $data['text']   = 'Error al crear el PUNTO DE VENTA';
+                                $data['estado'] = 'error';
+                            }
+                        }else{
+                            $data['text']   = 'Error al crear el CUIS';
+                            $data['msg']    = $puntoVentaGenerado->resultado;
+                            $data['estado'] = 'error';
+                        }
+                    }else{
+                        $data['text']   = 'Error en la consulta';
+                        $data['msg']    = $puntoVentaGenerado;
+                        $data['estado'] = 'error';
+                    }
+                }else{
+                    $data['text']   = 'Alcanzo la cantidad maxima registros de puntos de ventas, solicite un plan superior.';
+                    $data['estado'] = 'error_sus';
+                }
+            }else{
+                $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
+                $data['estado'] = 'error_sus';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function guardaSucursalEmpresa(Request $request){
+        if($request->ajax()){
+
+            $sucursal_id = $request->input('sucursal_id_sucursal');
+            $usuario     = Auth::user();
+            $empresa     = $usuario->empresa;
+
+            $suscripcion = app(SuscripcionController::class);
+            $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
+
+            if($obtenerSuscripcionVigenteEmpresa){
+
+                $sucursal_id = $usuario->sucursal_id;
+                $plan        = $obtenerSuscripcionVigenteEmpresa->plan;
+                $sucursal    = Sucursal::find($sucursal_id);
+
+                if($suscripcion->verificarRegistroSucursalByPlan($plan, $empresa)){
+
+                    if($sucursal_id == "0"){
+                        $sucursal                     = new Sucursal();
+                        $sucursal->usuario_creador_id = $usuario->id;
+                    }else{
+                        $sucursal                         = new Sucursal();
+                        $sucursal->usuario_modificador_id = $usuario->id;
+                    }
+
+                    $sucursal->nombre             = $request->input('nombre_sucursal');
+                    $sucursal->codigo_sucursal    = $request->input('codigo_sucursal');
+                    $sucursal->direccion          = $request->input('direccion_sucursal');
+                    $sucursal->empresa_id         = $request->input('empresa_id_sucursal');
+
+                    if($sucursal->save()){
+
+                        $punto_venta                     = new PuntoVenta();
+                        $punto_venta->usuario_creador_id = Auth::user()->id;
+                        $punto_venta->sucursal_id        = $sucursal->id;
+                        $punto_venta->codigoPuntoVenta   = 0;
+                        $punto_venta->nombrePuntoVenta   = "PRIMER PUNTO VENTA POR DEFECTO";
+                        $punto_venta->tipoPuntoVenta     = "VENTANILLA INICIAL POR DEFECTO";
+                        $punto_venta->codigo_ambiente    = 2;
+                        $punto_venta->save();
+
+                        $data['estado'] = 'success';
+                        $data['text']   = 'Se creo con exito';
+                    }else{
+                        $data['text']   = 'Erro al crear';
+                        $data['estado'] = 'error';
+                    }
+                }else{
+                    $data['text']   = 'Alcanzo la cantidad maxima registros de sucursales, solicite un plan superior.';
+                    $data['estado'] = 'error_sus';
+                }
+            }else{
+                $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
+                $data['estado'] = 'error_sus';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function eliminarSucursalEmpresa(Request $request){
+        if($request->ajax()){
+
+            $usuario     = Auth::user();
+            $empresa     = $usuario->empresa;
+            $sucursal_id = $request->input('sucursal');
+
+            $sucursal = Sucursal::find($sucursal_id);
+
+            if($sucursal->empresa_id = $empresa->id){
+
+                $sucursal->usuario_eliminador_id = $usuario->id;
+                $sucursal->save();
+
+                Sucursal::destroy($sucursal_id);
+
+                $data['text']   = 'Se elimino con exito!';
+                $data['estado'] = 'success';
+
+            }else{
+                $data['text']   = 'No existe el sucursal!.';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function guardarUsuarioEmpresaEmpresa(Request $request){
+        if($request->ajax()){
+
+            $usuarioLogeado = Auth::user();
+            $empresa        = $usuarioLogeado->empresa;
+            $usuario_new_id = $request->input('usuario_id_new_usuario_empresa');
+
+            // dd($request->all());
+
+            $suscripcion = app(SuscripcionController::class);
+            $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
+
+            if($obtenerSuscripcionVigenteEmpresa){
+                $plan        = $obtenerSuscripcionVigenteEmpresa->plan;
+                if($suscripcion->verificarRegistroUsuarioByPlan($plan, $empresa) || $usuario_new_id != "0"){
+
+                    if($usuario_new_id != "0"){
+                        $usuario                         = User::find($usuario_new_id);
+                        $usuario->usuario_modificador_id = $usuarioLogeado->id;
+                    }else{
+                        $usuario                     = new User();
+                        $usuario->usuario_creador_id = $usuarioLogeado->id;
+                    }
+
+                    $usuario->nombres            = $request->input('nombres_new_usuaio_empresa');
+                    $usuario->ap_paterno         = $request->input('ap_paterno_new_usuaio_empresa');
+                    $usuario->ap_materno         = $request->input('ap_materno_new_usuaio_empresa');
+                    $usuario->name               = $usuario->nombres." ".$usuario->ap_paterno." ".$usuario->ap_materno;
+                    $usuario->email              = $request->input('usuario_new_usuaio_empresa');
+                    $usuario->empresa_id         = $empresa->id;
+
+                    if(!$request->has('contrasenia_new_usuaio_empresa')){
+                        $usuario->password           = Hash::make($request->input('contrasenia_new_usuaio_empresa'));
+                    }
+
+                    $usuario->punto_venta_id     = $request->input('punto_venta_id_new_usuaio_empresa');
+                    $usuario->sucursal_id        = $request->input('sucursal_id_new_usuaio_empresa');
+                    $usuario->rol_id             = $request->input('rol_id_new_usuaio_empresa');
+                    $usuario->numero_celular     = $request->input('num_ceular_new_usuaio_empresa');
+
+                    $usuario->save();
+
+                    $data['estado'] = 'success';
+
+                }else{
+                    $data['text']   = 'Alcanzo la cantidad maxima registros de usuarios, solicite un plan superior.';
+                    $data['estado'] = 'error_sus';
+                }
+            }else{
+                $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
+                $data['estado'] = 'error_sus';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return  $data;
     }
 }
