@@ -17,8 +17,16 @@ class PlanController extends Controller
     {
         if($request->ajax()){
 
-            $plan                       = new Plan();
-            $plan->usuario_creador_id   = Auth::user()->id;
+            $plan_id= $request->input('plan_id');
+
+            if($plan_id == "0"){
+                $plan                       = new Plan();
+                $plan->usuario_creador_id   = Auth::user()->id;
+            }else{
+                $plan = Plan::find($plan_id);
+                $plan->usuario_modificador_id = Auth::user()->id;
+            }
+
             $plan->precio               = $request->input('precio');
             $plan->nombre               = $request->input('nombre');
             $plan->tipo_plan            = $request->input('tipo_plan');
@@ -27,6 +35,8 @@ class PlanController extends Controller
             $plan->cantidad_punto_venta = $request->input('cantidad_punto_venta');
             $plan->cantidad_usuario     = $request->input('cantidad_usuario');
             $plan->cantidad_producto    = $request->input('cantidad_producto');
+            $plan->cantidad_clientes    = $request->input('cantidad_clientes');
+
             $plan->save();
 
             $data['text']    = 'Se proceso con exito';

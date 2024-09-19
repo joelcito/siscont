@@ -709,7 +709,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label class="fs-6 fw-semibold form-label mb-2">Nombre Empresa</label>
-                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="nombre_empresa" id="nombre_empresa" value="{{ $empresa->nombre }}" required>
+                                            <input type="text" class="form-control fw-bold form-control-solid form-control-sm" name="nombre_empresa" id="nombre_empresa" value="{{ $empresa->nombre }}" required maxlength="17">
                                             <input type="hidden" name="empresa_id" id="empresa_id" value="{{ $empresa->id }}" required>
                                         </div>
                                         <div class="col-md-2">

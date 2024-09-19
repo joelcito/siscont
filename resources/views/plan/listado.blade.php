@@ -26,6 +26,7 @@
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombre</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombre" id="nombre" required>
+                                <input type="hidden" name="plan_id" id="plan_id" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Precio</label>
@@ -52,6 +53,10 @@
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Punto de Venta</label>
                                 <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_punto_venta" id="cantidad_punto_venta" required>
                             </div>
+
+                        </div>
+                        <div class="row mt-5">
+
                             <div class="col-md">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Usuarios</label>
                                 <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_usuario" id="cantidad_usuario" required>
@@ -60,6 +65,12 @@
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Producto</label>
                                 <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_producto" id="cantidad_producto" required>
                             </div>
+
+                            <div class="col-md">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Cantidad de Clientes</label>
+                                <input type="number" min="1" class="form-control fw-bold form-control-solid" name="cantidad_clientes" id="cantidad_clientes" required>
+                            </div>
+
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
@@ -79,7 +90,7 @@
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <!--begin::Toolbar container-->
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+            <div id="kt_app_toolbar_container" class="app-container container-xxlg d-flex flex-stack">
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
@@ -124,7 +135,7 @@
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
-            <div id="kt_app_content_container" class="app-container container-xxl">
+            <div id="kt_app_content_container" class="app-container container-xxlg">
                 <!--begin::Card-->
                 <div class="card">
                     <div class="card-body py-4">
@@ -178,6 +189,7 @@
         }
 
         function modalPlan(){
+            $('#plan_id').val("0")
             $('#nombre').val("")
             $('#precio').val("")
             $('#tipo_plan').val("")
@@ -214,6 +226,23 @@
             }else{
                 $("#formulario_new_plan")[0].reportValidity();
             }
+        }
+
+        function editarPlan(id,precio,nombre,tipo_plan,cantidad_factura ,cantidad_sucursal ,cantidad_punto_venta ,cantidad_usuario,cantidad_producto ,cantidad_clientes){
+
+            $('#plan_id').val(id)
+            $('#nombre').val(nombre)
+            $('#precio').val(precio)
+            $('#tipo_plan').val(tipo_plan)
+            $('#cantidad_factura').val(cantidad_factura)
+            $('#cantidad_sucursal').val(cantidad_sucursal)
+            $('#cantidad_punto_venta').val(cantidad_punto_venta)
+            $('#cantidad_usuario').val(cantidad_usuario)
+            $('#cantidad_clientes').val(cantidad_clientes)
+            $('#cantidad_producto').val(cantidad_producto)
+
+
+            $('#modal_new_plan').modal('show')
         }
 
    </script>

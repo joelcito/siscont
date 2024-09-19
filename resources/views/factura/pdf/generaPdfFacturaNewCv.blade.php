@@ -137,9 +137,9 @@
         #TableFactura{
             position        : absolute;
             top             : 150px;
-            left            : 80px;
-            /* background-color: red; */
+            /* left            : 80px; */
             text-align: center;
+            width: 780px;
         }
 
         #table_datos_factura{

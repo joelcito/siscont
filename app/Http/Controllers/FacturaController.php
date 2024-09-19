@@ -2129,8 +2129,6 @@ class FacturaController extends Controller
 
         if($request->ajax()){
 
-            // dd($request->all());
-
             // DE AQUI ESE EL ANTIGUO
             $usuario_id     = Auth::user()->id;
             $empresa_id     = Auth::user()->empresa_id;
@@ -2159,8 +2157,22 @@ class FacturaController extends Controller
                 'clientes.nombres',
                 'clientes.ap_paterno',
                 'clientes.ap_materno',
+
+                'detalles.servicio_id as servicio_id',
+                'detalles.descripcion_adicional',
+                'detalles.precio',
+                'detalles.cantidad',
+                'detalles.total',
+                'detalles.descuento',
+                'detalles.importe',
+
+                'servicios.descripcion as descripcion_servicio',
+                'servicios.precio as precio_servicio'
+
                 )
             ->join('clientes', 'clientes.id', '=', 'facturas.cliente_id')
+            ->join('detalles', 'detalles.factura_id','=','facturas.id')
+            ->join('servicios', 'servicios.id', '=','detalles.servicio_id')
             ->where('facturas.empresa_id', $empresa_id)
             ->where('facturas.sucursal_id', $sucursal_id)
             ->where('facturas.punto_venta_id', $punto_venta_id)
@@ -2188,6 +2200,13 @@ class FacturaController extends Controller
             }
 
             $facturas = $query->get();
+            // $facturas = $query->toSql();
+            // dd(
+            //     $facturas,
+            //     $empresa_id,
+            //     $sucursal_id,
+            //     $punto_venta_id
+            // );
 
             // generacion del excel
             $fileName = 'Facturas.xlsx';
@@ -2204,6 +2223,15 @@ class FacturaController extends Controller
             $hoja->getColumnDimension('G')->setWidth(20); // SECTOR
             $hoja->getColumnDimension('H')->setWidth(20); // MODALIDAD
             $hoja->getColumnDimension('I')->setWidth(20); // ESTADO
+            $hoja->getColumnDimension('J')->setWidth(20);
+            $hoja->getColumnDimension('K')->setWidth(20);
+            $hoja->getColumnDimension('L')->setWidth(20);
+            $hoja->getColumnDimension('M')->setWidth(20);
+            $hoja->getColumnDimension('N')->setWidth(20);
+            $hoja->getColumnDimension('O')->setWidth(20);
+            $hoja->getColumnDimension('P')->setWidth(20);
+            $hoja->getColumnDimension('Q')->setWidth(20);
+            $hoja->getColumnDimension('R')->setWidth(20);
 
             // Añadir datos a la hoja de cálculo
             $hoja->setCellValue('A1', $empresa->nombre);
@@ -2219,6 +2247,15 @@ class FacturaController extends Controller
             $hoja->setCellValue('G4', "SECTOR");
             $hoja->setCellValue('H4', "MODALIDAD");
             $hoja->setCellValue('I4', "ESTADO");
+            $hoja->setCellValue('J4', "USUARIO");
+            $hoja->setCellValue('K4', "SERVICIO_ID");
+            $hoja->setCellValue('L4', "PRODUCTO / SERVICIO");
+            $hoja->setCellValue('M4', "DESCRIPCION ADICIONAL");
+            $hoja->setCellValue('N4', "PRECIO DEL SERVICIO");
+            $hoja->setCellValue('O4', "CANTIDAD");
+            $hoja->setCellValue('P4', "MONTO TOTAL");
+            $hoja->setCellValue('Q4', "DESCUENTO");
+            $hoja->setCellValue('R4', "IMPORTE PAGADO");
 
             $encabezadoStyle =[
                 'font' => [
@@ -2231,9 +2268,9 @@ class FacturaController extends Controller
                 ],
             ];
 
-            $hoja->mergeCells('A1:I1');
-            $hoja->mergeCells('A2:I2');
-            $hoja->mergeCells('A3:I3');
+            $hoja->mergeCells('A1:R1');
+            $hoja->mergeCells('A2:R2');
+            $hoja->mergeCells('A3:R3');
 
             $hoja->getStyle('A1')->applyFromArray($encabezadoStyle);
             $hoja->getStyle('A2')->applyFromArray($encabezadoStyle);
@@ -2261,7 +2298,7 @@ class FacturaController extends Controller
                     ],
                 ],
             ];
-            $hoja->getStyle('A4:I4')->applyFromArray($encabezadoStyle);
+            $hoja->getStyle('A4:R4')->applyFromArray($encabezadoStyle);
 
             $contadorInicio = 5;
             foreach($facturas  as $key => $fac){
@@ -2278,11 +2315,23 @@ class FacturaController extends Controller
                 $hoja->setCellValue('H'.$contadorInicio, $modalidad);
                 $estado = !is_null($fac->estado) ? $fac->estado : "Vigente" ;
                 $hoja->setCellValue('I'.$contadorInicio, $estado);
+                $hoja->setCellValue('J'.$contadorInicio, $fac->usuarioCreador->nombres." ".$fac->usuarioCreador->ap_paterno." ".$fac->usuarioCreador->ap_materno);
+
+                $hoja->setCellValue('K'.$contadorInicio, $fac->servicio_id);
+                $hoja->setCellValue('L'.$contadorInicio, $fac->descripcion_servicio);
+                $hoja->setCellValue('M'.$contadorInicio, $fac->descripcion_adicional);
+                $hoja->setCellValue('N'.$contadorInicio, $fac->precio_servicio);
+                $hoja->setCellValue('O'.$contadorInicio, $fac->cantidad);
+                $hoja->setCellValue('P'.$contadorInicio, $fac->total);
+                $hoja->setCellValue('Q'.$contadorInicio, $fac->descuento);
+                $hoja->setCellValue('R'.$contadorInicio, $fac->importe);
+
+
                 $contadorInicio++;
             }
 
             // Aplicar bordes a las celdas de datos
-            $hoja->getStyle('A5:I'.($contadorInicio-1))->applyFromArray([
+            $hoja->getStyle('A5:R'.($contadorInicio-1))->applyFromArray([
                 'borders' => [
                     'allBorders' => [
                         'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,

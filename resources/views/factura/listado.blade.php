@@ -181,13 +181,13 @@
                                 <div class="col-md-2">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-success btn-sm w-100 mt-8 btn-icon" onclick="ajaxListado()"><i class="fa fa-search"></i></button>
+                                            <button type="button" id="botom_genera_buscar" class="btn btn-success btn-sm w-100 mt-8 btn-icon" onclick="ajaxListado()"><i class="fa fa-search"></i></button>
                                         </div>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-danger btn-sm w-100 btn-icon mt-8" title="Expotar en PDF" onclick="reportePDF()"><i class="fa fa-file-pdf"></i></button>
+                                            <button type="button" id="botom_genera_pdf" class="btn btn-danger btn-sm w-100 btn-icon mt-8" title="Expotar en PDF" onclick="reportePDF()"><i class="fa fa-file-pdf"></i></button>
                                         </div>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-success btn-sm w-100 btn-icon mt-8" title="Expotar en Excel" onclick="exportarExcel()"><i class="fa fa-file-excel"></i></button>
+                                            <button type="button" id="botom_genera_excel" class="btn btn-success btn-sm w-100 btn-icon mt-8" title="Expotar en Excel" onclick="exportarExcel()"><i class="fa fa-file-excel"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -288,6 +288,19 @@
         // }
 
         function ajaxListado(){
+
+            // $('#botom_genera_buscar').prop('disabled', true);
+
+            // Mostrar SweetAlert2 antes de enviar la solicitud
+            Swal.fire({
+                title: 'Generando Listado...',
+                text: 'Por favor espera mientras generamos el listado.',
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+                didOpen: () => {
+                    Swal.showLoading(); // Mostrar el spinner de carga
+                }
+            });
+
             let datos = $('#formulario-busqueda-factura').serializeArray();
             $.ajax({
                     url: "{{ url('factura/ajaxListadoFacturas') }}",
@@ -299,6 +312,10 @@
                         }else{
 
                         }
+
+                        // Ocultar SweetAlert2 cuando la solicitud sea exitosa
+                        Swal.close();
+
                     }
                 })
         }
@@ -548,6 +565,16 @@
             //     }
             // });
 
+            // Mostrar SweetAlert2 antes de enviar la solicitud
+            Swal.fire({
+                title: 'Generando Excel...',
+                text: 'Por favor espera mientras generamos el archivo.',
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+                didOpen: () => {
+                    Swal.showLoading(); // Mostrar el spinner de carga
+                }
+            });
+
             $.ajax({
                 url: "{{ url('factura/reporteExcel') }}",
                 method: "POST",
@@ -557,7 +584,7 @@
                 },
                 success: function (data, status, xhr) {
                     // // Ocultar SweetAlert2 cuando la solicitud sea exitosa
-                    // Swal.close();
+                    Swal.close();
 
                     // Assume `data` contains the binary response from the server
                     var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

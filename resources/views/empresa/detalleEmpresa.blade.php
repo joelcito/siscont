@@ -834,20 +834,6 @@
                                             <span class="path6"></span>
                                         </i>Usuarios</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_servicios">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Servicios</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_clientes">
-                                        <i class="ki-duotone ki-save-2 fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>Clientes</a>
-                                    </li>
                                     <!--end:::Tab item-->
                                 </ul>
                                 <!--end:::Tabs-->
@@ -903,28 +889,6 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div id="tabla_siat_productos">
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end:::Tab pane-->
-                                    <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade" id="tab_tabla_servicios" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div id="tabla_servicios">
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end:::Tab pane-->
-                                    <!--begin:::Tab pane-->
-                                    <div class="tab-pane fade" id="tab_tabla_clientes" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div id="tabla_clientes">
 
                                                 </div>
                                             </div>

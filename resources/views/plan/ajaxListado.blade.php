@@ -10,6 +10,7 @@
             <th>Cantidad Punto Venta</th>
             <th>Cantidad Usuario</th>
             <th>Cantidad Producto</th>
+            <th>Cantidad Clientes</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -24,8 +25,9 @@
                 <td>{{ $plan->cantidad_punto_venta }}</td>
                 <td>{{ $plan->cantidad_usuario }}</td>
                 <td>{{ $plan->cantidad_producto }}</td>
+                <td>{{ $plan->cantidad_clientes }}</td>
                 <td>
-                    {{-- <button class="btn btn-warning"></button> --}}
+                    <button class="btn btn-warning btn-icon btn-sm" onclick="editarPlan('{{ $plan->id }}','{{ $plan->precio }}','{{ $plan->nombre }}','{{ $plan->tipo_plan }}','{{ $plan->cantidad_factura }}','{{ $plan->cantidad_sucursal }}','{{ $plan->cantidad_punto_venta }}','{{ $plan->cantidad_usuario }}','{{ $plan->cantidad_producto }}', '{{ $plan->cantidad_clientes }}')"><i class="fa fa-edit"></i></button>
                 </td>
             </tr>
         @empty
