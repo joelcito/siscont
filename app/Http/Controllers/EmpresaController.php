@@ -26,9 +26,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Ui\Presets\React;
 use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpParser\Node\Expr\FuncCall;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmpresaController extends Controller
 {
@@ -1845,7 +1847,8 @@ class EmpresaController extends Controller
             $hoja->setCellValue('K2', "CODIGO ACTIVIDAD SIAT");
             $hoja->setCellValue('L2', "CODIGO UNIDAD MEDIDA SIAT");
             $hoja->setCellValue('M2', "UNIDAD MEDIDA");
-            $hoja->setCellValue('N2', "UNIDAD MEDIDA");
+            $hoja->setCellValue('N2', "DOCUMENTO SECTOR");
+            // $hoja->setCellValue('O2', "PRUEBA");
 
 
             $encabezadoStyle =[
@@ -1934,5 +1937,243 @@ class EmpresaController extends Controller
             $data['estado'] = 'error';
         }
 
+    }
+
+    public function descargarFormatoImportarExcel(Request $request){
+        if($request->ajax()){
+
+            // generacion del excel
+            $fileName = 'ImportarServiciosProductos.xlsx';
+            $libro = new Spreadsheet();
+            $hoja = $libro->getActiveSheet();
+
+            $hoja->getColumnDimension('A')->setWidth(40);
+            $hoja->getColumnDimension('B')->setWidth(50);
+            $hoja->getColumnDimension('C')->setWidth(20);
+            $hoja->getColumnDimension('D')->setWidth(20);
+            $hoja->getColumnDimension('E')->setWidth(20);
+
+            // Crear una hoja separada para los valores de la lista desplegable
+            $hojaLista = $libro->createSheet();
+            $hojaLista->setTitle('ListaUnidadesMedidas');
+
+            // Insertar los valores de la lista desplegable en la hoja "ListaValores"
+            $unidadesMedidas = SiatUnidadMedida::orderBy('descripcion', 'asc')
+                                                ->pluck('descripcion')
+                                                ->toArray();
+
+            // $valoresLista = ['Valor 1', 'Valor 2', 'Valor 3', 'Valor 4'];
+            $valoresLista = $unidadesMedidas;
+            foreach ($valoresLista as $key => $valor)
+                $hojaLista->setCellValue('A' . ($key + 1), $valor);
+
+            // Definir la lista de valores como un rango en la hoja activa (por ejemplo, "A1:A4" de la hoja "ListaValores")
+            $listaRango = 'ListaUnidadesMedidas!$A$1:$A$' . count($valoresLista);
+
+            $hoja->setCellValue('A1', "SERVICIOS / PRODUCTOS PARA IMPORTAR AL SISTEMA ");
+
+            $hoja->setCellValue('A2', "UNIDAD DE MEDIDA");
+            $hoja->setCellValue('B2', "DESCRIPCION DEL SERVICIO / PRODUCTO");
+            $hoja->setCellValue('C2', "PRECIO DEL SERVICIO / PRODUCTO");
+            $hoja->setCellValue('D2', "NUMERO SERIE");
+            $hoja->setCellValue('E2', "CODIGO IMEI");
+
+
+            $encabezadoStyle =[
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+            ];
+
+            $hoja->mergeCells('A1:E1');
+            $hoja->getStyle('A1')->applyFromArray($encabezadoStyle);
+
+            // Aplicar márgenes y formato a los encabezados
+            $encabezadoStyle = [
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => [
+                        'argb' => 'FFFFE0B2', // Color de fondo
+                    ],
+                ],
+            ];
+            $hoja->getStyle('A2:E2')->applyFromArray($encabezadoStyle);
+
+            $contadorCeldas = 3;
+            for($i = 1 ; $i <= 1000 ; $i++){
+
+                // de aqui el seleccionable
+                $validacion = $hoja->getCell('A' . $i)->getDataValidation();
+                $validacion->setType(DataValidation::TYPE_LIST);
+                $validacion->setErrorStyle(DataValidation::STYLE_STOP);
+                $validacion->setAllowBlank(true);
+                $validacion->setShowInputMessage(true);
+                $validacion->setShowErrorMessage(true);
+                $validacion->setShowDropDown(true);
+                $validacion->setErrorTitle('Valor inválido');
+                $validacion->setError('El valor ingresado no es válido.');
+                $validacion->setPromptTitle('Seleccione de la lista');
+                $validacion->setPrompt('Seleccione un valor de la lista.');
+                $validacion->setFormula1($listaRango);
+
+            }
+
+            // Proteger la hoja con la lista para evitar modificaciones
+            $hojaLista->getProtection()->setSheet(true);
+            $hojaLista->getProtection()->setSort(true);
+            $hojaLista->getProtection()->setInsertRows(true);
+            $hojaLista->getProtection()->setFormatCells(true);
+
+            // Aplicar bordes a las celdas de datos
+            $hoja->getStyle('A3:N'.($contadorCeldas-1))->applyFromArray([
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+            ]);
+
+            // Establecer los encabezados para forzar la descarga
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'. $fileName .'"');
+            header('Cache-Control: max-age=0');
+
+            // Guardar el archivo
+            $writer = new Xlsx($libro);
+            $writer->save('php://output');
+            exit;
+
+
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function importarServiciosProductosExcel(Request $request){
+
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            // Validación de los campos
+            $rules = [
+                'documento_sector_siat_id_importar_excel'    => 'required|integer',
+                'actividad_economica_siat_id_importar_excel' => 'required|integer',
+                'producto_servicio_siat_id_importar_excel'   => 'required|integer',
+                'archivo_excel_importar_excel'               => 'required|file|mimes:xlsx,xls',   // Validación para archivos Excel
+            ];
+
+            $messages = [
+                'archivo_excel_importar_excel.required' => 'El archivo Excel es obligatorio.',
+                'archivo_excel_importar_excel.mimes'    => 'Solo se permiten archivos Excel (.xlsx, .xls).',
+            ];
+
+            // Aplicar la validación
+            $validated = $request->validate($rules, $messages);
+
+            // Obtener el archivo subido
+            $archivo = $request->file('archivo_excel_importar_excel');
+
+            // Lee el archivo Excel subido y obtiene todas las filas en un array
+            $rows = Excel::toArray([], $archivo);
+
+            $datosErroneos = [];
+
+            $usuario                     = Auth::user();
+            $documento_sector_siat_id    = $request->input('documento_sector_siat_id_importar_excel');
+            $actividad_economica_siat_id = $request->input('actividad_economica_siat_id_importar_excel');
+            $producto_servicio_siat_id   = $request->input('producto_servicio_siat_id_importar_excel');
+
+            // Itera sobre cada fila a partir de la fila 3
+            foreach ($rows[0] as $key => $row) {
+                // Comienza desde la fila 3 (índice 2, porque el índice comienza en 0)
+                if ($key >= 2) {
+                    // $row es un array con los datos de cada celda en la fila
+                    // echo 'Fila ' . ($key + 1) . ': ' . implode(', ', $row) .'|'.$row[0] .'<br>';
+                    $unidadMedida = $row[0];
+                    $descripcion  = $row[1];
+                    $precio       = $row[2];
+                    $numero_serie = $row[3];
+                    $codigo_imei  = $row[4];
+
+                    if(!empty($unidadMedida) && !empty($descripcion) && !empty($precio)){
+                        if(is_numeric($precio)){
+                            $unidadMedidaDataBase = SiatUnidadMedida::where('descripcion', $unidadMedida)->first();
+                            if($unidadMedidaDataBase){
+                                $servicio                              = new Servicio();
+                                $servicio->usuario_creador_id          = $usuario->id;
+                                $servicio->empresa_id                  = $usuario->empresa->id;
+
+                                $servicio->siat_depende_actividades_id = $actividad_economica_siat_id;
+                                $servicio->siat_producto_servicios_id  = $producto_servicio_siat_id;
+                                $servicio->siat_unidad_medidas_id      = $unidadMedidaDataBase->id;
+                                $servicio->siat_documento_sector_id    = $documento_sector_siat_id;
+
+                                $servicio->descripcion                 = $descripcion;
+                                $servicio->precio                      = $precio;
+                                $servicio->numero_serie                = $numero_serie;
+                                $servicio->codigo_imei                 = $codigo_imei;
+
+                                $servicio->save();
+                            }else{
+                                $h = [
+                                    'texto' => 'Unidad de Medida no encontrada',
+                                    'fila'  => $row,
+                                    'numero' => ($key+1)
+                                ];
+                                $datosErroneos[] = $h;
+                            }
+                        }else{
+                            $h = [
+                                'texto' => 'El precio debe ser numerico',
+                                'fila'  => $row,
+                                'numero' => ($key+1)
+                            ];
+                            $datosErroneos[] = $h;
+                        }
+                    }else{
+                        $h = [
+                            'texto' => 'Fila enviado con vacios o nulos',
+                            'fila'  => $row,
+                            'numero' => ($key+1)
+                        ];
+                        $datosErroneos[] = $h;
+                    }
+                }
+            }
+            if(count($datosErroneos)>0){
+                $data['text']    = 'Se registro con exito, pero hay observaciones';
+                $data['estado']  = 'warnig';
+                $data['errores'] = $datosErroneos;
+            }else{
+                $data['text']   = 'Se registro con extio';
+                $data['estado'] = 'success';
+            }
+        }else{
+            $data['text']    = 'No existe';
+            $data['estado']  = 'error';
+        }
+        return $data;
     }
 }

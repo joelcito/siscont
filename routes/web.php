@@ -99,6 +99,8 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/guardarUsuarioEmpresaEmpresa', [EmpresaController::class, 'guardarUsuarioEmpresaEmpresa']);
 
         Route::post('/exportarServicoProductoExcel', [EmpresaController::class, 'exportarServicoProductoExcel']);
+        Route::post('/descargarFormatoImportarExcel', [EmpresaController::class, 'descargarFormatoImportarExcel']);
+        Route::post('/importarServiciosProductosExcel', [EmpresaController::class, 'importarServiciosProductosExcel']);
 
     });
 

@@ -110,69 +110,48 @@
                     </div>
                 </div>
                 <div class="modal-body scroll-y">
-                    <form id="formulario_new_servicio">
+                    <form id="formulario_importar_servicios_productos_excel" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Documento Sector</label>
-                                <select required data-control="select2" name="documento_sector_siat_id_new_servicio" id="documento_sector_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <select required data-control="select2" name="documento_sector_siat_id_importar_excel" id="documento_sector_siat_id_importar_excel" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($documentos_sectores_asignados as $dsa)
                                         <option value="{{ $dsa->siat_tipo_documento_sector->id }}">{{ $dsa->siat_tipo_documento_sector->descripcion }}</option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" name="servicio_producto_id_new_servicio" id="servicio_producto_id_new_servicio">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="fs-6 required fw-semibold form-label mb-2">Actividad Economica Siat</label>
-                                <select required data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <select required data-control="select2" name="actividad_economica_siat_id_importar_excel" id="actividad_economica_siat_id_importar_excel" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($activiadesEconomica as $ae)
                                         <option value="{{ $ae->id }}">{{ $ae->descripcion }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label class="fs-6 fw-semibold required form-label mb-2">Producto Servicio Siat</label>
-                                <select required data-control="select2" name="producto_servicio_siat_id_new_servicio" id="producto_servicio_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <select required data-control="select2" name="producto_servicio_siat_id_importar_excel" id="producto_servicio_siat_id_importar_excel" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
                                     @foreach ($productoServicio as $ps)
                                         <option value="{{ $ps->id }}">{{ $ps->descripcion_producto }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <label class="fs-6 required fw-semibold form-label mb-2">Unidad Medida Siat</label>
-                                <select required data-control="select2" name="unidad_medida_siat_id_new_servicio" id="unidad_medida_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
-                                    <option></option>
-                                    @foreach ($unidadMedida as $um)
-                                        <option value="{{ $um->id }}">{{ $um->id." | ".$um->descripcion }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2">Numero de Serie</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="numero_serie" id="numero_serie">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2">Codigo IMEI</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="codigo_imei" id="codigo_imei">
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion del Servicio</label>
-                                <input type="text" class="form-control fw-bold form-control-solid" name="descrpcion_new_servicio" id="descrpcion_new_servicio" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Precio</label>
-                                <input type="number" class="form-control fw-bold form-control-solid" name="precio_new_servicio" id="precio_new_servicio" required step="any">
+                            <div class="col-md-1">
+                                <button type="button" onclick="descargarFormatoImportarExcel()" class="btn btn-dark btn-sm btn-icon btn-circle mt-10" title="Descargar Formato"><i class="fa fa-download"></i></button>
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarNewServioEmpresa()">Generar</button>
+                                <label class="fs-6 fw-semibold required form-label mb-2">Archivo para Importar</label>
+                                <input type="file" class="form-control form-control-sm" id="archivo_excel_importar_excel" name="archivo_excel_importar_excel" required  accept=".xlsx,.xls">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="importarServiciosProductosExcel()">Generar</button>
                             </div>
                         </div>
                     </form>
@@ -270,7 +249,7 @@
             // ajaxListadoTipoDocumentoSector();
             ajaxListado();
 
-            $("#actividad_economica_siat_id_new_servicio, #producto_servicio_siat_id_new_servicio, #unidad_medida_siat_id_new_servicio, #documento_sectores, #documento_sector_siat_id_new_servicio").select2();
+            $("#actividad_economica_siat_id_new_servicio, #producto_servicio_siat_id_new_servicio, #unidad_medida_siat_id_new_servicio, #documento_sectores, #documento_sector_siat_id_new_servicio, #documento_sector_siat_id_importar_excel, #actividad_economica_siat_id_importar_excel, #producto_servicio_siat_id_importar_excel ").select2();
 
         });
 
@@ -430,7 +409,109 @@
         }
 
         function modalImportarServicio(){
+
+            $('#documento_sector_siat_id_importar_excel').val(null).trigger('change');
+            $('#actividad_economica_siat_id_importar_excel').val(null).trigger('change');
+            $('#producto_servicio_siat_id_importar_excel').val(null).trigger('change');
+            $('#archivo_excel_importar_excel').val(null);
+
             $('#modal_new_servicio_importar_excel').modal('show')
+        }
+
+        function descargarFormatoImportarExcel(){
+            // Mostrar SweetAlert2 antes de enviar la solicitud
+            Swal.fire({
+                title: 'Generando Excel...',
+                text: 'Por favor espera mientras generamos el archivo.',
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+                didOpen: () => {
+                    Swal.showLoading(); // Mostrar el spinner de carga
+                }
+            });
+
+            $.ajax({
+                url: "{{ url('empresa/descargarFormatoImportarExcel') }}",
+                method: "POST",
+                // data: datos,
+                xhrFields: {
+                    responseType: 'blob' // Esto le dice a jQuery que espere un archivo binario (PDF)
+                },
+                success: function (data, status, xhr) {
+                    // // Ocultar SweetAlert2 cuando la solicitud sea exitosa
+                    Swal.close();
+
+                    // Assume `data` contains the binary response from the server
+                    var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'ImportarServiciosProductos.xlsx'; // Nombre del archivo Excel
+                    document.body.appendChild(link); // Required for Firefox
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (xhr, status, error) {
+                    // Mostrar error si algo falla
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo generar el EXCEL. Inténtalo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    console.error("Error al generar el PDF: ", error);
+                }
+            });
+        }
+
+        function importarServiciosProductosExcel(){
+            if($("#formulario_importar_servicios_productos_excel")[0].checkValidity()){
+                let datos = new FormData($("#formulario_importar_servicios_productos_excel")[0]);
+                $.ajax({
+                    url   : "{{ url('empresa/importarServiciosProductosExcel') }}",
+                    method: "POST",
+                    data  : datos,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+
+                        console.log(data);
+
+
+                        if(data.estado === 'success'){
+                            Swal.fire({
+                                icon:'success',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO CON EXITO",
+                            })
+                            // ajaxListadoClientes();
+                            $('#modal_new_servicio_importar_excel').modal('hide');
+                        }else if(data.estado === 'warnig'){
+
+                            // Supongamos que `datosErroneos` es tu array con las observaciones
+                            const datosErroneos = data.errores;
+
+                            // Crea un string HTML a partir del array
+                            const erroresHtml = datosErroneos.map(error => `<li>${error.texto} en el fila [ ${error.numero} ]</li>`).join('');
+
+                            Swal.fire({
+                                icon:'warning',
+                                title: "EXITO!",
+                                text:  "SE REGISTRO, PERO HAY OBSERVACIONES",
+                                html: `
+                                    SE REGISTRÓ, PERO HAY OBSERVACIONES:<br>
+                                    <ul>${erroresHtml}</ul>
+                                `,
+                            })
+
+                            $('#modal_new_servicio_importar_excel').modal('hide');
+
+                        }
+                    }
+                })
+
+                // console.log(datos)
+            }else{
+                $("#formulario_importar_servicios_productos_excel")[0].reportValidity();
+            }
         }
    </script>
 @endsection
