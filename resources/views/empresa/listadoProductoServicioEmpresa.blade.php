@@ -508,7 +508,6 @@
                     }
                 })
 
-                // console.log(datos)
             }else{
                 $("#formulario_importar_servicios_productos_excel")[0].reportValidity();
             }
