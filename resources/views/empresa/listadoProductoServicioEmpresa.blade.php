@@ -151,7 +151,7 @@
                         </div>
                         <div class="row mt-5">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="importarServiciosProductosExcel()">Generar</button>
+                                <button type="button" id="boton_importar_datos_excel" class="btn btn-success w-100 btn-sm" onclick="importarServiciosProductosExcel()">Generar</button>
                             </div>
                         </div>
                     </form>
@@ -463,6 +463,9 @@
         }
 
         function importarServiciosProductosExcel(){
+
+            $('#boton_importar_datos_excel').prop('disabled', true);
+
             if($("#formulario_importar_servicios_productos_excel")[0].checkValidity()){
                 let datos = new FormData($("#formulario_importar_servicios_productos_excel")[0]);
                 $.ajax({
@@ -473,16 +476,12 @@
                     processData: false,
                     success: function (data) {
 
-                        console.log(data);
-
-
                         if(data.estado === 'success'){
                             Swal.fire({
                                 icon:'success',
                                 title: "EXITO!",
                                 text:  "SE REGISTRO CON EXITO",
                             })
-                            // ajaxListadoClientes();
                             $('#modal_new_servicio_importar_excel').modal('hide');
                         }else if(data.estado === 'warnig'){
 
@@ -505,6 +504,10 @@
                             $('#modal_new_servicio_importar_excel').modal('hide');
 
                         }
+
+                        ajaxListado();
+
+                        $('#boton_importar_datos_excel').prop('disabled', true);
                     }
                 })
 
