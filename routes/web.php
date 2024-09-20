@@ -98,6 +98,8 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/eliminarSucursalEmpresa', [EmpresaController::class, 'eliminarSucursalEmpresa']);
         Route::post('/guardarUsuarioEmpresaEmpresa', [EmpresaController::class, 'guardarUsuarioEmpresaEmpresa']);
 
+        Route::post('/exportarServicoProductoExcel', [EmpresaController::class, 'exportarServicoProductoExcel']);
+
     });
 
     Route::prefix('/sincronizacion')->group(function(){

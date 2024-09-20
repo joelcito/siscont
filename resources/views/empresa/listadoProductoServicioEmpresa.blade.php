@@ -95,6 +95,95 @@
     </div>
     <!--end::Modal - New Card-->
 
+
+    <!--end::Modal - New Card-->
+    <div class="modal fade" id="modal_new_servicio_importar_excel" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">Formulario de Importacion Servicio / Producto</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y">
+                    <form id="formulario_new_servicio">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Documento Sector</label>
+                                <select required data-control="select2" name="documento_sector_siat_id_new_servicio" id="documento_sector_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                    <option></option>
+                                    @foreach ($documentos_sectores_asignados as $dsa)
+                                        <option value="{{ $dsa->siat_tipo_documento_sector->id }}">{{ $dsa->siat_tipo_documento_sector->descripcion }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="servicio_producto_id_new_servicio" id="servicio_producto_id_new_servicio">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 required fw-semibold form-label mb-2">Actividad Economica Siat</label>
+                                <select required data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                    <option></option>
+                                    @foreach ($activiadesEconomica as $ae)
+                                        <option value="{{ $ae->id }}">{{ $ae->descripcion }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 fw-semibold required form-label mb-2">Producto Servicio Siat</label>
+                                <select required data-control="select2" name="producto_servicio_siat_id_new_servicio" id="producto_servicio_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                    <option></option>
+                                    @foreach ($productoServicio as $ps)
+                                        <option value="{{ $ps->id }}">{{ $ps->descripcion_producto }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fs-6 required fw-semibold form-label mb-2">Unidad Medida Siat</label>
+                                <select required data-control="select2" name="unidad_medida_siat_id_new_servicio" id="unidad_medida_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio_importar_excel" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                    <option></option>
+                                    @foreach ($unidadMedida as $um)
+                                        <option value="{{ $um->id }}">{{ $um->id." | ".$um->descripcion }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2">Numero de Serie</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="numero_serie" id="numero_serie">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2">Codigo IMEI</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="codigo_imei" id="codigo_imei">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Descripcion del Servicio</label>
+                                <input type="text" class="form-control fw-bold form-control-solid" name="descrpcion_new_servicio" id="descrpcion_new_servicio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fs-6 fw-semibold form-label mb-2 required">Precio</label>
+                                <input type="number" class="form-control fw-bold form-control-solid" name="precio_new_servicio" id="precio_new_servicio" required step="any">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success w-100 btn-sm" onclick="guardarNewServioEmpresa()">Generar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -134,6 +223,8 @@
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
+                    <button class="btn btn-sm fw-bold btn-success" onclick="exportarExcel()"><i class="fa fa-file-excel"></i> Exportar Producto / Servicio</button>
+                    <button class="btn btn-sm fw-bold btn-danger" onclick="modalImportarServicio()"><i class="fa fa-plus"></i> Importar Producto / Servicio</button>
                     <button class="btn btn-sm fw-bold btn-primary" onclick="modalNuevoServicio()"><i class="fa fa-plus"></i> Nuevo Producto / Servicio</button>
                 </div>
                 <!--end::Actions-->
@@ -292,6 +383,54 @@
                     })
                 }
             });
+        }
+
+        function exportarExcel(){
+            // Mostrar SweetAlert2 antes de enviar la solicitud
+            Swal.fire({
+                title: 'Generando Excel...',
+                text: 'Por favor espera mientras generamos el archivo.',
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+                didOpen: () => {
+                    Swal.showLoading(); // Mostrar el spinner de carga
+                }
+            });
+
+            $.ajax({
+                url: "{{ url('empresa/exportarServicoProductoExcel') }}",
+                method: "POST",
+                // data: datos,
+                xhrFields: {
+                    responseType: 'blob' // Esto le dice a jQuery que espere un archivo binario (PDF)
+                },
+                success: function (data, status, xhr) {
+                    // // Ocultar SweetAlert2 cuando la solicitud sea exitosa
+                    Swal.close();
+
+                    // Assume `data` contains the binary response from the server
+                    var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'servicio_productos.xlsx'; // Nombre del archivo Excel
+                    document.body.appendChild(link); // Required for Firefox
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (xhr, status, error) {
+                    // Mostrar error si algo falla
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo generar el EXCEL. Inténtalo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    console.error("Error al generar el PDF: ", error);
+                }
+            });
+        }
+
+        function modalImportarServicio(){
+            $('#modal_new_servicio_importar_excel').modal('show')
         }
    </script>
 @endsection

@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Ui\Presets\React;
 use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpParser\Node\Expr\FuncCall;
 
 class EmpresaController extends Controller
@@ -1209,8 +1211,6 @@ class EmpresaController extends Controller
 
         $documentos_sectores_asignados = $empresa->empresasDocumentos;
 
-        // dd($documentos_sectores_asignados);
-
         $activiadesEconomica = SiatDependeActividades::where('empresa_id', $empresa_id)->get();
         $productoServicio    = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
         $unidadMedida        = SiatUnidadMedida::all();
@@ -1640,7 +1640,7 @@ class EmpresaController extends Controller
     public function guardaSucursalEmpresa(Request $request){
         if($request->ajax()){
 
-            $sucursal_id = $request->input('sucursal_id_sucursal');
+            $sucursal_id = $request->input('empresa_id_sucursal');
             $usuario     = Auth::user();
             $empresa     = $usuario->empresa;
 
@@ -1653,13 +1653,13 @@ class EmpresaController extends Controller
                 $plan        = $obtenerSuscripcionVigenteEmpresa->plan;
                 $sucursal    = Sucursal::find($sucursal_id);
 
-                if($suscripcion->verificarRegistroSucursalByPlan($plan, $empresa)){
+                if($suscripcion->verificarRegistroSucursalByPlan($plan, $empresa) || $sucursal_id != "0"){
 
                     if($sucursal_id == "0"){
                         $sucursal                     = new Sucursal();
                         $sucursal->usuario_creador_id = $usuario->id;
                     }else{
-                        $sucursal                         = new Sucursal();
+                        $sucursal                         = Sucursal::find($sucursal_id);
                         $sucursal->usuario_modificador_id = $usuario->id;
                     }
 
@@ -1787,5 +1787,152 @@ class EmpresaController extends Controller
             $data['estado'] = 'error';
         }
         return  $data;
+    }
+
+    public function exportarServicoProductoExcel(Request $request){
+
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $usuario = Auth::user();
+            $empresa = $usuario->empresa;
+
+            $servicios = Servicio::select(
+                                    'servicios.id as servicio_id',
+                                    'servicios.descripcion as descripcion_servicio',
+                                    'servicios.precio as servicio_precio',
+                                    'servicios.numero_serie',
+                                    'servicios.codigo_imei',
+
+                                    'siat_depende_actividades.descripcion as descripcion_actividad_economica',
+                                    'siat_depende_actividades.codigo_caeb',
+                                    'siat_depende_actividades.tipo_actividad',
+
+                                    'siat_producto_servicios.descripcion_producto as descripcion_producto_siat',
+                                    'siat_producto_servicios.codigo_producto as codigo_producto_siat',
+                                    'siat_producto_servicios.codigo_actividad as codigo_actividad_siat',
+
+                                    'siat_unidad_medidas.codigo_clasificador as codigo_clasificador_um',
+                                    'siat_unidad_medidas.descripcion as descripcion_unidad_medida',
+
+                                    'siat_tipo_documento_sectores.descripcion as descripcion_tipo_sector'
+                                )
+                                ->join('siat_depende_actividades', 'siat_depende_actividades.id','=','servicios.siat_depende_actividades_id')
+                                ->join('siat_producto_servicios', 'siat_producto_servicios.id', '=', 'servicios.siat_producto_servicios_id')
+                                ->join('siat_unidad_medidas', 'siat_unidad_medidas.id', '=', 'servicios.siat_unidad_medidas_id')
+                                ->join('siat_tipo_documento_sectores', 'siat_tipo_documento_sectores.id', '=', 'servicios.siat_documento_sector_id')
+                                ->where('servicios.empresa_id', $empresa->id)
+                                ->get();
+
+            // generacion del excel
+            $fileName = 'ServiciosProductos.xlsx';
+            $libro = new Spreadsheet();
+            $hoja = $libro->getActiveSheet();
+
+            $hoja->setCellValue('A1', "SERVIOS PRODUCTOS");
+
+            $hoja->setCellValue('A2', "SERVICIO_ID");
+            $hoja->setCellValue('B2', "DESCRIPCION SERVICIO / PRODCUTO");
+            $hoja->setCellValue('C2', "PRECIO");
+            $hoja->setCellValue('D2', "NUMERO SERIE");
+            $hoja->setCellValue('E2', "CODIGO IMEI");
+            $hoja->setCellValue('F2', "ACTIVIDAD ECONOMICA");
+            $hoja->setCellValue('G2', "CODIGO CAEB");
+            $hoja->setCellValue('H2', "TIPO ACTIVIDAD");
+            $hoja->setCellValue('I2', "DESCRIPCION PRODUCTO SIAT");
+            $hoja->setCellValue('J2', "CODIGO PRODUCTO SIAT");
+            $hoja->setCellValue('K2', "CODIGO ACTIVIDAD SIAT");
+            $hoja->setCellValue('L2', "CODIGO UNIDAD MEDIDA SIAT");
+            $hoja->setCellValue('M2', "UNIDAD MEDIDA");
+            $hoja->setCellValue('N2', "UNIDAD MEDIDA");
+
+
+            $encabezadoStyle =[
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+            ];
+
+            $hoja->mergeCells('A1:N1');
+            $hoja->getStyle('A1')->applyFromArray($encabezadoStyle);
+
+            $encabezadoStyle = [
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => [
+                        'argb' => 'FFFFE0B2', // Color de fondo
+                    ],
+                ],
+            ];
+
+
+
+            $hoja->getStyle('A2:N2')->applyFromArray($encabezadoStyle);
+
+            $contadorInicio = 3;
+            foreach ($servicios as $key => $s) {
+
+                $hoja->setCellValue('A'.$contadorInicio, $s->servicio_id);
+                $hoja->setCellValue('B'.$contadorInicio, $s->descripcion_servicio);
+                $hoja->setCellValue('C'.$contadorInicio, $s->servicio_precio);
+                $hoja->setCellValue('D'.$contadorInicio, $s->numero_serie);
+                $hoja->setCellValue('E'.$contadorInicio, $s->codigo_imei);
+                $hoja->setCellValue('F'.$contadorInicio, $s->descripcion_actividad_economica);
+                $hoja->setCellValue('G'.$contadorInicio, $s->codigo_caeb);
+                $hoja->setCellValue('H'.$contadorInicio, $s->tipo_actividad);
+                $hoja->setCellValue('I'.$contadorInicio, $s->descripcion_producto_siat);
+                $hoja->setCellValue('J'.$contadorInicio, $s->codigo_producto_siat);
+                $hoja->setCellValue('K'.$contadorInicio, $s->codigo_actividad_siat);
+                $hoja->setCellValue('L'.$contadorInicio, $s->codigo_clasificador_um);
+                $hoja->setCellValue('M'.$contadorInicio, $s->descripcion_unidad_medida);
+                $hoja->setCellValue('N'.$contadorInicio, $s->descripcion_tipo_sector);
+
+                $contadorInicio++;
+
+            }
+
+            // Aplicar bordes a las celdas de datos
+            $hoja->getStyle('A3:N'.($contadorInicio-1))->applyFromArray([
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+            ]);
+
+            // Establecer los encabezados para forzar la descarga
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'. $fileName .'"');
+            header('Cache-Control: max-age=0');
+
+            // Guardar el archivo
+            $writer = new Xlsx($libro);
+            $writer->save('php://output');
+            exit;
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
     }
 }
