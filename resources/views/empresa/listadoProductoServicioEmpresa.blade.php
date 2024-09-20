@@ -507,7 +507,7 @@
 
                         ajaxListado();
 
-                        $('#boton_importar_datos_excel').prop('disabled', true);
+                        $('#boton_importar_datos_excel').prop('disabled', false);
                     }
                 })
 
