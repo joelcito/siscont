@@ -32,7 +32,10 @@
                 <td>{{ $s->descripcion }}</td>
                 <td>{{ $s->precio }}</td>
                 <td>
-
+                    <button class="btn btn-warning btn-icon btn-sm" onclick="editaraSErvicio('{{ $s->id }}', '{{ $s->siat_documento_sector_id }}','{{ $s->siat_depende_actividades_id }}','{{ $s->siat_producto_servicios_id }}','{{ $s->siat_unidad_medidas_id }}','{{ $s->numero_serie }}','{{ $s->codigo_imei }}','{{ $s->descripcion }}','{{ $s->precio }}')"><i class="fa fa-edit"></i></button>
+                    @if ($s->detalles($s->id) == "0")
+                        <button class="btn btn-danger btn-icon btn-sm" onclick="eliminarServicio('{{ $s->id }}')"><i class="fa fa-trash"></i></button>
+                    @endif
                 </td>
             </tr>
         @empty

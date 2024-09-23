@@ -29,7 +29,7 @@
                 <td>
                     <button class="btn btn-warning btn-sm btn-icon" onclick="editarUsuario('{{ $u->id }}','{{ $u->nombres }}','{{ $u->ap_paterno }}','{{ $u->ap_materno }}','{{ $u->numero_celular }}','{{ $u->email }}','{{ $u->rol->id }}','{{ $u->sucursal->id }}','{{ $u->puntoVenta->id }}')"><i class="fa fa-edit"></i></button>
                     @if ($u->contarFacturas() == 0)
-                        <button class="btn btn-danger btn-sm btn-icon"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-danger btn-sm btn-icon" onclick="eliminarUsuario('{{ $u->id }}')"><i class="fa fa-trash"></i></button>
                     @endif
                 </td>
             </tr>

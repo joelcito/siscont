@@ -89,7 +89,7 @@
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Listado de Clientes</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
-                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                    {{--  <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
                             <a href="index.html" class="text-muted text-hover-primary">Home</a>
@@ -111,12 +111,13 @@
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">Users</li>
                         <!--end::Item-->
-                    </ul>
+                    </ul>  --}}
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
+                    <button class="btn btn-success btn-sm" onclick="expoartarExcelClientes()"><i class="fa fa-file-excel"></i>Exportar Excel</button>
                     <button class="btn btn-sm fw-bold btn-primary" onclick="modalNuevoCliente()"><i class="fa fa-plus"></i> Nuevo Cliente</button>
                 </div>
                 <!--end::Actions-->
@@ -254,7 +255,7 @@
               }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url   : "{{ url('empresa/eliminarCliente') }}",
+                        url   : "{{ url('empresa/eliminarClienteEmpresa') }}",
                         method: "POST",
                         data  : {
                             cliente : id
@@ -276,6 +277,50 @@
                             }
                         }
                     })
+                }
+            });
+        }
+
+        function expoartarExcelClientes(){
+            // Mostrar SweetAlert2 antes de enviar la solicitud
+            Swal.fire({
+                title: 'Generando Excel...',
+                text: 'Por favor espera mientras generamos el archivo.',
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera
+                didOpen: () => {
+                    Swal.showLoading(); // Mostrar el spinner de carga
+                }
+            });
+
+            $.ajax({
+                url: "{{ url('empresa/expoartarExcelClientes') }}",
+                method: "POST",
+                // data: datos,
+                xhrFields: {
+                    responseType: 'blob' // Esto le dice a jQuery que espere un archivo binario (PDF)
+                },
+                success: function (data, status, xhr) {
+                    // // Ocultar SweetAlert2 cuando la solicitud sea exitosa
+                    Swal.close();
+
+                    // Assume `data` contains the binary response from the server
+                    var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'Clientes.xlsx'; // Nombre del archivo Excel
+                    document.body.appendChild(link); // Required for Firefox
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (xhr, status, error) {
+                    // Mostrar error si algo falla
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No se pudo generar el EXCEL. Inténtalo de nuevo.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    console.error("Error al generar el PDF: ", error);
                 }
             });
         }

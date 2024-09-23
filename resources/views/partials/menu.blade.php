@@ -14,13 +14,6 @@
                     <!--end:Menu content-->
                 </div>
                 <!--end:Menu item-->
-                <!--begin:Menu item-->
-
-                {{-- @dd(Auth::user()->empresa()->empresasDocumentos()) --}}
-                {{-- @dd(Auth::user()->empresa()) --}}
-
-                {{-- @dd(Auth::user()->empresa->empresasDocumentos[1]->siat_tipo_documento_sector->codigo_clasificador); --}}
-
 
                 @if (Auth::user()->isAdmin())
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -52,18 +45,6 @@
                             </div>
                             <!--end:Menu item-->
                             <!--begin:Menu item-->
-                            {{-- <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="pages/user-profile/projects.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Usuarios</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div> --}}
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
                                 <a class="menu-link" href="{{url('rol/listado')}}">
@@ -87,43 +68,6 @@
                                 </a>
                                 <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-
-                            <!--begin:Menu item-->
-                            {{-- <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="pages/user-profile/documents.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Documents</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div> --}}
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="{{ url('registrocompras/listado') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Registro de Compras</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            {{-- <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="pages/user-profile/activity.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Activity</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div> --}}
                             <!--end:Menu item-->
                         </div>
                         <!--end:Menu sub-->

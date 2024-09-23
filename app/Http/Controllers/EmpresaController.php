@@ -11,6 +11,7 @@ use App\Models\PuntoVenta;
 use App\Models\Rol;
 use App\Models\Servicio;
 use App\Models\SiatDependeActividades;
+use App\Models\SiatDocumentoSector;
 use App\Models\SiatProductoServicio;
 use App\Models\SiatTipoDocumentoSector;
 use App\Models\SiatTipoPuntoVenta;
@@ -206,7 +207,7 @@ class EmpresaController extends Controller
                 $sucursal                     = new Sucursal();
                 $sucursal->usuario_creador_id = $usuario->id;
             }else{
-                $sucursal                         = new Sucursal();
+                $sucursal                         = Sucursal::find($sucursal_id);
                 $sucursal->usuario_modificador_id = $usuario->id;
             }
 
@@ -492,15 +493,26 @@ class EmpresaController extends Controller
     public function guardarUsuarioEmpresa(Request $request){
         if($request->ajax()){
 
-            $usuario = new User();
+            $usuario_id = $request->input('usuario_id_new_usuario_empresa');
 
-            $usuario->usuario_creador_id = Auth::user()->id;
+            if($usuario_id == "0"){
+                $usuario                     = new User();
+                $usuario->usuario_creador_id = Auth::user()->id;
+            }else{
+                $usuario                         = User::find($usuario_id);
+                $usuario->usuario_modificador_id = Auth::user()->id;
+            }
+
             $usuario->nombres            = $request->input('nombres_new_usuaio_empresa');
             $usuario->ap_paterno         = $request->input('ap_paterno_new_usuaio_empresa');
             $usuario->ap_materno         = $request->input('ap_materno_new_usuaio_empresa');
             $usuario->name               = $usuario->nombres." ".$usuario->ap_paterno." ".$usuario->ap_materno;
             $usuario->email              = $request->input('usuario_new_usuaio_empresa');
-            $usuario->password           = Hash::make($request->input('contrasenia_new_usuaio_empresa'));
+
+            if($request->input('contrasenia_new_usuaio_empresa') != null){
+                $usuario->password           = Hash::make($request->input('contrasenia_new_usuaio_empresa'));
+            }
+
             $usuario->empresa_id         = $request->input('empresa_id_new_usuario_empresa');
             $usuario->punto_venta_id     = $request->input('punto_venta_id_new_usuaio_empresa');
             $usuario->sucursal_id        = $request->input('sucursal_id_new_usuaio_empresa');
@@ -1034,7 +1046,7 @@ class EmpresaController extends Controller
 
             // dd($request->all());
 
-            $servicio_id_new_servicio = $request->input('servicio_id_new_servicio');
+            $servicio_id_new_servicio = $request->input('servicio_producto_id_new_servicio');
 
             if($servicio_id_new_servicio == "0"){
                 $servicio                     = new Servicio();
@@ -1050,7 +1062,8 @@ class EmpresaController extends Controller
             $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
             $servicio->descripcion                 = $request->input('descrpcion_new_servicio');
             $servicio->precio                      = $request->input('precio_new_servicio');
-
+            $servicio->numero_serie                = $request->input('numero_serie');
+            $servicio->codigo_imei                 = $request->input('codigo_imei');
             $servicio->save();
             $data['estado'] = 'success';
 
@@ -1103,8 +1116,16 @@ class EmpresaController extends Controller
     public function  guardarClienteEmpresa(Request $request){
         if($request->ajax()){
 
-            $cliente                     = new Cliente();
-            $cliente->usuario_creador_id = Auth::user()->id;
+            $cliente_id = $request->input('cliente_id_cliente_new_usuaio_empresa');
+
+            if($cliente_id == "0"){
+                $cliente                     = new Cliente();
+                $cliente->usuario_creador_id = Auth::user()->id;
+            }else{
+                $cliente                         = Cliente::find($cliente_id);
+                $cliente->usuario_modificador_id = Auth::user()->id;
+            }
+
             $cliente->empresa_id         = $request->input('empresa_id_cliente_new_usuario_empresa');
             $cliente->nombres            = $request->input('nombres_cliente_new_usuaio_empresa');
             $cliente->ap_paterno         = $request->input('ap_paterno_cliente_new_usuaio_empresa');
@@ -1338,8 +1359,43 @@ class EmpresaController extends Controller
             $cliente_id = $request->input('cliente');
             $cliente    = Cliente::find($cliente_id);
             if($cliente){
-                if($cliente->empresa_id == $usuario->empresa_id){
+                // if($cliente->empresa_id == $usuario->empresa_id){
+
+                    $cliente->usuario_eliminador_id = $usuario->id;
+                    $cliente->save();
+
                     Cliente::destroy($cliente_id);
+
+                    $data['text']   = 'El cliente se elimino con exito!';
+                    $data['estado'] = 'success';
+                // }else{
+                //     $data['text']   = 'El cliente no pertenece a la empresa';
+                //     $data['estado'] = 'error';
+                // }
+            }else{
+                $data['text']   = 'El cliente no existe';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function eliminarClienteEmpresa(Request $request){
+        if($request->ajax()){
+            $usuario    = Auth::user();
+            $cliente_id = $request->input('cliente');
+            $cliente    = Cliente::find($cliente_id);
+            if($cliente){
+                if($cliente->empresa_id == $usuario->empresa_id){
+
+                    $cliente->usuario_eliminador_id = $usuario->id;
+                    $cliente->save();
+
+                    Cliente::destroy($cliente_id);
+
                     $data['text']   = 'El cliente se elimino con exito!';
                     $data['estado'] = 'success';
                 }else{
@@ -1364,13 +1420,40 @@ class EmpresaController extends Controller
             $servicio    = Servicio::find($servicio_id);
             if($servicio){
                 if($servicio->empresa_id == $usuario->empresa_id){
+                    $servicio->usuario_eliminador_id = $usuario->id;
+                    $servicio->save();
                     Servicio::destroy($servicio_id);
                     $data['text']   = 'El servicio se elimino con exito!';
                     $data['estado'] = 'success';
                 }else{
-                    $data['text']   = 'El cliente no pertenece a la empresa';
+                    $data['text']   = 'El servicio no pertenece a la empresa';
                     $data['estado'] = 'error';
                 }
+            }else{
+                $data['text']   = 'El servicio no existe';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
+    public function eliminarServicioEmpresa(Request $request){
+        if($request->ajax()){
+            $usuario     = Auth::user();
+            $servicio_id = $request->input('servicio');
+            $servicio    = Servicio::find($servicio_id);
+
+            if($servicio){
+
+                $servicio->usuario_eliminador_id = $usuario->id;
+                $servicio->save();
+
+                Servicio::destroy($servicio_id);
+                $data['text']   = 'El servicio se elimino con exito!';
+                $data['estado'] = 'success';
             }else{
                 $data['text']   = 'El servicio no existe';
                 $data['estado'] = 'error';
@@ -1385,6 +1468,11 @@ class EmpresaController extends Controller
     public function eliminarAsignaconDocumentoSector(Request $request){
         if($request->ajax()){
             $asignaicon_id = $request->input('asignacion');
+
+            $documentosSector = EmpresaDocumentoSector::find($asignaicon_id);
+            $documentosSector->usuario_eliminador_id = Auth::user()->id;
+            $documentosSector->save();
+
             EmpresaDocumentoSector::destroy($asignaicon_id);
             $data['text']   = 'Se elimino con exito!';
             $data['estado'] = 'success';
@@ -1642,6 +1730,7 @@ class EmpresaController extends Controller
     public function guardaSucursalEmpresa(Request $request){
         if($request->ajax()){
 
+
             $sucursal_id = $request->input('empresa_id_sucursal');
             $usuario     = Auth::user();
             $empresa     = $usuario->empresa;
@@ -1732,14 +1821,35 @@ class EmpresaController extends Controller
         return $data;
     }
 
+    public function eliminarSucursal(Request $request){
+        if($request->ajax()){
+
+            $usuario     = Auth::user();
+            $sucursal_id = $request->input('sucursal');
+
+            $sucursal = Sucursal::find($sucursal_id);
+
+                $sucursal->usuario_eliminador_id = $usuario->id;
+                $sucursal->save();
+
+                Sucursal::destroy($sucursal_id);
+
+                $data['text']   = 'Se elimino con exito!';
+                $data['estado'] = 'success';
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
     public function guardarUsuarioEmpresaEmpresa(Request $request){
         if($request->ajax()){
 
             $usuarioLogeado = Auth::user();
             $empresa        = $usuarioLogeado->empresa;
             $usuario_new_id = $request->input('usuario_id_new_usuario_empresa');
-
-            // dd($request->all());
 
             $suscripcion = app(SuscripcionController::class);
             $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
@@ -1763,7 +1873,8 @@ class EmpresaController extends Controller
                     $usuario->email              = $request->input('usuario_new_usuaio_empresa');
                     $usuario->empresa_id         = $empresa->id;
 
-                    if(!$request->has('contrasenia_new_usuaio_empresa')){
+                    // if(!$request->has('contrasenia_new_usuaio_empresa')){
+                    if($request->input('contrasenia_new_usuaio_empresa') != null){
                         $usuario->password           = Hash::make($request->input('contrasenia_new_usuaio_empresa'));
                     }
 
@@ -2176,4 +2287,198 @@ class EmpresaController extends Controller
         }
         return $data;
     }
+
+    public function eliminarUsuario(Request $request){
+        if($request->ajax()){
+
+            $usuarioSession = Auth::user();
+            $usuario_id     = $request->input('usuario');
+
+            $usuario = User::find($usuario_id);
+
+            if($usuario){
+
+                $usuario->usuario_eliminador_id = $usuarioSession->id;
+                $usuario->save();
+
+                User::destroy($usuario_id);
+
+                $data['text']    = 'Usuario eliminado con exito!';
+                $data['estado']  = 'success';
+
+            }else{
+                $data['text']    = 'Usuario no existente';
+                $data['estado']  = 'error';
+            }
+        }else{
+            $data['text']    = 'No existe';
+            $data['estado']  = 'error';
+        }
+        return $data;
+    }
+
+    public function eliminarUsuarioEmpresa(Request $request){
+        if($request->ajax()){
+
+            $usuarioSession = Auth::user();
+            $empresa        = $usuarioSession->empresa;
+            $usuario_id     = $request->input('usuario');
+            $usuario        = User::find($usuario_id);
+
+            if($usuario){
+                if($usuario->empresa){
+                    if($empresa->id == $usuario->empresa->id){
+                        $usuario->usuario_eliminador_id = $usuarioSession->id;
+                        $usuario->save();
+
+                        User::destroy($usuario_id);
+
+                        $data['text']    = 'Usuario eliminado con exito!';
+                        $data['estado']  = 'success';
+                    }else{
+                        $data['text']    = 'Usuario no existente';
+                        $data['estado']  = 'error';
+                    }
+                }else{
+                    $data['text']    = 'Empresa no existente';
+                    $data['estado']  = 'error';
+                }
+            }else{
+                $data['text']    = 'Usuario no existente';
+                $data['estado']  = 'error';
+            }
+        }else{
+            $data['text']    = 'No existe';
+            $data['estado']  = 'error';
+        }
+        return $data;
+    }
+
+    public function expoartarExcelClientes(Request $request){
+
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $usuario = Auth::user();
+            $empresa = $usuario->empresa;
+
+            $clientes = Cliente::select(
+                                'id',
+                                'nombres',
+                                'ap_paterno',
+                                'ap_materno',
+                                'cedula',
+                                'complemento',
+                                'nit',
+                                'razon_social',
+                                'correo',
+                                'numero_celular'
+                                )
+                                ->where('empresa_id', $empresa->id)
+                                ->get();
+
+
+            // generacion del excel
+            $fileName = 'Clientes.xlsx';
+            $libro = new Spreadsheet();
+            $hoja = $libro->getActiveSheet();
+
+            $hoja->setCellValue('A1', "LISTADO DE CLIENTES");
+
+            $hoja->setCellValue('A2', "CLIENTE_ID");
+            $hoja->setCellValue('B2', "NOMBRE");
+            $hoja->setCellValue('C2', "AP PATERNO");
+            $hoja->setCellValue('D2', "AP MATERNO");
+            $hoja->setCellValue('E2', "CEDULA");
+            $hoja->setCellValue('F2', "COMPLEMENTO");
+            $hoja->setCellValue('G2', "NIT");
+            $hoja->setCellValue('H2', "RAZON SOCIAL");
+            $hoja->setCellValue('I2', "CORREO ");
+            $hoja->setCellValue('J2', "NUMERO CELULAR");
+
+            $encabezadoStyle =[
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+            ];
+
+            $hoja->mergeCells('A1:J1');
+            $hoja->getStyle('A1')->applyFromArray($encabezadoStyle);
+
+            $encabezadoStyle = [
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => [
+                        'argb' => 'FFFFE0B2', // Color de fondo
+                    ],
+                ],
+            ];
+
+
+
+            $hoja->getStyle('A2:J2')->applyFromArray($encabezadoStyle);
+
+            $contadorInicio = 3;
+            foreach ($clientes as $key => $c) {
+
+                $hoja->setCellValue('A'.$contadorInicio, $c->id);
+                $hoja->setCellValue('B'.$contadorInicio, $c->nombres);
+                $hoja->setCellValue('C'.$contadorInicio, $c->ap_paterno);
+                $hoja->setCellValue('D'.$contadorInicio, $c->ap_materno);
+                $hoja->setCellValue('E'.$contadorInicio, $c->cedula);
+                $hoja->setCellValue('F'.$contadorInicio, $c->complemento);
+                $hoja->setCellValue('G'.$contadorInicio, $c->nit);
+                $hoja->setCellValue('H'.$contadorInicio, $c->razon_social);
+                $hoja->setCellValue('I'.$contadorInicio, $c->correo);
+                $hoja->setCellValue('J'.$contadorInicio, $c->numero_celular);
+
+                $contadorInicio++;
+
+            }
+
+            // Aplicar bordes a las celdas de datos
+            $hoja->getStyle('A3:J'.($contadorInicio-1))->applyFromArray([
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    ],
+                ],
+            ]);
+
+            // Establecer los encabezados para forzar la descarga
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'. $fileName .'"');
+            header('Cache-Control: max-age=0');
+
+            // Guardar el archivo
+            $writer = new Xlsx($libro);
+            $writer->save('php://output');
+            exit;
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+
+    }
+
 }

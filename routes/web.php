@@ -84,8 +84,10 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/listadoProductoServicioEmpresa', [EmpresaController::class, 'listadoProductoServicioEmpresa']);
         Route::post('/ajaxListadoProductoServicioEmpresa', [EmpresaController::class, 'ajaxListadoProductoServicioEmpresa']);
         Route::post('/guardarProductoServicioEmpresa', [EmpresaController::class, 'guardarProductoServicioEmpresa']);
-        Route::post('/eliminarCliente', [EmpresaController::class, 'eliminarCliente']);
         Route::post('/eliminarServicio', [EmpresaController::class, 'eliminarServicio']);
+        Route::post('/eliminarSucursal', [EmpresaController::class, 'eliminarSucursal']);
+        Route::post('/eliminarUsuario', [EmpresaController::class, 'eliminarUsuario']);
+        Route::post('/eliminarCliente', [EmpresaController::class, 'eliminarCliente']);
 
         Route::post('/ajaxListadoAsignacionDocumentosSectores', [EmpresaController::class, 'ajaxListadoAsignacionDocumentosSectores']);
         Route::post('/guardarAsignacionDocumentoSector', [EmpresaController::class, 'guardarAsignacionDocumentoSector']);
@@ -97,10 +99,14 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/guardaSucursalEmpresa', [EmpresaController::class, 'guardaSucursalEmpresa']);
         Route::post('/eliminarSucursalEmpresa', [EmpresaController::class, 'eliminarSucursalEmpresa']);
         Route::post('/guardarUsuarioEmpresaEmpresa', [EmpresaController::class, 'guardarUsuarioEmpresaEmpresa']);
+        Route::post('/eliminarUsuarioEmpresa', [EmpresaController::class, 'eliminarUsuarioEmpresa']);
+        Route::post('/eliminarServicioEmpresa', [EmpresaController::class, 'eliminarServicioEmpresa']);
+        Route::post('/eliminarClienteEmpresa', [EmpresaController::class, 'eliminarClienteEmpresa']);
 
         Route::post('/exportarServicoProductoExcel', [EmpresaController::class, 'exportarServicoProductoExcel']);
         Route::post('/descargarFormatoImportarExcel', [EmpresaController::class, 'descargarFormatoImportarExcel']);
         Route::post('/importarServiciosProductosExcel', [EmpresaController::class, 'importarServiciosProductosExcel']);
+        Route::post('/expoartarExcelClientes', [EmpresaController::class, 'expoartarExcelClientes']);
 
     });
 

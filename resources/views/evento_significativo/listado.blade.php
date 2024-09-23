@@ -112,7 +112,7 @@
                         Listado de Eventos Significativos Registrados</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
-                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                    {{--  <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
                             <a href="index.html" class="text-muted text-hover-primary">Home</a>
@@ -134,7 +134,7 @@
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">Users</li>
                         <!--end::Item-->
-                    </ul>
+                    </ul>  --}}
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->

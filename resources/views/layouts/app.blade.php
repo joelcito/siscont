@@ -58,7 +58,19 @@
 						<!--begin::Mobile logo-->
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 							<a href="index.html" class="d-lg-none">
-								<img alt="Logo" src="{{asset('assets/media/logos/default-small.svg')}}" class="h-30px" />
+
+                                @if (Auth::user()->isAdmin())
+                                    <img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-70px app-sidebar-logo-default"  width="100%"/>
+                                    <img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" width="100%" />
+                                @elseif(Auth::user()->empresa->logo != null)
+                                    <img alt="Logo" src="{{ asset('assets/img')."/".Auth::user()->empresa->logo }}" class="h-45px app-sidebar-logo-default"  width="100%"/>
+                                    <img alt="Logo" src="{{ asset('assets/img')."/".Auth::user()->empresa->logo }}" class="h-15px app-sidebar-logo-minimize" width="100%" />
+                                @else
+                                    <img alt="Logo" src="{{asset('assets/img/default.jpg')}}" class="h-70px app-sidebar-logo-default"  width="100%"/>
+                                    <img alt="Logo" src="{{asset('assets/img/default.jpg')}}" class="h-40px app-sidebar-logo-minimize" width="100%" />
+                                @endif
+
+								{{--  <img alt="Logo" src="{{asset('assets/media/logos/default-small.svg')}}" class="h-30px" />  --}}
 							</a>
 						</div>
 						<!--end::Mobile logo-->
@@ -4691,9 +4703,6 @@
 								<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 									<!--begin::Menu wrapper-->
 									<div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-										{{--
-										<img src="{{asset('assets/media/avatars/300-3.jpg')}}" class="rounded-3" alt="user" />
-										--}}
 										<i class="fa fa-user" style="font-size: 30px;"></i>
 									</div>
 									<!--begin::User account menu-->
@@ -4703,9 +4712,6 @@
 											<div class="menu-content d-flex align-items-center px-3">
 												<!--begin::Avatar-->
 												<div class="symbol symbol-50px me-5">
-													{{--
-												 	<img alt="Logo" src="{{asset('assets/media/avatars/300-3.jpg')}}" />
-													 --}}
 													<i class="fa fa-user" style="font-size: 30px;"></i>
 												</div>
 												<!--end::Avatar-->
@@ -4950,16 +4956,7 @@
 									<!--end::Menu wrapper-->
 								</div>
 								<!--end::User menu-->
-								<!--begin::Header menu toggle-->
-								<div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
-									<div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_header_menu_toggle">
-										<i class="ki-duotone ki-element-4 fs-1">
-											<span class="path1"></span>
-											<span class="path2"></span>
-										</i>
-									</div>
-								</div>
-								<!--end::Header menu toggle-->
+
 								<!--begin::Aside toggle-->
 								<!--end::Header menu toggle-->
 							</div>

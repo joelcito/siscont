@@ -14,7 +14,7 @@
         @forelse ( $empresas as $e)
             <tr>
                 <td>
-                    <div style="width: 50px; background-color:green" align="center">
+                    <div style="width: 50px;" align="center">
                         @if ($e->logo != null)
                             <img src="{{ asset('assets/img')."/".$e->logo }}" width="100%" alt="">
                         @else

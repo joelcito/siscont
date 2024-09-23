@@ -38,9 +38,10 @@
                 <td>{{ $cli->cedula }}</td>
                 <td>{{ $cli->correo }}</td>
                 <td>
-                    <button class="btn btn-sm btn-info btn-icon" title="Puntos de Venta" onclick="modalPuntoVentas('{{ $cli->id }}', '{{ $cli->nombre }}', {{ $cli->codigo_sucursal }})"><i class="fa fa-home"></i></button>
-                    <button class="btn btn-sm btn-warning btn-icon"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger btn-icon"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-sm btn-warning btn-icon" onclick="editarCliente('{{ $cli->id }}', '{{ $cli->nombres }}', '{{ $cli->ap_paterno }}', '{{ $cli->ap_materno }}', '{{ $cli->numero_celular }}', '{{ $cli->nit }}', '{{ $cli->razon_social }}', '{{ $cli->cedula }}', '{{ $cli->complemento }}', '{{ $cli->correo }}')"><i class="fa fa-edit"></i></button>
+                    @if ($cli->contarFacturas() == 0)
+                        <button class="btn btn-sm btn-danger btn-icon" onclick="eliminarCliente('{{ $cli->id }}')"><i class="fa fa-trash"></i></button>
+                    @endif
                 </td>
             </tr>
         @empty

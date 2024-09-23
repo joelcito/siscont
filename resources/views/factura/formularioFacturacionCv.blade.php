@@ -89,7 +89,7 @@
                     <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Formulario de Facturacion Compra y Venta</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
-                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                    {{--  <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
                             <a href="index.html" class="text-muted text-hover-primary">Home</a>
@@ -111,7 +111,7 @@
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">Users</li>
                         <!--end::Item-->
-                    </ul>
+                    </ul>  --}}
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->

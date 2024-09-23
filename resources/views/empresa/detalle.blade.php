@@ -128,6 +128,7 @@
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombres_cliente_new_usuaio_empresa" id="nombres_cliente_new_usuaio_empresa" required>
                                 <input type="hidden" name="empresa_id_cliente_new_usuario_empresa" id="empresa_id_cliente_new_usuario_empresa" value="{{ $empresa->id }}">
+                                <input type="hidden" name="cliente_id_cliente_new_usuaio_empresa" id="cliente_id_cliente_new_usuaio_empresa" required>
                             </div>
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
@@ -308,7 +309,7 @@
                                     @endforeach
                                 </select>
                                 <input type="hidden" name="empresa_id_new_servicio" id="empresa_id_new_servicio" value="{{ $empresa->id }}">
-                                <input type="hidden" name="servicio_id_new_servicio" id="servicio_id_new_servicio" value="0">
+                                <input type="hidden" name="servicio_producto_id_new_servicio" id="servicio_producto_id_new_servicio" value="0">
                             </div>
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2">Producto Servicio Siat</label>
@@ -383,6 +384,7 @@
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Nombres</label>
                                 <input type="text" class="form-control fw-bold form-control-solid" name="nombres_new_usuaio_empresa" id="nombres_new_usuaio_empresa" required>
                                 <input type="hidden" name="empresa_id_new_usuario_empresa" id="empresa_id_new_usuario_empresa" value="{{ $empresa->id }}">
+                                <input type="hidden" name="usuario_id_new_usuario_empresa" id="usuario_id_new_usuario_empresa" value="0">
                             </div>
                             <div class="col-md-3">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Ap Paterno</label>
@@ -1276,7 +1278,7 @@
         }
 
         function agregarUsuarioEmpresa(){
-            // $('#empresa_id_new_usuario_empresa').val(0)
+            $('#usuario_id_new_usuario_empresa').val(0)
             $('#nombres_new_usuaio_empresa').val("")
             $('#ap_paterno_new_usuaio_empresa').val("")
             $('#ap_materno_new_usuaio_empresa').val("")
@@ -1330,7 +1332,7 @@
         }
 
         function modalNuevoServicio(){
-            $('#servicio_id_new_servicio').val(0)
+            $('#servicio_producto_id_new_servicio').val(0)
             $('#modal_new_servicio').modal('show')
         }
 
@@ -1597,6 +1599,8 @@
         }
 
         function modalNuevoCliente(){
+
+            $('#cliente_id_cliente_new_usuaio_empresa').val("0")
             $('#nombres_cliente_new_usuaio_empresa').val("")
             $('#ap_paterno_cliente_new_usuaio_empresa').val("")
             $('#ap_materno_cliente_new_usuaio_empresa').val("")
@@ -1809,6 +1813,211 @@
             $('#direccion_sucursal').val(direccion)
             $('#modal_new_sucursal').modal('show');
         }
+
+        function eliminarSucursalEmpresa(sucursal){
+            Swal.fire({
+                title             : "Esta seguro de eliminar el Sucursal?",
+                text              : "No podras revetir eso!",
+                icon              : "warning",
+                showCancelButton  : true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor : "#d33",
+                confirmButtonText : "Si, eliminar!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //let datos = $('#formulario_genera_cuis').serializeArray()
+                        let datos = {sucursal:sucursal}
+                        $.ajax({
+                            url   : "{{ url('empresa/eliminarSucursal') }}",
+                            method: "POST",
+                            data  : datos,
+                            success: function (data) {
+                                if(data.estado === 'success'){
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: "EXITO!",
+                                        text:  data.text,
+                                    })
+                                    ajaxListadoSucursal();
+                                }else if( data.estado === 'error'){
+                                    Swal.fire({
+                                        icon : 'error',
+                                        title: "Error!",
+                                        text : data.text,
+                                        timer: 5000
+                                    })
+                                }
+                            }
+                        })
+                    }
+            });
+        }
+
+        function editarUsuario(id,nombres,ap_paterno,ap_materno,numero_celular,email,rol,sucursal,puntoVenta){
+
+            $('#usuario_id_new_usuario_empresa').val(id)
+            $('#nombres_new_usuaio_empresa').val(nombres)
+            $('#ap_paterno_new_usuaio_empresa').val(ap_materno)
+            $('#ap_materno_new_usuaio_empresa').val(ap_materno)
+            $('#usuario_new_usuaio_empresa').val(email)
+            $('#contrasenia_new_usuaio_empresa').val("")
+            $('#num_ceular_new_usuaio_empresa').val(numero_celular)
+            $('#rol_id_new_usuaio_empresa').val(rol).trigger('change')
+            $('#sucursal_id_new_usuaio_empresa').val(sucursal).trigger('change')
+
+            $('#contrasenia_new_usuaio_empresa').attr('required', false)
+
+            // Verificar después de un tiempo si el valor cambió o no
+            setTimeout(function() {
+                $('#punto_venta_id_new_usuaio_empresa').val(puntoVenta).trigger('change')
+            }, 500); // Tiempo de espera en milisegundos
+            $('#modal_new_usuario').modal('show')
+        }
+
+        function eliminarUsuario(usuario){
+            Swal.fire({
+                title             : "Esta seguro de eliminar el Usuario?",
+                text              : "No podras revetir eso!",
+                icon              : "warning",
+                showCancelButton  : true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor : "#d33",
+                confirmButtonText : "Si, eliminar!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let datos = {usuario:usuario}
+                        $.ajax({
+                            url   : "{{ url('empresa/eliminarUsuario') }}",
+                            method: "POST",
+                            data  : datos,
+                            success: function (data) {
+                                if(data.estado === 'success'){
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: "EXITO!",
+                                        text:  data.text,
+                                    })
+                                    ajaxListadoUsuarioEmpresa();
+                                }else if( data.estado === 'error'){
+                                    Swal.fire({
+                                        icon : 'error',
+                                        title: "Error!",
+                                        text : data.text,
+                                        timer: 5000
+                                    })
+                                }
+                            }
+                        })
+                    }
+            });
+        }
+
+        function editaraSErvicio(id ,siat_documento_sector_id ,siat_depende_actividades_id ,siat_producto_servicios_id,siat_unidad_medidas_id,numero_serie,codigo_imei ,descripcion, precio){
+
+            $('#servicio_producto_id_new_servicio').val(id)
+            $('#documento_sector_siat_id_new_servicio').val(siat_documento_sector_id).trigger('change')
+            $('#actividad_economica_siat_id_new_servicio').val(siat_depende_actividades_id).trigger('change')
+            $('#producto_servicio_siat_id_new_servicio').val(siat_producto_servicios_id).trigger('change')
+            $('#unidad_medida_siat_id_new_servicio').val(siat_unidad_medidas_id).trigger('change')
+            $('#numero_serie').val(numero_serie)
+            $('#codigo_imei').val(codigo_imei)
+            $('#descrpcion_new_servicio').val(descripcion)
+            $('#precio_new_servicio').val(precio)
+            $('#modal_new_servicio').modal('show')
+        }
+
+        function eliminarServicio(id){
+            Swal.fire({
+                title: "Estas seguro de eliminar el servicio?",
+                text: "No podras revertir eso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url   : "{{ url('empresa/eliminarServicioEmpresa') }}",
+                        method: "POST",
+                        data  : {
+                            servicio : id
+                        },
+                        success: function (data) {
+                            if(data.estado === 'success'){
+                                Swal.fire({
+                                    icon:'success',
+                                    title: "EXITO!",
+                                    text:  data.text,
+                                })
+                                ajaxListadoServicios();
+                            }else if(data.estado === 'error'){
+                                Swal.fire({
+                                    icon : 'warning',
+                                    title: "ALTO!",
+                                    text : data.text,
+                                })
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
+        function editarCliente(id,nombres ,ap_paterno,ap_materno ,numero_celular ,nit,razon_social ,cedula ,complemento,correo){
+
+            $('#cliente_id_cliente_new_usuaio_empresa').val(id)
+            $('#nombres_cliente_new_usuaio_empresa').val(nombres)
+            $('#ap_paterno_cliente_new_usuaio_empresa').val(ap_paterno)
+            $('#ap_materno_cliente_new_usuaio_empresa').val(ap_materno)
+            $('#complemento_cliente_new_usuaio_empresa').val(complemento)
+            $('#num_ceular_cliente_new_usuaio_empresa').val(numero_celular)
+            $('#cedula_cliente_new_usuaio_empresa').val(cedula)
+            $('#nit_cliente_new_usuaio_empresa').val(nit)
+            $('#razon_social_cliente_new_usuaio_empresa').val(razon_social)
+            $('#correo_cliente_new_usuaio_empresa').val(correo)
+
+            $('#modal_new_cliente').modal('show')
+        }
+
+        function eliminarCliente(id){
+            Swal.fire({
+                title: "Estas seguro de eliminar al cliente?",
+                text: "No podras revertir eso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url   : "{{ url('empresa/eliminarCliente') }}",
+                        method: "POST",
+                        data  : {
+                            cliente : id
+                        },
+                        success: function (data) {
+                            if(data.estado === 'success'){
+                                Swal.fire({
+                                    icon:'success',
+                                    title: "EXITO!",
+                                    text:  data.text,
+                                })
+                                ajaxListadoClientes();
+                            }else if(data.estado === 'error'){
+                                Swal.fire({
+                                    icon : 'warning',
+                                    title: "ALTO!",
+                                    text : data.text,
+                                })
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
    </script>
 @endsection
 
