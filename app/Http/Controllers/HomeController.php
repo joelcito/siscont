@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,8 @@ class HomeController extends Controller
 
         // dd(Auth::user()->empresa->empresasDocumentos);
 
-        return view('home.inicio');
+        $cantidaEmpresas = Empresa::count();
+
+        return view('home.inicio')->with(compact('cantidaEmpresas'));
     }
 }

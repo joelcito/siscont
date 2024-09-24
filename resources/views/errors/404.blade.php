@@ -1,29 +1,10 @@
-{{--  @extends('errors::minimal')  --}}
-
-{{--  @section('title', __('Not Found'))
-@section('code', '404')
-@section('message', __('Not Found'))  --}}
-
-
-{{--  @extends('layouts.app')  --}}
-
-{{--  @extends('errors::minimal')
-@section('content')
-<div class="container text-center">
-    <h1>404 - Página no encontrada</h1>
-    <p>{{ session('error_message', 'Lo sentimos, pero la página que estás buscando no existe.') }}</p>
-    <a href="{{ url('/') }}">Volver al inicio</a>
-</div>
-@endsection  --}}
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema</title>
+    <title>Error - 404</title>
     <style>
         #outer {
             width: 100%;
@@ -76,3 +57,5 @@
 </body>
 
 </html>
+
+

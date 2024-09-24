@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         @if (count($facturas) > 0)
-            <button class="btn btn-dark btn-sm w-100" onclick="mandarFacturasPaquete()">Enviar Paquete de Facturas</button>
+            <button id="boton_enviar_paquete" class="btn btn-dark btn-sm w-100" onclick="mandarFacturasPaquete()">Enviar Paquete de Facturas</button>
         @endif
     </div>
 </div>

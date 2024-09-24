@@ -183,35 +183,7 @@
 
         $(document).ready(function() {
 
-            // ajaxListadoTipoDocumentoSector();
             ajaxListado();
-
-
-
-
-            // const inputTime = document.getElementById('time');
-
-            // inputTime.addEventListener('input', function() {
-            //     const timeValue = this.value;
-            //     const timeParts = timeValue.split(':');
-
-            //     let hour = parseInt(timeParts[0]) || 0;
-            //     let minute = parseInt(timeParts[1]) || 0;
-            //     let second = parseInt(timeParts[2]) || 0;
-
-            //     // Validación de los valores
-            //     hour = Math.min(Math.max(hour, 0), 23);
-            //     minute = Math.min(Math.max(minute, 0), 59);
-            //     second = Math.min(Math.max(second, 0), 59);
-
-            //     // Formatear los valores para asegurar dos dígitos
-            //     hour = String(hour).padStart(2, '0');
-            //     minute = String(minute).padStart(2, '0');
-            //     second = String(second).padStart(2, '0');
-
-            //     // Reemplazar el valor del input con la hora formateada
-            //     this.value = `${hour}:${minute}:${second}`;
-            // });
 
         });
 
@@ -255,12 +227,12 @@
         function agregarEventoSignificativo() {
             if ($("#formulario_new_evento_significativo")[0].checkValidity()) {
 
-                // // Obtén el botón y el icono de carga
-                // var boton = $("#boton_enviar");
-                // var iconoCarga = boton.find("i");
-                // // Deshabilita el botón y muestra el icono de carga
-                // boton.attr("disabled", true);
-                // iconoCarga.show();
+                // Obtén el botón y el icono de carga
+                var boton = $("#boton_enviar");
+                var iconoCarga = boton.find("i");
+                // Deshabilita el botón y muestra el icono de carga
+                boton.attr("disabled", true);
+                iconoCarga.show();
 
                 let datos = $('#formulario_new_evento_significativo').serializeArray();
 
@@ -288,23 +260,23 @@
                             //DESABILITAMOS EL BOTON
 
                         } else {
+
                             let j = "";
                             if(data.num_error == 1){
                                 j = "Error al recuperar el CUFD intente otra vez"
-                                //DESABILITAMOS EL BOTON
-                                boton.attr("disabled", false);
-                                iconoCarga.hide();
                             }
                             Swal.fire({
                                 title: JSON.stringify(data.msg),
                                 text : j,
                                 icon : 'error'
                             })
+
+                            //DESABILITAMOS EL BOTON
+                            boton.attr("disabled", false);
+                            iconoCarga.hide();
                         }
                     }
                 })
-
-
 
             } else {
                 $("#formulario_new_evento_significativo")[0].reportValidity();
@@ -335,9 +307,6 @@
 
                             $('#bloque_bloque_cufds').html(data.select)
 
-                            console.log(data.select)
-
-                            // $('#tabla_eventos_significativos').html(data.listado)
                         } else {
 
                         }
@@ -347,54 +316,6 @@
             } else {
                 alert("DEBE LLENAR FECHA INICIO, HORA INICIO, FECHA FINAL Y HORA FINAL")
             }
-
-
-
-
-
-
         }
-
-        // function agregarRol(){
-        //     if($("#formulario_new_rol")[0].checkValidity()){
-
-        //         let datos = $('#formulario_new_rol').serializeArray();
-
-        //         $.ajax({
-        //             url   : "{{ url('rol/agregarRol') }}",
-        //             method: "POST",
-        //             data  : datos,
-        //             success: function (data) {
-
-        //                 console.log(data)
-
-        //                 if(data.estado === 'success'){
-        //                     // console.log(data)
-        //                     Swal.fire({
-        //                         icon:'success',
-        //                         title: "EXITO!",
-        //                         text:  "SE REGISTRO CON EXITO",
-        //                     })
-        //                     ajaxListado();
-        //                     $('#modal_new_rol').modal('hide');
-        //                     // $('#modal_puntos_ventas').modal('show');
-        //                     // $('#tabla_puntos_ventas').html(data.listado)
-        //                     // location.reload();
-        //                 }else{
-        //                     // console.log(data, data.detalle.mensajesList)
-        //                     // Swal.fire({
-        //                     //     icon:'error',
-        //                     //     title: data.detalle.codigoDescripcion,
-        //                     //     text:  JSON.stringify(data.detalle.mensajesList),
-        //                     //     // timer:1500
-        //                     // })
-        //                 }
-        //             }
-        //         })
-
-        //     }else{
-        //         $("#formulario_new_rol")[0].reportValidity();
-        //     }
-        // }
     </script>
 @endsection

@@ -421,6 +421,9 @@
         }
 
         function mandarFacturasPaquete(){
+
+            $('#boton_enviar_paquete').prop('disabled', true);
+
             let arraye = $('#formularioEnvioPaquete').serializeArray();
             // Agregar un nuevo elemento al array
             arraye.push({ name: 'evento_significativo_id', value: $('#evento_significativo_contingencia_select').val() });
@@ -440,6 +443,7 @@
                             // timer            : 2000,        // 5 segundos
                             timerProgressBar : true
                         });
+                        $('#boton_enviar_paquete').prop('disabled', false);
                     }else{
                         Swal.fire({
                             icon             : 'error',

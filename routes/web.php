@@ -141,8 +141,8 @@ Route::middleware(['auth', 'one.session'])->group(function () {
     });
 
     Route::prefix('/factura')->group(function(){
-        Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
-        Route::get('/formularioFacturacionTasaCero', [FacturaController::class, 'formularioFacturacionTasaCero']);
+        // Route::get('/formularioFacturacion', [FacturaController::class, 'formularioFacturacion']);
+        // Route::get('/formularioFacturacionTasaCero', [FacturaController::class, 'formularioFacturacionTasaCero']);
 
         Route::get('/listado', [FacturaController::class, 'listado']);
 
@@ -170,7 +170,6 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::get('/emiteFacturaMasa', [FacturaController::class, 'emiteFacturaMasa']);
         Route::get('/armaJson', [FacturaController::class, 'armaJson']);
         // PARA CREACION DE FACTURAS MASA
-
 
         Route::get('/formularioFacturacionCv', [FacturaController::class, 'formularioFacturacionCv']);
         Route::post('/ajaxListadoServicios', [FacturaController::class, 'ajaxListadoServicios']);
