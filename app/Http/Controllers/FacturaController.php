@@ -1990,7 +1990,7 @@ class FacturaController extends Controller
                 $numeroFactura  = (string)$cabeza['cabecera']->numeroFactura;
 
                 // Genera el texto para el código QR
-                $textoQR = $factura->empresa->url_verifica."?nit".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=2";
+                $textoQR = $factura->empresa->url_verifica."?nit=".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=2";
                 // Genera la ruta temporal para guardar la imagen del código QR
                 $rutaImagenQR = storage_path('app/public/qr_code.png');
                 // Genera el código QR y guarda la imagen en la ruta temporal
@@ -2027,7 +2027,7 @@ class FacturaController extends Controller
                 $cuf           = (string)$cabeza['cabecera']->cuf;
                 $numeroFactura = (string)$cabeza['cabecera']->numeroFactura;
 
-                $textoQR = $factura->empresa->url_verifica."?nit".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=1";
+                $textoQR = $factura->empresa->url_verifica."?nit=".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=1";
 
                 // Genera la ruta temporal para guardar la imagen del código QR
                 $rutaImagenQR = storage_path('app/public/qr_code.png');
@@ -3486,7 +3486,7 @@ class FacturaController extends Controller
             $cuf           = (string)$cabeza['cabecera']->cuf;
             $numeroFactura = (string)$cabeza['cabecera']->numeroFactura;
             // Genera el texto para el código QR
-            $textoQR = $empresa->url_verifica."?nit".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=1";
+            $textoQR = $empresa->url_verifica."?nit=".$factura->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=1";
 
             // Genera la ruta temporal para guardar la imagen del código QR
             $rutaImagenQR = storage_path('app/public/qr_code.png');
