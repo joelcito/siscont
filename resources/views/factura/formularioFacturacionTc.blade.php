@@ -568,31 +568,41 @@
                 var valorTotal   = parseFloat(totalCell.text());
                 var subTotalCell = $(filaExistente.node()).find('.subTotal');
 
-                if(valorDescuento < valorTotal){
-                    subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
-                    let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
-                    if (servicio) {
-                        servicio.descuento = parseFloat(valorDescuento);
-                        servicio.subTotal  = parseFloat(servicio.total) - parseFloat(valorDescuento);
+                if(parseFloat(valorDescuento) > -1){
+                    if(valorDescuento < valorTotal){
+                        subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
+                        let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
+                        if (servicio) {
+                            servicio.descuento = parseFloat(valorDescuento);
+                            servicio.subTotal  = parseFloat(servicio.total) - parseFloat(valorDescuento);
 
-                        // EJECUTAMOS EL DESCUENTO
-                        let sumaTotal          = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
-                        let descuentoAdicional = $('#descuento_adicional').val()
-                        $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
-                    } else {
+                            // EJECUTAMOS EL DESCUENTO
+                            let sumaTotal          = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                            let descuentoAdicional = $('#descuento_adicional').val()
+                            $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
+                        } else {
+                            Swal.fire({
+                                icon:'error',
+                                title: "ERROR!",
+                                text:  "Error al actualizar el descuento",
+                                timer: 4000
+                            })
+                        }
+
+                    }else{
                         Swal.fire({
                             icon:'error',
                             title: "ERROR!",
-                            text:  "Error al actualizar el descuento",
+                            text:  "El valor de descuento no debe ser mayor al valor Total",
                             timer: 4000
                         })
+                        $('#descuento_'+id).val(valorTotal-parseFloat(subTotalCell.text()))
                     }
-
                 }else{
                     Swal.fire({
                         icon:'error',
                         title: "ERROR!",
-                        text:  "El valor de descuento no debe ser mayor al valor Total",
+                        text:  "El valor de descuento debe ser mayor a 0!",
                         timer: 4000
                     })
                     $('#descuento_'+id).val(valorTotal-parseFloat(subTotalCell.text()))
