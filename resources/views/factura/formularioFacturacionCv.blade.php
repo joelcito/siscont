@@ -822,12 +822,6 @@
             let descuentoAdcional = parseFloat($('#descuento_adicional').val())
             let montoTotal        = parseFloat($('#monto_total').val())
 
-            console.log(
-                descuentoAdcional,
-                montoTotal,
-                (descuentoAdcional < montoTotal)
-            );
-
             if(descuentoAdcional > -1){
                 if(descuentoAdcional < montoTotal){
                     let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);

@@ -825,9 +825,40 @@
         }
 
         function ejecutarDescuentoAdicional(){
-            let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
-            let descuentoAdicional = $('#descuento_adicional').val();
-            $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+            // let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+            // let descuentoAdicional = $('#descuento_adicional').val();
+            // $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+
+            let descuentoAdcional = parseFloat($('#descuento_adicional').val())
+            let montoTotal        = parseFloat($('#monto_total').val())
+
+            if(descuentoAdcional > -1){
+                if(descuentoAdcional < montoTotal){
+                    let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                    let descuentoAdicional = $('#descuento_adicional').val();
+                    $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+                }else{
+                    Swal.fire({
+                        icon : 'error',
+                        title: "Error",
+                        text : 'El descuento Adicional no debe ser mayor al monto total!',
+                    })
+                    let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                    let descuentoAdicional = 0;
+                    $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+                    $('#descuento_adicional').val(0);
+                }
+            }else{
+                Swal.fire({
+                    icon : 'error',
+                    title: "Error",
+                    text : 'El descuento debe ser mayor a 0!',
+                })
+                let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                let descuentoAdicional = 0;
+                $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+                $('#descuento_adicional').val(0);
+            }
         }
 
 
