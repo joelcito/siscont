@@ -371,7 +371,8 @@
             @endforeach
             <tr style="align: right;">
                 <td  style="background: white; border: none;" colspan="4" rowspan="{{ ($tipo_documento_sector == "1")? 6 : 5 }}">
-                    @php
+                    {{-- este era el otro --}}
+                    {{-- @php
                         $to = ((float) $archivoXML->cabecera->montoTotal);
                         $number = $to;
                         // Crear una instancia de NumberFormatter para el idioma español
@@ -380,7 +381,25 @@
                         $literal = $formatter->format($number);
 
                     @endphp
-                    <b>Son: {{ ucfirst($literal) }} 00/100 Bolivianos</b>
+                    <b>Son: {{ ucfirst($literal) }} 00/100 Bolivianos</b> --}}
+
+                    {{-- ESTE ES EL NUEVO --}}
+                    @php
+                        $to = (float) $archivoXML->cabecera->montoTotal;
+
+                        // Separar la parte entera y la parte decimal del monto
+                        $entero = floor($to); // Parte entera
+                        $decimal = round(($to - $entero) * 100); // Parte decimal, redondeada a dos decimales
+
+                        // Crear una instancia de NumberFormatter para el idioma español
+                        $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+
+                        // Convertir solo la parte entera a su forma literal
+                        $literal = $formatter->format($entero);
+
+                    @endphp
+                    <!-- Mostrar el literal y la parte decimal como fracción de 100 -->
+                    <b>Son: {{ ucfirst($literal) }} {{ sprintf('%02d', $decimal) }}/100 Bolivianos</b>
                 </td>
                 <td colspan="2" style="text-align: right; padding-right: 10px;">SUBTOTAL Bs</td>
                 {{--  <td  style="text-align: right;"> {{  number_format( (int) $archivoXML->cabecera->montoTotal, 2) }}</td>  --}}
