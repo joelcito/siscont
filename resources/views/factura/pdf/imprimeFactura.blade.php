@@ -370,13 +370,28 @@
             </table>
             <br>
             <div style="text-align: left">
-                @php
+                {{-- ANTIGUO --}}
+                {{-- @php
                     $to        = ((float) $archivoXML->cabecera->montoTotal);
                     $number    = $to;
                     $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
                     $literal   = $formatter->format($number);
                 @endphp
-                <b>Son: {{ ucfirst($literal) }} 00/100 Bolivianos</b>
+                <b>Son: {{ ucfirst($literal) }} 00/100 Bolivianos</b> --}}
+                @php
+                    $to = (float) $archivoXML->cabecera->montoTotal;
+
+                    // Separar la parte entera y la parte decimal del monto
+                    $entero = floor($to); // Parte entera
+                    $decimal = round(($to - $entero) * 100); // Parte decimal, redondeada a dos decimales
+
+                    // Crear una instancia de NumberFormatter para el idioma español
+                    $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+
+                    // Convertir solo la parte entera a su forma literal
+                    $literal = $formatter->format($entero);
+                @endphp
+                <b>Son: {{ ucfirst($literal) }} {{ sprintf('%02d', $decimal) }}/100 Bolivianos</b>
             </div>
             - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <br>
             <p style="font-size:11px">
