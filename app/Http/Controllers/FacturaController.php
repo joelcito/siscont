@@ -1990,7 +1990,7 @@ class FacturaController extends Controller
                 $numeroFactura  = (string)$cabeza['cabecera']->numeroFactura;
 
                 // Genera el texto para el código QR
-                $textoQR = $factura->empresa->url_verifica."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$factura->numero_factura."&t=2";
+                $textoQR = $factura->empresa->url_verifica."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=2";
                 // Genera la ruta temporal para guardar la imagen del código QR
                 $rutaImagenQR = storage_path('app/public/qr_code.png');
                 // Genera el código QR y guarda la imagen en la ruta temporal
