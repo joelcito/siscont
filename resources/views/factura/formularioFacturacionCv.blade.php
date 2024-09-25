@@ -557,41 +557,50 @@
                 var valorTotal   = parseFloat(totalCell.text());
                 var subTotalCell = $(filaExistente.node()).find('.subTotal');
 
-                if(valorDescuento < valorTotal){
-                    subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
-                    let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
-                    if (servicio) {
-                        servicio.descuento = parseFloat(valorDescuento);
-                        servicio.subTotal  = parseFloat(servicio.total) - parseFloat(valorDescuento);
+                if(parseFloat(valorDescuento) > -1){
+                    if(valorDescuento < valorTotal){
+                        subTotalCell.text((valorTotal - valorDescuento).toFixed(2));
+                        let servicio = arrayProductoCar.find(s => s.servicio_id === parseInt(id));
+                        if (servicio) {
+                            servicio.descuento = parseFloat(valorDescuento);
+                            servicio.subTotal  = parseFloat(servicio.total) - parseFloat(valorDescuento);
 
-                        // EJECUTAMOS EL DESCUENTO
-                        let sumaTotal          = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
-                        let descuentoAdicional = $('#descuento_adicional').val()
-                        $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
-                    } else {
+                            // EJECUTAMOS EL DESCUENTO
+                            let sumaTotal          = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                            let descuentoAdicional = $('#descuento_adicional').val()
+                            $('#monto_total').val(parseFloat(sumaTotal)-parseFloat(descuentoAdicional))
+                        } else {
+                            Swal.fire({
+                                icon:'error',
+                                title: "ERROR!",
+                                text:  "Error al actualizar el descuento",
+                                timer: 4000
+                            })
+                        }
+
+                    }else{
                         Swal.fire({
                             icon:'error',
                             title: "ERROR!",
-                            text:  "Error al actualizar el descuento",
+                            text:  "El valor de descuento no debe ser mayor al valor Total",
                             timer: 4000
                         })
+                        $('#descuento_'+id).val(valorTotal-parseFloat(subTotalCell.text()))
                     }
-
                 }else{
                     Swal.fire({
                         icon:'error',
                         title: "ERROR!",
-                        text:  "El valor de descuento no debe ser mayor al valor Total",
+                        text:  "El valor de descuento debe ser mayor a 0!",
                         timer: 4000
                     })
                     $('#descuento_'+id).val(valorTotal-parseFloat(subTotalCell.text()))
                 }
-
             } else {
                 Swal.fire({
-                    icon:'error',
+                    icon : 'error',
                     title: "ERROR!",
-                    text:  "Servicion no encontrado",
+                    text : "Servicion no encontrado",
                     timer: 4000
                 })
             }
@@ -790,13 +799,7 @@
                             }
                         },
                         error: function(error){
-                            {{--  if (error.status === 419) {
-                                alert('Tu sesión ha expirado. Por favor, vuelve a cargar la página.');
-                                // Opcional: Recargar la página
-                                location.reload();
-                            } else {
-                                // Manejar otros errores
-                            }  --}}
+
                         }
                     })
                 }else{
@@ -815,11 +818,44 @@
         }
 
         function ejecutarDescuentoAdicional(){
-            let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
-            let descuentoAdicional = $('#descuento_adicional').val();
-            $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
-        }
 
+            let descuentoAdcional = parseFloat($('#descuento_adicional').val())
+            let montoTotal        = parseFloat($('#monto_total').val())
+
+            console.log(
+                descuentoAdcional,
+                montoTotal,
+                (descuentoAdcional < montoTotal)
+            );
+
+            if(descuentoAdcional > -1){
+                if(descuentoAdcional < montoTotal){
+                    let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                    let descuentoAdicional = $('#descuento_adicional').val();
+                    $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+                }else{
+                    Swal.fire({
+                        icon : 'error',
+                        title: "Error",
+                        text : 'El descuento Adicional no debe ser mayor al monto total!',
+                    })
+                    let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                    let descuentoAdicional = 0;
+                    $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+                    $('#descuento_adicional').val(0);
+                }
+            }else{
+                Swal.fire({
+                    icon : 'error',
+                    title: "Error",
+                    text : 'El descuento debe ser mayor a 0!',
+                })
+                let sumaTotal = arrayProductoCar.reduce((sum, current) => sum + current.subTotal, 0);
+                let descuentoAdicional = 0;
+                $('#monto_total').val( parseFloat(sumaTotal) - parseFloat(descuentoAdicional))
+                $('#descuento_adicional').val(0);
+            }
+        }
 
         function bloqueCAFC(){
             if($('#tipo_facturacion').val() === "offline"){

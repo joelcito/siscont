@@ -399,67 +399,80 @@ class EmpresaController extends Controller
                               ->where('codigo_ambiente', $empresa->codigo_ambiente)
                               ->first();
 
+            $tipo_punto_venta = SiatTipoPuntoVenta::where('codigo_clasificador', $codigo_clasificador_punto_venta)
+                                                    ->first();
 
-            $descripcionPuntoVenta = $request->input('descripcion_punto_venta');
-            $nombrePuntoVenta      = $request->input('nombre_punto_venta');
-            $header                = $empresa->api_token;
-            $url4                  = $empresa->url_facturacion_operaciones;
-            $codigoAmbiente        = $empresa->codigo_ambiente;
-            $codigoModalidad       = $empresa->cogigo_modalidad;
-            $codigoSistema         = $empresa->codigo_sistema;
-            $codigoSucursal        = $sucursal->codigo_sucursal;
-            $codigoTipoPuntoVenta  = $codigo_clasificador_punto_venta;
-            $scuis                 = $cuis->codigo;
-            $nit                   = $empresa->nit;
+             // Obtener la instancia del modelo
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlOperaciones         = $urlApiServicioSiat->getUrlOperaciones($empresa->codigo_ambiente, $empresa->codigo_modalidad);
+            if($UrlOperaciones){
 
-            $siat = app(SiatController::class);
+                $descripcionPuntoVenta = $request->input('descripcion_punto_venta');
+                $nombrePuntoVenta      = $request->input('nombre_punto_venta');
+                $header                = $empresa->api_token;
+                $url4                  = $UrlOperaciones->url_servicio;
+                $codigoAmbiente        = $empresa->codigo_ambiente;
+                $codigoModalidad       = $empresa->cogigo_modalidad;
+                $codigoSistema         = $empresa->codigo_sistema;
+                $codigoSucursal        = $sucursal->codigo_sucursal;
+                $codigoTipoPuntoVenta  = $codigo_clasificador_punto_venta;
+                $scuis                 = $cuis->codigo;
+                $nit                   = $empresa->nit;
 
-            $puntoVentaGenerado = json_decode($siat->registroPuntoVenta(
-                $descripcionPuntoVenta,
-                $nombrePuntoVenta,
-                $header,
-                $url4,
-                $codigoAmbiente,
-                $codigoModalidad,
-                $codigoSistema,
-                $codigoSucursal,
-                $codigoTipoPuntoVenta,
-                $scuis,
-                $nit
-            ));
+                $siat = app(SiatController::class);
 
-            if($puntoVentaGenerado->estado === "success"){
-                if($puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->transaccion){
-                    $codigoPuntoVentaDevuelto        = $puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->codigoPuntoVenta;
+                $puntoVentaGenerado = json_decode($siat->registroPuntoVenta(
+                    $descripcionPuntoVenta,
+                    $nombrePuntoVenta,
+                    $header,
+                    $url4,
+                    $codigoAmbiente,
+                    $codigoModalidad,
+                    $codigoSistema,
+                    $codigoSucursal,
+                    $codigoTipoPuntoVenta,
+                    $scuis,
+                    $nit
+                ));
 
-                    $punto_venta                     = new PuntoVenta();
-                    $punto_venta->usuario_creador_id = Auth::user()->id;
-                    $punto_venta->sucursal_id        = $sucursal->id;
-                    $punto_venta->codigoPuntoVenta   = $codigoPuntoVentaDevuelto;
-                    $punto_venta->nombrePuntoVenta   = $nombrePuntoVenta;
-                    $punto_venta->tipoPuntoVenta     = $codigo_clasificador_punto_venta;
-                    $punto_venta->codigo_ambiente    = $codigoAmbiente;
+                if($puntoVentaGenerado->estado === "success"){
+                    if($puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->transaccion){
 
-                    if($punto_venta->save()){
-                        $data['text']   = 'Se creo el PUNTO DE VENTA con exito';
-                        $data['estado'] = 'success';
+                        $codigoPuntoVentaDevuelto        = $puntoVentaGenerado->resultado->RespuestaRegistroPuntoVenta->codigoPuntoVenta;
 
-                        $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
-                                                    ->get();
-                        $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas'))->render();
+                        $punto_venta                     = new PuntoVenta();
+                        $punto_venta->usuario_creador_id = Auth::user()->id;
+                        $punto_venta->sucursal_id        = $sucursal->id;
+                        $punto_venta->codigoPuntoVenta   = $codigoPuntoVentaDevuelto;
+                        $punto_venta->nombrePuntoVenta   = $nombrePuntoVenta;
+                        $punto_venta->tipoPuntoVenta     = $tipo_punto_venta->descripcion;
+                        $punto_venta->codigo_ambiente    = $codigoAmbiente;
 
+                        if($punto_venta->save()){
+                            $data['text']   = 'Se creo el PUNTO DE VENTA con exito';
+                            $data['estado'] = 'success';
+
+                            $punto_ventas = PuntoVenta::where('sucursal_id', $sucursal->id)
+                                                        ->get();
+                            $data['listado'] = view('empresa.ajaxListadoPuntoVenta')->with(compact('punto_ventas','sucursal_id'))->render();
+
+                        }else{
+                            $data['text']   = 'Error al crear el PUNTO DE VENTA';
+                            $data['estado'] = 'error';
+                        }
                     }else{
-                        $data['text']   = 'Error al crear el PUNTO DE VENTA';
+                        $data['text']   = 'Error al crear el CUIS';
+                        $data['msg']    = $puntoVentaGenerado->resultado;
                         $data['estado'] = 'error';
                     }
                 }else{
-                    $data['text']   = 'Error al crear el CUIS';
-                    $data['msg']    = $puntoVentaGenerado->resultado;
+                    $data['text']   = 'Error en la consulta';
+                    $data['msg']    = $puntoVentaGenerado;
                     $data['estado'] = 'error';
                 }
             }else{
-                $data['text']   = 'Error en la consulta';
-                $data['msg']    = $puntoVentaGenerado;
+                $data['text']   = 'No existe el servico para la generacion el CUIS';
+                $data['msg']    = 'No existe el servico para la generacion el CUIS';
                 $data['estado'] = 'error';
             }
         }else{

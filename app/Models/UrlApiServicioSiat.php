@@ -16,17 +16,6 @@ class UrlApiServicioSiat extends Model
         return $this->belongsTo('App\Models\SiatTipoDocumentoSector', 'siat_documento_sector_id');
     }
 
-
-    // public function getUrlFacturaCodigos($ambiente, $modalidad, $documentos_sector){
-
-    //     return $this->where('ambiente', $ambiente)
-    //                 ->where('modalidad', $modalidad)
-    //                 ->where('nombre', 'url_facturacionCodigos')
-    //                 ->where('siat_documento_sector_id', $documentos_sector)
-    //                 ->first();
-
-    // }
-
     public function getUrlSincronizacion($ambiente, $modalidad){
         return $this->where('ambiente', $ambiente)
                     ->where('modalidad', $modalidad)
