@@ -108,6 +108,7 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/importarServiciosProductosExcel', [EmpresaController::class, 'importarServiciosProductosExcel']);
         Route::post('/expoartarExcelClientes', [EmpresaController::class, 'expoartarExcelClientes']);
 
+        Route::post('/guardarNewServioEmpresaFormularioFacturacion', [EmpresaController::class, 'guardarNewServioEmpresaFormularioFacturacion']);
     });
 
     Route::prefix('/sincronizacion')->group(function(){

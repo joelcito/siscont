@@ -32,6 +32,8 @@ class HomeController extends Controller
 
         $cantidaEmpresas = Empresa::count();
 
-        return view('home.inicio')->with(compact('cantidaEmpresas'));
+        $empresa = Auth::user()->empresa;
+
+        return view('home.inicio')->with(compact('cantidaEmpresas', 'empresa'));
     }
 }

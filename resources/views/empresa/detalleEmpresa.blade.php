@@ -807,13 +807,24 @@
                                     <!--begin:::Tab item-->
                                     <li class="nav-item">
                                         <a class="nav-link text-active-primary d-flex align-items-center pb-4 active" data-bs-toggle="tab" href="#plan_de_empresa_bloque">
-                                        <i class="ki-duotone ki-home fs-4 me-1"></i>Plan de Empresa</a>
+                                        <i class="ki-duotone ki-bill fs-4 me-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                            <span class="path5"></span>
+                                            <span class="path6"></span>
+                                        </i>Plan de Empresa</a>
                                     </li>
                                     <!--end:::Tab item-->
                                     <!--begin:::Tab item-->
                                     <li class="nav-item">
                                         <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#documentos_sectores">
-                                        <i class="ki-duotone ki-home fs-4 me-1"></i>Documento Sector</a>
+                                        <i class="ki-duotone ki-price-tag fs-4 me-1">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>Documento Sector</a>
                                     </li>
                                     <!--end:::Tab item-->
                                     <!--begin:::Tab item-->
@@ -825,13 +836,11 @@
                                     <!--begin:::Tab item-->
                                     <li class="nav-item">
                                         <a class="nav-link text-active-primary d-flex align-items-center pb-4" data-bs-toggle="tab" href="#tab_tabla_usuario">
-                                        <i class="ki-duotone ki-calendar-8 fs-4 me-1">
+                                        <i class="ki-duotone ki-profile-user fs-4 me-1">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                             <span class="path3"></span>
                                             <span class="path4"></span>
-                                            <span class="path5"></span>
-                                            <span class="path6"></span>
                                         </i>Usuarios</a>
                                     </li>
                                     <!--end:::Tab item-->

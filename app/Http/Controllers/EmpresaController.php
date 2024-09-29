@@ -1743,8 +1743,9 @@ class EmpresaController extends Controller
     public function guardaSucursalEmpresa(Request $request){
         if($request->ajax()){
 
+            // dd($request->all());
 
-            $sucursal_id = $request->input('empresa_id_sucursal');
+            $sucursal_id = $request->input('sucursal_id_sucursal');
             $usuario     = Auth::user();
             $empresa     = $usuario->empresa;
 
@@ -1753,7 +1754,7 @@ class EmpresaController extends Controller
 
             if($obtenerSuscripcionVigenteEmpresa){
 
-                $sucursal_id = $usuario->sucursal_id;
+                // $sucursal_id = $usuario->sucursal_id;
                 $plan        = $obtenerSuscripcionVigenteEmpresa->plan;
                 $sucursal    = Sucursal::find($sucursal_id);
 
@@ -2492,6 +2493,69 @@ class EmpresaController extends Controller
             $data['estado'] = 'error';
         }
 
+    }
+
+    public function guardarNewServioEmpresaFormularioFacturacion(Request $request){
+        if($request->ajax()){
+
+            // dd($request->all());
+
+            $suscripcion = app(SuscripcionController::class);
+            $usuario     = Auth::user();
+            $empresa     = $usuario->empresa;
+
+            $obtenerSuscripcionVigenteEmpresa = $suscripcion->obtenerSuscripcionVigenteEmpresa($empresa);
+
+            if($obtenerSuscripcionVigenteEmpresa){
+                $empresa_id = $usuario->empresa_id;
+                $plan       = $obtenerSuscripcionVigenteEmpresa->plan;
+
+                $guardarProductoServicioEmpresa = "0"; // PORQUE SIEMPRE VA AGREGAR
+
+                if($suscripcion->verificarRegistroServicioProductoByPlan($plan, $empresa) || $guardarProductoServicioEmpresa != "0"){
+
+                    if($guardarProductoServicioEmpresa == "0"){
+                        $servicio                     = new Servicio();
+                        $servicio->usuario_creador_id = $usuario->id;
+                    }else{
+                        $servicio                         = Servicio::find($guardarProductoServicioEmpresa);
+                        $servicio->usuario_modificador_id = $usuario->id;
+                    }
+                    // $servicio                              = $guardarProductoServicioEmpresa == "0" ? new Servicio()  : Servicio::find($guardarProductoServicioEmpresa);
+                    $servicio->empresa_id                  = $empresa_id;
+                    $servicio->siat_depende_actividades_id = $request->input('actividad_economica_siat_id_new_servicio');
+                    $servicio->siat_documento_sector_id    = $request->input('documento_sector_siat_id_new_servicio');
+                    $servicio->siat_producto_servicios_id  = $request->input('producto_servicio_siat_id_new_servicio');
+                    $servicio->siat_unidad_medidas_id      = $request->input('unidad_medida_siat_id_new_servicio');
+                    $servicio->numero_serie                = $request->input('numero_serie');
+                    $servicio->codigo_imei                 = $request->input('codigo_imei');
+                    $servicio->descripcion                 = $request->input('descrpcion_new_servicio');
+                    $servicio->precio                      = $request->input('precio_new_servicio');
+                    $servicio->save();
+
+                    $servicios = Servicio::select('*')
+                                        ->where('empresa_id', $empresa_id)
+                                        ->where('siat_documento_sector_id', $servicio->siat_documento_sector_id)
+                                        ->get();
+
+                    $data['servicio'] = $servicios;
+                    $data['estado']   = 'success';
+
+                }else{
+                    $data['text']   = 'Alcanzo la cantidad maxima registros de producto / servicio, solicite un plan superior.';
+                    $data['estado'] = 'error';
+                }
+
+            }else{
+                $data['text']   = 'No existe suscripciones activas!, , solicite una suscripcion a un plan vigente.';
+                $data['estado'] = 'error';
+            }
+
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
     }
 
 }

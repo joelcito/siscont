@@ -20,10 +20,13 @@
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
+                                {{--  <i class="ki-duotone ki-address-book fs-2">  --}}
+                                <i class="ki-duotone ki-badge fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
                                 </i>
                             </span>
                             <span class="menu-title">Administracion</span>
@@ -124,10 +127,13 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
+                                {{--  <i class="ki-duotone ki-address-book fs-2">  --}}
+                                <i class="ki-duotone ki-badge fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
                                 </i>
                             </span>
                             <span class="menu-title">Perfil de Empresa</span>
@@ -148,7 +154,7 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
+                                <i class="ki-duotone ki-tag fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
@@ -211,10 +217,12 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
+                                <i class="ki-duotone ki-people fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
                                 </i>
                             </span>
                             <span class="menu-title">Clientes</span>
@@ -235,10 +243,15 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
+                                <i class="ki-duotone ki-lots-shopping fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                    <span class="path6"></span>
+                                    <span class="path7"></span>
+                                    <span class="path8"></span>
                                 </i>
                             </span>
                             <span class="menu-title">Servicio / Producto</span>

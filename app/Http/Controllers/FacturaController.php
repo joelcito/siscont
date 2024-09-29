@@ -11,10 +11,13 @@ use App\Models\Empresa;
 use App\Models\Factura;
 use App\Models\PuntoVenta;
 use App\Models\Servicio;
+use App\Models\SiatDependeActividades;
 use App\Models\SiatMotivoAnulacion;
+use App\Models\SiatProductoServicio;
 use App\Models\SiatTipoDocumentoIdentidad;
 use App\Models\SiatTipoMetodoPagos;
 use App\Models\SiatTipoMoneda;
+use App\Models\SiatUnidadMedida;
 use App\Models\Sucursal;
 use App\Models\UrlApiServicioSiat;
 use Carbon\Carbon;
@@ -873,7 +876,12 @@ class FacturaController extends Controller
         // TIPO MONEDA
         $tipoMonedas = SiatTipoMoneda::all();
 
-        return view('factura.formularioFacturacionCv')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'));
+        $documentos_sectores_asignados = $empresa->empresasDocumentos;
+        $activiadesEconomica           = SiatDependeActividades::where('empresa_id', $empresa_id)->get();
+        $productoServicio              = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
+        $unidadMedida                  = SiatUnidadMedida::all();
+
+        return view('factura.formularioFacturacionCv')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas', 'documentos_sectores_asignados','activiadesEconomica','productoServicio','unidadMedida'));
     }
 
     public function  formularioFacturacionTc(Request $request){
@@ -922,7 +930,12 @@ class FacturaController extends Controller
         // TIPO MONEDA
         $tipoMonedas = SiatTipoMoneda::all();
 
-        return view('factura.formularioFacturacionTc')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas'));
+        $documentos_sectores_asignados = $empresa->empresasDocumentos;
+        $activiadesEconomica           = SiatDependeActividades::where('empresa_id', $empresa_id)->get();
+        $productoServicio              = SiatProductoServicio::where('empresa_id', $empresa_id)->get();
+        $unidadMedida                  = SiatUnidadMedida::all();
+
+        return view('factura.formularioFacturacionTc')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa', 'tipoDocumento', 'tipoMetodoPago', 'tipoMonedas', 'documentos_sectores_asignados','activiadesEconomica','productoServicio','unidadMedida'));
 
     }
 
@@ -2146,12 +2159,13 @@ class FacturaController extends Controller
                 'facturas.cuf',
                 'facturas.id',
                 'facturas.fecha',
-                'facturas.total',
+                'facturas.total as totalFactura',
                 'facturas.razon_social',
                 'facturas.numero_factura',
                 'facturas.empresa_id',
                 'facturas.siat_documento_sector_id',
                 'facturas.usuario_creador_id',
+                'facturas.descuento_adicional',
 
                 'clientes.cedula',
                 'clientes.nombres',
@@ -2232,13 +2246,15 @@ class FacturaController extends Controller
             $hoja->getColumnDimension('P')->setWidth(20);
             $hoja->getColumnDimension('Q')->setWidth(20);
             $hoja->getColumnDimension('R')->setWidth(20);
+            $hoja->getColumnDimension('S')->setWidth(20);
+            $hoja->getColumnDimension('T')->setWidth(20);
 
             // Añadir datos a la hoja de cálculo
             $hoja->setCellValue('A1', $empresa->nombre);
             $hoja->setCellValue('A2', "LISTADO DE FACTURAS");
             $hoja->setCellValue('A3', date('d/m/Y H:i:s'));
 
-            $hoja->setCellValue('A4', "N°");
+            $hoja->setCellValue('A4', "N° FAC");
             $hoja->setCellValue('B4', "CLIENTE");
             $hoja->setCellValue('C4', "RAZON");
             $hoja->setCellValue('D4', "NIT");
@@ -2255,7 +2271,9 @@ class FacturaController extends Controller
             $hoja->setCellValue('O4', "CANTIDAD");
             $hoja->setCellValue('P4', "MONTO TOTAL");
             $hoja->setCellValue('Q4', "DESCUENTO");
-            $hoja->setCellValue('R4', "IMPORTE PAGADO");
+            $hoja->setCellValue('R4', "DESCUENTO ADICIONAL");
+            $hoja->setCellValue('S4', "IMPORTE PAGADO");
+            $hoja->setCellValue('T4', "IMPORTE PAGADO TOTAL");
 
             $encabezadoStyle =[
                 'font' => [
@@ -2268,9 +2286,9 @@ class FacturaController extends Controller
                 ],
             ];
 
-            $hoja->mergeCells('A1:R1');
-            $hoja->mergeCells('A2:R2');
-            $hoja->mergeCells('A3:R3');
+            $hoja->mergeCells('A1:T1');
+            $hoja->mergeCells('A2:T2');
+            $hoja->mergeCells('A3:T3');
 
             $hoja->getStyle('A1')->applyFromArray($encabezadoStyle);
             $hoja->getStyle('A2')->applyFromArray($encabezadoStyle);
@@ -2298,11 +2316,24 @@ class FacturaController extends Controller
                     ],
                 ],
             ];
-            $hoja->getStyle('A4:R4')->applyFromArray($encabezadoStyle);
+            $hoja->getStyle('A4:T4')->applyFromArray($encabezadoStyle);
 
-            $contadorInicio = 5;
+            $contadorInicio              = 5;
+            $numeroFacturaAnterior       = null;
+            $numeroImportePagadoAnterior = null;
             foreach($facturas  as $key => $fac){
                 $num_fac = $fac->uso_cafc == "Si" ? "N° Cafc:".$fac->numero_cafc : $fac->numero_factura;
+
+                // // Comprobar si el número de factura actual es igual al anterior
+                // if ($num_fac === $numeroFacturaAnterior) {
+                //     // Si son iguales, solo configurar el contenido de la celda
+                //     // (no necesitas hacer nada aquí si solo quieres combinar más adelante)
+                //     // Puedes opcionalmente dejar la celda en blanco o mantener el valor
+                // } else {
+                //     // Si son diferentes, configurar la celda normalmente
+                //     $hoja->setCellValue('A' . $contadorInicio, $num_fac);
+                // }
+
                 $hoja->setCellValue('A'.$contadorInicio, $num_fac);
                 $hoja->setCellValue('B'.$contadorInicio, $fac->nombres." ".$fac->ap_paterno." ".$fac->ap_materno);
                 $hoja->setCellValue('C'.$contadorInicio, $fac->razon_social);
@@ -2324,14 +2355,29 @@ class FacturaController extends Controller
                 $hoja->setCellValue('O'.$contadorInicio, $fac->cantidad);
                 $hoja->setCellValue('P'.$contadorInicio, $fac->total);
                 $hoja->setCellValue('Q'.$contadorInicio, $fac->descuento);
-                $hoja->setCellValue('R'.$contadorInicio, $fac->importe);
+                $hoja->setCellValue('R'.$contadorInicio, $fac->descuento_adicional);
+                $hoja->setCellValue('S'.$contadorInicio, $fac->importe);
+                $hoja->setCellValue('T'.$contadorInicio, $fac->totalFactura);
 
+                // Si es el primer registro o el número de factura ha cambiado, incrementar el contador
+                // if ($num_fac !== $numeroFacturaAnterior) {
+                if ($num_fac == $numeroFacturaAnterior) {
+                    // Combinar celdas de la columna R (por ejemplo) si los números de factura son iguales
+                    if ($contadorInicio > 1 && $numeroFacturaAnterior !== null) {
+                        // Combina las celdas desde la fila anterior hasta la fila actual
+                        $hoja->mergeCells('R' . ($contadorInicio - 1) . ':R' . $contadorInicio);
+                        $hoja->mergeCells('T' . ($contadorInicio - 1) . ':T' . $contadorInicio);
+                    }
 
+                    // Actualiza el número de factura anterior
+                }
+
+                $numeroFacturaAnterior = $num_fac;
                 $contadorInicio++;
             }
 
             // Aplicar bordes a las celdas de datos
-            $hoja->getStyle('A5:R'.($contadorInicio-1))->applyFromArray([
+            $hoja->getStyle('A5:T'.($contadorInicio-1))->applyFromArray([
                 'borders' => [
                     'allBorders' => [
                         'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
