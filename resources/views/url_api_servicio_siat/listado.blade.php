@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="fs-6 fw-semibold form-label mb-2 required">Documento Sector</label>
-                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_api_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold" name="new_api_servicio_documento_sector" id="new_api_servicio_documento_sector" class="form-control" required>
+                                <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_api_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold" name="new_api_servicio_documento_sector" id="new_api_servicio_documento_sector" class="form-control">
                                     <option></option>
                                     @foreach ($documentosSectores as $stDocumentoSector)
                                         <option value="{{ $stDocumentoSector->id }}">{{ $stDocumentoSector->descripcion }}</option>
