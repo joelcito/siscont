@@ -51,4 +51,10 @@ class UrlApiServicioSiat extends Model
                     ->first();
     }
 
+    public function getUrlVerificaFactura($ambiente){
+        return $this->where('ambiente', $ambiente)
+                    ->where('nombre', 'url_verificacion_factura')
+                    ->first();
+    }
+
 }

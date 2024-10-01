@@ -69,9 +69,11 @@
                     <td>
                         {{-- <a href="https://siat.impuestos.gob.bo/consulta/QR?nit=5427648016&cuf={{ $p->cuf }}&numero={{ $p->numero_cafc }}&t=2" target="_blank" class="btn btn-dark btn-icon btn-sm"><i class="fa fa-file"></i></a> --}}
                         @if ($fac->uso_cafc == 'Si')
-                            <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->empresa->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_cafc."&t=2" }}" target="_blank" class="btn btn-icon btn-sm tamanio_boton"><img src="{{ asset('assets/img/siat.png') }}" style="width: 25px;" alt=""></a>
+                            {{--  <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->empresa->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_cafc."&t=2" }}" target="_blank" class="btn btn-icon btn-sm tamanio_boton"><img src="{{ asset('assets/img/siat.png') }}" style="width: 25px;" alt=""></a>  --}}
+                            <a href="{{ $url_verifica_factura."?nit=".$fac->empresa->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_cafc."&t=2" }}" target="_blank" class="btn btn-icon btn-sm tamanio_boton"><img src="{{ asset('assets/img/siat.png') }}" style="width: 25px;" alt=""></a>
                         @else
-                            <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->empresa->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-icon btn-sm tamanio_boton"><img src="{{ asset('assets/img/siat.png') }}" style="width: 25px;" alt=""></a>
+                            {{--  <a href="{{ $fac->empresa->url_verifica."?nit=".$fac->empresa->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-icon btn-sm tamanio_boton"><img src="{{ asset('assets/img/siat.png') }}" style="width: 25px;" alt=""></a>  --}}
+                            <a href="{{ $url_verifica_factura."?nit=".$fac->empresa->nit."&cuf=".$fac->cuf."&numero=".$fac->numero_factura."&t=2" }}" target="_blank" class="btn btn-icon btn-sm tamanio_boton"><img src="{{ asset('assets/img/siat.png') }}" style="width: 25px;" alt=""></a>
                         @endif
 
                         <a  class="btn btn-primary btn-icon btn-sm tamanio_boton" title="Imprime Factura oficio" href="{{ url('factura/generaPdfFacturaNewCv', [$fac->id]) }}" target="_blank"><i class="fa fa-file-pdf"></i></a>

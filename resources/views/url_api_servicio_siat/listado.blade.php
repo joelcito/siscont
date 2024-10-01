@@ -12,7 +12,7 @@
         <div class="modal-dialog modal-dialog-centered mw-1000px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="fw-bold">Formulario Plan</h2>
+                    <h2 class="fw-bold">Formulario URL SIAT</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
@@ -24,7 +24,7 @@
                     <form id="formulario_new_api_servicio">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="fs-6 fw-semibold form-label mb-2 required">Documento Sector</label>
+                                <label class="fs-6 fw-semibold form-label mb-2">Documento Sector</label>
                                 <select data-control="select2" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_api_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold" name="new_api_servicio_documento_sector" id="new_api_servicio_documento_sector" class="form-control">
                                     <option></option>
                                     @foreach ($documentosSectores as $stDocumentoSector)

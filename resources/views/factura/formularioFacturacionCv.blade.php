@@ -876,6 +876,15 @@
                                     timer: 2000
                                 })
                                 window.location.href = "{{ url('factura/listado')}}"
+                            }else if(data.estado === "error_firma"){
+                                Swal.fire({
+                                    icon : 'error',
+                                    title: data.text,
+                                    text : 'EMISION DE FACTURA RECHAZADO',
+                                })
+                                // Habilita el botón y oculta el icono de carga después de completar
+                                boton.attr("disabled", false);
+                                iconoCarga.hide();
                             }else{
                                 Swal.fire({
                                     icon : 'error',

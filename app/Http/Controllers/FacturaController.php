@@ -45,84 +45,84 @@ class FacturaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function formularioFacturacion(Request $request){
+    // public function formularioFacturacion(Request $request){
 
-        $usuario = Auth::user();
+    //     $usuario = Auth::user();
 
-        $empresa_id     = $usuario->empresa_id;
-        $punto_venta_id = $usuario->punto_venta_id;
-        $sucursal_id    = $usuario->sucursal_id;
+    //     $empresa_id     = $usuario->empresa_id;
+    //     $punto_venta_id = $usuario->punto_venta_id;
+    //     $sucursal_id    = $usuario->sucursal_id;
 
-        $empresa     = Empresa::find($empresa_id);
-        $punto_venta = PuntoVenta::find($punto_venta_id);
-        $sucursal    = Sucursal::find($sucursal_id);
+    //     $empresa     = Empresa::find($empresa_id);
+    //     $punto_venta = PuntoVenta::find($punto_venta_id);
+    //     $sucursal    = Sucursal::find($sucursal_id);
 
-        $url1   = $empresa->url_facturacionCodigos;
-        $header = $empresa->api_token;
+    //     $url1   = $empresa->url_facturacionCodigos;
+    //     $header = $empresa->api_token;
 
-        // para el siat LA CONECCION
-        $siat = app(SiatController::class);
-        $verificacionSiat = json_decode($siat->verificarComunicacion(
-            $url1,
-            $header
-        ));
+    //     // para el siat LA CONECCION
+    //     $siat = app(SiatController::class);
+    //     $verificacionSiat = json_decode($siat->verificarComunicacion(
+    //         $url1,
+    //         $header
+    //     ));
 
-        // dd(
-        //     "sucursal_id ".$sucursal_id,
-        //     "punto_venta_id ".$punto_venta_id,
-        //     "codigo_ambiente ".$empresa->codigo_ambiente
-        // );
+    //     // dd(
+    //     //     "sucursal_id ".$sucursal_id,
+    //     //     "punto_venta_id ".$punto_venta_id,
+    //     //     "codigo_ambiente ".$empresa->codigo_ambiente
+    //     // );
 
-        // SACAMOS EL CUIS VIGENTE
-        $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
+    //     // SACAMOS EL CUIS VIGENTE
+    //     $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
 
-        // dd($cuis, $sucursal_id, $punto_venta_id, $empresa->codigo_ambiente, $usuario, $sucursal_id);
+    //     // dd($cuis, $sucursal_id, $punto_venta_id, $empresa->codigo_ambiente, $usuario, $sucursal_id);
 
 
-        // SACAMOS EL CUFD VIGENTE
-        $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
+    //     // SACAMOS EL CUFD VIGENTE
+    //     $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
-        $servicios = Servicio::where('empresa_id', $empresa_id)
-                            ->get();
+    //     $servicios = Servicio::where('empresa_id', $empresa_id)
+    //                         ->get();
 
-        return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
-    }
+    //     return view('factura.formularioFacturacion')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
+    // }
 
-    public function formularioFacturacionTasaCero(Request $request){
+    // public function formularioFacturacionTasaCero(Request $request){
 
-        $usuario = Auth::user();
+    //     $usuario = Auth::user();
 
-        $empresa_id     = $usuario->empresa_id;
-        $punto_venta_id = $usuario->punto_venta_id;
-        $sucursal_id    = $usuario->sucursal_id;
+    //     $empresa_id     = $usuario->empresa_id;
+    //     $punto_venta_id = $usuario->punto_venta_id;
+    //     $sucursal_id    = $usuario->sucursal_id;
 
-        $empresa     = Empresa::find($empresa_id);
-        $punto_venta = PuntoVenta::find($punto_venta_id);
-        $sucursal    = Sucursal::find($sucursal_id);
+    //     $empresa     = Empresa::find($empresa_id);
+    //     $punto_venta = PuntoVenta::find($punto_venta_id);
+    //     $sucursal    = Sucursal::find($sucursal_id);
 
-        $url1   = $empresa->url_facturacionCodigos;
-        $header = $empresa->api_token;
+    //     $url1   = $empresa->url_facturacionCodigos;
+    //     $header = $empresa->api_token;
 
-        // para el siat LA CONECCION
-        $siat = app(SiatController::class);
-        $verificacionSiat = json_decode($siat->verificarComunicacion(
-            $url1,
-            $header
-        ));
+    //     // para el siat LA CONECCION
+    //     $siat = app(SiatController::class);
+    //     $verificacionSiat = json_decode($siat->verificarComunicacion(
+    //         $url1,
+    //         $header
+    //     ));
 
-        // dd($verificacionSiat);
+    //     // dd($verificacionSiat);
 
-        // SACAMOS EL CUIS VIGENTE
-        $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
+    //     // SACAMOS EL CUIS VIGENTE
+    //     $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
 
-        // SACAMOS EL CUFD VIGENTE
-        $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
+    //     // SACAMOS EL CUFD VIGENTE
+    //     $cufd = $siat->verificarConeccion($empresa_id, $sucursal_id, $cuis->id, $punto_venta->id, $empresa->codigo_ambiente);
 
-        $servicios = Servicio::where('empresa_id', $empresa_id)
-                            ->get();
+    //     $servicios = Servicio::where('empresa_id', $empresa_id)
+    //                         ->get();
 
-        return view('factura.formularioFacturacionTasaCero')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
-    }
+    //     return view('factura.formularioFacturacionTasaCero')->with(compact('verificacionSiat', 'cuis', 'cufd', 'servicios', 'empresa'));
+    // }
 
     public function ajaxListadoClientes(Request $request){
         if($request->ajax()){
@@ -458,17 +458,7 @@ class FacturaController extends Controller
             $empresa_id     = Auth::user()->empresa_id;
             $sucursal_id    = Auth::user()->sucursal_id;
             $punto_venta_id = Auth::user()->punto_venta_id;
-
-            // $facturas = Factura::where('empresa_id', $empresa_id)
-            //                     ->where('sucursal_id', $sucursal_id)
-            //                     ->where('punto_venta_id', $punto_venta_id)
-
-            //                     // ->whereNull('estado')
-            //                     // ->where('estado','ANULADO')
-
-            //                     ->orderBy('id', 'desc')
-            //                     ->limit(100)
-            //                     ->get();
+            $empresa        = Auth::user()->empresa;
 
             // DE AQUI ESE EL ANTIGUO
 
@@ -535,8 +525,12 @@ class FacturaController extends Controller
                 // $facturas = $query->orderBy('facturas.id', 'desc')->with('empresa')->get();
             }
 
+            $urlApiServicioSiat = new UrlApiServicioSiat();
+            $UrlVerificaFactura = $urlApiServicioSiat->getUrlVerificaFactura($empresa->codigo_ambiente);
 
-            $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas'))->render();
+            $url_verifica_factura = $UrlVerificaFactura->url_servicio;
+
+            $data['listado'] = view('factura.ajaxListadoFacturas')->with(compact('facturas', 'url_verifica_factura'))->render();
             $data['estado'] = 'success';
 
         }else{
@@ -964,7 +958,10 @@ class FacturaController extends Controller
     public function ajaxListadoClientesBusqueda(Request $request){
         if($request->ajax()){
 
-            $query = Cliente::select('*');
+            $empresa = Auth::user()->empresa;
+
+            $query = Cliente::select('*')
+                            ->where('empresa_id', $empresa->id);
 
             if(!is_null($request->input('cedula_escogido'))){
                 $cedula = $request->input('cedula_escogido');
@@ -1286,10 +1283,18 @@ class FacturaController extends Controller
 
                     //  =========================   DE AQUI COMENZAMOS EL FIRMADO CHEEEEE ==============================\
                     if($empresa_objeto->codigo_modalidad == "1"){
-                        // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                        $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                        $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxml_$nombreArchivo.xml");
-                        file_put_contents("assets/docs/facturaxml_$nombreArchivo.xml", $xmlFirmado);
+
+                        if(!is_null($empresa_objeto->archivop12)){
+                            // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
+                            $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
+                            $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxml_$nombreArchivo.xml");
+                            file_put_contents("assets/docs/facturaxml_$nombreArchivo.xml", $xmlFirmado);
+                        }else{
+                            $data['text']   = 'No existe el archivo .p12 de firmado';
+                            $data['estado'] = 'error_firma';
+
+                            return $data;
+                        }
                     }
                     // ========================== FINAL DE AQUI COMENZAMOS EL FIRMADO CHEEEEE  ==========================
 
@@ -1738,12 +1743,6 @@ class FacturaController extends Controller
 
                     $cufPro                                                 = $this->generarBase16($cadenaConM11).$scodigoControl;
 
-                    // dd(
-                    //     $cufPro,
-                    //     $cadenaConM11,
-                    //     $scodigoControl
-                    // );
-
                     $datos['factura'][0]['cabecera']['numeroFactura']     = $numeroFacturaEmpresa;
                     $datos['factura'][0]['cabecera']['cuf']                 = $cufPro;
                     $datos['factura'][0]['cabecera']['cufd']                = $scufd;
@@ -1771,10 +1770,17 @@ class FacturaController extends Controller
 
                     //  =========================   DE AQUI COMENZAMOS EL FIRMADO CHEEEEE ==============================\
                     if($empresa_objeto->codigo_modalidad == "1"){
-                        // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                        $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
-                        $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
-                        file_put_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml", $xmlFirmado);
+                        if(!is_null($empresa_objeto->archivop12)){
+                            // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
+                            $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
+                            $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml");
+                            file_put_contents("assets/docs/facturaxmlTasaCero_$nombreArchivo.xml", $xmlFirmado);
+                        }else{
+                            $data['text']   = 'No existe el archivo .p12 de firmado';
+                            $data['estado'] = 'error_firma';
+
+                            return $data;
+                        }
                     }
                     // ========================== FINAL DE AQUI COMENZAMOS EL FIRMADO CHEEEEE  ==========================
 
@@ -2002,8 +2008,13 @@ class FacturaController extends Controller
                 $cuf            = (string)$cabeza['cabecera']->cuf;
                 $numeroFactura  = (string)$cabeza['cabecera']->numeroFactura;
 
+
+                $urlApiServicioSiat = new UrlApiServicioSiat();
+                $UrlVerificaFactura = $urlApiServicioSiat->getUrlVerificaFactura($empresa->codigo_ambiente);
+
                 // Genera el texto para el código QR
-                $textoQR = $factura->empresa->url_verifica."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=2";
+                // $textoQR = $factura->empresa->url_verifica."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=2";
+                $textoQR = $UrlVerificaFactura->url_servicio."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=2";
                 // Genera la ruta temporal para guardar la imagen del código QR
                 $rutaImagenQR = storage_path('app/public/qr_code.png');
                 // Genera el código QR y guarda la imagen en la ruta temporal
@@ -2040,7 +2051,11 @@ class FacturaController extends Controller
                 $cuf           = (string)$cabeza['cabecera']->cuf;
                 $numeroFactura = (string)$cabeza['cabecera']->numeroFactura;
 
-                $textoQR = $factura->empresa->url_verifica."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=1";
+                $urlApiServicioSiat = new UrlApiServicioSiat();
+                $UrlVerificaFactura = $urlApiServicioSiat->getUrlVerificaFactura($empresa->codigo_ambiente);
+
+                // $textoQR = $factura->empresa->url_verifica."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=1";
+                $textoQR = $UrlVerificaFactura->url_servicio."?nit=".$empresa->nit."&cuf=".$factura->cuf."&numero=".$numeroFactura."&t=1";
 
                 // Genera la ruta temporal para guardar la imagen del código QR
                 $rutaImagenQR = storage_path('app/public/qr_code.png');

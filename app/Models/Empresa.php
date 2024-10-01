@@ -32,4 +32,20 @@ class Empresa extends Model
                     ->first();
     }
 
+    public function sucursales(){
+        return $this->hasMany(Sucursal::class, 'empresa_id', 'id');
+    }
+
+    public function clientes(){
+        return $this->hasMany(Cliente::class, 'empresa_id', 'id');
+    }
+
+    public function usuarios(){
+        return $this->hasMany(User::class, 'empresa_id', 'id');
+    }
+
+    public function facturas(){
+        return $this->hasMany(Factura::class, 'empresa_id', 'id');
+    }
+
 }

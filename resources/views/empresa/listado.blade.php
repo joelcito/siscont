@@ -302,17 +302,53 @@
         function ajaxListado(){
             let datos = {}
             $.ajax({
-                    url: "{{ url('empresa/ajaxListado') }}",
-                    method: "POST",
-                    data: datos,
-                    success: function (data) {
-                        if(data.estado === 'success'){
-                            $('#tabla_empresas').html(data.listado)
-                        }else{
+                url: "{{ url('empresa/ajaxListado') }}",
+                method: "POST",
+                data: datos,
+                success: function (data) {
+                    if(data.estado === 'success'){
+                        $('#tabla_empresas').html(data.listado)
+                    }else{
 
-                        }
                     }
-                })
+                }
+            })
+        }
+
+        function eliminarEmpresa(empresa){
+            Swal.fire({
+                title: "Estas seguro de eliminar la empresa?",
+                text: "No podras revertir eso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, Eliminar!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+
+                    let datos = {empresa:empresa}
+                    $.ajax({
+                        url: "{{ url('empresa/eliminarEmpresa') }}",
+                        method: "POST",
+                        data: datos,
+                        success: function (data) {
+                            if(data.estado === 'success'){
+                                Swal.fire({
+                                    icon:'success',
+                                    title: "EXITO!",
+                                    text:  "SE ELIMINO CON EXITO",
+                                })
+
+                                ajaxListado()
+                            }else{
+
+                            }
+                        }
+                    })
+
+                }
+            });
         }
    </script>
 @endsection

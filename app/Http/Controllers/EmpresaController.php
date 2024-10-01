@@ -2558,4 +2558,58 @@ class EmpresaController extends Controller
         return $data;
     }
 
+    public function eliminarEmpresa(Request $request) {
+        if($request->ajax()){
+            $usuario = Auth::user();
+            if($usuario->isAdmin()){
+                $empresa_id = $request->input('empresa');
+                $empresa    = Empresa::find($empresa_id);
+                if($empresa){
+                    $sucursales = $empresa->sucursales;
+                    if(count($sucursales) > 0){
+                        Sucursal::where('empresa_id', $empresa_id)
+                        ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        Sucursal::where('empresa_id', $empresa_id)->delete();
+                    }
+
+                    $clientes = $empresa->clientes;
+                    if(count($clientes) > 0){
+                        Cliente::where('empresa_id',$empresa_id)
+                                ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        Cliente::where('empresa_id', $empresa_id)->delete();
+                    }
+
+                    $usuarios = $empresa->usuarios;
+                    if(count($usuarios) > 0){
+                        User::where('empresa_id',$empresa_id)
+                            ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        User::where('empresa_id',$empresa_id)->delete();
+                    }
+
+                    $empresa->usuario_eliminador_id = $usuario->id;
+                    $empresa->save();
+
+                    Empresa::destroy($empresa_id);
+
+                    $data['text']   = 'Empresa eliminado con exito';
+                    $data['estado'] = 'success';
+
+                }else{
+                    $data['text']   = 'Empresa no existente';
+                    $data['estado'] = 'error';
+                }
+            }else{
+                $data['text']   = 'Sin permisos';
+                $data['estado'] = 'error';
+            }
+        }else{
+            $data['text']   = 'No existe';
+            $data['estado'] = 'error';
+        }
+        return $data;
+    }
+
 }

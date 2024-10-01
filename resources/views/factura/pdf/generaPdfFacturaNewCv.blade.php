@@ -285,16 +285,6 @@
                     @if (!empty($archivoXML->cabecera->complemento))
                         - {{ $archivoXML->cabecera->complemento }}
                     @endif
-
-                    {{--  @dd(
-                        $archivoXML->cabecera->complemento,
-                        isset($archivoXML->cabecera->complemento) ,
-                        count($archivoXML->cabecera->complemento->children()) > 0,
-                        count($archivoXML->cabecera->complemento->children()),
-                        $archivoXML->cabecera->complemento->count(),
-                        !empty($archivoXML->cabecera->complemento)
-                    );  --}}
-
                 </td>
             </tr>
         </thead>
@@ -336,7 +326,8 @@
                         <td>{{ $d['codigoProducto'] }}</td>
                         <td style="text-align: right">{{ number_format((float) $d['cantidad'],2) }}</td>
                         <td> Unidad (Servicios) </td>
-                        <td> {{ $d['descripcion'] }}</td>
+                        {{--  <td> {{ $d['descripcion'] }}</td>  --}}
+                        <td>{!! nl2br(e($d['descripcion'])) !!}</td>
                         <td style="text-align: right">
                             {{ number_format((float) $d['precioUnitario'],2) }}
                         </td>
@@ -355,7 +346,8 @@
                         <td>{{ $listado_detalles['codigoProducto'] }}</td>
                         <td style="text-align: right">{{ number_format((float) $listado_detalles['cantidad'],2) }}</td>
                         <td> Unidad (Servicios) </td>
-                        <td> {{ $listado_detalles['descripcion'] }}</td>
+                        {{--  <td> {{ $listado_detalles['descripcion'] }}</td>  --}}
+                        <td>{!! nl2br(e($listado_detalles['descripcion'])) !!}</td>
                         <td style="text-align: right">
                             {{ number_format((float) $listado_detalles['precioUnitario'],2) }}
                         </td>

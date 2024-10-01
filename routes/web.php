@@ -88,6 +88,7 @@ Route::middleware(['auth', 'one.session'])->group(function () {
         Route::post('/eliminarSucursal', [EmpresaController::class, 'eliminarSucursal']);
         Route::post('/eliminarUsuario', [EmpresaController::class, 'eliminarUsuario']);
         Route::post('/eliminarCliente', [EmpresaController::class, 'eliminarCliente']);
+        Route::post('/eliminarEmpresa', [EmpresaController::class, 'eliminarEmpresa']);
 
         Route::post('/ajaxListadoAsignacionDocumentosSectores', [EmpresaController::class, 'ajaxListadoAsignacionDocumentosSectores']);
         Route::post('/guardarAsignacionDocumentoSector', [EmpresaController::class, 'guardarAsignacionDocumentoSector']);

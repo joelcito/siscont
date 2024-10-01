@@ -296,7 +296,8 @@
                             @endphp
                             <tr>
                                 <td style="text-align: left">
-                                    <b>{{ $d['codigoProducto'] }} - {{ $d['descripcion'] }}</b> <br>
+                                    {{--  <b>{{ $d['codigoProducto'] }} - {{ $d['descripcion'] }}</b> <br>  --}}
+                                    <b>{{ $d['codigoProducto'] }} - {!! nl2br(e($d['descripcion'])) !!}</b> <br>
                                     Unidad de Medida: Unidad (Servicios) <br>
                                     {{ number_format((float) $d['cantidad'],2) }} X {{ number_format((float) $d['precioUnitario'],2) }} - {{ number_format((float) $d['montoDescuento'],2) }}
                                 </td>
@@ -312,7 +313,8 @@
                             @endphp
                             <tr>
                                 <td>
-                                    {{ $listado_detalles['codigoProducto'] }} - {{ $listado_detalles['descripcion'] }} <br>
+                                    {{--  {{ $listado_detalles['codigoProducto'] }} - {{ $listado_detalles['descripcion'] }} <br>  --}}
+                                    {{ $listado_detalles['codigoProducto'] }} - {!! nl2br(e($listado_detalles['descripcion'])) !!} <br>
                                     Unidad de Medida: Unidad (Servicios) <br>
                                     {{ number_format((float) $listado_detalles['cantidad'],2) }} X {{ number_format((float) $listado_detalles['precioUnitario'],2) }} - {{ number_format((float) $listado_detalles['montoDescuento'],2) }}
                                 </td>
