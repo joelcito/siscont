@@ -1119,7 +1119,7 @@ class FacturaController extends Controller
                         $detalle->punto_venta_id        = $punto_venta_id;
                         $detalle->cliente_id            = $cliente_id;
                         $detalle->servicio_id           = $item['servicio_id'];
-                        $detalle->descripcion_adicional = "\n".$item['descripcion_adicional'];
+                        $detalle->descripcion_adicional = $item['descripcion_adicional'];
                         $detalle->numero_serie          = $item['numero_serie'];
                         $detalle->numero_imei           = $item['numero_imei'];
                         $detalle->precio                = $item['precio'];
@@ -1139,7 +1139,7 @@ class FacturaController extends Controller
                         $contenidoDetalleFcv['actividadEconomica'] = $servicio->siatDependeActividad->codigo_caeb;
                         $contenidoDetalleFcv['codigoProductoSin']  = $servicio->siatProductoServicio->codigo_producto;
                         $contenidoDetalleFcv['codigoProducto']     = $servicio->id;
-                        $contenidoDetalleFcv['descripcion']        = $servicio->descripcion." ".$item['descripcion_adicional'];
+                        $contenidoDetalleFcv['descripcion']        = $servicio->descripcion."\n".$item['descripcion_adicional'];
                         $contenidoDetalleFcv['cantidad']           = $item['cantidad'];
                         $contenidoDetalleFcv['unidadMedida']       = $servicio->siatUnidadMedida->codigo_clasificador;
                         $contenidoDetalleFcv['precioUnitario']     = $item['precio'];
@@ -1625,7 +1625,7 @@ class FacturaController extends Controller
                         $contenidoDetalleFcv['actividadEconomica'] = $servicio->siatDependeActividad->codigo_caeb;
                         $contenidoDetalleFcv['codigoProductoSin']  = $servicio->siatProductoServicio->codigo_producto;
                         $contenidoDetalleFcv['codigoProducto']     = $servicio->id;
-                        $contenidoDetalleFcv['descripcion']        = $servicio->descripcion." ".$item['descripcion_adicional'];
+                        $contenidoDetalleFcv['descripcion']        = $servicio->descripcion."\n".$item['descripcion_adicional'];
                         $contenidoDetalleFcv['cantidad']           = $item['cantidad'];
                         $contenidoDetalleFcv['unidadMedida']       = $servicio->siatUnidadMedida->codigo_clasificador;
                         $contenidoDetalleFcv['precioUnitario']     = $item['precio'];
