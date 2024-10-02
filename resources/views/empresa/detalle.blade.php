@@ -804,11 +804,11 @@
                                                 @endif
                                             </div>
                                             <br>
-                                            <input type="file" class="form-control fw-bold form-control-solid form-control-sm" name="fila_archivo_p12" id="fila_archivo_p12">
+                                            <input type="file" class="form-control fw-bold form-control-solid form-control-sm" name="fila_archivo_p12" id="fila_archivo_p12" accept=".p12">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="fs-6 fw-semibold form-label mb-2">Contraseña archivo .P12</label>
-                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12" autocomplete="current-password" accept=".p12">
+                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12" autocomplete="current-password">
                                         </div>
                                     </div>
 
