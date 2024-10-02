@@ -808,7 +808,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="fs-6 fw-semibold form-label mb-2">Contraseña archivo .P12</label>
-                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12" autocomplete="current-password">
+                                            <input type="password" class="form-control fw-bold form-control-solid form-control-sm" name="contrasenia_archivo_p12" id="contrasenia_archivo_p12" autocomplete="current-password" accept=".p12">
                                         </div>
                                     </div>
 
