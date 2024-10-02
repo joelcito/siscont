@@ -57,8 +57,7 @@
 						<!--end::Sidebar mobile toggle-->
 						<!--begin::Mobile logo-->
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-							<a href="index.html" class="d-lg-none">
-
+							<a href="{{ url('home') }}" class="d-lg-none">
                                 @if (Auth::user()->isAdmin())
                                     <img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-70px app-sidebar-logo-default"  width="100%"/>
                                     <img alt="Logo" src="{{asset('assets/img/logo_siscont.jpg')}}" class="h-40px app-sidebar-logo-minimize" width="100%" />
@@ -69,7 +68,6 @@
                                     <img alt="Logo" src="{{asset('assets/img/default.jpg')}}" class="h-70px app-sidebar-logo-default"  width="100%"/>
                                     <img alt="Logo" src="{{asset('assets/img/default.jpg')}}" class="h-40px app-sidebar-logo-minimize" width="100%" />
                                 @endif
-
 							</a>
 						</div>
 						<!--end::Mobile logo-->

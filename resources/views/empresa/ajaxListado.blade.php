@@ -34,7 +34,7 @@
                 </td>
                 <td>
                     <a class="btn btn-sm btn-info btn-icon" title="Detalles de la Empresa" href="{{ url('empresa/detalle', [$e->id]) }}"><i class="fa fa-eye"></i></a>
-                    @if (count($e->facturas) == 0)
+                    @if (count($e->facturas) == 0 || $e->codigo_ambiente == "2")
                         <button class="btn btn-sm btn-icon btn-danger" title="Eliminar Empresa" onclick="eliminarEmpresa('{{ $e->id }}')"><i class="fa fa-trash"></i></button>
                     @endif
                 </td>

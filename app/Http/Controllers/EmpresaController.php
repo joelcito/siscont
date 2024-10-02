@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Cuis;
 use App\Models\Empresa;
 use App\Models\EmpresaDocumentoSector;
+use App\Models\Factura;
 use App\Models\Plan;
 use App\Models\PuntoVenta;
 use App\Models\Rol;
@@ -2565,6 +2566,26 @@ class EmpresaController extends Controller
                 $empresa_id = $request->input('empresa');
                 $empresa    = Empresa::find($empresa_id);
                 if($empresa){
+
+                    // ELIMINAMOS LAS EMPRESAS DOCUMENTOS SECTORES
+                    $empresas_documentos_sectores = $empresa->empresas_documentos_sectores;
+                    if(count($empresas_documentos_sectores) > 0){
+                        EmpresaDocumentoSector::where('empresa_id', $empresa_id)
+                                                ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        EmpresaDocumentoSector::where('empresa_id', $empresa_id)->delete();
+                    }
+
+                    // ELIMINAMOS LAS SUSCRIPCIONES
+                    $suscripciones = $empresa->suscripciones;
+                    if(count($suscripciones) > 0){
+                        Suscripcion::where('empresa_id', $empresa_id)
+                                    ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        Suscripcion::where('empresa_id', $empresa_id)->delete();
+                    }
+
+                    // ELIMINAMOS LAS SUCURSALES
                     $sucursales = $empresa->sucursales;
                     if(count($sucursales) > 0){
                         Sucursal::where('empresa_id', $empresa_id)
@@ -2573,6 +2594,7 @@ class EmpresaController extends Controller
                         Sucursal::where('empresa_id', $empresa_id)->delete();
                     }
 
+                    // ELIMINAMOS LOS CLIENTES
                     $clientes = $empresa->clientes;
                     if(count($clientes) > 0){
                         Cliente::where('empresa_id',$empresa_id)
@@ -2581,12 +2603,31 @@ class EmpresaController extends Controller
                         Cliente::where('empresa_id', $empresa_id)->delete();
                     }
 
+                    // ELIMINAMOS A LOS USUARIOS
                     $usuarios = $empresa->usuarios;
                     if(count($usuarios) > 0){
                         User::where('empresa_id',$empresa_id)
                             ->update(['usuario_eliminador_id' => $usuario->id]);
 
                         User::where('empresa_id',$empresa_id)->delete();
+                    }
+
+                    // ELIMINAMOS A LOS USUARIOS
+                    $servicios = $empresa->servicios;
+                    if(count($servicios) > 0){
+                        Servicio::where('empresa_id',$empresa_id)
+                            ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        Servicio::where('empresa_id',$empresa_id)->delete();
+                    }
+
+                    // ELIMINAMOS LAS FACTURAS
+                    $facturas = $empresa->facturas;
+                    if(count($facturas) > 0){
+                        Factura::where('empresa_id',$empresa_id)
+                            ->update(['usuario_eliminador_id' => $usuario->id]);
+
+                        Factura::where('empresa_id',$empresa_id)->delete();
                     }
 
                     $empresa->usuario_eliminador_id = $usuario->id;

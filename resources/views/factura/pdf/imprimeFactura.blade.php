@@ -293,12 +293,13 @@
                         @if (is_array($d))
                             @php
                                 $subTotales += (float) $d['subTotal'];
+                                $unidadMedida = \App\Models\SiatUnidadMedida::where('codigo_clasificador', $d['unidadMedida'])->first();
                             @endphp
                             <tr>
                                 <td style="text-align: left">
                                     {{--  <b>{{ $d['codigoProducto'] }} - {{ $d['descripcion'] }}</b> <br>  --}}
                                     <b>{{ $d['codigoProducto'] }} - {!! nl2br(e($d['descripcion'])) !!}</b> <br>
-                                    Unidad de Medida: Unidad (Servicios) <br>
+                                    Unidad de Medida: {{ $unidadMedida->descripcion }} <br>
                                     {{ number_format((float) $d['cantidad'],2) }} X {{ number_format((float) $d['precioUnitario'],2) }} - {{ number_format((float) $d['montoDescuento'],2) }}
                                 </td>
                                 <td>
@@ -310,12 +311,13 @@
                         @else
                             @php
                                 $subTotales += (float) $listado_detalles['subTotal'];
+                                $unidadMedida = \App\Models\SiatUnidadMedida::where('codigo_clasificador', $listado_detalles['unidadMedida'])->first();
                             @endphp
                             <tr>
                                 <td>
                                     {{--  {{ $listado_detalles['codigoProducto'] }} - {{ $listado_detalles['descripcion'] }} <br>  --}}
                                     {{ $listado_detalles['codigoProducto'] }} - {!! nl2br(e($listado_detalles['descripcion'])) !!} <br>
-                                    Unidad de Medida: Unidad (Servicios) <br>
+                                    Unidad de Medida: {{ $unidadMedida->descripcion }} <br>
                                     {{ number_format((float) $listado_detalles['cantidad'],2) }} X {{ number_format((float) $listado_detalles['precioUnitario'],2) }} - {{ number_format((float) $listado_detalles['montoDescuento'],2) }}
                                 </td>
                                 <td>

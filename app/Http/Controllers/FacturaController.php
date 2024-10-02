@@ -2274,7 +2274,7 @@ class FacturaController extends Controller
             $hoja->setCellValue('C4', "RAZON");
             $hoja->setCellValue('D4', "NIT");
             $hoja->setCellValue('E4', "FECHA");
-            $hoja->setCellValue('F4', "MONTO");
+            $hoja->setCellValue('F4', "PRECIO SERVICIO");
             $hoja->setCellValue('G4', "SECTOR");
             $hoja->setCellValue('H4', "MODALIDAD");
             $hoja->setCellValue('I4', "ESTADO");
@@ -2282,7 +2282,7 @@ class FacturaController extends Controller
             $hoja->setCellValue('K4', "SERVICIO_ID");
             $hoja->setCellValue('L4', "PRODUCTO / SERVICIO");
             $hoja->setCellValue('M4', "DESCRIPCION ADICIONAL");
-            $hoja->setCellValue('N4', "PRECIO DEL SERVICIO");
+            $hoja->setCellValue('N4', "PRECIO DEL SERVICIO VENTA");
             $hoja->setCellValue('O4', "CANTIDAD");
             $hoja->setCellValue('P4', "MONTO TOTAL");
             $hoja->setCellValue('Q4', "DESCUENTO");
@@ -2354,7 +2354,7 @@ class FacturaController extends Controller
                 $hoja->setCellValue('C'.$contadorInicio, $fac->razon_social);
                 $hoja->setCellValue('D'.$contadorInicio, $fac->nit);
                 $hoja->setCellValue('E'.$contadorInicio, $fac->fecha);
-                $hoja->setCellValue('F'.$contadorInicio, $fac->total);
+                $hoja->setCellValue('F'.$contadorInicio, $fac->precio_servicio);
                 $sector = $fac->siat_tipo_documento_sector->codigo_clasificador == "8" ? "Fac. Tasa Cero" : "Fac. Com. Venta";
                 $hoja->setCellValue('G'.$contadorInicio, $sector);
                 $modalidad = $fac->tipo_factura == 'offline' ? "Fuera Linea": "Linea";
@@ -2366,7 +2366,7 @@ class FacturaController extends Controller
                 $hoja->setCellValue('K'.$contadorInicio, $fac->servicio_id);
                 $hoja->setCellValue('L'.$contadorInicio, $fac->descripcion_servicio);
                 $hoja->setCellValue('M'.$contadorInicio, $fac->descripcion_adicional);
-                $hoja->setCellValue('N'.$contadorInicio, $fac->precio_servicio);
+                $hoja->setCellValue('N'.$contadorInicio, $fac->precio);
                 $hoja->setCellValue('O'.$contadorInicio, $fac->cantidad);
                 $hoja->setCellValue('P'.$contadorInicio, $fac->total);
                 $hoja->setCellValue('Q'.$contadorInicio, $fac->descuento);

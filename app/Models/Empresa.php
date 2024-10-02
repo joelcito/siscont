@@ -48,4 +48,16 @@ class Empresa extends Model
         return $this->hasMany(Factura::class, 'empresa_id', 'id');
     }
 
+    public function suscripciones(){
+        return $this->hasMany(Suscripcion::class, 'empresa_id', 'id');
+    }
+
+    public function empresas_documentos_sectores(){
+        return $this->hasMany(EmpresaDocumentoSector::class, 'empresa_id', 'id');
+    }
+
+    public function servicios(){
+        return $this->hasMany(Servicio::class, 'empresa_id', 'id');
+    }
+
 }

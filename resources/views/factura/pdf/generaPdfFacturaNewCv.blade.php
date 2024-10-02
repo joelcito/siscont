@@ -321,11 +321,12 @@
                 @if (is_array($d))
                     @php
                         $subTotales += (float) $d['subTotal'];
+                        $unidadMedida = \App\Models\SiatUnidadMedida::where('codigo_clasificador', $d['unidadMedida'])->first();
                     @endphp
                     <tr>
                         <td>{{ $d['codigoProducto'] }}</td>
                         <td style="text-align: right">{{ number_format((float) $d['cantidad'],2) }}</td>
-                        <td> Unidad (Servicios) </td>
+                        <td> {{ $unidadMedida->descripcion }} </td>
                         {{--  <td> {{ $d['descripcion'] }}</td>  --}}
                         <td>{!! nl2br(e($d['descripcion'])) !!}</td>
                         <td style="text-align: right">
@@ -341,11 +342,12 @@
                 @else
                     @php
                         $subTotales += (float) $listado_detalles['subTotal'];
+                        $unidadMedida = \App\Models\SiatUnidadMedida::where('codigo_clasificador', $listado_detalles['unidadMedida'])->first();
                     @endphp
                     <tr>
                         <td>{{ $listado_detalles['codigoProducto'] }}</td>
                         <td style="text-align: right">{{ number_format((float) $listado_detalles['cantidad'],2) }}</td>
-                        <td> Unidad (Servicios) </td>
+                        <td> {{ $unidadMedida->descripcion }} </td>
                         {{--  <td> {{ $listado_detalles['descripcion'] }}</td>  --}}
                         <td>{!! nl2br(e($listado_detalles['descripcion'])) !!}</td>
                         <td style="text-align: right">
