@@ -21,15 +21,9 @@
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-badge fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                </i>
+                                <i class="fa fa-industry clase-iconow"></i>
                             </span>
-                            <span class="menu-title">Administracion</span>
+                            <span class="menu-title text-white">Administracion</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -42,7 +36,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Empresas</span>
+                                    <span class="menu-title text-white">Empresas</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -54,7 +48,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Roles</span>
+                                    <span class="menu-title text-white">Roles</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -67,7 +61,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Planes de sistema</span>
+                                    <span class="menu-title text-white">Planes de sistema</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -80,13 +74,9 @@
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
+                                <i class="fa fa-university clase-icono"></i>
                             </span>
-                            <span class="menu-title">Siat</span>
+                            <span class="menu-title text-white">Siat</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -99,7 +89,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Sincronizacion de Catalogos</span>
+                                    <span class="menu-title text-white">Sincronizacion de Catalogos</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -114,7 +104,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Apis SIAT</span>
+                                    <span class="menu-title text-white">Apis SIAT</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -127,7 +117,7 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="fa fa-id-card clase-icono"></i>
+                                <i class="fa fa-industry clase-icono"></i>
                             </span>
                             <span class="menu-title text-white">Perfil de Empresa</span>
                             <span class="menu-arrow"></span>
@@ -147,11 +137,7 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-tag fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
+                                <i class="fa fa-list-alt clase-icono"></i>
                             </span>
                             <span class="menu-title text-white">Facturacion en Linea</span>
                             <span class="menu-arrow"></span>
@@ -164,7 +150,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Facturacion Compra Venta</span>
+                                            <span class="menu-title text-white">Facturacion Compra Venta</span>
                                         </a>
                                     </div>
                                 @elseif($eds->siat_tipo_documento_sector->codigo_clasificador == '8')
@@ -173,7 +159,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Facturacion Tasa Cero</span>
+                                            <span class="menu-title text-white">Facturacion Tasa Cero</span>
                                         </a>
                                     </div>
                                 @else
@@ -182,7 +168,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Sin asignaciones!</span>
+                                            <span class="menu-title text-white">Sin asignaciones!</span>
                                         </a>
                                     </div>
                                 @endif
@@ -192,7 +178,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Sin documentos !</span>
+                                        <span class="menu-title text-white">Sin documentos !</span>
                                     </a>
                                 </div>
                             @endforelse
@@ -201,7 +187,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Listado de facturas</span>
+                                    <span class="menu-title text-white">Listado de facturas</span>
                                 </a>
                             </div>
                         </div>
@@ -210,13 +196,7 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-people fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                </i>
+                                <i class="fa fa-users clase-icono"></i>
                             </span>
                             <span class="menu-title text-white">Clientes</span>
                             <span class="menu-arrow"></span>
@@ -227,7 +207,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Listado de clientes</span>
+                                    <span class="menu-title text-white">Listado de clientes</span>
                                 </a>
                             </div>
                         </div>
@@ -236,16 +216,7 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-lots-shopping fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                    <span class="path6"></span>
-                                    <span class="path7"></span>
-                                    <span class="path8"></span>
-                                </i>
+                                <i class="fa fa-cubes clase-icono"></i>
                             </span>
                             <span class="menu-title text-white">Servicio / Producto</span>
                             <span class="menu-arrow"></span>
@@ -256,7 +227,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Listado de Producto / Servicio</span>
+                                    <span class="menu-title text-white">Listado de Producto / Servicio</span>
                                 </a>
                             </div>
                         </div>
@@ -265,11 +236,7 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-address-book fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
+                                <i class="fa fa-university clase-icono"></i>
                             </span>
                             <span class="menu-title text-white">Siat</span>
                             <span class="menu-arrow"></span>
@@ -280,7 +247,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Eventos Significativos</span>
+                                    <span class="menu-title text-white">Eventos Significativos</span>
                                 </a>
                             </div>
                         </div>

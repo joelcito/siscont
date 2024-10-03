@@ -56,7 +56,7 @@ License: For each use you must have a valid license purchased only from above li
 					<!--begin::Aside-->
 					<div class="d-flex flex-center flex-lg-start flex-column">
 						<!--begin::Logo-->
-                        <img alt="Logo" src="{{ asset('assets/img/logo_siscont_1.png') }}" />
+                        <img alt="Logo" src="{{ asset('assets/img/logo_2.png') }}" width="40%" />
 						<!--end::Logo-->
 						<!--begin::Title-->
                         <br>

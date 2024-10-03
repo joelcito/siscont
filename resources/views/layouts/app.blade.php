@@ -29,16 +29,21 @@
 
         <style>
             .clase-icono {
-            background-color: white; /* Fondo blanco */
-            color: black;            /* Ícono negro */
-            padding: 10px;           /* Ajuste de padding si es necesario */
-            border-radius: 50%;      /* Si quieres que el fondo sea circular */
-            transition: background-color 0.3s, color 0.3s; /* Suave transición */
+                background-color: white;                              /* Fondo blanco */
+                color           : black;                              /* Ícono negro */
+                padding         : 10px;                               /* Ajuste de padding si es necesario */
+                border-radius   : 50%;                                /* Si quieres que el fondo sea circular */
+                transition      : background-color 0.3s, color 0.3s;  /* Suave transición */
             }
 
             .menu-link:hover .clase-icono {
-            background-color: black; /* Fondo negro al hacer hover */
-            color: white;            /* Ícono blanco al hacer hover */
+                background-color: black;  /* Fondo negro al hacer hover */
+                color           : white;  /* Ícono blanco al hacer hover */
+            }
+
+            .menu-item.menu-accordion.hover.show .menu-link .clase-icono {
+                background-color: black;
+                color: white;
             }
 
         </style>
@@ -178,7 +183,7 @@
 								<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 									<!--begin::Menu wrapper-->
 									<div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-										<i class="fa fa-user" style="font-size: 30px;"></i>
+										<i class="fa fa-user text-white" style="font-size: 30px;"></i>
 									</div>
 									<!--begin::User account menu-->
 									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
