@@ -21,7 +21,7 @@
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="fa fa-industry clase-iconow"></i>
+                                <i class="fa fa-industry clase-icono"></i>
                             </span>
                             <span class="menu-title text-white">Administracion</span>
                             <span class="menu-arrow"></span>
