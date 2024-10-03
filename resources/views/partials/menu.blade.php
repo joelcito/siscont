@@ -1,4 +1,4 @@
-<div class="app-sidebar-menu overflow-hidden flex-column-fluid" style="background-color: #0b1747">
+<div class="app-sidebar-menu overflow-hidden flex-column-fluid bg-primary">
     <!--begin::Menu wrapper-->
     <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper">
         <!--begin::Scroll wrapper-->
@@ -9,7 +9,8 @@
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">Menus</span>
+                        {{-- <span class="menu-heading fw-bold text-uppercase fs-7">MENUS</span> --}}
+                        <span class="fs-7 text-white fw-boldn">MENUS</span>
                     </div>
                     <!--end:Menu content-->
                 </div>
@@ -20,7 +21,6 @@
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                {{--  <i class="ki-duotone ki-address-book fs-2">  --}}
                                 <i class="ki-duotone ki-badge fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
@@ -127,16 +127,9 @@
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                {{--  <i class="ki-duotone ki-address-book fs-2">  --}}
-                                <i class="ki-duotone ki-badge fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                </i>
+                                <i class="fa fa-id-card clase-icono"></i>
                             </span>
-                            <span class="menu-title">Perfil de Empresa</span>
+                            <span class="menu-title text-white">Perfil de Empresa</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
@@ -145,7 +138,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Datos de Empresa</span>
+                                    <span class="menu-title text-white">Datos de Empresa</span>
                                 </a>
                             </div>
                         </div>
@@ -160,7 +153,7 @@
                                     <span class="path3"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Facturacion en Linea</span>
+                            <span class="menu-title text-white">Facturacion en Linea</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
@@ -225,7 +218,7 @@
                                     <span class="path5"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Clientes</span>
+                            <span class="menu-title text-white">Clientes</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
@@ -254,7 +247,7 @@
                                     <span class="path8"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Servicio / Producto</span>
+                            <span class="menu-title text-white">Servicio / Producto</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
@@ -278,7 +271,7 @@
                                     <span class="path3"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Siat</span>
+                            <span class="menu-title text-white">Siat</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
