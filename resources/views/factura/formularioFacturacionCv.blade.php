@@ -232,7 +232,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label class="required fw-semibold fs-6 mb-2">Precio</label>
-                                        <input type="number" class="form-control form-control-sm" id="precio_venta" name="precio_venta" value="0" min="1" required onchange="calcularPrecioTotal()">
+                                        <input type="number" class="form-control form-control-sm" id="precio_venta" name="precio_venta" value="0" min="1" required onchange="calcularPrecioTotal()" step="any">
                                     </div>
                                     <div class="col-md-1">
                                         <label class="required fw-semibold fs-6 mb-2">Cantidad</label>
@@ -542,9 +542,10 @@
                 let id            = servicioDatos.id;
                 var filaExistente = table.row("#producto-" + id);
                 // var precio        = servicioDatos.precio;
-                var precio        = $('#precio_venta').val();
-                var cantidad      = $('#cantidad_venta').val();
-                var total         = precio*cantidad;
+                // var precio        = $('#precio_venta').val();
+                var precio        = parseFloat($('#precio_venta').val()).toFixed(2);
+                var cantidad      = parseInt($('#cantidad_venta').val());
+                var total         = parseFloat(precio*cantidad).toFixed(2);
                 var subTotal      = (precio*cantidad)-0;
 
                 let servicio = {
@@ -603,7 +604,7 @@
                     }
 
                 } else {
-                    var subTotal      = precio*cantidad;
+                    var subTotal      = (precio*cantidad).toFixed(2);
 
                     table.row.add([
                         servicioDatos.descripcion+" "+$('#descripcion_adicional').val(),
@@ -620,7 +621,9 @@
                     arrayProductoCar.push(servicio);
                     // AGREGAMOS AL CARRO LOS PRODUSTOS
 
-                    $('#monto_total').val(parseFloat($('#monto_total').val())+parseFloat(servicio.subTotal))
+                    var monto_total_r = parseFloat($('#monto_total').val())+parseFloat(servicio.subTotal);
+
+                    $('#monto_total').val(monto_total_r.toFixed(2))
                 }
 
                 // BORRAMOS LOS ITEM QUE AGREGAMOS
