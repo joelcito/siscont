@@ -3523,13 +3523,18 @@ class FacturaController extends Controller
         $mail = new PHPMailer(true);
 
         // Configuración de los parámetros SMTP
-        $smtpHost       = 'mail.micarautolavado.com';
+        // $smtpHost       = 'mail.micarautolavado.com';
+        // $smtpPort       =  465;
+        // $smtpUsername   = 'admin@micarautolavado.com';
+        // $smtpPassword   = '-Z{DjF[D@y8G';
+
+        $smtpHost       = 'mail.facbol.com';
         $smtpPort       =  465;
-        $smtpUsername   = 'admin@micarautolavado.com';
-        $smtpPassword   = '-Z{DjF[D@y8G';
+        $smtpUsername   = 'facturacion@facbol.com';
+        $smtpPassword   = 'j}RXM[5&#yzz';
 
         try {
-            $mail->setFrom('admin@micarautolavado.com', $empresa->nombre);
+            $mail->setFrom($smtpUsername, $empresa->nombre);
             $mail->addAddress($to);
 
             // Agregar direcciones de correo electrónico en copia (CC)
@@ -3615,12 +3620,10 @@ class FacturaController extends Controller
                 $templateContent = str_replace('{{ $' . $key . ' }}', $value, $templateContent);
 
             // Configuración de los parámetros SMTP
-            $smtpHost       = 'mail.micarautolavado.com';
+            $smtpHost       = 'mail.facbol.com';
             $smtpPort       =  465;
-            // $smtpUsername   = 'suscripcion@comercio-latino.com';
-            // $smtpPassword   = 'Fc;D&0@A7(T%';
-            $smtpUsername   = 'admin@micarautolavado.com';
-            $smtpPassword   = '-Z{DjF[D@y8G';
+            $smtpUsername   = 'facturacion@facbol.com';
+            $smtpPassword   = 'j}RXM[5&#yzz';
 
             // $smtpUsername   = 'sistemas@comercio-latino.com';
             // $smtpPassword   = 'j@xKuZ(65VNK';
@@ -3637,7 +3640,7 @@ class FacturaController extends Controller
                 // $mail->SMTPSecure   = PHPMailer::ENCRYPTION_STARTTLS; no va este
                 // $mail->SMTPSecure   = PHPMailer::ENCRYPTION_SMTPS;
                 // ... Configura los parámetros SMTP ...
-                $mail->setFrom('admin@micarautolavado.com', $empresa->nombre);
+                $mail->setFrom($smtpUsername, $empresa->nombre);
                 $mail->addAddress($to);
 
                 // Agregar direcciones de correo electrónico en copia (CC)
