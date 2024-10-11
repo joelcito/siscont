@@ -211,7 +211,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    <span class="badge bg-danger text-white w-100">NO HAY CONECCION CON SIAT</span>
+                                    <span class="badge bg-danger text-white w-100">NO HAY CONECCION CON SIAT | {{ json_encode($verificacionSiat->msg) }}</span>
                                 @endif
                             </div>
                         </div>
@@ -1039,7 +1039,7 @@
         let precio = $('#precio_venta').val();
         let cantidad = $('#cantidad_venta').val();
         let total = parseFloat(precio) * parseFloat(cantidad);
-        $('#total_venta').val(total)
+        $('#total_venta').val(total.toFixed(2))
     }
 
     function modalAgregarCliente(){

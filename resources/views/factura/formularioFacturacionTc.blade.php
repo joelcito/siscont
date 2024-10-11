@@ -1059,7 +1059,7 @@
             let precio = $('#precio_venta').val();
             let cantidad = $('#cantidad_venta').val();
             let total = parseFloat(precio) * parseFloat(cantidad);
-            $('#total_venta').val(total)
+            $('#total_venta').val(total.toFixed(2))
         }
 
         function modalAgregarCliente(){

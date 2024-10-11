@@ -851,6 +851,8 @@ class FacturaController extends Controller
             $header
         ));
 
+        // dd($verificacionSiat);
+
         // SACAMOS EL CUIS VIGENTE
         $cuis = $empresa->cuisVigente($sucursal_id, $punto_venta_id, $empresa->codigo_ambiente);
 

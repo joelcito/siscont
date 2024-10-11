@@ -1513,6 +1513,9 @@ class SiatController extends Controller
         // );
 
         $comunicacion =  json_decode($this->verificarComunicacion($url1,$header));
+
+        // dd($comunicacion);
+
         if($comunicacion->estado == "success"){
             if($comunicacion->resultado->RespuestaComunicacion->transaccion){
                 $wsdl               = $url1;
@@ -1571,7 +1574,7 @@ class SiatController extends Controller
             $data['estado']    = 'error';
             $data['resultado'] = $comunicacion;
         }
-        return $data;
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
     public function recepcionFactura(
