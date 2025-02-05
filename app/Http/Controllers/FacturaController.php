@@ -1222,6 +1222,8 @@ class FacturaController extends Controller
                                 $empresa_objeto->codigo_ambiente
                             ));
 
+                        dd($cufdVigente);
+
                         $scufd                  = $cufdVigente->codigo;
                         $scodigoControl         = $cufdVigente->codigo_control;
                         $sdireccion             = $cufdVigente->direccion;

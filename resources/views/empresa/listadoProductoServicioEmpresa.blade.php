@@ -35,10 +35,10 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="fs-6 required fw-semibold form-label mb-2">Actividad Economica Siat</label>
-                                <select required data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                <select required data-control="select2" name="actividad_economica_siat_id_new_servicio" id="actividad_economica_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold" onchange="filtrarPorActividad(this)">
                                     <option></option>
                                     @foreach ($activiadesEconomica as $ae)
-                                        <option value="{{ $ae->id }}">{{ $ae->descripcion }}</option>
+                                        <option data-codigo="{{ $ae->codigo_caeb }}" value="{{ $ae->id }}">{{ $ae->descripcion }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -46,9 +46,9 @@
                                 <label class="fs-6 fw-semibold required form-label mb-2">Producto Servicio Siat</label>
                                 <select required data-control="select2" name="producto_servicio_siat_id_new_servicio" id="producto_servicio_siat_id_new_servicio" data-placeholder="Seleccione" data-dropdown-parent="#modal_new_servicio" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                     <option></option>
-                                    @foreach ($productoServicio as $ps)
+                                    {{-- @foreach ($productoServicio as $ps)
                                         <option value="{{ $ps->id }}">{{ $ps->descripcion_producto }}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -514,6 +514,24 @@
             }else{
                 $("#formulario_importar_servicios_productos_excel")[0].reportValidity();
             }
+        }
+
+        function filtrarPorActividad(datos){
+            var productosServicios = @JSON($productoServicio);
+            var codigo             = $(datos).find(':selected').data('codigo');
+            var listadoFiltrado    = productosServicios.filter(pro => parseInt(pro.codigo_actividad) === codigo)
+
+            //Llenar el segundo <select>
+            var selectProducto = $("#producto_servicio_siat_id_new_servicio");
+            selectProducto.empty().append('<option></option>'); // Limpiar y agregar opción vacía
+
+            listadoFiltrado.forEach(pro => {
+                selectProducto.append(`<option value="${pro.id}">${pro.descripcion_producto}</option>`);
+            });
+
+            // Refrescar el select2 si lo usas
+            selectProducto.trigger('change');
+
         }
    </script>
 @endsection

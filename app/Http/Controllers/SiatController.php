@@ -1711,6 +1711,8 @@ class SiatController extends Controller
         $scuis            = $cuis->codigo;
         $nit              = $empresa->nit;
 
+        // dd($cufdDelDia);
+
         if($cufdDelDia){
             $fechaVigencia = $cufdDelDia->fecha_vigencia;
             // dd($fechaVigencia < date('Y-m-d H:i'));
@@ -1762,6 +1764,7 @@ class SiatController extends Controller
                         $cufdRescatadoUtilizar = null;
                     }
                 }else{
+                    // $cufdRescatadoUtilizar = null;
                     $cufdRescatadoUtilizar = null;
                 }
                 // dd('$fechaVigencia < date("Y-m-d H:i")', "NO", $fechaVigencia, date("Y-m-d H:i"), $fechaVigencia < date("Y-m-d H:i"));
