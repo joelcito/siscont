@@ -1,6 +1,10 @@
 <?php
 
-class FirmaException extends \Exception
+namespace App\Firma\Exceptions;
+
+use Exception;
+
+class FirmaException extends Exception
 {
 
 }

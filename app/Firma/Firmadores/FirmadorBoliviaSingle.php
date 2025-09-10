@@ -8,7 +8,9 @@ use DOMXPath;
 
 // require_once __DIR__ . '/../Exceptions/FirmaException.php';
 // require_once('/../Exceptions/FirmaException.php');
-require_once('FirmaException.php' );
+//require_once('FirmaException.php' );
+
+use App\Firma\Exceptions\FirmaException;
 
 // use FirmaException;
 
