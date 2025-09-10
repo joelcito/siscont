@@ -74,13 +74,12 @@ class FirmadorBoliviaSingle
         throw new FirmaException("No se pudo leer el archivo .p12 o está vacío: {$p12Path}");
     }
 
-    // ✅ Limpiar la contraseña
-    $password = trim($this->contrasenia);
+    // ✅ Limpiar la contraseña de espacios y comillas
+    $password = trim($this->contrasenia, " \t\n\r\0\x0B'\"");
 
     // 🔹 Intento de abrir el .p12 con depuración
     $result = openssl_pkcs12_read($p12Content, $certs, $password);
     if (!$result) {
-        // Información extra para depuración
         $opensslVersion = defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'desconocida';
         throw new FirmaException(
             "No se pudo abrir el certificado.\n" .
@@ -124,6 +123,7 @@ class FirmadorBoliviaSingle
 
     return $doc->saveXML();
 }
+
 
 
 
