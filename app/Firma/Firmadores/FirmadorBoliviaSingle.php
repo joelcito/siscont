@@ -58,79 +58,10 @@ class FirmadorBoliviaSingle
      * @throws FirmaException
      */
     public function firmar(string $xml): string
-{
-    $certs = [];
-
-    // ✅ Ruta absoluta al archivo .p12 subido
-    $p12Path = public_path($this->p12Path);
-
-    if (!file_exists($p12Path)) {
-        throw new FirmaException("El archivo .p12 no existe en la ruta: {$p12Path}");
-    }
-
-    // ✅ Leer el contenido del .p12
-    $p12Content = file_get_contents($p12Path);
-    if ($p12Content === false || strlen($p12Content) === 0) {
-        throw new FirmaException("No se pudo leer el archivo .p12 o está vacío: {$p12Path}");
-    }
-
-    // ✅ Limpiar la contraseña
-    $password = trim(strval($this->contrasenia)); // aseguramos string sin comillas
-
-    // 🔹 Extraer clave privada y certificado en memoria
-    if (!openssl_pkcs12_read($p12Content, $certs, $password)) {
-        throw new FirmaException("No se pudo abrir el certificado. Verifica la contraseña exacta.");
-    }
-
-    if (empty($certs['pkey']) || empty($certs['cert'])) {
-        throw new FirmaException("El certificado no contiene clave privada o certificado válido.");
-    }
-
-    $privateKey  = $certs['pkey'];
-    $certificate = $certs['cert'];
-
-    // ✅ Cargar el XML a firmar
-    $doc = new DOMDocument();
-    if (!$doc->loadXML($xml)) {
-        throw new FirmaException("El XML a firmar no es válido.");
-    }
-
-    // ✅ Inicializar firma
-    $this->create();
-    $this->setCanonicalMethod();
-
-    $this->addReference(
-        $doc,
-        [
-            'http://www.w3.org/2000/09/xmldsig#enveloped-signature',
-            'http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments'
-        ],
-        ['force_uri' => true]
-    );
-
-    // ✅ Firmar usando la clave privada y certificado extraídos
-    $this->createKey(['type' => 'private']);
-    $this->passphrase = $password; // si el pkey requiere passphrase, se usa
-
-    $this->loadKey($privateKey);
-    $this->add509Cert($certificate);
-
-    $this->sign($doc->documentElement);
-
-    return $doc->saveXML();
-}
-
-
-
-
-
-    /*
-    public function firmar(string $xml): string
     {
         $certs = [];
 
         $cert = openssl_pkcs12_read(file_get_contents($this->p12Path), $certs, $this->contrasenia);
-        dd($this->p12Path, $this->contrasenia, $certs);
 
         if (!$cert) {
             throw new FirmaException("No se pudo abrir el certificado.");
@@ -165,7 +96,6 @@ class FirmadorBoliviaSingle
 
         return $doc->saveXML();
     }
-    */
 
     private static function getRawThumbprint($cert)
     {
