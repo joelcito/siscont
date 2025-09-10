@@ -79,7 +79,7 @@ class FirmadorBoliviaSingle
 
     // 🔹 Intento de abrir el .p12 con depuración
     //$result = openssl_pkcs12_read($p12Content, $certs, $password);
-    $result = openssl_pkcs12_read($p12Content, $certs, 7019898);
+    $result = openssl_pkcs12_read($p12Content, $certs, '7019898');
     if (!$result) {
         $opensslVersion = defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'desconocida';
         throw new FirmaException(
