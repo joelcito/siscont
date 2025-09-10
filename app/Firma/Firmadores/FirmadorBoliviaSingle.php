@@ -61,6 +61,64 @@ class FirmadorBoliviaSingle
     {
         $certs = [];
 
+        // ✅ Asegurar ruta absoluta al archivo .p12
+        $p12Path = public_path($this->p12Path);
+
+        if (!file_exists($p12Path)) {
+            throw new FirmaException("El archivo .p12 no existe en la ruta: {$p12Path}");
+        }
+
+        // ✅ Leer contenido del archivo
+        $p12Content = file_get_contents($p12Path);
+        if ($p12Content === false) {
+            throw new FirmaException("No se pudo leer el archivo .p12 en: {$p12Path}");
+        }
+
+        // ✅ Intentar abrir con OpenSSL
+        $cert = openssl_pkcs12_read($p12Content, $certs, $this->contrasenia);
+        if (!$cert) {
+            throw new FirmaException("No se pudo abrir el certificado. Verifique la contraseña.");
+        }
+
+        // ✅ Verificar que tenga las claves necesarias
+        if (empty($certs['pkey']) || empty($certs['cert'])) {
+            throw new FirmaException("El certificado no contiene clave privada o certificado válido.");
+        }
+
+        // ✅ Cargar el XML a firmar
+        $doc = new DOMDocument();
+        if (!$doc->loadXML($xml)) {
+            throw new FirmaException("El XML a firmar no es válido.");
+        }
+
+        $this->create();
+        $this->setCanonicalMethod();
+
+        $this->addReference(
+            $doc,
+            [
+                'http://www.w3.org/2000/09/xmldsig#enveloped-signature',
+                'http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments'
+            ],
+            ['force_uri' => true]
+        );
+
+        $this->createKey(['type' => 'private']);
+        $this->passphrase = $this->contrasenia;
+
+        $this->loadKey($certs['pkey']);
+        $this->add509Cert($certs['cert']);
+
+        $this->sign($doc->documentElement);
+
+        return $doc->saveXML();
+    }
+
+    /*
+    public function firmar(string $xml): string
+    {
+        $certs = [];
+
         $cert = openssl_pkcs12_read(file_get_contents($this->p12Path), $certs, $this->contrasenia);
         dd($this->p12Path, $this->contrasenia, $certs);
 
@@ -97,6 +155,7 @@ class FirmadorBoliviaSingle
 
         return $doc->saveXML();
     }
+    */
 
     private static function getRawThumbprint($cert)
     {
