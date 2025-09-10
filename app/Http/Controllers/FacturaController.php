@@ -1291,6 +1291,9 @@ class FacturaController extends Controller
                         if(!is_null($empresa_objeto->archivop12)){
                             // dd($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
                             $firmador = new FirmadorBoliviaSingle($empresa_objeto->archivop12, $empresa_objeto->contrasenia);
+
+                            dd($firmador);
+
                             $xmlFirmado = $firmador->firmarRuta("assets/docs/facturaxml_$nombreArchivo.xml");
                             file_put_contents("assets/docs/facturaxml_$nombreArchivo.xml", $xmlFirmado);
                         }else{
