@@ -57,6 +57,7 @@ class FirmadorBoliviaSingle
      * @return string el XML firmado
      * @throws FirmaException
      */
+
     public function firmar(string $xml): string
 {
     $certs = [];
@@ -74,8 +75,9 @@ class FirmadorBoliviaSingle
         throw new FirmaException("No se pudo leer el archivo .p12 o está vacío: {$p12Path}");
     }
 
-    // ✅ Limpiar la contraseña de espacios y comillas
-    $password = trim($this->contrasenia, " \t\n\r\0\x0B'\"");
+    // ✅ Limpiar la contraseña de espacios y comillas internas o externas
+    $password = str_replace(["'", '"'], '', $this->contrasenia); // elimina comillas
+    $password = trim($password); // elimina espacios y saltos de línea
 
     // 🔹 Intento de abrir el .p12 con depuración
     $result = openssl_pkcs12_read($p12Content, $certs, $password);
