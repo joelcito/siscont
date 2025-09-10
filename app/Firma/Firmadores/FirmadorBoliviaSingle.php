@@ -61,40 +61,33 @@ class FirmadorBoliviaSingle
 {
     $certs = [];
 
-    // ✅ Ruta absoluta al archivo .p12
+    // ✅ Ruta absoluta al archivo .p12 subido
     $p12Path = public_path($this->p12Path);
 
     if (!file_exists($p12Path)) {
         throw new FirmaException("El archivo .p12 no existe en la ruta: {$p12Path}");
     }
 
-    // ✅ Leer contenido del archivo como binario
+    // ✅ Leer el contenido del .p12
     $p12Content = file_get_contents($p12Path);
     if ($p12Content === false || strlen($p12Content) === 0) {
         throw new FirmaException("No se pudo leer el archivo .p12 o está vacío: {$p12Path}");
     }
 
-    // ✅ Limpiar la contraseña de espacios y comillas
-    $password = trim($this->contrasenia, " \t\n\r\0\x0B'\"");
+    // ✅ Limpiar la contraseña
+    $password = trim(strval($this->contrasenia)); // aseguramos string sin comillas
 
-    // 🔹 Intento de abrir el .p12 con depuración
-    //$result = openssl_pkcs12_read($p12Content, $certs, $password);
-    $result = openssl_pkcs12_read($p12Content, $certs, '7019898');
-    if (!$result) {
-        $opensslVersion = defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'desconocida';
-        throw new FirmaException(
-            "No se pudo abrir el certificado.\n" .
-            "Verifica la contraseña exacta.\n" .
-            "Archivo: {$p12Path}, Tamaño: " . strlen($p12Content) . " bytes\n" .
-            "Versión OpenSSL PHP: {$opensslVersion}\n" .
-            "Contraseña usada: '{$password}'"
-        );
+    // 🔹 Extraer clave privada y certificado en memoria
+    if (!openssl_pkcs12_read($p12Content, $certs, $password)) {
+        throw new FirmaException("No se pudo abrir el certificado. Verifica la contraseña exacta.");
     }
 
-    // ✅ Verificar que contenga clave privada y certificado
     if (empty($certs['pkey']) || empty($certs['cert'])) {
         throw new FirmaException("El certificado no contiene clave privada o certificado válido.");
     }
+
+    $privateKey  = $certs['pkey'];
+    $certificate = $certs['cert'];
 
     // ✅ Cargar el XML a firmar
     $doc = new DOMDocument();
@@ -102,6 +95,7 @@ class FirmadorBoliviaSingle
         throw new FirmaException("El XML a firmar no es válido.");
     }
 
+    // ✅ Inicializar firma
     $this->create();
     $this->setCanonicalMethod();
 
@@ -114,16 +108,18 @@ class FirmadorBoliviaSingle
         ['force_uri' => true]
     );
 
+    // ✅ Firmar usando la clave privada y certificado extraídos
     $this->createKey(['type' => 'private']);
-    $this->passphrase = $password;
+    $this->passphrase = $password; // si el pkey requiere passphrase, se usa
 
-    $this->loadKey($certs['pkey']);
-    $this->add509Cert($certs['cert']);
+    $this->loadKey($privateKey);
+    $this->add509Cert($certificate);
 
     $this->sign($doc->documentElement);
 
     return $doc->saveXML();
 }
+
 
 
 
