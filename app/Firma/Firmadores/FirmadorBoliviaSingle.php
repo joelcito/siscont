@@ -68,28 +68,30 @@ class FirmadorBoliviaSingle
         throw new FirmaException("El archivo .p12 no existe en la ruta: {$p12Path}");
     }
 
-    // ✅ Leer contenido del archivo como binario y verificar
+    // ✅ Leer contenido del archivo como binario
     $p12Content = file_get_contents($p12Path);
-    if ($p12Content === false) {
-        throw new FirmaException("No se pudo leer el archivo .p12 en: {$p12Path}");
+    if ($p12Content === false || strlen($p12Content) === 0) {
+        throw new FirmaException("No se pudo leer el archivo .p12 o está vacío: {$p12Path}");
     }
 
-    if (strlen($p12Content) === 0) {
-        throw new FirmaException("El archivo .p12 está vacío: {$p12Path}");
-    }
-
-    // ✅ Limpiar la contraseña de espacios extras
+    // ✅ Limpiar la contraseña
     $password = trim($this->contrasenia);
 
-    // ✅ Intentar abrir el archivo .p12
-    if (!openssl_pkcs12_read($p12Content, $certs, $password)) {
+    // 🔹 Intento de abrir el .p12 con depuración
+    $result = openssl_pkcs12_read($p12Content, $certs, $password);
+    if (!$result) {
+        // Información extra para depuración
+        $opensslVersion = defined('OPENSSL_VERSION_TEXT') ? OPENSSL_VERSION_TEXT : 'desconocida';
         throw new FirmaException(
-            "No se pudo abrir el certificado. Verifica la contraseña exacta. " .
-            "Archivo: {$p12Path}, Tamaño: " . strlen($p12Content)
+            "No se pudo abrir el certificado.\n" .
+            "Verifica la contraseña exacta.\n" .
+            "Archivo: {$p12Path}, Tamaño: " . strlen($p12Content) . " bytes\n" .
+            "Versión OpenSSL PHP: {$opensslVersion}\n" .
+            "Contraseña usada: '{$password}'"
         );
     }
 
-    // ✅ Verificar que tenga clave privada y certificado
+    // ✅ Verificar que contenga clave privada y certificado
     if (empty($certs['pkey']) || empty($certs['cert'])) {
         throw new FirmaException("El certificado no contiene clave privada o certificado válido.");
     }
@@ -122,6 +124,7 @@ class FirmadorBoliviaSingle
 
     return $doc->saveXML();
 }
+
 
 
     /*
