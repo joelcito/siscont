@@ -60,6 +60,8 @@ class FirmadorBoliviaSingle
     public function firmar(string $xml): string
     {
         $certs = [];
+
+        dd($this->p12Path, $this->contrasenia, $certs);
         $cert = openssl_pkcs12_read(file_get_contents($this->p12Path), $certs, $this->contrasenia);
 
         if (!$cert) {
