@@ -320,6 +320,7 @@ class SiatController extends Controller
             $resultado = false;
             $data['estado'] = 'error';
             $data['resultado'] = $resultado;
+            $data['mensaje'] = $fault;
         }
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
