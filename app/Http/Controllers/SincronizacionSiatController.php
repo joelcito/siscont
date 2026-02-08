@@ -162,7 +162,7 @@ class SincronizacionSiatController extends Controller
                 $cuis->codigo,
                 $empresa->nit
             ));
-            dd($sincronizarParametricaTipoDocumentoIdentidad);
+            // dd($sincronizarParametricaTipoDocumentoIdentidad);
             if($sincronizarParametricaTipoDocumentoIdentidad->resultado->RespuestaListaParametricas){
                 $array = $sincronizarParametricaTipoDocumentoIdentidad->resultado->RespuestaListaParametricas->listaCodigos;
                 foreach ($array as $key => $value) {
